@@ -5,9 +5,6 @@ from tools.config_file_handler.parser_apollo import parser2class
 from tools.config_file_handler.translator_apollo import option_obj_translator, save2file
 
 
-
-
-
 def run_scenario():
     return
 
