@@ -16,10 +16,11 @@ APOLLO_VEHICLE_back_edge_to_center = 1.043
 
 
 # DIRECTORIES =======================================
-APOLLO_ROOT = '/home/yuqi/ResearchWorkspace/apollo'
-MAGGIE_ROOT = '/home/yuqi/ResearchWorkspace/MAGGIE'
+APOLLO_ROOT = '/home/cloudsky/Research/Apollo/apollo_7.0'
+MAGGIE_ROOT = '/home/cloudsky/Research/Apollo/AV_Config_Testing'
 RECORDS_DIR = f'{MAGGIE_ROOT}/data/records'
 LOG_DIR = f'{MAGGIE_ROOT}/data/Logs'
+CSV_DIR = f'{MAGGIE_ROOT}/data/csv'
 
 # MAGGIE CONFIGS ====================================
 STREAM_LOGGING_LEVEL = logging.INFO
@@ -30,4 +31,4 @@ INSTANCE_MAX_WAIT_TIME = 15
 MAX_ADC_COUNT = 5
 MAX_PD_COUNT = 5
 RUN_FOR_HOUR = 12
-HD_MAP_PATH = f'{MAGGIE_ROOT}/data/maps/shalun/base_map.bin'
+HD_MAP_PATH = f'{MAGGIE_ROOT}/data/maps/sunnyvale_loop/base_map.bin'

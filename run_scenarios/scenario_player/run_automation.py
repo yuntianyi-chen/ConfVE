@@ -20,8 +20,8 @@ import argparse
 import subprocess
 from multiprocessing import Process, Manager
 
-from apollo_v7_testing.auxiliary.routing import send_routing_request
-from apollo_v7_testing.grading_metrics import acceleration, speeding, collision
+from run_scenarios.auxiliary.routing import send_routing_request
+from run_scenarios.grading_metrics import acceleration, speeding, collision
 
 try:
     from subprocess import DEVNULL  # Python 3.

@@ -20,95 +20,95 @@ default_task_config: {
   task_type: PIECEWISE_JERK_PATH_OPTIMIZER
   piecewise_jerk_path_optimizer_config: {
     default_path_config: {
-      l_weight: 7.52
-      dl_weight: 11.94
-      ddl_weight: 67.2
-      dddl_weight: 92.35
+      l_weight: 49.61
+      dl_weight: 98.36
+      ddl_weight: 30.94
+      dddl_weight: 73.51
     }
     lane_change_path_config: {
-      l_weight: 51.1
-      dl_weight: 11.67
-      ddl_weight: 35.22
-      dddl_weight: 75.21
+      l_weight: 1.79
+      dl_weight: 22.35
+      ddl_weight: 88.48
+      dddl_weight: 56.2
     }
   }
 }
 default_task_config: {
   task_type: PIECEWISE_JERK_SPEED_OPTIMIZER
   piecewise_jerk_speed_optimizer_config: {
-    acc_weight: 60.16
-    jerk_weight: 55.26
-    kappa_penalty_weight: 6.9
-    ref_s_weight: 29.66
-    ref_v_weight: 26.97
+    acc_weight: 32.03
+    jerk_weight: 82.2
+    kappa_penalty_weight: 30.76
+    ref_s_weight: 3.21
+    ref_v_weight: 29.7
   }
 }
 default_task_config: {
   task_type: PIECEWISE_JERK_NONLINEAR_SPEED_OPTIMIZER
   piecewise_jerk_nonlinear_speed_optimizer_config: {
-    acc_weight: 54.78
-    jerk_weight: 45.38
-    lat_acc_weight: 35.93
-    s_potential_weight: 34.18
-    ref_v_weight: 20.2
-    ref_s_weight: 65.24
+    acc_weight: 55.11
+    jerk_weight: 44.81
+    lat_acc_weight: 67.13
+    s_potential_weight: 77.51
+    ref_v_weight: 22.74
+    ref_s_weight: 0.37
     soft_s_bound_weight: 1e6
-    use_warm_start: false
+    use_warm_start: true
   }
 }
 default_task_config: {
   task_type: SPEED_HEURISTIC_OPTIMIZER
   speed_heuristic_optimizer_config: {
     default_speed_config: {
-      unit_t: 74.56
-      dense_dimension_s: 5
-      dense_unit_s: 26.55
-      sparse_unit_s: 54.16
-      speed_weight: 80.05
-      accel_weight: 93.0
-      jerk_weight: 41.68
-      obstacle_weight: 64.4
-      reference_weight: 70.02
-      go_down_buffer: 11.64
-      go_up_buffer: 47.41
+      unit_t: 78.89
+      dense_dimension_s: 9
+      dense_unit_s: 47.4
+      sparse_unit_s: 64.3
+      speed_weight: 67.5
+      accel_weight: 98.05
+      jerk_weight: 21.05
+      obstacle_weight: 54.34
+      reference_weight: 10.77
+      go_down_buffer: 54.42
+      go_up_buffer: 60.56
       default_obstacle_cost: 1e4
       default_speed_cost: 1.0e3
       exceed_speed_penalty: 1.0e3
-      low_speed_penalty: 17.2
-      reference_speed_penalty: 23.8
-      keep_clear_low_speed_penalty: 98.02
-      accel_penalty: 57.0
-      decel_penalty: 20.29
-      positive_jerk_coeff: 38.37
-      negative_jerk_coeff: 47.53
-      max_acceleration: 17.23
-      max_deceleration: 71.94
+      low_speed_penalty: 16.86
+      reference_speed_penalty: 1.88
+      keep_clear_low_speed_penalty: 54.03
+      accel_penalty: 51.77
+      decel_penalty: 45.41
+      positive_jerk_coeff: 17.41
+      negative_jerk_coeff: 89.19
+      max_acceleration: 2.76
+      max_deceleration: 35.87
       spatial_potential_penalty: 1.0e2
     }
     lane_change_speed_config: {
-      unit_t: 90.2
-      dense_dimension_s: 9
-      dense_unit_s: 20.0
-      sparse_unit_s: 1.87
-      speed_weight: 64.84
-      accel_weight: 67.44
-      jerk_weight: 14.92
-      obstacle_weight: 13.39
-      reference_weight: 28.54
-      go_down_buffer: 64.0
-      go_up_buffer: 61.07
+      unit_t: 37.81
+      dense_dimension_s: 2
+      dense_unit_s: 78.47
+      sparse_unit_s: 42.17
+      speed_weight: 91.14
+      accel_weight: 74.2
+      jerk_weight: 23.08
+      obstacle_weight: 3.77
+      reference_weight: 26.83
+      go_down_buffer: 70.05
+      go_up_buffer: 25.03
       default_obstacle_cost: 1e4
       default_speed_cost: 1.0e3
       exceed_speed_penalty: 1.0e3
-      low_speed_penalty: 77.15
-      reference_speed_penalty: 64.85
-      keep_clear_low_speed_penalty: 8.35
-      accel_penalty: 44.51
-      decel_penalty: 28.84
-      positive_jerk_coeff: 8.66
-      negative_jerk_coeff: 40.12
-      max_acceleration: 86.36
-      max_deceleration: 53.36
+      low_speed_penalty: 51.19
+      reference_speed_penalty: 9.25
+      keep_clear_low_speed_penalty: 16.72
+      accel_penalty: 26.28
+      decel_penalty: 72.22
+      positive_jerk_coeff: 63.13
+      negative_jerk_coeff: 8.21
+      max_acceleration: 1.65
+      max_deceleration: 52.66
       spatial_potential_penalty: 1.0e5
       is_lane_changing: true
     }
@@ -120,42 +120,42 @@ default_task_config: {
 default_task_config: {
   task_type: RULE_BASED_STOP_DECIDER
   rule_based_stop_decider_config: {
-    max_adc_stop_speed: 32.16
-    max_valid_stop_distance: 88.29
-    search_beam_length: 17.66
-    search_beam_radius_intensity: 75.65
-    search_range: 32.57
-    is_block_angle_threshold: 17.56
+    max_adc_stop_speed: 79.81
+    max_valid_stop_distance: 23.45
+    search_beam_length: 67.27
+    search_beam_radius_intensity: 30.53
+    search_range: 11.67
+    is_block_angle_threshold: 4.43
   }
 }
 default_task_config: {
   task_type: ST_BOUNDS_DECIDER
   st_bounds_decider_config: {
-    total_time: 78.49
+    total_time: 35.65
   }
 }
 default_task_config: {
   task_type: SPEED_BOUNDS_PRIORI_DECIDER
   speed_bounds_decider_config: {
-    total_time: 29.92
-    boundary_buffer: 56.17
-    max_centric_acceleration_limit: 64.17
-    point_extension: 45.42
-    lowest_speed: 82.68
-    static_obs_nudge_speed_ratio: 75.05
-    dynamic_obs_nudge_speed_ratio: 67.84
+    total_time: 31.71
+    boundary_buffer: 92.92
+    max_centric_acceleration_limit: 46.59
+    point_extension: 50.12
+    lowest_speed: 87.3
+    static_obs_nudge_speed_ratio: 31.27
+    dynamic_obs_nudge_speed_ratio: 20.65
   }
 }
 default_task_config: {
   task_type: SPEED_BOUNDS_FINAL_DECIDER
   speed_bounds_decider_config: {
-    total_time: 25.48
-    boundary_buffer: 54.59
-    max_centric_acceleration_limit: 93.35
-    point_extension: 46.32
-    lowest_speed: 35.33
-    static_obs_nudge_speed_ratio: 40.79
-    dynamic_obs_nudge_speed_ratio: 35.76
+    total_time: 5.89
+    boundary_buffer: 79.33
+    max_centric_acceleration_limit: 85.22
+    point_extension: 14.27
+    lowest_speed: 79.84
+    static_obs_nudge_speed_ratio: 63.69
+    dynamic_obs_nudge_speed_ratio: 42.97
   }
 }
 default_task_config: {
@@ -167,27 +167,27 @@ default_task_config: {
     open_space_trajectory_optimizer_config: {
       planner_open_space_config: {
         warm_start_config: {
-          xy_grid_resolution: 59.22
-          phi_grid_resolution: 15.19
-          next_node_num: 10
-          step_size: 93.45
-          traj_forward_penalty: 31.41
-          traj_back_penalty: 65.32
-          traj_gear_switch_penalty: 77.5
-          traj_steer_penalty: 83.84
-          traj_steer_change_penalty: 81.74
-          grid_a_star_xy_resolution: 21.19
-          node_radius: 74.74
+          xy_grid_resolution: 58.59
+          phi_grid_resolution: 92.35
+          next_node_num: 2
+          step_size: 66.29
+          traj_forward_penalty: 74.01
+          traj_back_penalty: 3.05
+          traj_gear_switch_penalty: 12.11
+          traj_steer_penalty: 41.06
+          traj_steer_change_penalty: 88.67
+          grid_a_star_xy_resolution: 20.14
+          node_radius: 17.53
         }
         dual_variable_warm_start_config: {
-          weight_d: 70.83
+          weight_d: 54.82
           ipopt_config: {
-            ipopt_print_level: 8
-            mumps_mem_percent: 4
+            ipopt_print_level: 1
+            mumps_mem_percent: 10
             mumps_pivtol: 1e-06
-            ipopt_max_iter: 4
+            ipopt_max_iter: 3
             ipopt_tol: 1e-05
-            ipopt_acceptable_constr_viol_tol: 90.93
+            ipopt_acceptable_constr_viol_tol: 38.69
             ipopt_min_hessian_perturbation: 1e-12
             ipopt_jacobian_regularization_value: 1e-07
             ipopt_print_timing_statistics: "yes"
@@ -195,102 +195,102 @@ default_task_config: {
             ipopt_recalc_y: "yes"
           }
           qp_format: OSQP
-          min_safety_distance: 44.94
+          min_safety_distance: 46.58
           osqp_config: {
-            alpha: 1.74
+            alpha: 40.33
             eps_abs: 1.0e-3
             eps_rel: 1.0e-3
-            max_iter: 7
-            polish: true
-            osqp_debug_log: true
+            max_iter: 1
+            polish: false
+            osqp_debug_log: false
           }
         }
         distance_approach_config: {
-          weight_steer: 49.24
-          weight_a: 94.46
-          weight_steer_rate: 84.61
-          weight_a_rate: 42.34
-          weight_x: 72.61
-          weight_y: 82.26
-          weight_phi: 97.15
-          weight_v: 34.1
-          weight_steer_stitching: 59.11
-          weight_a_stitching: 70.92
-          weight_first_order_time: 83.68
-          weight_second_order_time: 79.59
-          weight_end_state: 78.4
-          weight_slack: 23.93
-          min_safety_distance: 52.42
-          max_speed_forward: 38.9
-          max_speed_reverse: 14.74
-          max_acceleration_forward: 69.9
-          max_acceleration_reverse: 39.57
-          min_time_sample_scaling: 77.28
-          max_time_sample_scaling: 34.87
+          weight_steer: 27.6
+          weight_a: 78.51
+          weight_steer_rate: 29.71
+          weight_a_rate: 58.67
+          weight_x: 28.24
+          weight_y: 95.93
+          weight_phi: 36.61
+          weight_v: 83.01
+          weight_steer_stitching: 70.73
+          weight_a_stitching: 44.37
+          weight_first_order_time: 13.54
+          weight_second_order_time: 98.64
+          weight_end_state: 17.83
+          weight_slack: 66.43
+          min_safety_distance: 88.63
+          max_speed_forward: 76.07
+          max_speed_reverse: 39.05
+          max_acceleration_forward: 95.11
+          max_acceleration_reverse: 79.59
+          min_time_sample_scaling: 86.47
+          max_time_sample_scaling: 45.31
           use_fix_time: false
           ipopt_config: {
             ipopt_print_level: 5
-            mumps_mem_percent: 10
+            mumps_mem_percent: 5
             mumps_pivtol: 1e-06
-            ipopt_max_iter: 6
-            ipopt_tol: 63.23
-            ipopt_acceptable_constr_viol_tol: 94.3
+            ipopt_max_iter: 5
+            ipopt_tol: 74.54
+            ipopt_acceptable_constr_viol_tol: 16.43
             ipopt_min_hessian_perturbation: 1e-12
             ipopt_jacobian_regularization_value: 1e-07
             ipopt_print_timing_statistics: "yes"
             ipopt_alpha_for_y: "min"
             ipopt_recalc_y: "yes"
-            ipopt_mu_init: 37.03
+            ipopt_mu_init: 48.49
           }
           enable_constraint_check: true
-          enable_initial_final_check: false
+          enable_initial_final_check: true
           enable_jacobian_ad: false
-          enable_hand_derivative: false
+          enable_hand_derivative: true
           enable_derivative_check: false
           distance_approach_mode: DISTANCE_APPROACH_IPOPT_RELAX_END_SLACK
           enable_check_initial_state: true
         }
         iterative_anchoring_smoother_config: {
-          interpolated_delta_s: 92.65
-          reanchoring_trails_num: 6
-          reanchoring_pos_stddev: 36.92
-          reanchoring_length_stddev: 32.15
+          interpolated_delta_s: 64.82
+          reanchoring_trails_num: 4
+          reanchoring_pos_stddev: 5.02
+          reanchoring_length_stddev: 79.42
           estimate_bound: true
-          default_bound: 71.15
-          vehicle_shortest_dimension: 89.24
+          default_bound: 69.74
+          vehicle_shortest_dimension: 87.97
           fem_pos_deviation_smoother_config: {
             weight_fem_pos_deviation: 1e7
-            weight_path_length: 51.69
+            weight_path_length: 16.33
             weight_ref_deviation: 1e3
             apply_curvature_constraint: false
             weight_curvature_constraint_slack_var: 1e8
-            curvature_constraint: 47.22
-            max_iter: 3
-            time_limit: 38.44
+            curvature_constraint: 67.31
+            max_iter: 10
+            time_limit: 10.73
             verbose: false
-            scaled_termination: true
-            warm_start: false
+            scaled_termination: false
+            warm_start: true
           }
           s_curve_config: {
-            acc_weight: 60.55
-            jerk_weight: 32.47
-            kappa_penalty_weight: 78.74
-            ref_s_weight: 40.09
-            ref_v_weight: 56.06
+            acc_weight: 49.22
+            jerk_weight: 94.43
+            kappa_penalty_weight: 40.49
+            ref_s_weight: 76.83
+            ref_v_weight: 72.3
           }
-          collision_decrease_ratio: 25.39
-          max_forward_v: 14.0
-          max_reverse_v: 70.48
-          max_forward_acc: 18.11
-          max_reverse_acc: 32.41
-          max_acc_jerk: 72.22
-          delta_t: 0.5
+          collision_decrease_ratio: 82.41
+          max_forward_v: 22.33
+          max_reverse_v: 56.39
+          max_forward_acc: 64.75
+          max_reverse_acc: 16.02
+          max_acc_jerk: 73.49
+          delta_t: 15.76
         }
-        delta_t: 63.71
-        is_near_destination_threshold: 3
-        enable_check_parallel_trajectory: false
+        delta_t: 67.61
+        is_near_destination_threshold: 1
+        enable_check_parallel_trajectory: true
         enable_linear_interpolation: true
-        is_near_destination_theta_threshold: 39.9
+        is_near_destination_theta_threshold: 21.75
       }
     }
   }
@@ -298,73 +298,73 @@ default_task_config: {
 default_task_config: {
   task_type: OPEN_SPACE_TRAJECTORY_PARTITION
   open_space_trajectory_partition_config: {
-    gear_shift_max_t: 40.81
-    gear_shift_unit_t: 54.87
-    gear_shift_period_duration: 0.56
+    gear_shift_max_t: 78.44
+    gear_shift_unit_t: 92.86
+    gear_shift_period_duration: 10.22
     interpolated_pieces_num: 8
-    initial_gear_check_horizon: 8
-    heading_search_range: 46.63
-    heading_track_range: 0.58
-    distance_search_range: 64.6
-    heading_offset_to_midpoint: 61.82
-    lateral_offset_to_midpoint: 35.8
-    longitudinal_offset_to_midpoint: 57.5
-    vehicle_box_iou_threshold_to_midpoint: 7.34
-    linear_velocity_threshold_on_ego: 12.9
+    initial_gear_check_horizon: 7
+    heading_search_range: 96.83
+    heading_track_range: 31.48
+    distance_search_range: 48.13
+    heading_offset_to_midpoint: 70.72
+    lateral_offset_to_midpoint: 55.55
+    longitudinal_offset_to_midpoint: 53.75
+    vehicle_box_iou_threshold_to_midpoint: 80.21
+    linear_velocity_threshold_on_ego: 26.71
   }
 }
 default_task_config: {
   task_type: OPEN_SPACE_ROI_DECIDER
   open_space_roi_decider_config: {
-    roi_longitudinal_range_start: 8
-    roi_longitudinal_range_end: 7
-    parking_start_range: 93.53
+    roi_longitudinal_range_start: 9
+    roi_longitudinal_range_end: 6
+    parking_start_range: 13.8
     parking_inwards: true
     enable_perception_obstacles: true
-    parking_depth_buffer: 13.46
-    roi_line_segment_min_angle: 20.4
-    roi_line_segment_length: 2.83
-    perception_obstacle_filtering_distance: 91.38
-    perception_obstacle_buffer: 25.8
-    curb_heading_tangent_change_upper_limit: 78.35
+    parking_depth_buffer: 15.48
+    roi_line_segment_min_angle: 41.25
+    roi_line_segment_length: 42.25
+    perception_obstacle_filtering_distance: 82.51
+    perception_obstacle_buffer: 13.84
+    curb_heading_tangent_change_upper_limit: 26.49
   }
 }
 default_task_config: {
   task_type: OPEN_SPACE_FALLBACK_DECIDER
   open_space_fallback_decider_config: {
-    open_space_prediction_time_period: 25.91
-    open_space_fallback_collision_distance: 14.41
-    open_space_fallback_stop_distance: 0.13
-    open_space_fallback_collision_time_buffer: 91.54
+    open_space_prediction_time_period: 44.3
+    open_space_fallback_collision_distance: 74.36
+    open_space_fallback_stop_distance: 46.3
+    open_space_fallback_collision_time_buffer: 75.6
   }
 }
 default_task_config: {
   task_type: PATH_BOUNDS_DECIDER
   path_bounds_decider_config: {
     is_lane_borrowing: true
-    is_pull_over: true
-    is_extend_lane_bounds_to_include_adc: false
-    pull_over_destination_to_adc_buffer: 60.38
-    pull_over_destination_to_pathend_buffer: 35.16
-    pull_over_road_edge_buffer: 59.08
-    pull_over_approach_lon_distance_adjust_factor: 44.46
+    is_pull_over: false
+    is_extend_lane_bounds_to_include_adc: true
+    pull_over_destination_to_adc_buffer: 5.57
+    pull_over_destination_to_pathend_buffer: 38.25
+    pull_over_road_edge_buffer: 52.34
+    pull_over_approach_lon_distance_adjust_factor: 49.61
   }
 }
 default_task_config: {
   task_type: PATH_LANE_BORROW_DECIDER
   path_lane_borrow_decider_config: {
-    allow_lane_borrowing: true
+    allow_lane_borrowing: false
   }
 }
 default_task_config: {
   task_type: LANE_CHANGE_DECIDER
   lane_change_decider_config: {
-    enable_lane_change_urgency_check: true
+    enable_lane_change_urgency_check: false
     enable_prioritize_change_lane: true
     enable_remove_change_lane: false
     reckless_change_lane: true
-    change_lane_success_freeze_time: 77.86
-    change_lane_fail_freeze_time: 26.05
+    change_lane_success_freeze_time: 82.75
+    change_lane_fail_freeze_time: 97.84
   }
 }
 default_task_config: {
@@ -376,7 +376,7 @@ default_task_config: {
 default_task_config: {
   task_type: PATH_DECIDER
   path_decider_config: {
-    static_obstacle_buffer: 33.98
+    static_obstacle_buffer: 40.03
   }
 }
 default_task_config: {

@@ -1,6 +1,5 @@
 import os
 import random
-
 from objectives.violation_number.oracles import RecordAnalyzer
 from optimization_algorithms.genetic_algorithm.ga import ga_init, crossover, mutate, calculate_fitness, select
 from tools.config_file_handler.parser_apollo import parser2class
@@ -8,13 +7,9 @@ from tools.config_file_handler.translator_apollo import option_obj_translator, s
 
 
 def run_scenario():
-
-
-
-
-
     record_scenario()
     return
+
 
 def record_scenario():
     return
@@ -46,9 +41,11 @@ def measure_objectives(record_path):
     return violation_number, code_coverage, execution_time
 
 
-if __name__ == '__main__':
-    working_dir_path = "C:/Users/cloud/PycharmProjects/AV_Testing"
-    os.chdir(working_dir_path)
+def ga_main():
+    # working_dir_path = "C:/Users/cloud/PycharmProjects/AV_Testing"
+    # working_dir_path = "C:/Users/cloud/PycharmProjects/AV_Testing"
+
+    # os.chdir(working_dir_path)
 
     raw_option_stack, option_tuple_list, option_obj_list, option_num = parser2class(
         "./configuration_files/Apollo/test_planning_config.pb.txt")
@@ -76,7 +73,8 @@ if __name__ == '__main__':
 
                 run_scenario()
 
-                violation_number, code_coverage, execution_time = measure_objectives()
+                record_path = ""
+                violation_number, code_coverage, execution_time = measure_objectives(record_path)
 
                 fitness = calculate_fitness(violation_number, code_coverage, execution_time)
 
@@ -86,3 +84,6 @@ if __name__ == '__main__':
         individual_list_after_mutate.sort(key=lambda x: x.fitness)
         individual_list = select(individual_list_after_mutate, option_obj_list)
 
+
+if __name__ == '__main__':
+    ga_main()
