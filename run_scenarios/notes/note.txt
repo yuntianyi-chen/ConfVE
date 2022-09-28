@@ -1,0 +1,87 @@
+Apollo Doc
+https://daobook.github.io/apollo/web/quickstart/index.html
+
+------
+# Remove Bazel output of previous builds
+rm -rf /apollo/.cache/{bazel,build,repos}
+
+# Update cuda
+wget https://developer.download.nvidia.com/compute/cuda/11.4.2/local_installers/cuda_11.4.2_470.57.02_linux.run
+sudo sh cuda_11.4.2_470.57.02_linux.run
+
+
+# Re-configure bazelrc.
+./apollo.sh config --noninteractive
+
+
+----
+Build Error:
+- Dependencies no longer available
+
+sudo grep -rnw './' -e 'zlib-1.2.11.tar.gz'
+
+./.cache/bazel/540135163923dd7d5820f3ee4b306b32/external/io_bazel_rules_go/go/private/repositories.bzl:100:            urls = ["https://zlib.net/zlib-1.2.11.tar.gz"],
+./.cache/bazel/540135163923dd7d5820f3ee4b306b32/external/rules_proto/proto/private/dependencies.bzl:36:            "https://zlib.net/zlib-1.2.11.tar.gz"
+
+
+https://zlib.net/zlib-1.2.11.tar.gz->https://zlib.net/fossils/zlib-1.2.11.tar.gz
+
+
+-----
+
+
+
+sudo grep -rnw './' -e '--experimental_ui_limit_console_output=1'
+
+The flag --experimental_ui_limit_console_output is removed. If you use --experimental_ui_limit_console_output=1 to silence terminal output, you should use --ui_event_filters= instead.
+
+----
+
+Step-by-step debug
+
+- GDB
+- Bazel with IDEs - https://docs.bazel.build/versions/main/ide.html
+
+
+----
+Cyber RT Python API : An Example
+
+https://github.com/ApolloAuto/apollo/blob/master/cyber/python/README.md
+
+
+----
+Apollo Simulation & Sim Control
+Always enable SimControl, planning and routing modules (see image below) should be ON while using SimControl
+
+- If you want the end-to-end simulator use deep reinforcement learning, you can try carla or lgsvl
+https://www.svlsimulator.com/docs/archive/2020.06/
+https://www.svlsimulator.com/docs/python-api/dreamview-api/
+
+- If you want to simulator the apollo modules, you can use a cloud simulator provide by apollo team. Apollo Simulation
+
+----
+Routing Module for processing input
+
+- Input
+
+    Map data
+    Routing request (Start and end location)
+
+- Output
+
+    Routing navigation information
+
+
+--------
+Cyber RT API for Developers
+
+
+https://github.com/ApolloAuto/apollo/blob/master/docs/cyber/CyberRT_API_for_Developers.md
+
+
+----
+
+Controller Module Tuning
+
+https://github.com/ApolloAuto/apollo/blob/master/docs/howto/how_to_tune_control_parameters.md
+
