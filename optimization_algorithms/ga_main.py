@@ -1,15 +1,26 @@
 import os
 import random
+
+from objectives.violation_number.oracles import RecordAnalyzer
 from optimization_algorithms.genetic_algorithm.ga import ga_init, crossover, mutate, calculate_fitness, select
 from tools.config_file_handler.parser_apollo import parser2class
 from tools.config_file_handler.translator_apollo import option_obj_translator, save2file
 
 
 def run_scenario():
+
+
+
+
+
+    record_scenario()
+    return
+
+def record_scenario():
     return
 
 
-def replay_scenario():
+def replay_scenario(record_path):
     return
 
 
@@ -21,13 +32,15 @@ def measure_execution_time():
     return
 
 
-def measure_violation_number():
+def measure_violation_number(record_path):
+    ra = RecordAnalyzer(record_path)
+    ra.analyze()
     return
 
 
-def measure_objectives():
-    replay_scenario()
-    violation_number = measure_violation_number()
+def measure_objectives(record_path):
+    violation_number = measure_violation_number(record_path)
+    replay_scenario(record_path)
     code_coverage = measure_code_coverage()
     execution_time = measure_execution_time()
     return violation_number, code_coverage, execution_time
