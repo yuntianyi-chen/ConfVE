@@ -32,7 +32,7 @@ def connectLanes(edges):
 
 def initialize():
     # data=json.load(open('/apollo/apollo_v7_testing/maps/borregas_ave/routing_map.json','r'))
-    data=json.load(open('/apollo/apollo_v7_testing/maps/sunnyvale_loop/routing_map.json','r'))
+    data=json.load(open('maps/sunnyvale_loop/routing_map.json','r'))
 
     ptl_dict, ltp_dict=parseLanes(data["nodes"])
     diGraph=connectLanes(data["edges"])

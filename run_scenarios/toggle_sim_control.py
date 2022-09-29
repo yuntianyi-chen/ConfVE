@@ -40,5 +40,7 @@ async def event_handler():
     async with websockets.connect('ws://127.0.0.1:8888/websocket') as websocket:
         await handle_commandline(websocket)
 
-asyncio.get_event_loop().run_until_complete(event_handler())
+def run_sim_control():
+     asyncio.get_event_loop().run_until_complete(event_handler())
+
 # event_handler()

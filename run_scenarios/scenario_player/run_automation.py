@@ -92,7 +92,7 @@ def get_routing(args):
 def record_output(record_time=10):
     # Start recording messages and producing perception messages
     start_record_cmd = f'cyber_recorder record -o {TEMP_OUTPUT_PATH}{OUTPUT_NAME} -a &'
-    
+
     subprocess.Popen(
         start_record_cmd,
         shell=True,
@@ -104,7 +104,7 @@ def record_output(record_time=10):
     # print(obstacles_perception_cmd)
 
     p = subprocess.Popen(
-        ['/apollo/modules/tools/perception/obstacles_perception.bash',MAP_NAME+'/obs_group_'+obs_group_number],
+        ['/apollo/modules/tools/perception/obstacles_perception.bash', MAP_NAME + '/obs_group_' + obs_group_number],
         stdout=DEVNULL,
         stderr=DEVNULL)
     # Wait for record time
@@ -133,7 +133,7 @@ def run_simulation(routing_list, init_x, init_y, dest_x, dest_y):
             float(routing_info['dest_x']), float(routing_info['dest_y'])
 
     send_routing_request.request_routing(
-       init_x, init_y, dest_x, dest_y, verbose=False)
+        init_x, init_y, dest_x, dest_y, verbose=False)
     time.sleep(1)
     record_output()
 
@@ -152,7 +152,7 @@ def run_oracles():
     manager = Manager()
     oracle_results = manager.dict()
 
-    for output_name in target_output_names:        # run checks on each output
+    for output_name in target_output_names:  # run checks on each output
         output_path = f'{TEMP_OUTPUT_PATH}{output_name}'
 
         processes.append(
@@ -171,7 +171,7 @@ def run_oracles():
             Process(target=speeding.walk_messages,
                     args=(output_path,),
                     kwargs={'return_dict': oracle_results}))
-        
+
     for process in processes:
         process.start()
 
@@ -191,7 +191,7 @@ def run_oracles():
 
 def main():
     global OUTPUT_NAME, MAP_NAME, obs_group_number
-    args = get_args()       # get arguments
+    args = get_args()  # get arguments
     # Define default routing values in case of no input from argument
     init_x, init_y = 587120.7636406536, 4141574.0292906095
     dest_x, dest_y = 587078.7256180799, 4141641.2485725204
@@ -202,7 +202,7 @@ def main():
         init_x, init_y = float(routing_inputs[0]), float(routing_inputs[1])
         dest_x, dest_y = float(routing_inputs[2]), float(routing_inputs[3])
 
-    routing_list = get_routing(args)    # obtain routing information
+    routing_list = get_routing(args)  # obtain routing information
 
     if not os.path.exists(TEMP_OUTPUT_PATH):
         subprocess.run(['mkdir', TEMP_OUTPUT_PATH])
@@ -210,16 +210,16 @@ def main():
     if args.output:
         OUTPUT_NAME = args.output
     if args.map_name:
-        MAP_NAME=args.map_name
+        MAP_NAME = args.map_name
     if args.obs_group_number:
-        obs_group_number=args.obs_group_number
-    sim_time=time.time()
+        obs_group_number = args.obs_group_number
+    sim_time = time.time()
     run_simulation(routing_list, init_x, init_y, dest_x, dest_y)
-    sim_time=time.time()-sim_time
+    sim_time = time.time() - sim_time
 
-    orcle_time=time.time()
+    orcle_time = time.time()
     min_dist, all_lanes, min_speed, boundary_dist, accl, hardbreak, collision = run_oracles()
-    orcle_time=time.time()-orcle_time
+    orcle_time = time.time() - orcle_time
 
     lanes_only = ""
     for lane in all_lanes:
@@ -230,7 +230,7 @@ def main():
         print(None)
     else:
         print(min_dist, lanes_only, min_speed, boundary_dist,
-              accl, hardbreak, all_lanes, collision, sim_time,orcle_time,sep="\n")
+              accl, hardbreak, all_lanes, collision, sim_time, orcle_time, sep="\n")
 
 
 if __name__ == '__main__':

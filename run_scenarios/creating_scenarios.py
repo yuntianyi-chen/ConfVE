@@ -9,11 +9,14 @@ import time
 from deap import base, creator, tools
 
 from config import APOLLO_ROOT, CSV_DIR
+from container_control.container_settings import get_container_name
 from map_info_parser import *
 from feature_generator import *
 from auxiliary.map import map_tools
 import pickle
 from deap import base, creator, tools
+
+from run_scenarios.toggle_sim_control import run_sim_control
 
 # from os import listdir
 # from os.path import isfile, join
@@ -26,6 +29,7 @@ map_name = "sunnyvale_loop"
 obs_folder = f"{APOLLO_ROOT}/modules/tools/perception/obstacles/" + map_name + "/"
 
 ptl_dict, ltp_dict, diGraph = initialize()
+
 
 # obstacle_type=["PEDESTRIAN","BICYCLE","VEHICLE"]
 
@@ -54,15 +58,27 @@ def output_results():
 
 
 def cyber_env_init():
-    os.system("bash /apollo/scripts/bootstrap.sh restart")
-    time.sleep(2)
-    os.system("bash /apollo/apollo_v7_testing/auxiliary/modules/start_modules.sh")
-    time.sleep(2)
-    sim_control_cmd = 'bazel run //apollo_v7_testing:toggle_sim_control'
-    sim_control_cmd_output = subprocess.check_output(sim_control_cmd, shell=True)
-    time.sleep(2)
-    os.system("source /apollo/cyber/setup.bash")
-    time.sleep(2)
+    cmd = f"docker exec -d {get_container_name()} bash /apollo/scripts/bootstrap.sh restart"
+    subprocess.run(cmd.split())
+    # os.system("bash /apollo/scripts/bootstrap.sh restart")
+    time.sleep(1)
+
+    cmd = f"docker exec -d {get_container_name()} bash /apollo/apollo_v7_testing/auxiliary/modules/start_modules.sh"
+    subprocess.run(cmd.split())
+    # os.system("bash /apollo/apollo_v7_testing/auxiliary/modules/start_modules.sh")
+    time.sleep(10)
+
+
+    # cmd = f"docker exec -d {get_container_name()} bazel run //apollo_v7_testing:toggle_sim_control"
+    # subprocess.run(cmd.split())
+    # sim_control_cmd_output = subprocess.check_output(sim_control_cmd, shell=True)
+    run_sim_control()
+    time.sleep(1)
+
+    cmd = f"docker exec -d {get_container_name()} source /apollo/cyber/setup.bash"
+    subprocess.run(cmd.split())
+    # os.system("source /apollo/cyber/setup.bash")
+    time.sleep(1)
 
 
 def scenario_runner():
@@ -81,7 +97,7 @@ def scenario_runner():
 
         deme = pop[scenario_counter]
 
-        start_time=time.time()
+        start_time = time.time()
         # record_name="Generation{}_Scenario{}".format(generation,scenario_counter)
         record_name = "scenario_" + str(scenario_counter)
 
@@ -125,6 +141,10 @@ def runScenario(deme, record_name, obs_group_number):
 
         # adc_routing = adc_routing_generating()
         # scenario_player_cmd = 'bazel run //apollo_v7_testing/scenario_player:run_automation -- -rv ' + adc_routing + ' -o ' + record_name + ' -mn ' + map_name + ' -ogn ' + str(obs_group_number)
+
+        # cmd = f"docker exec -d {get_container_name()} "+ scenario_player_cmd
+        # subprocess.run(cmd.split())
+
         scenario_player_output = subprocess.check_output(scenario_player_cmd, shell=True)
 
         scenario_player_output = str(scenario_player_output)[2:-3]

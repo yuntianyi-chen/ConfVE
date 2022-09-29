@@ -2,9 +2,7 @@
 Global configurations for the framework
 """
 
-
 import logging
-
 
 # APOLLO CONFIGURATION ==============================
 PERCEPTION_FREQUENCY = 25
@@ -13,7 +11,6 @@ APOLLO_VEHICLE_LENGTH = 4.933
 APOLLO_VEHICLE_WIDTH = 2.11
 APOLLO_VEHICLE_HEIGHT = 1.48
 APOLLO_VEHICLE_back_edge_to_center = 1.043
-
 
 # DIRECTORIES =======================================
 APOLLO_ROOT = '/home/cloudsky/Research/Apollo/apollo_7.0'
