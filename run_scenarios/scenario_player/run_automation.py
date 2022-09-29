@@ -132,8 +132,7 @@ def run_simulation(routing_list, init_x, init_y, dest_x, dest_y):
             float(routing_info['init_x']), float(routing_info['init_y']), \
             float(routing_info['dest_x']), float(routing_info['dest_y'])
 
-    send_routing_request.request_routing(
-        init_x, init_y, dest_x, dest_y, verbose=False)
+    send_routing_request.request_routing(init_x, init_y, dest_x, dest_y, verbose=False)
     time.sleep(1)
     record_output()
 

@@ -147,6 +147,15 @@ def runScenario(deme, record_name, obs_group_number):
 
         scenario_player_output = subprocess.check_output(scenario_player_cmd, shell=True)
 
+
+
+
+
+
+
+
+
+
         scenario_player_output = str(scenario_player_output)[2:-3]
 
         num_runs = num_runs + 1
