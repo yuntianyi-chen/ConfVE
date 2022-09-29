@@ -27,8 +27,8 @@ obs_folder = f"{APOLLO_ROOT}/modules/tools/perception/obstacles/" + map_name + "
 
 ptl_dict, ltp_dict, diGraph = initialize()
 
-
 # obstacle_type=["PEDESTRIAN","BICYCLE","VEHICLE"]
+
 
 def output_results():
     global features_file, ga_file, timer_file
@@ -50,8 +50,6 @@ def output_results():
     labels = "RecordName,Simulation,Oracles,MISC,E2E,RetryNo\n"
     with open(timer_file, 'a+') as tfile:
         tfile.write(labels)
-
-    # os.system("rm -rf /apollo/apollo_v7_testing/grading_metrics/Safety_Violations/*")
     # os.system("rm -rf /apollo/apollo_v7_testing/grading_metrics/Safety_Violations/*")
 
 
@@ -68,7 +66,6 @@ def cyber_env_init():
 
 
 def scenario_runner():
-    # GLOBAL_LANE_COVERAGE=set()
     cyber_env_init()
     pop_pickle_dump_data_path = f"{APOLLO_ROOT}/modules/tools/perception/pop_pickle/" + map_name + "_dump_data"
     # pop_pickle_dump_data_path = "/apollo/modules/tools/perception/pop_pickle/" + map_name + "_dump_data"
@@ -83,32 +80,16 @@ def scenario_runner():
         obs_files_name_list = os.listdir(obs_folder + obs_group_folder_name)
 
         deme = pop[scenario_counter]
-        # lane_coverage = {scenario_num:set() for scenario_num in range(1,NP+1)} 
 
-        # print("Start of evolution")
-        # generation=0
-        # start_time=time.time()
+        start_time=time.time()
         # record_name="Generation{}_Scenario{}".format(generation,scenario_counter)
         record_name = "scenario_" + str(scenario_counter)
 
         e2e_time_start = time.time()
         lanes, min_distance, speeding_min, uslc_min, fastAccl_min, hardBrake_min, sim_time, orcle_time, num_runs = runScenario(
             deme, record_name, obs_group_number=scenario_counter)
-        # lanes.remove('')
-        # GLOBAL_LANE_COVERAGE.update(lanes)
-        # lane_coverage[scenario_counter]=lane_coverage[scenario_counter].union(lanes) 
-        # sum=0
-        # for ind in obs_deme:
-        #     obs_min_dist=min_distance[str(ind[0])]
-        #     ind.fitness.values = (obs_min_dist,speeding_min,uslc_min,fastAccl_min,hardBrake_min,)
-        #     sum+=obs_min_dist
-        # with open(ga_file,'a+') as gfile:
-        #     gfile.write("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n" 
-        #     % (record_name,len(obs_deme),diversity_counter["P"],diversity_counter["B"],diversity_counter["V"],sum/len(obs_deme),speeding_min,uslc_min,fastAccl_min,hardBrake_min))
         e2e_time = time.time() - e2e_time_start
         misc_time = e2e_time - sim_time - orcle_time
-        # with open(timer_file,'a+') as tfile:
-        #     tfile.write("{},{:.2f},{:.2f},{:.2f},{:.2f},{}\n".format(record_name,sim_time,orcle_time,misc_time,e2e_time,num_runs))
         scenario_counter += 1
 
 
@@ -135,45 +116,6 @@ def runScenario(deme, record_name, obs_group_number):
     # scenario_counter=0
 
     while failed:
-        # #if scenario has been restarted x times, restart the moodules and sim control 
-        # # if num_runs % 10 == 0 and num_runs != 0:
-        # if num_runs % 10 == 0:
-
-        #     # os.system("bash /apollo/scripts/bootstrap.sh stop")
-        #     # time.sleep(10)
-        #     # os.system("bash /apollo/scripts/bootstrap.sh start")
-        #     os.system("bash /apollo/scripts/bootstrap.sh restart")
-        #     time.sleep(2)
-        #     os.system("bash /apollo/apollo_v7_testing/auxiliary/modules/start_modules.sh")
-        #     time.sleep(2)
-
-        #     # os.system("wscat -c ws://127.0.0.1:8888/websocket -x {\"enable\":false,\"type\":\"ToggleSimControl\"}")
-
-        #     sim_control_cmd='bazel run //apollo_v7_testing:toggle_sim_control'
-        #     sim_control_cmd_output = subprocess.check_output(sim_control_cmd, shell=True)
-        #     time.sleep(2)
-
-        #     # print(sim_control_cmd_output)
-        #     os.system("source /apollo/cyber/setup.bash")
-        #     time.sleep(2)
-        #     print("attempted %s run" % num_runs)
-
-        # # ------- sending valid adc routing -------
-
-        # valid_path=False
-        # while not valid_path:
-        #     p_index1=random.randint(0,len(ptl_dict.keys())-1)
-        #     p_index2=random.randint(0,len(ptl_dict.keys())-1)
-        #     start_point=tuple(map(float,list(ptl_dict.keys())[p_index1].split('-')))
-        #     if not map_tools.all_points_not_in_junctions(start_point):
-        #         p1=list(ptl_dict.keys())[p_index1]
-        #         p2=list(ptl_dict.keys())[p_index2]
-        #         continue
-        #     valid_path=validatePath(p_index1,p_index2,ptl_dict,ltp_dict,diGraph)
-        # p1=list(ptl_dict.keys())[p_index1]
-        # p2=list(ptl_dict.keys())[p_index2]
-        # adc_routing=p1.replace('-',',')+","+p2.replace('-',',')
-
         # ------- running the scneario -------
         # bazel-bin/apollo_v7_testing/scenario_player/run_automation -rv 586115.2216681268,4140677.470931069,586131.4210111903,4140791.3412697404 -o scenario_0 -mn sunnyvale_loop -ogn 0
         # scenario_player_cmd='bazel run //apollo_v7_testing/scenario_player:run_automation -- -rv 586855.34,4140800.88,587283.52,4140882.30'+' -o '+record_name+' -mn '+map_name+' -ogn '+str(obs_group_number)
@@ -217,15 +159,3 @@ def runScenario(deme, record_name, obs_group_number):
 if __name__ == "__main__":
     scenario_runner()
     # runScenario()
-
-# b=[1]
-# cyber.init()
-# a=100
-# print('Hello\n')
-
-# if not cyber.ok():
-#     print('Well, something went wrong.')
-#     sys.exit(1)
-
-# # Do your job here.
-# cyber.shutdown()
