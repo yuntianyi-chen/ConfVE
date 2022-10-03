@@ -8,7 +8,7 @@ import subprocess
 import time
 from deap import base, creator, tools
 
-from config import APOLLO_ROOT, CSV_DIR
+from config import APOLLO_ROOT, CSV_DIR, MAP_NAME
 from container_control.container_settings import get_container_name
 from map_info_parser import *
 from feature_generator import *
@@ -21,12 +21,12 @@ from run_scenarios.toggle_sim_control import run_sim_control
 # from os import listdir
 # from os.path import isfile, join
 
-map_name = "sunnyvale_loop"
+# map_name = "sunnyvale_loop"
 # map_name="borregas_ave"
 # map_name="san_mateo"
 
 # obs_folder = "/apollo/modules/tools/perception/obstacles/" + map_name + "/"
-obs_folder = f"{APOLLO_ROOT}/modules/tools/perception/obstacles/" + map_name + "/"
+obs_folder = f"{APOLLO_ROOT}/modules/tools/perception/obstacles/{MAP_NAME}/"
 
 ptl_dict, ltp_dict, diGraph = initialize()
 
@@ -83,7 +83,7 @@ def cyber_env_init():
 
 def scenario_runner():
     cyber_env_init()
-    pop_pickle_dump_data_path = f"{APOLLO_ROOT}/modules/tools/perception/pop_pickle/" + map_name + "_dump_data"
+    pop_pickle_dump_data_path = f"{APOLLO_ROOT}/modules/tools/perception/pop_pickle/{MAP_NAME}_dump_data"
     # pop_pickle_dump_data_path = "/apollo/modules/tools/perception/pop_pickle/" + map_name + "_dump_data"
     pop_pickle_dump_data_file = open(pop_pickle_dump_data_path, "rb")
     creator.create("MultiFitness", base.Fitness, weights=(-1.0, -1.0, -1.0, 1.0, -1.0))
@@ -135,7 +135,7 @@ def runScenario(deme, record_name, obs_group_number):
         # ------- running the scneario -------
         # bazel-bin/apollo_v7_testing/scenario_player/run_automation -rv 586115.2216681268,4140677.470931069,586131.4210111903,4140791.3412697404 -o scenario_0 -mn sunnyvale_loop -ogn 0
         # scenario_player_cmd='bazel run //apollo_v7_testing/scenario_player:run_automation -- -rv 586855.34,4140800.88,587283.52,4140882.30'+' -o '+record_name+' -mn '+map_name+' -ogn '+str(obs_group_number)
-        scenario_player_cmd = 'bazel run //apollo_v7_testing/scenario_player:run_automation -- -rv 586980.86,4140959.45,587283.52,4140882.30' + ' -o ' + record_name + ' -mn ' + map_name + ' -ogn ' + str(
+        scenario_player_cmd = 'bazel run //apollo_v7_testing/scenario_player:run_automation -- -rv 586980.86,4140959.45,587283.52,4140882.30' + ' -o ' + record_name + ' -mn ' + MAP_NAME + ' -ogn ' + str(
             obs_group_number)
         # scenario_player_cmd='bazel run //apollo_v7_testing/scenario_player:run_automation -- -rv 586855.34,4140800.88,586980.86,4140959.45'+' -o '+record_name+' -mn '+map_name+' -ogn '+str(obs_group_number)
 

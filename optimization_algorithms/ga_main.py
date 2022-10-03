@@ -2,6 +2,7 @@ import os
 import random
 from objectives.violation_number.oracles import RecordAnalyzer
 from optimization_algorithms.genetic_algorithm.ga import ga_init, crossover, mutate, calculate_fitness, select
+from scenario_handling.create_scenarios import create_scenarios
 from tools.config_file_handler.parser_apollo import parser2class
 from tools.config_file_handler.translator_apollo import option_obj_translator, save2file
 
@@ -41,21 +42,10 @@ def measure_objectives(record_path):
     return violation_number, code_coverage, execution_time
 
 
-def ga_main():
-    # working_dir_path = "C:/Users/cloud/PycharmProjects/AV_Testing"
-    # working_dir_path = "C:/Users/cloud/PycharmProjects/AV_Testing"
-
-    # os.chdir(working_dir_path)
-
-    raw_option_stack, option_tuple_list, option_obj_list, option_num = parser2class(
-        "./configuration_files/Apollo/test_planning_config.pb.txt")
+def ga_main(module_config_path):
+    raw_option_stack, option_tuple_list, option_obj_list, option_num = parser2class(module_config_path)
 
     init_individual_list, generation_limit, option_type_list = ga_init(option_obj_list)
-
-    # init_individual_list = [IndividualWithFitness(value_list, None) for value_list in init_generated_value_lists]
-
-    # generated_value_lists = init_generated_value_lists
-    # generated_individual_list = init_individual_list
 
     individual_list = init_individual_list
 
@@ -65,12 +55,10 @@ def ga_main():
 
         for generated_individual in individual_list_after_mutate:
             if generated_individual.fitness is None:
-                generated_value_list = generated_individual.value_list
-                for generated_value, option_obj in zip(generated_value_list, option_obj_list):
-                    option_obj.option_value = generated_value
-                output_string_list = option_obj_translator(option_obj_list)
-                save2file(output_string_list)
+                # scenario refers to a config settings with different fixed obstacles and adc routes
+                create_scenarios(generated_individual, option_obj_list)
 
+                # test each config settings under several groups of obstacles and acd routes
                 run_scenario()
 
                 record_path = ""
@@ -86,4 +74,5 @@ def ga_main():
 
 
 if __name__ == '__main__':
-    ga_main()
+    module_config_path = "./configuration_files/Apollo/test_planning_config.pb.txt"
+    ga_main(module_config_path)

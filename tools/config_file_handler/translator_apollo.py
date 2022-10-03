@@ -1,3 +1,6 @@
+from config import APOLLO_ROOT, MODULE_NAME
+
+
 def option_tuple_translator(option_tuple_list):
     output_string_list = list()
     last_position_list = None
@@ -85,7 +88,7 @@ def option_obj_translator(option_obj_list):
 
 
 def save2file(output_string_list):
-    with open('./configuration_files/Apollo/generated_config_files/planning_config.pb.txt',
-              'w') as processed_config_file:
+    with open(f'{APOLLO_ROOT}/modules/{MODULE_NAME}/conf/{MODULE_NAME}_config.pb.txt','w') as processed_config_file:
+    # with open('./configuration_files/Apollo/generated_config_files/planning_config.pb.txt','w') as processed_config_file:
         processed_config_file.writelines(output_string_list)
     return

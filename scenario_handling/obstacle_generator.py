@@ -4,15 +4,19 @@
 # ptvsd.wait_for_attach()
 
 from deap import base, creator, tools
-from map_info_parser import *
-from feature_generator import *
+
+from config import OBS_DIR, APOLLO_ROOT, MAP_NAME
+from scenario_handling.scenario_tools.map_info_parser import *
+from scenario_handling.scenario_tools.feature_generator import *
 import pickle
 
-map_name = "sunnyvale_loop"
+# map_name = "sunnyvale_loop"
 # map_name="borregas_ave"
 # map_name="san_mateo"
 
-obs_folder = "/apollo/modules/tools/perception/obstacles/" + map_name + "/"
+
+# obs_folder = "/apollo/modules/tools/perception/obstacles/" + map_name + "/"
+# obs_folder = OBS_DIR
 
 ptl_dict, ltp_dict, diGraph = initialize()
 obstacle_type = ["PEDESTRIAN", "BICYCLE", "VEHICLE"]
@@ -31,7 +35,7 @@ def check_trajectory(p_index1, p_index2):
 
 def check_obs_type(length, width, height, speed, type_index):
     obs_type = obstacle_type[type_index]
-    if obs_type is "VEHICLE":
+    if obs_type == "VEHICLE":
         if length < 4.0 or length > 14.5:
             length = random.uniform(4.0, 14.5)
         if height < 1.5 or height > 4.7:
@@ -41,7 +45,7 @@ def check_obs_type(length, width, height, speed, type_index):
         if speed < 2.5 or speed > 20:
             speed = random.uniform(2.5, 20)
         diversity_counter["V"] += 1
-    if obs_type is "PEDESTRIAN":
+    if obs_type == "PEDESTRIAN":
         if length < 0.2 or length > 0.5:
             length = random.uniform(0.2, 0.5)
         if height < 0.97 or height > 1.87:
@@ -51,7 +55,7 @@ def check_obs_type(length, width, height, speed, type_index):
         if speed < 1.25 or speed > 3:
             speed = random.uniform(1.25, 3)
         diversity_counter["P"] += 1
-    if obs_type is "BICYCLE":
+    if obs_type == "BICYCLE":
         if length < 1 or length > 2.5:
             length = random.uniform(1, 2.5)
         if height < 1 or height > 2.5:
@@ -94,7 +98,7 @@ def genetic_obs_individual_init():
 
 
 def obs_files_generator(obs_deme, scenario_counter):
-    scenario_obs_folder_path = obs_folder + "obs_group_" + str(scenario_counter) + "/"
+    scenario_obs_folder_path = OBS_DIR + "obs_group_" + str(scenario_counter) + "/"
     if os.path.exists(scenario_obs_folder_path):
         os.system("rm -f " + scenario_obs_folder_path + "*")
     else:
@@ -144,7 +148,7 @@ def obs_settings():
 def obs_generating(toolbox):
     DEME_SIZES = obs_settings()
     pop = [toolbox.deme(n=i) for i in DEME_SIZES]
-    pop_pickle_dump_data_path = "/apollo/modules/tools/perception/pop_pickle/" + map_name + "_dump_data"
+    pop_pickle_dump_data_path = f"{APOLLO_ROOT}/modules/tools/perception/pop_pickle/{MAP_NAME}_dump_data"
 
     with open(pop_pickle_dump_data_path, 'wb') as f:
         pickle.dump(pop, f, protocol=4)
@@ -155,6 +159,10 @@ def obs_generating(toolbox):
         scenario_counter += 1
 
 
-if __name__ == "__main__":
+def generate_obstacles():
     toolbox = genetic_obs_individual_init()
     obs_generating(toolbox)
+
+
+if __name__ == "__main__":
+    generate_obstacles()
