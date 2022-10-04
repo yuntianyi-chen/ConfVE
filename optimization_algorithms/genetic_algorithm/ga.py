@@ -2,14 +2,10 @@ import random
 from copy import deepcopy
 
 
-# from optimization_algorithms.ga_main import IndividualWithFitness
-
-
 class IndividualWithFitness:
     def __init__(self, value_list, fitness):
         self.value_list = value_list
         self.fitness = fitness
-
         # self.range_list = range_list
 
 
@@ -21,13 +17,10 @@ def generate_individuals(option_obj_list, population_size):
         for option_obj in option_obj_list:
             option_type = option_obj.option_type
             option_value = option_obj.option_value
-
             generated_value = generate_option_value(option_type, option_value)
-
             generated_value_list.append(generated_value)
         generated_value_lists.append(generated_value_list)
     individual_list = [IndividualWithFitness(value_list, None) for value_list in generated_value_lists]
-
     return individual_list
 
 
@@ -36,26 +29,12 @@ def ga_init(option_obj_list):
     init_population_size = 10
     generation_limit = 10
     option_type_list = [option_obj.option_type for option_obj in option_obj_list]
-
     init_individual_list = generate_individuals(option_obj_list, init_population_size)
-
-    # init_generated_value_lists = list()
-    # for i in range(init_population_size):
-    #     generated_value_list = list()
-    #     for option_obj in option_obj_list:
-    #         option_type = option_obj.option_type
-    #         option_value = option_obj.option_value
-    #
-    #         generated_value = generate_option_value(option_type, option_value)
-    #
-    #         generated_value_list.append(generated_value)
-    #     init_generated_value_lists.append(generated_value_list)
-
     return init_individual_list, generation_limit, option_type_list
 
 
 def select(individual_list, option_obj_list):
-    # select 5 with least fitness, 3 randomly from the remaining, 2 new generated
+    # select 5 with the least fitness, 3 randomly from the remaining, 2 new generated
     select_num_ratio = [5, 3, 2]
 
     new_individual_list = get_unduplicated(individual_list, select_num_ratio, option_obj_list)
@@ -68,22 +47,6 @@ def get_unduplicated(individual_list, select_num_ratio, option_obj_list):
     individuals_from_remaining = random.choices(individual_list[5:], k=select_num_ratio[1])
     individuals_new_generated = generate_individuals(option_obj_list, select_num_ratio[2])
     selected_individuals_list = individuals_with_least_fitness + individuals_from_remaining + individuals_new_generated
-    # count = 0
-    # num = 0
-    # for element in individual_list:
-    #     num = num + 1
-    #     if count < select_num / 2:
-    #         if element not in select_list:
-    #             select_list.append(element)
-    #             count = count + 1
-    #     else:
-    #         break
-    # list_length = len(individual_list)
-    # while count < select_num:
-    #     id = random.randint(num, list_length - 1)
-    #     if individual_list[id] not in select_list:
-    #         select_list.append(individual_list[id])
-    #         count = count + 1
     return selected_individuals_list
 
 

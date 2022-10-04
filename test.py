@@ -1,12 +1,13 @@
-import json
+import os
+import shutil
+import subprocess
 
-with open("./test_files/performance.json") as file:
-    aa=json.loads(file.read())
+from config import APOLLO_ROOT, MAGGIE_ROOT, MODULE_NAME
+from container_control.container_settings import get_container_name
 
-    for key,value in aa.items():
-        print(key+" : "+str(sum(value)/len(value)))
-        print(key+" : "+str(sum(value)))
-
-    print()
+cmd = f"docker exec -d {get_container_name()} cyber_recorder record -o /apollo/records/asdsad -a &"
+subprocess.Popen(cmd.split(), shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 
+cmd = f"docker exec -d {get_container_name()} python3 /apollo/scripts/record_bag.py --stop --stop_signal SIGINT > /dev/null 2>&1"
+subprocess.run(cmd.split())

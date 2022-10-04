@@ -1,3 +1,10 @@
 - [] Traffic Lights Issue
 - [] Branches Coverage
 - [] Update Asana Timestamp
+
+
+docker exec -d apollo_dev_cloudsky cyber_recorder record -o /apollo/records/asdsad -a &
+
+
+docker exec -d apollo_dev_cloudsky python3 /apollo/scripts/record_bag.py --stop --stop_signal SIGINT > /dev/null 2>&1
+
