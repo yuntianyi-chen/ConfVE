@@ -1,4 +1,3 @@
-import os
 import random
 import shutil
 
@@ -29,8 +28,6 @@ def measure_violation_number(record_path):
 def measure_objectives(scenario_list):
     shutil.rmtree(f"{MAGGIE_ROOT}/data/records")
     shutil.copytree(f"{APOLLO_ROOT}/records", f"{MAGGIE_ROOT}/data/records")
-    # record_path =
-    # cmd = f"docker exec -d {get_container_name()} cyber_recorder record -o {RECORDS_DIR}/{self.record_name} -a &"
     for scenario in scenario_list:
         record_path = scenario.record_name
         violation_number = measure_violation_number(record_path)
@@ -74,7 +71,3 @@ def ga_main(module_config_path):
         individual_list_after_mutate.sort(key=lambda x: x.fitness)
         individual_list = select(individual_list_after_mutate, option_obj_list)
 
-
-if __name__ == '__main__':
-    module_config_path = "./configuration_files/Apollo/test_planning_config.pb.txt"
-    ga_main(module_config_path)

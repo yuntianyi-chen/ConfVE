@@ -54,15 +54,8 @@ def cyber_setup():
 
 
 def get_docker_container_ip():
-    """
-    Gets the ip address of the container
-
-    Returns:
-        ip: str
-            ip address of the container
-    """
-    ctn = docker.from_env().containers.get(get_container_name())
-    return ctn.attrs['NetworkSettings']['IPAddress']
+    docker_container_info = docker.from_env().containers.get(get_container_name())
+    return docker_container_info.attrs['NetworkSettings']['IPAddress']
 
 
 def start_bridge():

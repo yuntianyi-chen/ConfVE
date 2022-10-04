@@ -45,29 +45,11 @@ def config_file_generating(generated_individual, option_obj_list, default):
 def read_obstacles():
     obs_folder = f"{APOLLO_ROOT}/modules/tools/perception/obstacles/{MAP_NAME}/"
     obs_apollo_folder = f"/apollo/modules/tools/perception/obstacles/{MAP_NAME}/"
-    # pop_pickle_dump_data_path = f"{APOLLO_ROOT}/modules/tools/perception/pop_pickle/{MAP_NAME}_dump_data"
-    # pop_pickle_dump_data_file = open(pop_pickle_dump_data_path, "rb")
-    # pop = pickle.load(pop_pickle_dump_data_file)
-    # obs_group_num = 0
     obs_group_folders_name_list = os.listdir(obs_folder)
     obs_group_folders_name_list.sort()
     obs_group_path_list = []
     for obs_group_folder_name in obs_group_folders_name_list:
         obs_group_path_list.append(obs_apollo_folder + obs_group_folder_name)
-
-        # obs_files_name_list = os.listdir(obs_folder + obs_group_folder_name)
-        # start_time = time.time()
-        # record_name="Generation{}_Scenario{}".format(generation,scenario_counter)
-        # record_name = "scenario_" + str(obs_group_num)
-
-        # e2e_time_start = time.time()
-
-        # run_scenario(record_name, obs_folder, obs_group_num)
-
-        # runScenario(record_name, obs_group_number=obs_group_num)
-        # e2e_time = time.time() - e2e_time_start
-        # obs_group_num += 1
-
     return obs_group_path_list
 
 

@@ -1,42 +1,12 @@
-# The main script for replaying augmented test bags
-# and storing the planning outputs
-
-# import debugpy
-# debugpy.listen(5724)
-# debugpy.wait_for_client()
-
-# import ptvsd
-# ptvsd.enable_attach(address=('localhost', 5724), redirect_output=True)
-# # print('Now is a good time to attach your debugger: Run: Python: Attach')
-# ptvsd.wait_for_attach()
-
 import os
 import time
 import signal
 import subprocess
-
 from apollo.CyberBridge import Topics
 from config import MAX_RECORD_TIME
 from environment.container_settings import get_container_name
 from environment.cyber_env_operation import modules_operation
 from modules.routing.proto.routing_pb2 import RoutingRequest
-
-
-# from run_scenarios.auxiliary.routing import send_routing_request
-# from run_scenarios.grading_metrics import acceleration, speeding, collision
-
-# try:
-#     from subprocess import DEVNULL  # Python 3.
-# except ImportError:
-#     DEVNULL = open(os.devnull, 'wb')
-#
-
-# RECORDER_PATH = '/apollo/scripts/record_bag.py'
-# USE_CSV_ROUTING = False
-# OUTPUT_NAME = 'output'
-
-# Stores output record files from simulation
-# TEMP_OUTPUT_PATH = '/apollo/apollo_v7_testing/temp_record/'
 
 
 def replay_scenario(record_path):
@@ -72,7 +42,7 @@ def send_routing_request(init_x, init_y, dest_x, dest_y, bridge):
     # routing_request.header.timestamp_sec = cyber_time.Time.now().to_sec()
     routing_request.header.timestamp_sec = time.time()
 
-    routing_request.header.module_name = "automation routing"
+    routing_request.header.module_name = "routing routing..."
     routing_request.header.sequence_num = 0
 
     # define way points (start and end)
