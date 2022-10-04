@@ -11,19 +11,14 @@
 # ptvsd.wait_for_attach()
 
 import os
-import sys
-import csv
 import time
-import random
 import signal
-import argparse
 import subprocess
-from multiprocessing import Process, Manager
 
 from apollo.CyberBridge import Topics
-from config import MAP_NAME, APOLLO_ROOT, MAX_RECORD_TIME
-from container_control.container_settings import get_container_name
-from cyber_env.cyber_env_operation import modules_operation
+from config import MAX_RECORD_TIME
+from environment.container_settings import get_container_name
+from environment.cyber_env_operation import modules_operation
 from modules.routing.proto.routing_pb2 import RoutingRequest
 
 

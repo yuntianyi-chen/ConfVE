@@ -3,7 +3,7 @@ import random
 import shutil
 
 from config import APOLLO_ROOT, MAGGIE_ROOT
-from cyber_env.cyber_env_operation import cyber_env_init
+from environment.cyber_env_operation import cyber_env_init
 from objectives.violation_number.oracles import RecordAnalyzer
 from optimization_algorithms.genetic_algorithm.ga import ga_init, crossover, mutate, calculate_fitness, select
 from scenario_handling.create_scenarios import create_scenarios

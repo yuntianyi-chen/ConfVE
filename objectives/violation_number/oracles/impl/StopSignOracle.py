@@ -1,11 +1,11 @@
 import re
-from typing import List, Dict, Optional, Set
+from typing import List, Dict, Set
 
 from shapely.geometry import Polygon, LineString
 
 from apollo.utils import calculate_velocity, generate_adc_polygon
 from objectives.violation_number.oracles.OracleInterface import OracleInterface
-from hdmap.MapParser import MapParser
+from tools.hdmap.MapParser import MapParser
 from modules.localization.proto.localization_pb2 import LocalizationEstimate
 from modules.planning.proto.decision_pb2 import STOP_REASON_STOP_SIGN
 from modules.planning.proto.planning_pb2 import ADCTrajectory

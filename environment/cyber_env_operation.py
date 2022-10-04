@@ -4,7 +4,7 @@ import time
 import docker
 
 from apollo.CyberBridge import CyberBridge, Topics
-from container_control.container_settings import get_container_name
+from environment.container_settings import get_container_name
 from scenario_handling.toggle_sim_control import run_sim_control
 
 

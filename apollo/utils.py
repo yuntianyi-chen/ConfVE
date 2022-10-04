@@ -1,4 +1,3 @@
-from cmath import isnan
 import glob
 import math
 import os
@@ -13,7 +12,7 @@ from dataclasses import dataclass
 from shapely.geometry import Polygon, LineString
 from typing import Set, Tuple
 from modules.planning.proto.planning_pb2 import ADCTrajectory
-from hdmap.MapParser import MapParser
+from tools.hdmap.MapParser import MapParser
 
 
 @dataclass

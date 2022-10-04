@@ -1,14 +1,11 @@
 import os
-import pickle
 import random
 import shutil
 import subprocess
-import time
 
-from config import APOLLO_ROOT, MAP_NAME, RECORDS_DIR, MODULE_NAME, MAGGIE_ROOT
-from container_control.container_settings import get_container_name
+from config import APOLLO_ROOT, MAP_NAME, MODULE_NAME, MAGGIE_ROOT
+from environment.container_settings import get_container_name
 from run_scenarios.auxiliary.map import map_tools
-from scenario_handling.obstacle_generator import generate_obstacles
 from scenario_handling.scenario_tools.map_info_parser import validatePath, initialize
 from tools.config_file_handler.translator_apollo import option_obj_translator, save2file
 

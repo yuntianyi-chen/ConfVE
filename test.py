@@ -1,9 +1,6 @@
-import os
-import shutil
 import subprocess
 
-from config import APOLLO_ROOT, MAGGIE_ROOT, MODULE_NAME
-from container_control.container_settings import get_container_name
+from environment.container_settings import get_container_name
 
 cmd = f"docker exec -d {get_container_name()} cyber_recorder record -o /apollo/records/asdsad -a &"
 subprocess.Popen(cmd.split(), shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)

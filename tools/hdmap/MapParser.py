@@ -1,6 +1,6 @@
 from collections import defaultdict
 from typing import List, Set, Tuple
-from hdmap import load_hd_map
+from tools.hdmap import load_hd_map
 from modules.map.proto.map_pb2 import Map
 import networkx as nx
 from shapely.geometry import LineString, Point

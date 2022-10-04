@@ -3,18 +3,13 @@
 # # print('Now is a good time to attach your debugger: Run: Python: Attach')
 # ptvsd.wait_for_attach()
 
-from cProfile import run
-import subprocess
-import time
-from deap import base, creator, tools
-
 from config import APOLLO_ROOT, CSV_DIR, MAP_NAME
-from container_control.container_settings import get_container_name
+from env.container_settings import get_container_name
 from map_info_parser import *
 from feature_generator import *
 from auxiliary.map import map_tools
 import pickle
-from deap import base, creator, tools
+from deap import base, creator
 
 from run_scenarios.toggle_sim_control import run_sim_control
 

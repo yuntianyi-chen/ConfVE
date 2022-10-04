@@ -4,7 +4,7 @@ from shapely.geometry import LineString, Point
 
 from apollo.utils import calculate_velocity, construct_lane_polygon
 from objectives.violation_number.oracles.OracleInterface import OracleInterface
-from hdmap.MapParser import MapParser
+from tools.hdmap.MapParser import MapParser
 from modules.localization.proto.localization_pb2 import LocalizationEstimate
 from modules.planning.proto.planning_pb2 import ADCTrajectory
 

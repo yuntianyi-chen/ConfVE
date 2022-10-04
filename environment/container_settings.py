@@ -1,4 +1,4 @@
-from hdmap.MapParser import MapParser
+from tools.hdmap.MapParser import MapParser
 from config import HD_MAP_PATH
 
 def init_settings():
