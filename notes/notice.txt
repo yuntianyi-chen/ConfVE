@@ -1,0 +1,19 @@
+ps -ef | grep -E 'cyber_recorder|obstacles_perception|replay_perception' | grep -v 'grep' | awk '{print $2}' | xargs kill -9
+
+
+
+docker exec apollo_dev_cloudsky ps -ef | grep -E 'cyber_recorder' | grep -v 'grep' | awk '{print $2}' | xargs kill -9
+
+
+
+docker exec apollo_dev_cloudsky /apollo/bazel-bin/cyber/tools/cyber_recorder/cyber_recorder record -o /apollo/records/qwe -a &
+
+
+docker exec python3 /apollo/scripts/record_bag.py --stop --stop_signal SIGINT > /dev/null 2>&1
+
+
+cyber_recorder play -f /apollo/records/qwe.00000 -l
+
+
+
+docker exec -d apollo_dev_cloudsky /apollo/scripts/my_scripts/stop_recorder.sh

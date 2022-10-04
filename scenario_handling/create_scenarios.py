@@ -1,6 +1,7 @@
 import os
 import random
 import shutil
+import signal
 import subprocess
 from config import APOLLO_ROOT, MAP_NAME, MODULE_NAME, MAGGIE_ROOT
 from environment.container_settings import get_container_name
@@ -21,11 +22,23 @@ class Scenario:
 
         # bazel-bin
         cmd = f"docker exec -d {get_container_name()} /apollo/bazel-bin/cyber/tools/cyber_recorder/cyber_recorder record -o /apollo/records/{self.record_name} -a &"
-        subprocess.Popen(cmd, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        recorder_subprocess = subprocess.Popen(cmd, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        return recorder_subprocess
 
-    def stop_recorder(self):
-        cmd = f"docker exec -d {get_container_name()} python3 /apollo/scripts/record_bag.py --stop --stop_signal SIGINT > /dev/null 2>&1"
+    def stop_recorder(self, recorder_subprocess):
+        # cmd = f"docker exec -d {get_container_name()} python3 /apollo/scripts/record_bag.py --stop --stop_signal SIGINT > /dev/null 2>&1"
+        # subprocess.run(cmd.split())
+        cmd = f"docker exec -d {get_container_name()} /apollo/scripts/my_scripts/stop_recorder.sh"
         subprocess.run(cmd.split())
+
+        # self.stop_subprocess(recorder_subprocess)
+
+    def stop_subprocess(self, p):
+        try:
+            os.kill(p.pid, signal.SIGINT)
+            p.kill()
+        except OSError:
+            print("stopped")
 
 
 def config_file_generating(generated_individual, option_obj_list, default):

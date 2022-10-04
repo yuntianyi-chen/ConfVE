@@ -5,6 +5,6 @@
 
 docker exec -d apollo_dev_cloudsky cyber_recorder record -o /apollo/records/asdsad -a &
 
-
+cyber_recorder play -f /apollo/records/Generation_0_Config_0_Obs_3.00000 -l
 docker exec -d apollo_dev_cloudsky python3 /apollo/scripts/record_bag.py --stop --stop_signal SIGINT > /dev/null 2>&1
 

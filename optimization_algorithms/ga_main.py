@@ -1,7 +1,7 @@
 import random
 import shutil
 
-from config import APOLLO_ROOT, MAGGIE_ROOT
+from config import APOLLO_ROOT, MAGGIE_ROOT, RECORDS_DIR
 from environment.cyber_env_operation import cyber_env_init
 from objectives.violation_number.oracles import RecordAnalyzer
 from optimization_algorithms.genetic_algorithm.ga import ga_init, crossover, mutate, calculate_fitness, select
@@ -29,7 +29,7 @@ def measure_objectives(scenario_list):
     shutil.rmtree(f"{MAGGIE_ROOT}/data/records")
     shutil.copytree(f"{APOLLO_ROOT}/records", f"{MAGGIE_ROOT}/data/records")
     for scenario in scenario_list:
-        record_path = scenario.record_name
+        record_path = f"{RECORDS_DIR}/{scenario.record_name}.00000"
         violation_number = measure_violation_number(record_path)
         replay_scenario(record_path)
         code_coverage = measure_code_coverage()

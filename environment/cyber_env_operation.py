@@ -1,12 +1,18 @@
+import os
+import shutil
 import subprocess
 import time
 import docker
 from apollo.CyberBridge import CyberBridge, Topics
+from config import APOLLO_ROOT
 from environment.container_settings import get_container_name
 from scenario_handling.toggle_sim_control import run_sim_control
 
 
 def cyber_env_init():
+    shutil.rmtree(f"{APOLLO_ROOT}/records")
+    os.mkdir(f"{APOLLO_ROOT}/records")
+
     print("Init cyber environment...")
     dreamview_operation(operation="restart")
     # modules_operation(operation="start")

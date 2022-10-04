@@ -28,11 +28,13 @@ def register_obstacles(obs_group_path):
 
 'docker exec apollo_dev_cloudsky /apollo/modules/tools/perception/obstacles_perception.bash sunnyvale_loop/obs_group_0'
 def stop_obstacles(p):
-    try:
-        os.kill(p.pid, signal.SIGINT)
-        p.kill()
-    except OSError:
-        print("stopped")
+    cmd = f"docker exec -d {get_container_name()} /apollo/scripts/my_scripts/stop_obstacles.sh"
+    subprocess.run(cmd.split())
+    # try:
+    #     os.kill(p.pid, signal.SIGINT)
+    #     p.kill()
+    # except OSError:
+    #     print("stopped")
 
 
 def send_routing_request(init_x, init_y, dest_x, dest_y, bridge):
@@ -74,7 +76,7 @@ def run_scenarios(scenario_list, bridge):
         record_route_info()
 
         print("  Start recorder...")
-        scenario.start_recorder()
+        recorder_subprocess = scenario.start_recorder()
 
         p = register_obstacles(scenario.obs_group_path)
 
@@ -85,7 +87,8 @@ def run_scenarios(scenario_list, bridge):
 
         # Stop recording messages and producing perception messages
         print("  Stop recorder...")
-        scenario.stop_recorder()
+        scenario.stop_recorder(recorder_subprocess)
 
+        # scenario.stop_subprocess(p)
         stop_obstacles(p)
         scenario_count += 1
