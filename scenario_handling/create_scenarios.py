@@ -20,7 +20,7 @@ class Scenario:
         # cmd = f"docker exec -d {get_container_name()} cyber_recorder record -o {RECORDS_DIR}/{self.record_name} -a &"
 
         # bazel-bin
-        cmd = f"docker exec -d {get_container_name()} cyber_recorder record -o /apollo/records/{self.record_name} -a &"
+        cmd = f"docker exec -d {get_container_name()} /apollo/bazel-bin/cyber/tools/cyber_recorder/cyber_recorder record -o /apollo/records/{self.record_name} -a &"
         subprocess.Popen(cmd, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
     def stop_recorder(self):
@@ -44,7 +44,7 @@ def config_file_generating(generated_individual, option_obj_list, default):
 
 def read_obstacles():
     obs_folder = f"{APOLLO_ROOT}/modules/tools/perception/obstacles/{MAP_NAME}/"
-    obs_apollo_folder = f"/apollo/modules/tools/perception/obstacles/{MAP_NAME}/"
+    obs_apollo_folder = f"{MAP_NAME}/"
     obs_group_folders_name_list = os.listdir(obs_folder)
     obs_group_folders_name_list.sort()
     obs_group_path_list = []

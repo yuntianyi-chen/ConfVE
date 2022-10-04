@@ -16,7 +16,7 @@ def replay_scenario(record_path):
 def record_route_info():
     return
 
-
+# 'docker exec apollo_dev_cloudsky /apollo/modules/tools/perception/obstacles_perception.bash /{MAP_NAME}/obs_group_0'
 def register_obstacles(obs_group_path):
     # Start recording messages and producing perception messages
     # obstacles_perception_cmd='/apollo/modules/tools/perception/obstacles_perception.bash '+MAP_NAME+'/obs_group_'+obs_group_number
@@ -26,7 +26,7 @@ def register_obstacles(obs_group_path):
     p = subprocess.Popen(cmd.split(), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     return p
 
-
+'docker exec apollo_dev_cloudsky /apollo/modules/tools/perception/obstacles_perception.bash sunnyvale_loop/obs_group_0'
 def stop_obstacles(p):
     try:
         os.kill(p.pid, signal.SIGINT)

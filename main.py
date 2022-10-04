@@ -1,4 +1,5 @@
 from config import MODULE_NAME, APOLLO_ROOT
+from environment.container_settings import init_settings
 from optimization_algorithms.ga_main import ga_main
 
 
@@ -10,6 +11,6 @@ def select_module():
 
 
 if __name__ == '__main__':
-    # init_settings()
+    init_settings()
     module_config_path = select_module()
     ga_main(module_config_path)
