@@ -3,21 +3,28 @@ import time
 
 import docker
 
-from apollo.CyberBridge import CyberBridge
+from apollo.CyberBridge import CyberBridge, Topics
 from container_control.container_settings import get_container_name
 from scenario_handling.toggle_sim_control import run_sim_control
 
 
 def cyber_env_init():
     print("Init cyber environment...")
-    dreamview_operation(operation="start")
+    dreamview_operation(operation="restart")
     # modules_operation(operation="start")
     print("Start sim control...")
     run_sim_control()
     print("Start bridge...")
     bridge = start_bridge()
     # cyber_setup()
+
+    register_bridge_publishers(bridge)
     return bridge
+
+
+def register_bridge_publishers(bridge):
+    for c in [Topics.Localization, Topics.Obstacles, Topics.TrafficLight, Topics.RoutingRequest]:
+        bridge.add_publisher(c)
 
 
 def dreamview_operation(operation):

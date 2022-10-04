@@ -56,6 +56,7 @@ def register_obstacles(obs_group_path):
     # Start recording messages and producing perception messages
     # obstacles_perception_cmd='/apollo/modules/tools/perception/obstacles_perception.bash '+MAP_NAME+'/obs_group_'+obs_group_number
     # print(obstacles_perception_cmd)
+    # cmd = ['/apollo/modules/tools/perception/obstacles_perception.bash', MAP_NAME + '/obs_group_' + obs_group_number]
     cmd = f"docker exec -d {get_container_name()} /apollo/modules/tools/perception/obstacles_perception.bash " + obs_group_path
     p = subprocess.Popen(cmd.split(), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     return p
@@ -94,7 +95,9 @@ def send_routing_request(init_x, init_y, dest_x, dest_y, bridge):
 def run_scenarios(scenario_list, bridge):
     print("Restart modules...")
     modules_operation(operation="stop")
+    time.sleep(2)
     modules_operation(operation="start")
+    time.sleep(2)
 
     scenario_count = 0
     for scenario in scenario_list:

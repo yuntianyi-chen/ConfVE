@@ -4,6 +4,7 @@ import json
 import asyncio
 import websockets
 
+
 async def handle_commandline(websocket):
 #     while True:
      #    cmd = input("Please enter your command(help):")
@@ -37,7 +38,7 @@ async def handle_commandline(websocket):
           print('Invalid command')
 
 async def event_handler():
-    async with websockets.connect('ws://127.0.0.1:8888/websocket') as websocket:
+    async with websockets.connect('ws://172.17.0.2:8888/websocket') as websocket:
         await handle_commandline(websocket)
 
 def run_sim_control():
