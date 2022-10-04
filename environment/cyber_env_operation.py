@@ -1,8 +1,6 @@
 import subprocess
 import time
-
 import docker
-
 from apollo.CyberBridge import CyberBridge, Topics
 from environment.container_settings import get_container_name
 from scenario_handling.toggle_sim_control import run_sim_control

@@ -2,7 +2,6 @@ import os
 import random
 import shutil
 import subprocess
-
 from config import APOLLO_ROOT, MAP_NAME, MODULE_NAME, MAGGIE_ROOT
 from environment.container_settings import get_container_name
 from run_scenarios.auxiliary.map import map_tools
@@ -20,6 +19,7 @@ class Scenario:
     def start_recorder(self):
         # cmd = f"docker exec -d {get_container_name()} cyber_recorder record -o {RECORDS_DIR}/{self.record_name} -a &"
 
+        # bazel-bin
         cmd = f"docker exec -d {get_container_name()} cyber_recorder record -o /apollo/records/{self.record_name} -a &"
         subprocess.Popen(cmd, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
