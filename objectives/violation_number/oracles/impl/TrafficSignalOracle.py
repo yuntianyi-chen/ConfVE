@@ -3,13 +3,14 @@ from typing import Dict, Optional, Set
 
 from shapely.geometry import LineString, Polygon
 
-from apollo.utils import generate_adc_polygon, calculate_velocity
+# from apollo.utils import generate_adc_polygon, calculate_velocity
 from objectives.violation_number.oracles.OracleInterface import OracleInterface
 from tools.hdmap.MapParser import MapParser
 from modules.localization.proto.localization_pb2 import LocalizationEstimate
 from modules.perception.proto.traffic_light_detection_pb2 import TrafficLightDetection, TrafficLight
 from modules.planning.proto.decision_pb2 import STOP_REASON_SIGNAL
 from modules.planning.proto.planning_pb2 import ADCTrajectory
+from tools.utils import generate_adc_polygon, calculate_velocity
 
 
 class TrafficSignalOracle(OracleInterface):

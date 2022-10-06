@@ -1,10 +1,11 @@
 from typing import List, Tuple, Optional
 
-from apollo.utils import calculate_velocity
+# from apollo.utils import calculate_velocity
 from objectives.violation_number.oracles.OracleInterface import OracleInterface
 from modules.localization.proto.localization_pb2 import LocalizationEstimate
 from modules.planning.proto.decision_pb2 import STOP_REASON_STOP_SIGN
 from modules.planning.proto.planning_pb2 import ADCTrajectory
+from tools.utils import calculate_velocity
 
 
 class UUStopOracle(OracleInterface):

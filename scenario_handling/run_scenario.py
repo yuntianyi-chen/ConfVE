@@ -2,12 +2,12 @@ import os
 import time
 import signal
 import subprocess
-from apollo.CyberBridge import Topics
 from config import MAX_RECORD_TIME
 from environment.container_settings import get_container_name
 from environment.cyber_env_operation import modules_operation, kill_modules
 from modules.routing.proto.routing_pb2 import RoutingRequest
 from objectives.measure_objectives import measure_objectives_individually
+from tools.bridge.CyberBridge import Topics
 
 
 # from optimization_algorithms.genetic_algorithm.ga import calculate_fitness

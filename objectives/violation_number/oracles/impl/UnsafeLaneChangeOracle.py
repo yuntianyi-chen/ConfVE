@@ -2,11 +2,13 @@ from typing import List, Dict, Set, Tuple, Optional
 
 from shapely.geometry import Polygon, LineString, Point
 
-from apollo.utils import calculate_velocity, generate_adc_polygon, construct_lane_polygon, \
-    construct_lane_boundary_linestring
+# from apollo.utils import calculate_velocity, generate_adc_polygon, construct_lane_polygon, \
+#     construct_lane_boundary_linestring
 from objectives.violation_number.oracles.OracleInterface import OracleInterface
 from tools.hdmap.MapParser import MapParser
 from modules.localization.proto.localization_pb2 import LocalizationEstimate
+from tools.utils import construct_lane_polygon, construct_lane_boundary_linestring, generate_adc_polygon, \
+    calculate_velocity
 
 
 class UnsafeLaneChangeOracle(OracleInterface):
