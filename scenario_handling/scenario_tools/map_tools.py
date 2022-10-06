@@ -3,11 +3,14 @@ A collection of map related tools
 '''
 import sys
 import numpy as np
+
+from config import MAGGIE_ROOT, MAP_NAME
 from modules.map.proto import map_pb2
 from shapely.geometry import Point, Polygon, LineString
 
 
-DEFAULT_SIM_MAP_PATH = '/apollo/modules/map/data/sunnyvale_loop/sim_map.bin'
+DEFAULT_SIM_MAP_PATH = f"{MAGGIE_ROOT}/data/maps/{MAP_NAME}/sim_map.bin"
+# DEFAULT_SIM_MAP_PATH = '/apollo/modules/map/data/sunnyvale_loop/sim_map.bin'
 # DEFAULT_SIM_MAP_PATH = '/apollo/modules/map/data/borregas_ave/sim_map.bin'
 #DEFAULT_SIM_MAP_PATH = '/apollo/modules/map/data/san_mateo/sim_map.bin'
 

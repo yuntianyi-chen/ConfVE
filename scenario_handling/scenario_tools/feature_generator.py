@@ -1,15 +1,8 @@
 import os
-import time
-import json
-import subprocess
 import ast
 
 dest = "/apollo/apollo_v7_testing/output_results"
 report_name = "mut_features.csv"
-
-
-# report_name="immut_features.csv"
-# report_name="rand_features.csv"
 
 
 def runOracles(scenario_player_output, record_name, scenario):

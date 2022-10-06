@@ -6,7 +6,7 @@ import subprocess
 import time
 from config import APOLLO_ROOT, MAP_NAME, MODULE_NAME, MAGGIE_ROOT
 from environment.container_settings import get_container_name
-from run_scenarios.auxiliary.map import map_tools
+from scenario_handling.scenario_tools import map_tools
 from scenario_handling.scenario_tools.map_info_parser import validatePath, initialize
 from tools.config_file_handler.translator_apollo import option_obj_translator, save2file
 
@@ -19,20 +19,14 @@ class Scenario:
         self.record_name = record_name
 
     def start_recorder(self):
-        # cmd = f"docker exec -d {get_container_name()} cyber_recorder record -o {RECORDS_DIR}/{self.record_name} -a &"
-
-        # bazel-bin
         cmd = f"docker exec -d {get_container_name()} /apollo/bazel-bin/cyber/tools/cyber_recorder/cyber_recorder record -o /apollo/records/{self.record_name} -a &"
         recorder_subprocess = subprocess.Popen(cmd, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         return recorder_subprocess
 
     def stop_recorder(self, recorder_subprocess):
-        # cmd = f"docker exec -d {get_container_name()} python3 /apollo/scripts/record_bag.py --stop --stop_signal SIGINT > /dev/null 2>&1"
-        # subprocess.run(cmd.split())
         cmd = f"docker exec -d {get_container_name()} /apollo/scripts/my_scripts/stop_recorder.sh"
         subprocess.run(cmd.split())
         time.sleep(1)
-        # self.stop_subprocess(recorder_subprocess)
 
     def stop_subprocess(self, p):
         try:
@@ -42,14 +36,13 @@ class Scenario:
             print("stopped")
 
     def calculate_fitness(self, violation_number, code_coverage, execution_time):
-        self.violation_number= violation_number
-        self.code_coverage=code_coverage
-        self.execution_time=execution_time
+        self.violation_number = violation_number
+        self.code_coverage = code_coverage
+        self.execution_time = execution_time
         self.fitness = random.uniform(0, 100)
 
     def get_fitness(self):
         return self.fitness
-
 
 
 def config_file_generating(generated_individual, option_obj_list, default):

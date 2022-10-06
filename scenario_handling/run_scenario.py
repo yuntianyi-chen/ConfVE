@@ -1,6 +1,4 @@
-import os
 import time
-import signal
 import subprocess
 from config import MAX_RECORD_TIME
 from environment.container_settings import get_container_name
@@ -10,9 +8,6 @@ from objectives.measure_objectives import measure_objectives_individually
 from tools.bridge.CyberBridge import Topics
 
 
-# from optimization_algorithms.genetic_algorithm.ga import calculate_fitness
-
-
 def replay_scenario(record_path):
     return
 
@@ -20,12 +15,7 @@ def replay_scenario(record_path):
 def record_route_info():
     return
 
-# 'docker exec apollo_dev_cloudsky /apollo/modules/tools/perception/obstacles_perception.bash /{MAP_NAME}/obs_group_0'
 def register_obstacles(obs_group_path):
-    # Start recording messages and producing perception messages
-    # obstacles_perception_cmd='/apollo/modules/tools/perception/obstacles_perception.bash '+MAP_NAME+'/obs_group_'+obs_group_number
-    # print(obstacles_perception_cmd)
-    # cmd = ['/apollo/modules/tools/perception/obstacles_perception.bash', MAP_NAME + '/obs_group_' + obs_group_number]
     cmd = f"docker exec -d {get_container_name()} /apollo/modules/tools/perception/obstacles_perception.bash " + obs_group_path
     p = subprocess.Popen(cmd.split(), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     return p
@@ -34,11 +24,6 @@ def register_obstacles(obs_group_path):
 def stop_obstacles(p):
     cmd = f"docker exec -d {get_container_name()} /apollo/scripts/my_scripts/stop_obstacles.sh"
     subprocess.run(cmd.split())
-    # try:
-    #     os.kill(p.pid, signal.SIGINT)
-    #     p.kill()
-    # except OSError:
-    #     print("stopped")
 
 
 def send_routing_request(init_x, init_y, dest_x, dest_y, bridge):

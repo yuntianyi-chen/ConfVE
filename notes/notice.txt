@@ -1,10 +1,14 @@
-ps -ef | grep -E 'cyber_recorder|obstacles_perception|replay_perception' | grep -v 'grep' | awk '{print $2}' | xargs kill -9
+ps -ef | grep -E 'cyber_recorder|obstacles_perception|replay_perception|prediction|planning|routing' | grep -v 'grep' | awk '{print $2}' | xargs kill -9
 
+ps -ef | grep -E 'dreamview' | grep -v 'grep' | awk '{print $2}' | xargs kill -9
 
+ps -ef | grep -E 'prediction|planning|routing' | grep -v 'grep' | awk '{print $2}' | xargs kill -9
 
 docker exec apollo_dev_cloudsky ps -ef | grep -E 'cyber_recorder' | grep -v 'grep' | awk '{print $2}' | xargs kill -9
 
+bash scripts/bootstrap.sh start
 
+---------------
 
 docker exec apollo_dev_cloudsky /apollo/bazel-bin/cyber/tools/cyber_recorder/cyber_recorder record -o /apollo/records/qwe -a &
 

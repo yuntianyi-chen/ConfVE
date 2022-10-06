@@ -6,13 +6,12 @@
 __author__ = "Sumaya Almanee"
 __copyright__ = "Copyright 2020, UCI"
 
-import sys, getopt
+import sys
 import json
 import networkx as nx
 import random
 from collections import defaultdict
 from config import MAP_NAME, MAGGIE_ROOT
-import os
 
 
 def parseLanes(lanes):
@@ -35,7 +34,7 @@ def connectLanes(edges):
 
 
 def initialize():
-    data = json.load(open(f'{MAGGIE_ROOT}/run_scenarios/maps/{MAP_NAME}/routing_map.json', 'r'))
+    data = json.load(open(f'{MAGGIE_ROOT}/data/maps/{MAP_NAME}/routing_map.json', 'r'))
     # data = json.load(open('maps/sunnyvale_loop/routing_map.json', 'r'))
 
     ptl_dict, ltp_dict = parseLanes(data["nodes"])

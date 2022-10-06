@@ -1,22 +1,9 @@
-# import ptvsd
-# ptvsd.enable_attach(address=('localhost', 5724), redirect_output=True)
-# # print('Now is a good time to attach your debugger: Run: Python: Attach')
-# ptvsd.wait_for_attach()
-
 from deap import base, creator, tools
-
 from config import OBS_DIR, APOLLO_ROOT, MAP_NAME
 from scenario_handling.scenario_tools.map_info_parser import *
 from scenario_handling.scenario_tools.feature_generator import *
 import pickle
 
-# map_name = "sunnyvale_loop"
-# map_name="borregas_ave"
-# map_name="san_mateo"
-
-
-# obs_folder = "/apollo/modules/tools/perception/obstacles/" + map_name + "/"
-# obs_folder = OBS_DIR
 
 ptl_dict, ltp_dict, diGraph = initialize()
 obstacle_type = ["PEDESTRIAN", "BICYCLE", "VEHICLE"]

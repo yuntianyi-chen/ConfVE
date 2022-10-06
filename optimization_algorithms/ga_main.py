@@ -29,32 +29,9 @@ def ga_main(module_config_path):
 
                 # test each config settings under several groups of obstacles and adc routes
                 run_scenarios(scenario_list, bridge)
-
-                # violation_number, code_coverage, execution_time = measure_objectives(scenario_list)
-
-                # fitness = calculate_fitness(violation_number, code_coverage, execution_time)
-
-                # generated_individual.fitness = fitness
                 individual_num += 1
 
         random.shuffle(individual_list_after_mutate)
         individual_list_after_mutate.sort(key=lambda x: x.fitness)
         individual_list = select(individual_list_after_mutate, option_obj_list)
 
-
-
-# if __name__ == '__main__':
-    # shutil.rmtree(f"{MAGGIE_ROOT}/data/records")
-    # shutil.copytree(f"{APOLLO_ROOT}/records", f"{MAGGIE_ROOT}/data/records")
-    # init_settings()
-    # list_a=os.listdir(f"{MAGGIE_ROOT}/data/records")
-    # # list_a.sort(reverse=True)
-    # list_a.sort()
-    #
-    # for record_name in list_a:
-    #     record_path = f"{RECORDS_DIR}/{record_name}"
-    #     violation_number = measure_violation_number(record_path)
-    #     replay_scenario(record_path)
-    #     code_coverage = measure_code_coverage()
-    #     execution_time = measure_execution_time()
-    #     print()
