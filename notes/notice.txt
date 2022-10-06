@@ -12,8 +12,13 @@ docker exec apollo_dev_cloudsky /apollo/bazel-bin/cyber/tools/cyber_recorder/cyb
 docker exec python3 /apollo/scripts/record_bag.py --stop --stop_signal SIGINT > /dev/null 2>&1
 
 
-cyber_recorder play -f /apollo/records/qwe.00000 -l
+cyber_recorder play -f /apollo/records/Generation_0_Config_0_Obs_9.00000 -l
 
+cyber_recorder info -f /apollo/records/Generation_0_Config_0_Obs_9.00000
 
 
 docker exec -d apollo_dev_cloudsky /apollo/scripts/my_scripts/stop_recorder.sh
+
+
+
+docker exec apollo_dev_cloudsky bash /apollo/scripts/routing.sh stop

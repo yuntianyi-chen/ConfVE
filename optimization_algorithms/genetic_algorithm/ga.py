@@ -83,9 +83,9 @@ def mutate(individual_list, option_type_list):
     return individual_list + new_individual_list
 
 
-def calculate_fitness(violation_number, code_coverage, execution_time):
-    fitness = random.uniform(0, 100)
-    return fitness
+# def calculate_fitness(violation_number, code_coverage, execution_time):
+#     fitness = random.uniform(0, 100)
+#     return fitness
 
 
 def generate_option_value(option_type, option_value):

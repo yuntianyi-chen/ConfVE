@@ -3,6 +3,8 @@ import random
 import shutil
 import signal
 import subprocess
+import time
+
 from config import APOLLO_ROOT, MAP_NAME, MODULE_NAME, MAGGIE_ROOT
 from environment.container_settings import get_container_name
 from run_scenarios.auxiliary.map import map_tools
@@ -30,7 +32,7 @@ class Scenario:
         # subprocess.run(cmd.split())
         cmd = f"docker exec -d {get_container_name()} /apollo/scripts/my_scripts/stop_recorder.sh"
         subprocess.run(cmd.split())
-
+        time.sleep(1)
         # self.stop_subprocess(recorder_subprocess)
 
     def stop_subprocess(self, p):
@@ -39,6 +41,16 @@ class Scenario:
             p.kill()
         except OSError:
             print("stopped")
+
+    def calculate_fitness(self, violation_number, code_coverage, execution_time):
+        self.violation_number= violation_number
+        self.code_coverage=code_coverage
+        self.execution_time=execution_time
+        self.fitness = random.uniform(0, 100)
+
+    def get_fitness(self):
+        return self.fitness
+
 
 
 def config_file_generating(generated_individual, option_obj_list, default):

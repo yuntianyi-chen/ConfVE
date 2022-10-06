@@ -5,8 +5,12 @@ import subprocess
 from apollo.CyberBridge import Topics
 from config import MAX_RECORD_TIME
 from environment.container_settings import get_container_name
-from environment.cyber_env_operation import modules_operation
+from environment.cyber_env_operation import modules_operation, kill_modules
 from modules.routing.proto.routing_pb2 import RoutingRequest
+from objectives.measure_objectives import measure_objectives_individually
+
+
+# from optimization_algorithms.genetic_algorithm.ga import calculate_fitness
 
 
 def replay_scenario(record_path):
@@ -60,22 +64,23 @@ def send_routing_request(init_x, init_y, dest_x, dest_y, bridge):
 
 
 def run_scenarios(scenario_list, bridge):
-    print("Restart modules...")
+    print("Restarting modules...")
     modules_operation(operation="stop")
     time.sleep(2)
+    kill_modules()
     modules_operation(operation="start")
     time.sleep(2)
 
     scenario_count = 0
     for scenario in scenario_list:
-        print(f"Scenario{scenario_count}")
+        print(f"  Scenario_{scenario_count}")
         adc_route_raw = scenario.adc_route.split(',')
         init_x, init_y, dest_x, dest_y = float(adc_route_raw[0]), float(adc_route_raw[1]), float(
             adc_route_raw[2]), float(adc_route_raw[3])
 
         record_route_info()
 
-        print("  Start recorder...")
+        print("    Start recorder...")
         recorder_subprocess = scenario.start_recorder()
 
         p = register_obstacles(scenario.obs_group_path)
@@ -86,9 +91,15 @@ def run_scenarios(scenario_list, bridge):
         time.sleep(MAX_RECORD_TIME)
 
         # Stop recording messages and producing perception messages
-        print("  Stop recorder...")
+        print("    Stop recorder...")
         scenario.stop_recorder(recorder_subprocess)
 
         # scenario.stop_subprocess(p)
         stop_obstacles(p)
+
+        violation_number, code_coverage, execution_time = measure_objectives_individually(scenario)
+        scenario.calculate_fitness(violation_number, code_coverage, execution_time)
+
+        # fitness = calculate_fitness(violation_number, code_coverage, execution_time)
+        fitness = scenario.get_fitness()
         scenario_count += 1

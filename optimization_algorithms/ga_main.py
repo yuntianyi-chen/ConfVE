@@ -1,39 +1,9 @@
 import random
-import shutil
-from config import APOLLO_ROOT, MAGGIE_ROOT, RECORDS_DIR
 from environment.cyber_env_operation import cyber_env_init
-from objectives.violation_number.oracles import RecordAnalyzer
-from optimization_algorithms.genetic_algorithm.ga import ga_init, crossover, mutate, calculate_fitness, select
+from optimization_algorithms.genetic_algorithm.ga import ga_init, crossover, mutate, select
 from scenario_handling.create_scenarios import create_scenarios
 from scenario_handling.run_scenario import run_scenarios, replay_scenario
 from tools.config_file_handler.parser_apollo import parser2class
-# from tools.config_file_handler.translator_apollo import option_obj_translator, save2file
-
-
-def measure_code_coverage():
-    return
-
-
-def measure_execution_time():
-    return
-
-
-def measure_violation_number(record_path):
-    ra = RecordAnalyzer(record_path)
-    ra.analyze()
-    return
-
-
-def measure_objectives(scenario_list):
-    shutil.rmtree(f"{MAGGIE_ROOT}/data/records")
-    shutil.copytree(f"{APOLLO_ROOT}/records", f"{MAGGIE_ROOT}/data/records")
-    for scenario in scenario_list:
-        record_path = f"{RECORDS_DIR}/{scenario.record_name}.00000"
-        violation_number = measure_violation_number(record_path)
-        replay_scenario(record_path)
-        code_coverage = measure_code_coverage()
-        execution_time = measure_execution_time()
-        return violation_number, code_coverage, execution_time
 
 
 def ga_main(module_config_path):
@@ -50,7 +20,8 @@ def ga_main(module_config_path):
 
         individual_num = 0
         for generated_individual in individual_list_after_mutate:
-            print(f"Generation {generation_num}_Individual {individual_num}")
+            print("-------------------------------------------------")
+            print(f"Generation_{generation_num} Individual_{individual_num}")
 
             if generated_individual.fitness is None:
                 # scenario refers to a config setting with different fixed obstacles and adc routes
@@ -59,14 +30,31 @@ def ga_main(module_config_path):
                 # test each config settings under several groups of obstacles and adc routes
                 run_scenarios(scenario_list, bridge)
 
-                violation_number, code_coverage, execution_time = measure_objectives(scenario_list)
+                # violation_number, code_coverage, execution_time = measure_objectives(scenario_list)
 
-                fitness = calculate_fitness(violation_number, code_coverage, execution_time)
+                # fitness = calculate_fitness(violation_number, code_coverage, execution_time)
 
-                generated_individual.fitness = fitness
+                # generated_individual.fitness = fitness
                 individual_num += 1
 
         random.shuffle(individual_list_after_mutate)
         individual_list_after_mutate.sort(key=lambda x: x.fitness)
         individual_list = select(individual_list_after_mutate, option_obj_list)
 
+
+
+# if __name__ == '__main__':
+    # shutil.rmtree(f"{MAGGIE_ROOT}/data/records")
+    # shutil.copytree(f"{APOLLO_ROOT}/records", f"{MAGGIE_ROOT}/data/records")
+    # init_settings()
+    # list_a=os.listdir(f"{MAGGIE_ROOT}/data/records")
+    # # list_a.sort(reverse=True)
+    # list_a.sort()
+    #
+    # for record_name in list_a:
+    #     record_path = f"{RECORDS_DIR}/{record_name}"
+    #     violation_number = measure_violation_number(record_path)
+    #     replay_scenario(record_path)
+    #     code_coverage = measure_code_coverage()
+    #     execution_time = measure_execution_time()
+    #     print()

@@ -13,6 +13,8 @@ def cyber_env_init():
     shutil.rmtree(f"{APOLLO_ROOT}/records")
     os.mkdir(f"{APOLLO_ROOT}/records")
 
+    close_subprocess()
+
     print("Init cyber environment...")
     dreamview_operation(operation="restart")
     # modules_operation(operation="start")
@@ -26,6 +28,15 @@ def cyber_env_init():
     return bridge
 
 
+def close_subprocess():
+    cmd = f"docker exec -d {get_container_name()} /apollo/scripts/my_scripts/close_subprocess.sh"
+    subprocess.run(cmd.split())
+
+def kill_modules():
+    cmd = f"docker exec -d {get_container_name()} bash /apollo/scripts/my_scripts/kill_modules.sh"
+    subprocess.run(cmd.split())
+    # time.sleep(1)
+
 def register_bridge_publishers(bridge):
     for c in [Topics.Localization, Topics.Obstacles, Topics.TrafficLight, Topics.RoutingRequest]:
         bridge.add_publisher(c)
@@ -38,6 +49,8 @@ def dreamview_operation(operation):
         time.sleep(10)
     else:
         time.sleep(1)
+
+
 
 
 def modules_operation(operation):
@@ -74,3 +87,10 @@ def start_bridge():
             return bridge
         except ConnectionRefusedError:
             time.sleep(1)
+
+
+
+if __name__ == '__main__':
+    modules_operation(operation="stop")
+    # time.sleep(2)
+    kill_modules()
