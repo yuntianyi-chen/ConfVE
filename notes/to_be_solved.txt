@@ -1,10 +1,14 @@
+0. Arrange the Notes dir
 0. Finish fitness calculation function
+
 1. Flashback when replaying the record
-2. Collision error
+2. Collision error example
 3. Cyber_recorder INFO files
+
 4. Create scenarios that may trigger the violations
 5. Traffic Lights control
+
 6. Code coverage (Branch coverage)
 7. Reinforcement learning
 8. Tuning ranges for options
-9. Arrange the Notes dir
+
