@@ -1,6 +1,5 @@
 import random
 import shutil
-
 from config import APOLLO_ROOT, MAGGIE_ROOT, RECORDS_DIR
 from environment.cyber_env_operation import cyber_env_init
 from objectives.violation_number.oracles import RecordAnalyzer
@@ -8,7 +7,7 @@ from optimization_algorithms.genetic_algorithm.ga import ga_init, crossover, mut
 from scenario_handling.create_scenarios import create_scenarios
 from scenario_handling.run_scenario import run_scenarios, replay_scenario
 from tools.config_file_handler.parser_apollo import parser2class
-from tools.config_file_handler.translator_apollo import option_obj_translator, save2file
+# from tools.config_file_handler.translator_apollo import option_obj_translator, save2file
 
 
 def measure_code_coverage():
