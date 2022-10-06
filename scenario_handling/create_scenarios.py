@@ -4,7 +4,6 @@ import shutil
 import signal
 import subprocess
 import time
-
 from config import APOLLO_ROOT, MAP_NAME, MODULE_NAME, MAGGIE_ROOT
 from environment.container_settings import get_container_name
 from run_scenarios.auxiliary.map import map_tools
