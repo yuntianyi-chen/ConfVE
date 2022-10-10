@@ -16,6 +16,7 @@ APOLLO_VEHICLE_back_edge_to_center = 1.043
 
 MAP_NAME = "sunnyvale_loop"
 MODULE_NAME = "planning"
+DEFAULT_CONFIG_FILE = True
 
 # DIRECTORIES =======================================
 APOLLO_ROOT = '/home/cloudsky/Research/Apollo/apollo_7.0'

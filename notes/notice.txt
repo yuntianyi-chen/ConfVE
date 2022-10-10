@@ -6,7 +6,7 @@ ps -ef | grep -E 'prediction|planning|routing' | grep -v 'grep' | awk '{print $2
 
 docker exec apollo_dev_cloudsky ps -ef | grep -E 'cyber_recorder' | grep -v 'grep' | awk '{print $2}' | xargs kill -9
 
-bash scripts/bootstrap.sh start
+bash scripts/bootstrap.sh stop
 
 ---------------
 

@@ -36,7 +36,6 @@ def ga_init(option_obj_list):
 def select(individual_list, option_obj_list):
     # select 5 with the least fitness, 3 randomly from the remaining, 2 new generated
     select_num_ratio = [5, 3, 2]
-
     new_individual_list = get_unduplicated(individual_list, select_num_ratio, option_obj_list)
     return new_individual_list
     # return individual_list[0:init_population_size]

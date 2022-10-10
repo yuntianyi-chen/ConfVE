@@ -15,12 +15,13 @@ def replay_scenario(record_path):
 def record_route_info():
     return
 
+
 def register_obstacles(obs_group_path):
     cmd = f"docker exec -d {get_container_name()} /apollo/modules/tools/perception/obstacles_perception.bash " + obs_group_path
     p = subprocess.Popen(cmd.split(), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     return p
 
-'docker exec apollo_dev_cloudsky /apollo/modules/tools/perception/obstacles_perception.bash sunnyvale_loop/obs_group_0'
+
 def stop_obstacles(p):
     cmd = f"docker exec -d {get_container_name()} /apollo/scripts/my_scripts/stop_obstacles.sh"
     subprocess.run(cmd.split())

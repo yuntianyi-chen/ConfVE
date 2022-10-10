@@ -1,4 +1,4 @@
-from config import APOLLO_ROOT
+from config import APOLLO_ROOT, MAX_RECORD_TIME
 from objectives.violation_number.oracles import RecordAnalyzer
 
 def measure_objectives_individually(scenario):
@@ -11,15 +11,15 @@ def measure_objectives_individually(scenario):
 
 
 def measure_code_coverage():
-    return
+    return 1
 
 
 def measure_execution_time():
-    return
+    return 1
 
 
 def measure_violation_number(record_path):
     ra = RecordAnalyzer(record_path)
     results = ra.analyze()
     print(f"     Violation Results: {results}")
-    return results
+    return len(results)

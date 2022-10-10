@@ -63,8 +63,14 @@ def genetic_obs_individual_init():
     toolbox = base.Toolbox()
     # Attribute generator (9 obstacle attributes)
     toolbox.register("id", random.randint, 0, 30000)
+
+
+
     toolbox.register("start_pos", random.randint, 0, len(ptl_dict.keys()) - 1)
     toolbox.register("end_pos", random.randint, 0, len(ptl_dict.keys()) - 1)
+
+
+
     toolbox.register("theta", random.uniform, -3.14, 3.14)
     toolbox.register("length", random.uniform, 0.2, 14.5)
     toolbox.register("width", random.uniform, 0.3, 2.5)
@@ -128,7 +134,6 @@ def obs_settings():
     # ETIME=43200 # execution time end (in seconds) after 12 hours 
     DEME_SIZES = [random.randint(OBS_MIN, OBS_MAX) for p in range(0, NP)]
     # CXPB, MUTPB, ADDPB, DELPB = 0.8, 0.2, 0.1, 0.1
-
     return DEME_SIZES
 
 

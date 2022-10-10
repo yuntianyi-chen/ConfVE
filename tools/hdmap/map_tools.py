@@ -6,13 +6,51 @@ import numpy as np
 
 from config import APOLLO_ROOT, MAP_NAME, MAGGIE_ROOT
 from modules.map.proto import map_pb2
+from modules.routing.proto import topo_graph_pb2
 from shapely.geometry import Point, Polygon, LineString
+import modules.tools.common.proto_utils as proto_utils
 
-# DEFAULT_SIM_MAP_PATH = f'{MAGGIE_ROOT}/data/maps/{MAP_NAME}/sim_map.bin'
-DEFAULT_SIM_MAP_PATH = f'{MAGGIE_ROOT}/data/maps/{MAP_NAME}/routing_map.bin'
+DEFAULT_SIM_MAP_PATH = f'{MAGGIE_ROOT}/data/maps/{MAP_NAME}/sim_map.bin'
+
+
 # DEFAULT_SIM_MAP_PATH = '/apollo/modules/map/data/sunnyvale_loop/sim_map.bin'
 # DEFAULT_SIM_MAP_PATH = '/apollo/modules/map/data/borregas_ave/sim_map.bin'
 # DEFAULT_SIM_MAP_PATH = '/apollo/modules/map/data/san_mateo/sim_map.bin'
+
+
+def load_routing_mapbin(routing_map_path=None):
+    """
+    Description: Parse the map binary into a protobuf message.
+
+    Input: Path to the sim map binary.
+
+    Ouput: The map protobuf message read from the input binary.
+    """
+    DEFAULT_ROUTING_MAP_PATH = f'{MAGGIE_ROOT}/data/maps/{MAP_NAME}/routing_map.bin'
+    if routing_map_path is None:
+        routing_map_path = DEFAULT_ROUTING_MAP_PATH
+
+    map_file = open(routing_map_path, 'rb')
+    map_data = map_file.read()
+    map_file.close()
+
+    # map_msg = map_pb2.Map()
+    map_msg = topo_graph_pb2.Graph()
+    map_msg.ParseFromString(map_data)
+
+    # node_msg = topo_graph_pb2.Node()
+    # node_msg.ParseFromString(map_data)
+
+    __nodes = dict()
+    for node in map_msg.node:
+        __nodes[node.lane_id] = node
+
+    node_msg = map_msg.node
+
+    # map_msg_2 = proto_utils.get_pb_from_bin_file(DEFAULT_ROUTING_MAP_PATH, topo_graph_pb2.Graph())
+    # map_msg_2 = proto_utils.get_pb_from_bin_file(DEFAULT_ROUTING_MAP_PATH, node_msg)
+
+    return map_msg
 
 
 def load_mapbin(sim_map_path=None):
@@ -32,6 +70,9 @@ def load_mapbin(sim_map_path=None):
 
     map_msg = map_pb2.Map()
     map_msg.ParseFromString(map_data)
+
+    # for junc in map_msg.junction:
+    #     print()
 
     return map_msg
 
@@ -347,5 +388,7 @@ def all_points_not_in_junctions(points) -> bool:
             return False
     return True
 
+
 if __name__ == "__main__":
-    load_mapbin()
+    load_routing_mapbin()
+    # load_mapbin()

@@ -32,6 +32,8 @@ def ga_main(module_config_path):
                 individual_num += 1
 
         random.shuffle(individual_list_after_mutate)
-        individual_list_after_mutate.sort(key=lambda x: x.fitness)
+
+        # Fitness the more, the better, currently, for testing
+        individual_list_after_mutate.sort(key=lambda x: x.fitness, reversed=True)
         individual_list = select(individual_list_after_mutate, option_obj_list)
 

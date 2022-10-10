@@ -3,9 +3,6 @@
 
 """Parser to extract nodes and edges from a map"""
 
-__author__ = "Sumaya Almanee"
-__copyright__ = "Copyright 2020, UCI"
-
 import sys
 import json
 import networkx as nx
@@ -33,13 +30,19 @@ def connectLanes(edges):
     return DG
 
 
+
 def initialize():
     data = json.load(open(f'{MAGGIE_ROOT}/data/maps/{MAP_NAME}/routing_map.json', 'r'))
-    # data = json.load(open('maps/sunnyvale_loop/routing_map.json', 'r'))
-
     ptl_dict, ltp_dict = parseLanes(data["nodes"])
     diGraph = connectLanes(data["edges"])
     return ptl_dict, ltp_dict, diGraph
+
+
+# def initialize():
+#     data = json.load(open(f'{MAGGIE_ROOT}/data/maps/{MAP_NAME}/routing_map.json', 'r'))
+#     ptl_dict, ltp_dict = parseLanes(data["nodes"])
+#     diGraph = connectLanes(data["edges"])
+#     return ptl_dict, ltp_dict, diGraph
 
 
 def validatePath(i1, i2, ptl_dict, ltp_dict, diGraph):

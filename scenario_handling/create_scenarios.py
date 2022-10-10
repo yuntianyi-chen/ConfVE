@@ -2,9 +2,10 @@ import os
 import random
 import shutil
 import signal
+import glob
 import subprocess
 import time
-from config import APOLLO_ROOT, MAP_NAME, MODULE_NAME, MAGGIE_ROOT
+from config import APOLLO_ROOT, MAP_NAME, MODULE_NAME, MAGGIE_ROOT, DEFAULT_CONFIG_FILE
 from environment.container_settings import get_container_name
 from scenario_handling.scenario_tools import map_tools
 from scenario_handling.scenario_tools.map_info_parser import validatePath, initialize
@@ -27,6 +28,7 @@ class Scenario:
         cmd = f"docker exec -d {get_container_name()} /apollo/scripts/my_scripts/stop_recorder.sh"
         subprocess.run(cmd.split())
         time.sleep(1)
+        self.delete_recorder_log()
 
     def stop_subprocess(self, p):
         try:
@@ -35,11 +37,16 @@ class Scenario:
         except OSError:
             print("stopped")
 
+    def delete_recorder_log(self):
+        files = glob.glob(f'{APOLLO_ROOT}/cyber_recorder.log.INFO.*')
+        for file in files:
+            os.remove(file)
+
     def calculate_fitness(self, violation_number, code_coverage, execution_time):
         self.violation_number = violation_number
         self.code_coverage = code_coverage
         self.execution_time = execution_time
-        self.fitness = random.uniform(0, 100)
+        self.fitness = violation_number * code_coverage * execution_time
 
     def get_fitness(self):
         return self.fitness
@@ -93,7 +100,8 @@ def adc_routing_generate():
 
 # scenario refers to different config settings with fixed obstacles and adc routing
 def create_scenarios(generated_individual, option_obj_list, generation_num, individual_num):
-    config_file_tuned_status = config_file_generating(generated_individual, option_obj_list, default=True)
+    config_file_tuned_status = config_file_generating(generated_individual, option_obj_list,
+                                                      default=DEFAULT_CONFIG_FILE)
     obs_group_path_list = read_obstacles()
     # adc_routing = adc_routing_generate()
     # adc_routing_list = ["586980.86,4140959.45,587283.52,4140882.30" for i in obs_group_path_list]
@@ -105,3 +113,12 @@ def create_scenarios(generated_individual, option_obj_list, generation_num, indi
                      zip(obs_group_path_list, adc_routing_list, record_name_list)]
 
     return scenario_list
+
+
+if __name__ == "__main__":
+    adc_routing = adc_routing_generate()
+    adc_route_raw = adc_routing.split(',')
+    init_x, init_y, dest_x, dest_y = float(adc_route_raw[0]), float(adc_route_raw[1]), float(
+        adc_route_raw[2]), float(adc_route_raw[3])
+
+    print()
