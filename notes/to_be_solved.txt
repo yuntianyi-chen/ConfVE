@@ -1,6 +1,5 @@
 0. Arrange the Notes dir
 0. Create scenarios that may trigger the violations (Modify obstacle_generator.py and adc_routing)
-0. Pull request update (_s_delta_t = sleep_time)(parser.add_argument("-p", "--period", action="store", type=float, default=0.1, defult error)
 
 
 4. Traffic Lights control (Traverse the traffic lights on map once, random tune the lights)
@@ -8,6 +7,7 @@
 
 - Flashback when replaying the record (Close all modules when replaying?) (Fix it by restarting Dreamview) (Must restart dreamview when you finish recording and want to replay scenarios)
 - Collision error example
+- Pull request update (_s_delta_t = sleep_time)(parser.add_argument("-p", "--period", action="store", type=float, default=0.1, defult error)
 
 
 1. Code coverage (Branch coverage)
