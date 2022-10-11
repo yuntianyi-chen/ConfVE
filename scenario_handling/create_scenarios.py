@@ -77,11 +77,12 @@ def read_obstacles():
     return obs_group_path_list
 
 
-# this function costs calculating resources
-ptl_dict, ltp_dict, diGraph = initialize()
 
 
 def adc_routing_generate():
+    # this function costs calculating resources
+    ptl_dict, ltp_dict, diGraph = initialize()
+
     valid_path = False
     while not valid_path:
         p_index1 = random.randint(0, len(ptl_dict.keys()) - 1)

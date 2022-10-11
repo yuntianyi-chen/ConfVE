@@ -54,13 +54,14 @@ def dreamview_operation(operation):
 
 
 def modules_operation(operation):
-    cmd = f"docker exec -d {get_container_name()} bash /apollo/scripts/prediction.sh {operation}"
-    subprocess.run(cmd.split())
-    cmd = f"docker exec -d {get_container_name()} bash /apollo/scripts/planning.sh {operation}"
-    subprocess.run(cmd.split())
     cmd = f"docker exec -d {get_container_name()} bash /apollo/scripts/routing.sh {operation}"
     subprocess.run(cmd.split())
     time.sleep(1)
+    cmd = f"docker exec -d {get_container_name()} bash /apollo/scripts/planning.sh {operation}"
+    subprocess.run(cmd.split())
+    time.sleep(1)
+    cmd = f"docker exec -d {get_container_name()} bash /apollo/scripts/prediction.sh {operation}"
+    subprocess.run(cmd.split())
 
 
 def cyber_setup():

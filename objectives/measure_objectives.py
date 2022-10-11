@@ -21,5 +21,5 @@ def measure_execution_time():
 def measure_violation_number(record_path):
     ra = RecordAnalyzer(record_path)
     results = ra.analyze()
-    print(f"     Violation Results: {results}")
+    print(f"      Violation Results: {results}")
     return len(results)

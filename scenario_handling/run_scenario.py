@@ -52,8 +52,9 @@ def send_routing_request(init_x, init_y, dest_x, dest_y, bridge):
 def run_scenarios(scenario_list, bridge):
     print("Restarting modules...")
     modules_operation(operation="stop")
-    time.sleep(2)
+    time.sleep(1)
     kill_modules()
+    time.sleep(1)
     modules_operation(operation="start")
     time.sleep(2)
 

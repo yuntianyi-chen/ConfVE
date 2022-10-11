@@ -26,13 +26,15 @@ def connectLanes(edges):
     DG = nx.DiGraph()
     for edge in edges:
         DG.add_edge(edge["from_lane_id"], edge["to_lane_id"], weight=edge["cost"])
-
     return DG
 
 
 
 def initialize():
     data = json.load(open(f'{MAGGIE_ROOT}/data/maps/{MAP_NAME}/routing_map.json', 'r'))
+
+
+
     ptl_dict, ltp_dict = parseLanes(data["nodes"])
     diGraph = connectLanes(data["edges"])
     return ptl_dict, ltp_dict, diGraph
