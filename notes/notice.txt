@@ -24,5 +24,4 @@ cyber_recorder info -f /apollo/records/Generation_0_Config_0_Obs_9.00000
 docker exec -d apollo_dev_cloudsky /apollo/scripts/my_scripts/stop_recorder.sh
 
 
-
 docker exec apollo_dev_cloudsky bash /apollo/scripts/routing.sh stop
