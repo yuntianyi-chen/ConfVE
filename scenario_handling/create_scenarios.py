@@ -30,6 +30,10 @@ class Scenario:
         time.sleep(1)
         self.delete_recorder_log()
 
+    def delete_record(self):
+        os.remove(f"{APOLLO_ROOT}/records/{self.record_name}.00000")
+
+
     def stop_subprocess(self, p):
         try:
             os.kill(p.pid, signal.SIGINT)

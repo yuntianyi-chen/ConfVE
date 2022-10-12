@@ -89,4 +89,8 @@ def run_scenarios(scenario_list, bridge):
 
         # fitness = calculate_fitness(violation_number, code_coverage, execution_time)
         fitness = scenario.get_fitness()
+
+        if violation_number == 0:
+            scenario.delete_record()
+
         scenario_count += 1

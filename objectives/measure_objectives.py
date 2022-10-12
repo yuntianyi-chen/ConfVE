@@ -19,6 +19,7 @@ def measure_execution_time():
     return 1
 
 
+# Most important
 def measure_violation_number(record_path):
     ra = RecordAnalyzer(record_path)
     results = ra.analyze()
