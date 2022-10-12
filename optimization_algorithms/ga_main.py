@@ -15,12 +15,8 @@ def ga_main(module_config_path):
 
     bridge = cyber_env_init()
     for generation_num in range(generation_limit):
-        if generation_num == 50:
-            break
-
         individual_list_after_crossover = crossover(individual_list)
         individual_list_after_mutate = mutate(individual_list_after_crossover, option_type_list)
-
         individual_num = 0
         for generated_individual in individual_list_after_mutate:
             print("-------------------------------------------------")
@@ -37,6 +33,6 @@ def ga_main(module_config_path):
         random.shuffle(individual_list_after_mutate)
 
         # Fitness the more, the better, currently, for testing
-        individual_list_after_mutate.sort(key=lambda x: x.fitness, reversed=True)
+        individual_list_after_mutate.sort(key=lambda x: x.fitness, reverse=True)
         individual_list = select(individual_list_after_mutate, option_obj_list)
 

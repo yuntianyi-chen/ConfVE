@@ -6,8 +6,11 @@ import logging
 
 # APOLLO CONFIGURATION ==============================
 PERCEPTION_FREQUENCY = 25
-
+GENERATION_LIMIT = 10
 MAX_RECORD_TIME = 10
+INIT_POP_SIZE = 10  # 60 individuals in each generation
+SELECT_NUM_RATIO = [5, 3, 2]
+
 
 APOLLO_VEHICLE_LENGTH = 4.933
 APOLLO_VEHICLE_WIDTH = 2.11

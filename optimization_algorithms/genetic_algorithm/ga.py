@@ -1,5 +1,6 @@
 import random
 from copy import deepcopy
+from config import GENERATION_LIMIT, INIT_POP_SIZE, SELECT_NUM_RATIO
 
 
 class IndividualWithFitness:
@@ -26,8 +27,8 @@ def generate_individuals(option_obj_list, population_size):
 
 def ga_init(option_obj_list):
     # global init_population_size
-    init_population_size = 10
-    generation_limit = 100
+    init_population_size = INIT_POP_SIZE
+    generation_limit = GENERATION_LIMIT
     option_type_list = [option_obj.option_type for option_obj in option_obj_list]
     init_individual_list = generate_individuals(option_obj_list, init_population_size)
     return init_individual_list, generation_limit, option_type_list
@@ -35,7 +36,7 @@ def ga_init(option_obj_list):
 
 def select(individual_list, option_obj_list):
     # select 5 with the least fitness, 3 randomly from the remaining, 2 new generated
-    select_num_ratio = [5, 3, 2]
+    select_num_ratio = SELECT_NUM_RATIO
     new_individual_list = get_unduplicated(individual_list, select_num_ratio, option_obj_list)
     return new_individual_list
     # return individual_list[0:init_population_size]
@@ -43,7 +44,7 @@ def select(individual_list, option_obj_list):
 
 def get_unduplicated(individual_list, select_num_ratio, option_obj_list):
     individuals_with_least_fitness = individual_list[:select_num_ratio[0]]
-    individuals_from_remaining = random.choices(individual_list[5:], k=select_num_ratio[1])
+    individuals_from_remaining = random.choices(individual_list[select_num_ratio[0]:], k=select_num_ratio[1])
     individuals_new_generated = generate_individuals(option_obj_list, select_num_ratio[2])
     selected_individuals_list = individuals_with_least_fitness + individuals_from_remaining + individuals_new_generated
     return selected_individuals_list
