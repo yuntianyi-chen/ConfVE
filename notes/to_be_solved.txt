@@ -5,8 +5,8 @@
 4. Traffic Lights control (Traverse the traffic lights on map once, random tune the lights)
 
 
-- Flashback when replaying the record (Close all modules and sim_sontrol when replaying) (Fix it by restarting Dreamview) (Must restart dreamview when you finish recording and want to replay scenarios)
-- Collision error example
+- Flashback when replaying the record (Close all modules and sim_sontrol when replaying)(Or fix it by restarting Dreamview)
+- Violation Examples (Collision and Stop sign)
 - Pull request update (_s_delta_t = sleep_time)(parser.add_argument("-p", "--period", action="store", type=float, default=0.1, defult error)
 
 
@@ -14,7 +14,6 @@
 2. Deep Reinforcement learning
 3. Tuning ranges for options
 0. Finish fitness calculation function
-
 
 
 x. Given a violated scenario, tune configuration options to avoid violations
