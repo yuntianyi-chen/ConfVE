@@ -1,0 +1,10 @@
+1h 50min
+
+Violation Results: [('collision', 9414)]  Obstacle hit the ego car
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_0_Config_24_Obs_2.00000
+Violation Results: [('stop_sign', '2203')]  Ego car didn't stop in front of the stop sign
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_0_Config_33_Obs_8.00000
+Violation Results: [('collision', 9251)]  The pedestrian generated is overlapped with the ego car
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_0_Config_48_Obs_4.00000
+Violation Results: [('stop_sign', '1042')]  Ego car stopped at the stop line
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_0_Config_51_Obs_3.00000
