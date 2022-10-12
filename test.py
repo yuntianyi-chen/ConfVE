@@ -3,9 +3,9 @@ import os
 import shutil
 import subprocess
 
-from config import APOLLO_ROOT
+from config import APOLLO_ROOT, MAGGIE_ROOT
 from environment.container_settings import get_container_name
 
-files = glob.glob(f'{APOLLO_ROOT}/cyber_recorder.log.INFO.*')
-for file in files:
-    os.remove(file)
+with open(f"{MAGGIE_ROOT}/violation_results.txt", "a") as f:
+    f.write(f"Violation Results: \n")
+    f.write(f"  record_path\n")

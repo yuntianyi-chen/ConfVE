@@ -15,6 +15,9 @@ def ga_main(module_config_path):
 
     bridge = cyber_env_init()
     for generation_num in range(generation_limit):
+        if generation_num == 50:
+            break
+
         individual_list_after_crossover = crossover(individual_list)
         individual_list_after_mutate = mutate(individual_list_after_crossover, option_type_list)
 

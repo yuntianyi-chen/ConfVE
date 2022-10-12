@@ -27,7 +27,7 @@ def generate_individuals(option_obj_list, population_size):
 def ga_init(option_obj_list):
     # global init_population_size
     init_population_size = 10
-    generation_limit = 10
+    generation_limit = 100
     option_type_list = [option_obj.option_type for option_obj in option_obj_list]
     init_individual_list = generate_individuals(option_obj_list, init_population_size)
     return init_individual_list, generation_limit, option_type_list
