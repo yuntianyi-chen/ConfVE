@@ -49,7 +49,6 @@ def send_routing_request(init_x, init_y, dest_x, dest_y, bridge):
     bridge.publish(Topics.RoutingRequest, routing_request.SerializeToString())
 
 
-
 def run_scenarios(generated_individual, scenario_list, bridge):
     print("Restarting modules...")
     modules_operation(operation="stop")

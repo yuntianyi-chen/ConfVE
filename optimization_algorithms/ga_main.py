@@ -42,7 +42,6 @@ def ga_main(module_config_path):
         individual_list = select(individual_list_after_mutate, option_obj_list)
 
 
-
 if __name__ == '__main__':
     module_config_path = f"{APOLLO_ROOT}/modules/{MODULE_NAME}/conf/{MODULE_NAME}_config.pb.txt"
     ga_main(module_config_path)
