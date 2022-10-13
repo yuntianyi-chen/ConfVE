@@ -30,7 +30,7 @@ def measure_violation_number(record_path):
 
     if len(results) > 0:
         print(f"      Record Path: {record_path}")
-        with open(f"{MAGGIE_ROOT}/violation_results_{date.today()}.txt", "a") as f:
+        with open(f"{MAGGIE_ROOT}/data/violation_results/violation_results_{date.today()}.txt", "a") as f:
             f.write(f"Violation Results: {results}\n")
             f.write(f"  {record_path}\n")
 
