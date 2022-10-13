@@ -49,7 +49,8 @@ def send_routing_request(init_x, init_y, dest_x, dest_y, bridge):
     bridge.publish(Topics.RoutingRequest, routing_request.SerializeToString())
 
 
-def run_scenarios(scenario_list, bridge):
+
+def run_scenarios(generated_individual, scenario_list, bridge):
     print("Restarting modules...")
     modules_operation(operation="stop")
     time.sleep(1)
@@ -59,6 +60,7 @@ def run_scenarios(scenario_list, bridge):
     time.sleep(2)
 
     scenario_count = 0
+
     for scenario in scenario_list:
         print(f"  Scenario_{scenario_count}")
         adc_route_raw = scenario.adc_route.split(',')
@@ -85,12 +87,14 @@ def run_scenarios(scenario_list, bridge):
         stop_obstacles(p)
 
         violation_number, code_coverage, execution_time = measure_objectives_individually(scenario)
-        scenario.calculate_fitness(violation_number, code_coverage, execution_time)
+        # scenario.calculate_fitness(violation_number, code_coverage, execution_time)
 
         # fitness = calculate_fitness(violation_number, code_coverage, execution_time)
-        fitness = scenario.get_fitness()
+        generated_individual.update_accumulated_objectives(violation_number, code_coverage, execution_time)
 
         if violation_number == 0:
             scenario.delete_record()
 
         scenario_count += 1
+
+    # return accumulated_fitness

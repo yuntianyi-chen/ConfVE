@@ -17,6 +17,7 @@ def measure_code_coverage():
 
 def measure_execution_time():
     return 1
+    # return MAX_RECORD_TIME
 
 
 # Most important

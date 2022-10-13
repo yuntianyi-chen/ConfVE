@@ -4,11 +4,27 @@ from config import GENERATION_LIMIT, INIT_POP_SIZE, SELECT_NUM_RATIO
 
 
 class IndividualWithFitness:
+
     def __init__(self, value_list, fitness):
         self.value_list = value_list
         self.fitness = fitness
+        self.accumulated_objectives = [0, 0, 0]
+
         # self.range_list = range_list
 
+    def update_accumulated_objectives(self, violation_number, code_coverage, execution_time):
+        self.accumulated_objectives[0] += violation_number
+        self.accumulated_objectives[1] += code_coverage
+        self.accumulated_objectives[2] += execution_time
+
+    def calculate_fitness(self):
+        self.violation_number = self.accumulated_objectives[0]
+        self.code_coverage = self.accumulated_objectives[1]
+        self.execution_time = self.accumulated_objectives[2]
+        self.fitness = self.violation_number * self.code_coverage * self.execution_time
+
+    def get_fitness(self):
+        return self.fitness
 
 def generate_individuals(option_obj_list, population_size):
     generated_value_lists = list()

@@ -46,14 +46,7 @@ class Scenario:
         for file in files:
             os.remove(file)
 
-    def calculate_fitness(self, violation_number, code_coverage, execution_time):
-        self.violation_number = violation_number
-        self.code_coverage = code_coverage
-        self.execution_time = execution_time
-        self.fitness = violation_number * code_coverage * execution_time
 
-    def get_fitness(self):
-        return self.fitness
 
 
 def config_file_generating(generated_individual, option_obj_list, default):

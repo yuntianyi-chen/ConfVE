@@ -1,0 +1,12 @@
+Violation Results: [('stop_sign', '2203')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_0_Config_2_Obs_6.00000
+Violation Results: [('collision', 9045)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_0_Config_30_Obs_3.00000
+Violation Results: [('collision', 6694)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_0_Config_39_Obs_5.00000
+Violation Results: [('collision', 1227)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_0_Config_40_Obs_3.00000
+Violation Results: [('stop_sign', '1012')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_0_Config_46_Obs_6.00000
+Violation Results: [('collision', 16415)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_0_Config_47_Obs_5.00000

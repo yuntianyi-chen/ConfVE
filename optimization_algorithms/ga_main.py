@@ -1,4 +1,6 @@
 import random
+
+from config import APOLLO_ROOT, MODULE_NAME
 from environment.cyber_env_operation import cyber_env_init
 from optimization_algorithms.genetic_algorithm.ga import ga_init, crossover, mutate, select
 from scenario_handling.create_scenarios import create_scenarios
@@ -27,12 +29,20 @@ def ga_main(module_config_path):
                 scenario_list = create_scenarios(generated_individual, option_obj_list, generation_num, individual_num)
 
                 # test each config settings under several groups of obstacles and adc routes
-                run_scenarios(scenario_list, bridge)
+                run_scenarios(generated_individual, scenario_list, bridge)
+
+                generated_individual.calculate_fitness()
+
                 individual_num += 1
 
         random.shuffle(individual_list_after_mutate)
 
         # Fitness the more, the better, currently, for testing
-        individual_list_after_mutate.sort(key=lambda x: x.fitness, reverse=True)
+        individual_list_after_mutate.sort(reverse=True, key=lambda x: x.fitness)
         individual_list = select(individual_list_after_mutate, option_obj_list)
 
+
+
+if __name__ == '__main__':
+    module_config_path = f"{APOLLO_ROOT}/modules/{MODULE_NAME}/conf/{MODULE_NAME}_config.pb.txt"
+    ga_main(module_config_path)
