@@ -7,10 +7,14 @@ import logging
 # APOLLO CONFIGURATION ==============================
 PERCEPTION_FREQUENCY = 25
 GENERATION_LIMIT = 10
+
 MAX_RECORD_TIME = 10
 INIT_POP_SIZE = 10  # 60 individuals in each generation
 SELECT_NUM_RATIO = [5, 3, 2]
 
+# MAX_RECORD_TIME = 3
+# INIT_POP_SIZE = 3
+# SELECT_NUM_RATIO = [1, 1, 1]
 
 APOLLO_VEHICLE_LENGTH = 4.933
 APOLLO_VEHICLE_WIDTH = 2.11
@@ -27,7 +31,6 @@ MAGGIE_ROOT = '/home/cloudsky/Research/Apollo/AV_Config_Testing'
 RECORDS_DIR = f'{MAGGIE_ROOT}/data/records'
 LOG_DIR = f'{MAGGIE_ROOT}/data/Logs'
 CSV_DIR = f'{MAGGIE_ROOT}/data/csv'
-
 OBS_DIR = f"{APOLLO_ROOT}/modules/tools/perception/obstacles/{MAP_NAME}/"
 
 # MAGGIE CONFIGS ====================================
@@ -39,4 +42,5 @@ INSTANCE_MAX_WAIT_TIME = 15
 MAX_ADC_COUNT = 5
 MAX_PD_COUNT = 5
 RUN_FOR_HOUR = 12
+
 HD_MAP_PATH = f'{MAGGIE_ROOT}/data/maps/{MAP_NAME}/base_map.bin'

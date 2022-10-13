@@ -9,21 +9,19 @@ from scenario_handling.toggle_sim_control import run_sim_control
 from tools.bridge.CyberBridge import Topics, CyberBridge
 
 
-def cyber_env_init():
+def delete_records():
     shutil.rmtree(f"{APOLLO_ROOT}/records")
     os.mkdir(f"{APOLLO_ROOT}/records")
 
-    close_subprocess()
 
-    print("Init cyber environment...")
+def cyber_env_init():
+    close_subprocess()
+    print("Restart Dreamview...")
     dreamview_operation(operation="restart")
-    # modules_operation(operation="start")
     print("Start sim control...")
     run_sim_control()
     print("Start bridge...")
     bridge = start_bridge()
-    # cyber_setup()
-
     register_bridge_publishers(bridge)
     return bridge
 
@@ -32,10 +30,12 @@ def close_subprocess():
     cmd = f"docker exec -d {get_container_name()} /apollo/scripts/my_scripts/close_subprocess.sh"
     subprocess.run(cmd.split())
 
+
 def kill_modules():
     cmd = f"docker exec -d {get_container_name()} bash /apollo/scripts/my_scripts/kill_modules.sh"
     subprocess.run(cmd.split())
     # time.sleep(1)
+
 
 def register_bridge_publishers(bridge):
     for c in [Topics.Localization, Topics.Obstacles, Topics.TrafficLight, Topics.RoutingRequest]:
@@ -49,8 +49,6 @@ def dreamview_operation(operation):
         time.sleep(10)
     else:
         time.sleep(1)
-
-
 
 
 def modules_operation(operation):
@@ -88,7 +86,6 @@ def start_bridge():
             return bridge
         except ConnectionRefusedError:
             time.sleep(1)
-
 
 
 if __name__ == '__main__':

@@ -1,2 +1,0 @@
-Violation Results: [('collision', 7365)]
-  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_0_Config_1_Obs_4.00000

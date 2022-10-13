@@ -1,10 +1,9 @@
 import random
-
 from config import APOLLO_ROOT, MODULE_NAME
-from environment.cyber_env_operation import cyber_env_init
+from environment.cyber_env_operation import cyber_env_init, delete_records
 from optimization_algorithms.genetic_algorithm.ga import ga_init, crossover, mutate, select
 from scenario_handling.create_scenarios import create_scenarios
-from scenario_handling.run_scenario import run_scenarios, replay_scenario
+from scenario_handling.run_scenario import run_scenarios
 from tools.config_file_handler.parser_apollo import parser2class
 
 
@@ -15,8 +14,13 @@ def ga_main(module_config_path):
 
     individual_list = init_individual_list
 
-    bridge = cyber_env_init()
+    delete_records()
+
     for generation_num in range(generation_limit):
+        print("-------------------------------------------------")
+        print(f"Generation_{generation_num}")
+        print("-------------------------------------------------")
+        bridge = cyber_env_init()
         individual_list_after_crossover = crossover(individual_list)
         individual_list_after_mutate = mutate(individual_list_after_crossover, option_type_list)
         individual_num = 0
