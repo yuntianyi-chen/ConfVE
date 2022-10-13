@@ -2,7 +2,11 @@ import glob
 import os
 import shutil
 import subprocess
+from datetime import date
 from pathlib import Path
+
+from config import MAGGIE_ROOT
+
 
 # a= Path.cwd()/"asdasfa.txt.00000"
 #
@@ -14,15 +18,15 @@ from pathlib import Path
 # print(a.parent)
 # print(a.suffixes)
 
-class fff:
-    def __str__(self):
-        return "asdasd"
-    def __repr__(self):
-        return "rere"
-# current_dir = Path.cwd()
-# py_files = list(current_dir.glob('**/*.py'))
+# class fff:
+#     def __str__(self):
+#         return "asdasd"
+#     def __repr__(self):
+#         return "rere"
+# # current_dir = Path.cwd()
+# # py_files = list(current_dir.glob('**/*.py'))
+#
+# a = fff()
+# print(a.__repr__())
 
-a = fff()
-
-print(a.__repr__())
-print(a.__str__())
+print(f"{MAGGIE_ROOT}/violation_results_{date.today()}.txt")

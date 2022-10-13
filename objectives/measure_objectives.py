@@ -1,3 +1,5 @@
+from datetime import date
+
 from config import APOLLO_ROOT, MAX_RECORD_TIME, MAGGIE_ROOT
 from objectives.violation_number.oracles import RecordAnalyzer
 
@@ -28,7 +30,7 @@ def measure_violation_number(record_path):
 
     if len(results) > 0:
         print(f"      Record Path: {record_path}")
-        with open(f"{MAGGIE_ROOT}/violation_results.txt", "a") as f:
+        with open(f"{MAGGIE_ROOT}/violation_results_{date.today()}.txt", "a") as f:
             f.write(f"Violation Results: {results}\n")
             f.write(f"  {record_path}\n")
 
