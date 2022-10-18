@@ -1,0 +1,11 @@
+1. overall coverage
+bash apollo.sh coverage --config=gpu routing
+
+2. coverage of starting a program
+(need to config the BUILD file of bazel)
+bazel coverage --instrumentation_filter --combined_report=lcov //modules/routing/topo_creator:topo_creator_test
+bazel coverage --config=gpu --instrumentation_filter --combined_report=lcov //modules/routing/topo_creator:topo_creator_test
+bazel coverage --instrumentation_filter --combined_report=lcov //modules/routing/tools/routing_tester:routing_request_test
+
+(generate report)
+genhtml -o output bazel-out/_coverage/_coverage_report.dat

@@ -1,0 +1,41 @@
+0. Preparation
+# Remove Bazel output of previous builds
+rm -rf /apollo/.cache/{bazel,build,repos}
+
+# Update cuda
+wget https://developer.download.nvidia.com/compute/cuda/11.4.2/local_installers/cuda_11.4.2_470.57.02_linux.run
+sudo sh cuda_11.4.2_470.57.02_linux.run
+
+# Re-configure bazelrc.
+./apollo.sh config --noninteractive
+
+# Build Error:
+- Dependencies no longer available
+(sudo grep -rnw './' -e 'zlib-1.2.11.tar.gz')
+(file location)
+./.cache/bazel/540135163923dd7d5820f3ee4b306b32/external/io_bazel_rules_go/go/private/repositories.bzl:100:            urls = ["https://zlib.net/zlib-1.2.11.tar.gz"],
+./.cache/bazel/540135163923dd7d5820f3ee4b306b32/external/rules_proto/proto/private/dependencies.bzl:36:            "https://zlib.net/zlib-1.2.11.tar.gz"
+
+https://zlib.net/zlib-1.2.11.tar.gz->https://zlib.net/fossils/zlib-1.2.11.tar.gz
+
+
+
+1. Build the whole project
+./apollo.sh clean
+./apollo.sh build_opt_gpu
+
+2. Build/run a program
+bazel build //apollo_v7_testing:my_demo
+or
+bazel run //apollo_v7_testing:my_demo
+bazel run --ui_event_filters=-info,-stdout,-stderr --noshow_progress //apollo_v7_testing:my_demo
+
+(bazel run includes bazel build)
+----
+
+
+
+----
+
+
+
