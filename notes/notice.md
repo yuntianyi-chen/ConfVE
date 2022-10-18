@@ -38,4 +38,7 @@
 
   - Output
       Routing navigation information
+11. Flashback when replaying the record
+- Close all modules and sim_control when replaying
+- Or fix it by restarting Dreamview
 

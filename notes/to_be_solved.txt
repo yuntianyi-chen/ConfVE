@@ -1,13 +1,10 @@
-0. Create scenarios that may trigger the violations (Modify obstacle_generator.py and adc_routing)
+0. Create scenarios that may trigger violations (Modify obstacle_generator.py and adc_routing)
 0. Finish the rest of violation types
-0. Traffic Lights control (Traverse the traffic lights on map once, random tune the lights)
+0. Traffic Lights control (Traverse the traffic lights on map once, random tune the lights) (Can we let it work like real-world?)
 0. Discuss with Yuqi about the stop sign violation
+0. The image of Dreamview is static after run many scenarios (Maybe bridge is disconnected?)
 
-1. The image of Dreamview is static after run many scenarios (Maybe bridge is discoonected?)
 
-- Flashback when replaying the record (Close all modules and sim_sontrol when replaying)(Or fix it by restarting Dreamview)
-- Violation Examples (Collision and Stop sign)
-- Pull request update (_s_delta_t = sleep_time)(parser.add_argument("-p", "--period", action="store", type=float, default=0.1, defult error)
 
 
 1. Code coverage (Branch coverage)

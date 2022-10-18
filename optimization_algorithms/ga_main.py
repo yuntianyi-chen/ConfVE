@@ -28,6 +28,12 @@ def ga_main(module_config_path):
             print("-------------------------------------------------")
             print(f"Generation_{generation_num} Individual_{individual_num}")
 
+            ######################
+
+            # Restart something to fix the image static bug here
+
+            ######################
+
             if generated_individual.fitness is None:
                 # scenario refers to a config setting with different fixed obstacles and adc routes
                 scenario_list = create_scenarios(generated_individual, option_obj_list, generation_num, individual_num)

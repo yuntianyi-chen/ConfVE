@@ -5,11 +5,9 @@ from config import GENERATION_LIMIT, INIT_POP_SIZE, SELECT_NUM_RATIO
 
 class IndividualWithFitness:
 
-    def __init__(self, value_list, fitness):
+    def __init__(self, value_list):
         self.value_list = value_list
-        self.fitness = fitness
-        self.accumulated_objectives = [0, 0, 0]
-
+        self.reset_default()
         # self.range_list = range_list
 
     def update_accumulated_objectives(self, violation_number, code_coverage, execution_time):
@@ -26,6 +24,16 @@ class IndividualWithFitness:
     def get_fitness(self):
         return self.fitness
 
+    def reset_default(self):
+        self.fitness = None
+        # self.fitness = random.randint(0, 10)
+
+        self.violation_number = 0
+        self.code_coverage = 0
+        self.execution_time = 0
+        self.accumulated_objectives = [0, 0, 0]
+
+
 def generate_individuals(option_obj_list, population_size):
     generated_value_lists = list()
 
@@ -37,7 +45,7 @@ def generate_individuals(option_obj_list, population_size):
             generated_value = generate_option_value(option_type, option_value)
             generated_value_list.append(generated_value)
         generated_value_lists.append(generated_value_list)
-    individual_list = [IndividualWithFitness(value_list, None) for value_list in generated_value_lists]
+    individual_list = [IndividualWithFitness(value_list) for value_list in generated_value_lists]
     return individual_list
 
 
@@ -81,8 +89,11 @@ def crossover(individual_list):
                                                                                  position:]
         individual_B.value_list = individual_list[randb].value_list[:position] + individual_list[randa].value_list[
                                                                                  position:]
-        individual_A.fitness = None
-        individual_B.fitness = None
+        # individual_A.fitness = None
+        # individual_B.fitness = None
+        individual_A.reset_default()
+        individual_B.reset_default()
+
         new_individual_list.append(individual_A)
         new_individual_list.append(individual_B)
     return individual_list + new_individual_list
@@ -96,6 +107,7 @@ def mutate(individual_list, option_type_list):
         option_value = individual_obj.value_list[position]
         generated_value = generate_option_value(option_type, option_value)
         individual_obj.value_list[position] = generated_value
+        individual_obj.reset_default()
     return individual_list + new_individual_list
 
 

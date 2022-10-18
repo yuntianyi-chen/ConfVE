@@ -1,5 +1,4 @@
 from datetime import date
-
 from config import APOLLO_ROOT, MAX_RECORD_TIME, MAGGIE_ROOT
 from objectives.violation_number.oracles import RecordAnalyzer
 
