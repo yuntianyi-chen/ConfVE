@@ -1,4 +1,3 @@
-0. Arrange the Notes dir
 0. Create scenarios that may trigger the violations (Modify obstacle_generator.py and adc_routing)
 0. Finish the rest of violation types
 0. Traffic Lights control (Traverse the traffic lights on map once, random tune the lights)
