@@ -1,4 +1,6 @@
 import random
+import time
+
 from config import APOLLO_ROOT, MODULE_NAME
 from environment.cyber_env_operation import cyber_env_init, delete_records
 from optimization_algorithms.genetic_algorithm.ga import ga_init, crossover, mutate, select
@@ -15,6 +17,8 @@ def ga_main(module_config_path):
     individual_list = init_individual_list
 
     delete_records()
+
+    start_time = time.time()
 
     for generation_num in range(generation_limit):
         print("-------------------------------------------------")
@@ -50,6 +54,9 @@ def ga_main(module_config_path):
         # Fitness the more, the better, currently, for testing
         individual_list_after_mutate.sort(reverse=True, key=lambda x: x.fitness)
         individual_list = select(individual_list_after_mutate, option_obj_list)
+
+    end_time = time.time()
+    print("Time cost: " + str((end_time - start_time) / 3600) + " hours")
 
 
 if __name__ == '__main__':
