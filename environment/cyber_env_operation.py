@@ -20,11 +20,13 @@ def cyber_env_init():
     dreamview_operation(operation="restart")
     print("Start sim control...")
     run_sim_control()
+
+
+def connect_bridge():
     print("Start bridge...")
     bridge = start_bridge()
     register_bridge_publishers(bridge)
     return bridge
-
 
 def close_subprocess():
     cmd = f"docker exec -d {get_container_name()} /apollo/scripts/my_scripts/close_subprocess.sh"
