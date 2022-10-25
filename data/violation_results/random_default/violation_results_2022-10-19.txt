@@ -1,0 +1,104 @@
+Violation Results: [('stop_sign', '2203')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_0_Config_27_Obs_8.00000
+Violation Results: [('collision', 12801)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_0_Config_29_Obs_7.00000
+Violation Results: [('collision', 14382)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_0_Config_40_Obs_4.00000
+Violation Results: [('stop_sign', '1034')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_0_Config_42_Obs_9.00000
+Violation Results: [('collision', 7365)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_0_Config_49_Obs_4.00000
+Violation Results: [('stop_sign', '2202')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_1_Config_8_Obs_9.00000
+Violation Results: [('collision', 15718)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_1_Config_28_Obs_6.00000
+Violation Results: [('collision', 1865)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_1_Config_44_Obs_0.00000
+Violation Results: [('collision', 15718)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_1_Config_49_Obs_6.00000
+Violation Results: [('collision', 14718)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_2_Config_2_Obs_7.00000
+Violation Results: [('collision', 2213)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_2_Config_4_Obs_2.00000
+Violation Results: [('stop_sign', '1012')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_2_Config_31_Obs_9.00000
+Violation Results: [('collision', 10675)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_2_Config_48_Obs_4.00000
+Violation Results: [('stop_sign', '1027')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_3_Config_2_Obs_9.00000
+Violation Results: [('collision', 1865)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_4_Config_4_Obs_0.00000
+Violation Results: [('collision', 27750)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_4_Config_6_Obs_6.00000
+Violation Results: [('collision', 21703)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_4_Config_16_Obs_4.00000
+Violation Results: [('collision', 28401)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_4_Config_17_Obs_0.00000
+Violation Results: [('collision', 15718)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_5_Config_18_Obs_6.00000
+Violation Results: [('collision', 12202)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_5_Config_24_Obs_8.00000
+Violation Results: [('collision', 11560)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_5_Config_45_Obs_6.00000
+Violation Results: [('collision', 9045)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_6_Config_4_Obs_3.00000
+Violation Results: [('collision', 11189)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_6_Config_9_Obs_7.00000
+Violation Results: [('collision', 17215)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_6_Config_30_Obs_2.00000
+Violation Results: [('collision', 15718)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_6_Config_39_Obs_6.00000
+Violation Results: [('collision', 10364)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_6_Config_45_Obs_2.00000
+Violation Results: [('collision', 1908)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_6_Config_50_Obs_7.00000
+Violation Results: [('module', 'routing failure')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_7_Config_7_Obs_0.00000
+Violation Results: [('module', 'routing failure')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_7_Config_7_Obs_1.00000
+Violation Results: [('module', 'routing failure')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_7_Config_7_Obs_2.00000
+Violation Results: [('module', 'routing failure')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_7_Config_7_Obs_3.00000
+Violation Results: [('module', 'routing failure')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_7_Config_7_Obs_4.00000
+Violation Results: [('module', 'routing failure')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_7_Config_7_Obs_5.00000
+Violation Results: [('module', 'routing failure')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_7_Config_7_Obs_6.00000
+Violation Results: [('module', 'routing failure')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_7_Config_7_Obs_7.00000
+Violation Results: [('module', 'routing failure')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_7_Config_7_Obs_8.00000
+Violation Results: [('module', 'routing failure')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_7_Config_7_Obs_9.00000
+Violation Results: [('collision', 2213)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_7_Config_12_Obs_2.00000
+Violation Results: [('collision', 2213)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_7_Config_14_Obs_2.00000
+Violation Results: [('collision', 2277)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_7_Config_22_Obs_1.00000
+Violation Results: [('collision', 10364)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_7_Config_25_Obs_2.00000
+Violation Results: [('collision', 27194)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_7_Config_25_Obs_8.00000
+Violation Results: [('collision', 28401)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_7_Config_29_Obs_0.00000
+Violation Results: [('collision', 14718)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_8_Config_1_Obs_7.00000
+Violation Results: [('collision', 3179)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_8_Config_7_Obs_9.00000
+Violation Results: [('stop_sign', '1023')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_8_Config_16_Obs_2.00000
+Violation Results: [('collision', 9106)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_8_Config_22_Obs_4.00000
+Violation Results: [('collision', 10364)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_8_Config_25_Obs_2.00000
+Violation Results: [('collision', 9414)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_8_Config_30_Obs_2.00000
+Violation Results: [('collision', 1865)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_8_Config_46_Obs_0.00000
+Violation Results: [('collision', 1865)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_10_Obs_0.00000
+Violation Results: [('collision', 9614)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_20_Obs_9.00000
