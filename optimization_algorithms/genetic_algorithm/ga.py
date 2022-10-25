@@ -42,7 +42,8 @@ def generate_individuals(option_obj_list, population_size):
         for option_obj in option_obj_list:
             option_type = option_obj.option_type
             option_value = option_obj.option_value
-            generated_value = generate_option_value(option_type, option_value)
+            # generated_value = generate_option_value_by_random(option_type, option_value)
+            generated_value = option_value
             generated_value_list.append(generated_value)
         generated_value_lists.append(generated_value_list)
     individual_list = [IndividualWithFitness(value_list) for value_list in generated_value_lists]
@@ -105,7 +106,7 @@ def mutate(individual_list, option_type_list):
         position = random.randint(0, len(individual_list[0].value_list) - 1)
         option_type = option_type_list[position]
         option_value = individual_obj.value_list[position]
-        generated_value = generate_option_value(option_type, option_value)
+        generated_value = generate_option_value_by_random(option_type, option_value)
         individual_obj.value_list[position] = generated_value
         individual_obj.reset_default()
     return individual_list + new_individual_list
@@ -116,7 +117,8 @@ def mutate(individual_list, option_type_list):
 #     return fitness
 
 
-def generate_option_value(option_type, option_value):
+
+def generate_option_value_by_random(option_type, option_value):
     if option_type == "float":
         generated_value = round(random.uniform(0, 100), 2)
     elif option_type == "integer":

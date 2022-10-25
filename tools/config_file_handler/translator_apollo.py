@@ -84,6 +84,12 @@ def option_obj_translator(option_obj_list):
     for i in range(pop_count):
         indent_length_rate -= 1
         output_string_list.append("  " * indent_length_rate + "}\n")
+
+
+    if MODULE_NAME == "planning":
+        output_string_list.insert(17, "  planner_public_road_config: {\n")
+        output_string_list.insert(18, "  }\n")
+        output_string_list.insert(14, "# NO_LEARNING / E2E / HYBRID / RL_TEST / E2E_TEST / HYBRID_TEST")
     return output_string_list
 
 

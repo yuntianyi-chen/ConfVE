@@ -47,8 +47,6 @@ class Scenario:
             os.remove(file)
 
 
-
-
 def config_file_generating(generated_individual, option_obj_list, default):
     if default:
         shutil.copy(f"{MAGGIE_ROOT}/backup/config files/{MODULE_NAME}/conf/{MODULE_NAME}_config.pb.txt",
@@ -118,5 +116,4 @@ if __name__ == "__main__":
     adc_route_raw = adc_routing.split(',')
     init_x, init_y, dest_x, dest_y = float(adc_route_raw[0]), float(adc_route_raw[1]), float(
         adc_route_raw[2]), float(adc_route_raw[3])
-
     print()

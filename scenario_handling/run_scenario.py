@@ -56,7 +56,7 @@ def run_scenarios(generated_individual, scenario_list, bridge):
     kill_modules()
     time.sleep(2)
     modules_operation(operation="start")
-    time.sleep(3)
+    time.sleep(4)
 
     scenario_count = 0
 
