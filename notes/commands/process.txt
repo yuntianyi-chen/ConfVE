@@ -1,7 +1,7 @@
 1. Process kill
 ps -ef | grep -E 'cyber_recorder|obstacles_perception|replay_perception|prediction|planning|routing' | grep -v 'grep' | awk '{print $2}' | xargs kill -9
 
-ps -ef | grep -E 'dreamview' | grep -v 'grep' | awk '{print $2}' | xargs kill -9
+ps -ef | grep -E 'dreamview|monitor' | grep -v 'grep' | awk '{print $2}' | xargs kill -9
 
 ps -ef | grep -E 'prediction|planning|routing' | grep -v 'grep' | awk '{print $2}' | xargs kill -9
 
@@ -18,4 +18,3 @@ docker exec -d apollo_dev_cloudsky /apollo/scripts/my_scripts/stop_recorder.sh
 
 (stop module)
 docker exec apollo_dev_cloudsky bash /apollo/scripts/routing.sh stop
-

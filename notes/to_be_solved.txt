@@ -4,8 +4,6 @@
 0. Discuss with Yuqi about the stop sign violation
 0. The image of Dreamview is static after run many scenarios (Maybe bridge is disconnected?) (Restart the dreamview to fix this, maybe not the bridge issue)
 
-0. Init by default configuration for all individuals
-
 0. Implement different approach first, lastly consider manually generating scenarios
 
 1. avoid generating the obstacles overlapped with the ego car
