@@ -15,11 +15,16 @@ def delete_records():
 
 
 def cyber_env_init():
+    print("Closing modules & Dreamview...")
+    modules_operation(operation="stop")
     close_subprocess()
     print("Restart Dreamview...")
-    dreamview_operation(operation="restart")
+    dreamview_operation(operation="start")
     print("Start sim control...")
     run_sim_control()
+    print("Restarting modules...")
+    # kill_modules()
+    modules_operation(operation="start")
 
 
 def connect_bridge():
@@ -36,7 +41,7 @@ def close_subprocess():
 def kill_modules():
     cmd = f"docker exec -d {get_container_name()} bash /apollo/scripts/my_scripts/kill_modules.sh"
     subprocess.run(cmd.split())
-    # time.sleep(1)
+    time.sleep(1)
 
 
 def register_bridge_publishers(bridge):
@@ -48,7 +53,7 @@ def dreamview_operation(operation):
     cmd = f"docker exec -d {get_container_name()} bash /apollo/scripts/bootstrap.sh {operation}"
     subprocess.run(cmd.split())
     if operation == "start" or "restart":
-        time.sleep(10)
+        time.sleep(5)
     else:
         time.sleep(1)
 
@@ -56,16 +61,16 @@ def dreamview_operation(operation):
 def modules_operation(operation):
     cmd = f"docker exec -d {get_container_name()} bash /apollo/scripts/routing.sh {operation}"
     subprocess.run(cmd.split())
-    time.sleep(1)
+    # time.sleep(1)
     cmd = f"docker exec -d {get_container_name()} bash /apollo/scripts/planning.sh {operation}"
     subprocess.run(cmd.split())
-    time.sleep(1)
+    # time.sleep(1)
     cmd = f"docker exec -d {get_container_name()} bash /apollo/scripts/prediction.sh {operation}"
     subprocess.run(cmd.split())
+    time.sleep(2)
 
 
 def cyber_setup():
-    time.sleep(1)
     cmd = f"docker exec -d {get_container_name()} source /apollo/cyber/setup.bash"
     subprocess.run(cmd.split())
     time.sleep(1)

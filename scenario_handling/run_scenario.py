@@ -50,13 +50,6 @@ def send_routing_request(init_x, init_y, dest_x, dest_y, bridge):
 
 
 def run_scenarios(generated_individual, scenario_list, bridge):
-    print("Restarting modules...")
-    modules_operation(operation="stop")
-    time.sleep(1)
-    kill_modules()
-    time.sleep(2)
-    modules_operation(operation="start")
-    time.sleep(4)
 
     scenario_count = 0
 
