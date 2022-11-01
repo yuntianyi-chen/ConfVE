@@ -1,16 +1,16 @@
-0. Create scenarios that may trigger violations (Modify obstacle_generator.py and adc_routing)
 0. Finish the rest of violation types
 0. Traffic Lights control (Traverse the traffic lights on map once, random tune the lights) (Can we let it work like real-world?)
 0. Discuss with Yuqi about the stop sign violation
 0. The image of Dreamview is static after run many scenarios (Maybe bridge is disconnected?) (Restart the dreamview to fix this, maybe not the bridge issue)
-
-0. Implement different approach first, lastly consider manually generating scenarios
-
-1. avoid generating the obstacles overlapped with the ego car
-2. avoid generating the ego car above the stop sign line
 
 
 1. Code coverage (Branch coverage)
 2. Deep Reinforcement learning
 3. Tuning ranges for options
 4. Finish fitness calculation function
+5. Manually create scenarios that may trigger violations (Modify obstacle_generator.py and adc_routing)
+
+
+0. Implement different approach first, consider manually generating scenarios at last
+1. avoid generating the obstacles overlapped with the ego car
+2. avoid generating the ego car above the stop sign line
