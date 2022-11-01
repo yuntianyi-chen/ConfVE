@@ -34,10 +34,10 @@ class IndividualWithFitness:
         self.accumulated_objectives = [0, 0, 0]
 
 
-def generate_individuals(option_obj_list, population_size):
+def generate_individuals(option_obj_list):
     generated_value_lists = list()
 
-    for i in range(population_size):
+    for i in range(INIT_POP_SIZE):
         generated_value_list = list()
         for option_obj in option_obj_list:
             option_type = option_obj.option_type
@@ -52,10 +52,10 @@ def generate_individuals(option_obj_list, population_size):
 
 def ga_init(option_obj_list):
     # global init_population_size
-    init_population_size = INIT_POP_SIZE
+    # init_population_size = INIT_POP_SIZE
     generation_limit = GENERATION_LIMIT
     option_type_list = [option_obj.option_type for option_obj in option_obj_list]
-    init_individual_list = generate_individuals(option_obj_list, init_population_size)
+    init_individual_list = generate_individuals(option_obj_list)
     return init_individual_list, generation_limit, option_type_list
 
 

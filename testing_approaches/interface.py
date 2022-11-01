@@ -1,15 +1,23 @@
 import os
 from config import APOLLO_ROOT, MAP_NAME, AV_TESTING_APPROACH, OBS_GROUP_COUNT
-from testing_approaches.scenorita.scenorita import adc_routing_generate, obs_routing_generate
+from testing_approaches.obstacle_obj import ObsWithFitness
+from testing_approaches.scenorita.scenorita import ScenoRITA
+
+
+
+def init_obs():
+    obstacle_chromosomes_list = [ObsWithFitness() for i in range(OBS_GROUP_COUNT)]
+    return obstacle_chromosomes_list
 
 
 def generate_obs_adc_routes_by_approach(obstacle_chromosomes):
-
-    # obs_group_path_list = obs_routing_generator(AV_TESTING_APPROACH)
-
+    approach_generator = None
+    if AV_TESTING_APPROACH == "scenoRITA":
+        approach_generator = ScenoRITA()
+    obs_group_path_list = [approach_generator.obs_routing_generate() for i in range(OBS_GROUP_COUNT)]
     obs_group_path_list = read_obstacles()
+    adc_routing_list = [approach_generator.adc_routing_generate() for i in range(OBS_GROUP_COUNT)]
 
-    adc_routing_list = adc_routing_generator(AV_TESTING_APPROACH)
     # adc_routing = adc_routing_generate()
     # adc_routing_list = ["586980.86,4140959.45,587283.52,4140882.30" for i in obs_group_path_list]
 
@@ -27,15 +35,3 @@ def read_obstacles():
     return obs_group_path_list
 
 
-def adc_routing_generator(AV_TESTING_APPROACH):
-    adc_routing_list = []
-    if AV_TESTING_APPROACH == "scenoRITA":
-        adc_routing_list = [adc_routing_generate() for i in range(OBS_GROUP_COUNT)]
-    return adc_routing_list
-
-
-def obs_routing_generator(AV_TESTING_APPROACH):
-    obs_group_path_list = []
-    if AV_TESTING_APPROACH == "scenoRITA":
-        obs_group_path_list = [obs_routing_generate() for i in range(OBS_GROUP_COUNT)]
-    return obs_group_path_list
