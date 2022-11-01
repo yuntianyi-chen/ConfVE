@@ -1,11 +1,11 @@
 import random
 import time
-
 from config import APOLLO_ROOT, MODULE_NAME
 from environment.cyber_env_operation import cyber_env_init, delete_records, connect_bridge
 from optimization_algorithms.genetic_algorithm.ga import ga_init, crossover, mutate, select
 from scenario_handling.create_scenarios import create_scenarios
 from scenario_handling.run_scenario import run_scenarios
+from testing_approaches.interface import generate_obs_adc_routes_by_approach
 from tools.config_file_handler.parser_apollo import parser2class
 
 
@@ -29,20 +29,22 @@ def ga_main(module_config_path):
         individual_list_after_crossover = crossover(individual_list)
         individual_list_after_mutate = mutate(individual_list_after_crossover, option_type_list)
         individual_num = 0
+
+        ###################
+
+        obstacle_chromosomes = []
+        obs_group_path_list, adc_routing_list = generate_obs_adc_routes_by_approach(obstacle_chromosomes)
+        ###################
+
         for generated_individual in individual_list_after_mutate:
             print("-------------------------------------------------")
             print(f"Generation_{generation_num} Individual_{individual_num}")
-
-            ######################
-
-            # Restart something to fix the image static bug here
+            # Restart cyber_env to fix the image static bug here
             cyber_env_init()
-
-            ######################
-
             if generated_individual.fitness is None:
                 # scenario refers to a config setting with different fixed obstacles and adc routes
-                scenario_list = create_scenarios(generated_individual, option_obj_list, generation_num, individual_num)
+                scenario_list = create_scenarios(generated_individual, option_obj_list, generation_num, individual_num,
+                                                 obs_group_path_list, adc_routing_list)
 
                 # test each config settings under several groups of obstacles and adc routes
                 run_scenarios(generated_individual, scenario_list, bridge)
