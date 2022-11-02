@@ -14,3 +14,8 @@
 0. Implement different approach first, consider manually generating scenarios at last
 1. avoid generating the obstacles overlapped with the ego car
 2. avoid generating the ego car above the stop sign line
+
+
+
+xx: take the final result of AV Testing approaches
+xx: 12 scenarios
