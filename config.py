@@ -25,6 +25,9 @@ MAP_NAME = "sunnyvale_loop"
 MODULE_NAME = "planning"
 DEFAULT_CONFIG_FILE = False
 
+AV_TESTING_APPROACH = "scenoRITA"
+OBS_GROUP_COUNT = 10
+
 # DIRECTORIES =======================================
 APOLLO_ROOT = '/home/cloudsky/Research/Apollo/apollo_7.0'
 MAGGIE_ROOT = '/home/cloudsky/Research/Apollo/AV_Config_Testing'

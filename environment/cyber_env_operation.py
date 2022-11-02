@@ -67,7 +67,7 @@ def modules_operation(operation):
     # time.sleep(1)
     cmd = f"docker exec -d {get_container_name()} bash /apollo/scripts/prediction.sh {operation}"
     subprocess.run(cmd.split())
-    time.sleep(2)
+    time.sleep(3)
 
 
 def cyber_setup():
