@@ -5,10 +5,9 @@
 3. Finish fitness calculation function
 4. Run AV Testing techniques
 
-0. Discuss with Yuqi about the stop sign violation
 0. The image of Dreamview is static after run many scenarios (Maybe bridge is disconnected?) (Restart the dreamview to fix this, maybe not the bridge issue)
 
-3. Tuning ranges for options
+1. Tuning ranges for options
 
 ---------------------
 1. avoid generating the obstacles overlapped with the ego car
