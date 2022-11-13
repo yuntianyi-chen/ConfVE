@@ -6,6 +6,7 @@ import subprocess
 import time
 from config import APOLLO_ROOT, MODULE_NAME, MAGGIE_ROOT, DEFAULT_CONFIG_FILE
 from environment.container_settings import get_container_name
+from scenario_handling.traffic_light_control.traffic_light_control import TCSection
 from tools.config_file_handler.translator_apollo import option_obj_translator, save2file
 
 
@@ -15,6 +16,8 @@ class Scenario:
         self.obs_group_path = obs_group_path
         self.adc_route = adc_route
         self.record_name = record_name
+        self.traffic_light_control = TCSection.get_one()
+        # self.tm =
 
     def start_recorder(self):
         cmd = f"docker exec -d {get_container_name()} /apollo/bazel-bin/cyber/tools/cyber_recorder/cyber_recorder record -o /apollo/records/{self.record_name} -a &"
@@ -64,6 +67,9 @@ def create_scenarios(generated_individual, option_obj_list, generation_num, indi
                                                       default=DEFAULT_CONFIG_FILE)
     record_name_list = [f"Generation_{str(generation_num)}_Config_{individual_num}_Obs_{str(i)}" for i in
                         range(len(adc_routing_list))]
+
+    # tm = TrafficControlManager(self.curr_scenario.tc_section)
+
     scenario_list = [Scenario(config_file_tuned_status, obs_group_path, adc_route, record_name) for
                      obs_group_path, adc_route, record_name in
                      zip(obs_group_path_list, adc_routing_list, record_name_list)]

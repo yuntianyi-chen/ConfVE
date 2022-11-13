@@ -5,6 +5,7 @@ from environment.container_settings import get_container_name
 from environment.cyber_env_operation import modules_operation, kill_modules
 from modules.routing.proto.routing_pb2 import RoutingRequest
 from objectives.measure_objectives import measure_objectives_individually
+from scenario_handling.traffic_light_control.TrafficControlManager import TrafficControlManager
 from tools.bridge.CyberBridge import Topics
 
 
@@ -49,8 +50,23 @@ def send_routing_request(init_x, init_y, dest_x, dest_y, bridge):
     bridge.publish(Topics.RoutingRequest, routing_request.SerializeToString())
 
 
-def run_scenarios(generated_individual, scenario_list, bridge):
+def register_traffic_lights(traffic_light_control, bridge):
+    tm = TrafficControlManager(traffic_light_control)
+    runner_time = 0
+    while (True):
+        # Publish TrafficLight
+        tld = tm.get_traffic_configuration(runner_time / 1000)
+        bridge.publish(Topics.TrafficLight, tld.SerializeToString())
 
+        # Check if scenario exceeded upper limit
+        if runner_time / 1000 >= MAX_RECORD_TIME:
+            break
+
+        time.sleep(0.1)
+        runner_time += 100
+
+
+def run_scenarios(generated_individual, scenario_list, bridge):
     scenario_count = 0
 
     for scenario in scenario_list:
@@ -68,8 +84,12 @@ def run_scenarios(generated_individual, scenario_list, bridge):
 
         send_routing_request(init_x, init_y, dest_x, dest_y, bridge)
 
+        ####################
+        register_traffic_lights(scenario.traffic_light_control, bridge)
+
         # Wait for record time
-        time.sleep(MAX_RECORD_TIME)
+        # time.sleep(MAX_RECORD_TIME)
+        ####################
 
         # Stop recording messages and producing perception messages
         print("    Stop recorder...")
