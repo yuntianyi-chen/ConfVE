@@ -4,10 +4,11 @@
 3. Finish fitness calculation function
 4. Finish the rest of violation types
 
-0. The image of Dreamview is static after run many scenarios (Maybe bridge is disconnected?) (Restart the dreamview to fix this, maybe not the bridge issue)
+0. The image of Dreamview is static after running many scenarios (Maybe bridge is disconnected?) (Restart the dreamview to fix this, maybe not the bridge issue)
 
 1. Tuning ranges for options
 
 ---------------------
 1. avoid generating the obstacles overlapped with the ego car
 2. avoid generating the ego car above the stop sign line
+3. replay obstacle detection & routing request

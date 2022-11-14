@@ -15,6 +15,9 @@ class ShowerEnv(Env):
         # Set shower length
         self.shower_length = 60
 
+    ####
+    # Apply run scenarios
+    ####
     def step(self, action):
         # Apply action
         # 0 -1 = -1 temperature

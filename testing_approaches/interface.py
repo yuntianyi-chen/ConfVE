@@ -4,7 +4,6 @@ from testing_approaches.obstacle_obj import ObsWithFitness
 from testing_approaches.scenorita.scenorita import ScenoRITA
 
 
-
 def init_obs():
     obstacle_chromosomes_list = [ObsWithFitness() for i in range(OBS_GROUP_COUNT)]
     return obstacle_chromosomes_list
@@ -33,5 +32,3 @@ def read_obstacles():
     for obs_group_folder_name in obs_group_folders_name_list:
         obs_group_path_list.append(obs_apollo_folder + obs_group_folder_name)
     return obs_group_path_list
-
-
