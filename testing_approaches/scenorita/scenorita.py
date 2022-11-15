@@ -11,10 +11,10 @@ import random
 import os
 import time
 import json
-from deap import tools
 from testing_approaches.scenorita.interface import ScenoRITA
 from testing_approaches.scenorita.run_oracles import run_oracles
-from testing_approaches.scenorita.scenoRITA_ga import scenoRITA_ga_init
+from testing_approaches.scenorita.scenoRITA_config import OBS_MIN, OBS_MAX, NP, TOTAL_LANES, ETIME, CXPB, MUTPB, ADDPB, DELPB
+from deap import base, creator, tools
 
 obs_folder = OBS_DIR+"scenorita/"
 dest = MAGGIE_ROOT + "/data/analysis"
@@ -26,6 +26,41 @@ timer_file = "execution_time.csv"
 ptl_dict, ltp_dict, diGraph = initialize()
 obstacle_type = ["PEDESTRIAN", "BICYCLE", "VEHICLE"]
 
+
+def scenoRITA_ga_init():
+    # global init_population_size
+    # init_population_size = INIT_POP_SIZE
+    # generation_limit = GENERATION_LIMIT
+    # option_type_list = [option_obj.option_type for option_obj in option_obj_list]
+    # init_individual_list = generate_individuals(option_obj_list)
+
+    # ------- GA Definitions -------
+    # Fitness and Individual generator
+    creator.create("MultiFitness", base.Fitness, weights=(-1.0, -1.0, -1.0, 1.0, -1.0))
+    creator.create("Individual", list, fitness=creator.MultiFitness)
+    toolbox = base.Toolbox()
+    # Attribute generator (9 obstacle attributes)
+    toolbox.register("id", random.randint, 0, 30000)
+    toolbox.register("start_pos", random.randint, 0, len(ptl_dict.keys()) - 1)
+    toolbox.register("end_pos", random.randint, 0, len(ptl_dict.keys()) - 1)
+    toolbox.register("theta", random.uniform, -3.14, 3.14)
+    toolbox.register("length", random.uniform, 0.2, 14.5)
+    toolbox.register("width", random.uniform, 0.3, 2.5)
+    toolbox.register("height", random.uniform, 0.97, 4.7)
+    toolbox.register("speed", random.uniform, 1, 20)
+    toolbox.register("type", random.randint, 0, 2)
+    # Structure initializers
+    toolbox.register("individual", tools.initCycle, creator.Individual,
+                     (toolbox.id, toolbox.start_pos, toolbox.end_pos, toolbox.theta, toolbox.length, toolbox.width,
+                      toolbox.height, toolbox.speed, toolbox.type), n=1)
+    # define the deme to be a list of individuals (obstacles)
+    toolbox.register("deme", tools.initRepeat, list, toolbox.individual)
+    toolbox.register("mate", tools.cxTwoPoint)
+    toolbox.register("mutate", tools.mutUniformInt, low=(0, 0, 0, -3, 1, 1, 1, 1, 0),
+                     up=(30000, len(ptl_dict.keys()) - 1, len(ptl_dict.keys()) - 1, 3, 15, 3, 5, 20, 2), indpb=0.05)
+    toolbox.register("select", tools.selNSGA2)
+
+    return toolbox
 
 def check_trajectory(p_index1, p_index2):
     valid_path = False
@@ -181,15 +216,8 @@ def runScenario(deme, record_name, bridge):
 if __name__ == "__main__":
     toolbox = scenoRITA_ga_init()
 
-    NP = 50
-    OBS_MAX = 15
-    OBS_MIN = 3
-    TOTAL_LANES = 60
-    ETIME = 43200  # execution time end (in seconds) after 12 hours
     GLOBAL_LANE_COVERAGE = set()
     DEME_SIZES = [random.randint(OBS_MIN, OBS_MAX) for p in range(0, NP)]
-    CXPB, MUTPB, ADDPB, DELPB = 0.8, 0.2, 0.1, 0.1
-
     pop = [toolbox.deme(n=i) for i in DEME_SIZES]
     hof = tools.HallOfFame(NP)  # best ind in each scenario
     lane_coverage = {scenario_num: set() for scenario_num in range(1, NP + 1)}
