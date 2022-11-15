@@ -2,7 +2,7 @@ import os
 import ast
 
 # dest = "/apollo/apollo_v7_testing/output_results"
-from config import MAGGIE_ROOT
+from config import MAGGIE_ROOT, APOLLO_RECORDS_DIR
 
 dest = MAGGIE_ROOT + "/data/scenoRITA_oracles"
 report_name = "mut_features.csv"
@@ -11,16 +11,15 @@ report_name = "mut_features.csv"
 def runOracles(scenario_player_output, record_name, scenario):
     lanes = scenario_player_output[1].split(" ")  # lanes travelled by the adc
     speed_limit = scenario_player_output[6]  # lanes travelled and their speed limit
-    collision = eval(scenario_player_output[7])  # collision info
-    min_speed = eval(scenario_player_output[2])  # the closest an adc reached to a lane speed limit
-    offroad = eval(scenario_player_output[3])  # the closest the adc got to driving on lane boundaries
-    accl = eval(scenario_player_output[4])  # maximum accl of adc
-    hardbrake = eval(scenario_player_output[5])  # maximum braking
+    collision = scenario_player_output[7]  # collision info
+    min_speed = scenario_player_output[2]  # the closest an adc reached to a lane speed limit
+    offroad = scenario_player_output[3]  # the closest the adc got to driving on lane boundaries
+    accl = scenario_player_output[4]  # maximum accl of adc
+    hardbrake =scenario_player_output[5]  # maximum braking
     result = ""
 
     # collision values
-    min_distance = ast.literal_eval(
-        scenario_player_output[0])  # a list of obs_id and their minimum dist to the adc, this list is needed for ga
+    min_distance = scenario_player_output[0]  # a list of obs_id and their minimum dist to the adc, this list is needed for ga
     c_type = {"rear": 0, "front": 1, "right": 2, "left": 3}
     if collision == None:
         c_counter = 0
@@ -141,7 +140,7 @@ def runOracles(scenario_player_output, record_name, scenario):
 
     # if there's no violations, delete record file to save space
     if total_vio == 0:
-        del_cmd = "rm /apollo/apollo_v7_testing/temp_record/{}.00000".format(record_name)
+        del_cmd = f"rm {APOLLO_RECORDS_DIR}/{record_name}.00000"
         os.system(del_cmd)
     else:
         with open(os.path.join(dest, report_name), 'a+') as file:

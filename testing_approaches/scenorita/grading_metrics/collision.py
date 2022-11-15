@@ -6,13 +6,21 @@ from shapely.geometry import Polygon, LineString
 # from modules.tools.perception.replay_perception import generate_polygon
 from testing_approaches.scenorita.auxiliary.record.read_record import print_msg_num, read_by_path
 # from automation.auxiliary.oracles.speeding import calculate_speed
-from testing_approaches.scenorita.grading_metrics.speeding import calculate_speed
+# from testing_approaches.scenorita.grading_metrics.speeding import calculate_speed
 from tools.utils import generate_polygon
 
 COLLISION_DETECTED = 0
 
 DEFAULT_ADC_LENGTH = 4.933
 DEFAULT_ADC_WIDTH = 2.11
+
+def calculate_speed(linear_velocity):
+    '''
+    Calculate the speed from linear velocity
+    '''
+    x = linear_velocity.x
+    y = linear_velocity.y
+    return math.sqrt(x ** 2 + y ** 2)
 
 
 def get_args():
@@ -28,7 +36,7 @@ def get_args():
 def get_sample_range(messages):
     max_gap = 0
     prev_time = 0
-    for channel_name, _, _, _, timestamp in messages:
+    for channel_name, _, timestamp in messages:
         if channel_name == '/apollo/localization/pose':
             # Update the max range if we found larger range
             if prev_time != 0:
@@ -144,7 +152,7 @@ def get_adc_rear_vertices(adc_pose, length=DEFAULT_ADC_LENGTH, width=DEFAULT_ADC
 
 def is_rear_end_collision(adc_pose, obs_polygon):
     """
-    Description: Given the adc pose message and obstable polygon, determine if there is a rear-end collison
+    Description: Given the adc pose message and obstacle polygon, determine if there is a rear-end collison
 
     Input:
         1. adc pose message
@@ -221,7 +229,7 @@ def test_collisions(messages):
 
     collision = None
 
-    for channel_name, _, parsed_msg, _, _ in messages:
+    for channel_name, parsed_msg, _ in messages:
         current_timestamp = parsed_msg.header.timestamp_sec
         if init_timestamp is None:
             init_timestamp = current_timestamp

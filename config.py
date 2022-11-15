@@ -32,6 +32,7 @@ OBS_GROUP_COUNT = 10
 APOLLO_ROOT = '/home/cloudsky/Research/Apollo/apollo_7.0'
 MAGGIE_ROOT = '/home/cloudsky/Research/Apollo/AV_Config_Testing'
 RECORDS_DIR = f'{MAGGIE_ROOT}/data/records'
+APOLLO_RECORDS_DIR = f'{APOLLO_ROOT}/records'
 LOG_DIR = f'{MAGGIE_ROOT}/data/Logs'
 CSV_DIR = f'{MAGGIE_ROOT}/data/csv'
 OBS_DIR = f"{APOLLO_ROOT}/modules/tools/perception/obstacles/{MAP_NAME}/"

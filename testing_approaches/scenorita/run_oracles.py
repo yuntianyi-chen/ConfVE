@@ -1,11 +1,11 @@
 import os
 from multiprocessing import Process, Manager
-from config import RECORDS_DIR
+from config import RECORDS_DIR, APOLLO_ROOT, APOLLO_RECORDS_DIR
 from testing_approaches.scenorita.grading_metrics import acceleration, speeding, collision
 
 # TEMP_OUTPUT_PATH = '/apollo/automation/temp_record/'
-TEMP_OUTPUT_PATH = RECORDS_DIR + "/"
-
+# TEMP_OUTPUT_PATH = APOLLO_ROOT + "/records/"
+TEMP_OUTPUT_PATH = f"{APOLLO_RECORDS_DIR}/"
 # OUTPUT_NAME = 'output'
 
 def run_oracles(record_name):

@@ -1,5 +1,5 @@
 import networkx as nx
-from config import MAGGIE_ROOT, OBS_DIR
+from config import MAGGIE_ROOT, OBS_DIR, MAX_RECORD_TIME, MAP_NAME
 from environment.cyber_env_operation import connect_bridge, cyber_env_init
 from scenario_handling.create_scenarios import Scenario
 from scenario_handling.run_scenario import register_obstacles, send_routing_request, \
@@ -13,15 +13,15 @@ import time
 import json
 from testing_approaches.scenorita.interface import ScenoRITA
 from testing_approaches.scenorita.run_oracles import run_oracles
-from testing_approaches.scenorita.scenoRITA_config import OBS_MIN, OBS_MAX, NP, TOTAL_LANES, ETIME, CXPB, MUTPB, ADDPB, DELPB
+from testing_approaches.scenorita.scenoRITA_config import OBS_MIN, OBS_MAX, NP, TOTAL_LANES, ETIME, CXPB, MUTPB, ADDPB, \
+    DELPB
 from deap import base, creator, tools
 
-obs_folder = OBS_DIR+"scenorita/"
+obs_folder = OBS_DIR + "scenorita/"
 dest = MAGGIE_ROOT + "/data/analysis"
 features_file = "mut_features.csv"
 ga_file = "ga_output.csv"
 timer_file = "execution_time.csv"
-
 
 ptl_dict, ltp_dict, diGraph = initialize()
 obstacle_type = ["PEDESTRIAN", "BICYCLE", "VEHICLE"]
@@ -61,6 +61,7 @@ def scenoRITA_ga_init():
     toolbox.register("select", tools.selNSGA2)
 
     return toolbox
+
 
 def check_trajectory(p_index1, p_index2):
     valid_path = False
@@ -109,7 +110,7 @@ def check_obs_type(length, width, height, speed, type_index):
 
 
 def run_scenario(scenario, bridge):
-    sim_time=time.time()
+    sim_time = time.time()
     adc_route_raw = scenario.adc_route.split(',')
     init_x, init_y, dest_x, dest_y = float(adc_route_raw[0]), float(adc_route_raw[1]), float(
         adc_route_raw[2]), float(adc_route_raw[3])
@@ -125,7 +126,7 @@ def run_scenario(scenario, bridge):
     # register_traffic_lights(scenario.traffic_light_control, bridge)
 
     # Wait for record time
-    # time.sleep(MAX_RECORD_TIME)
+    time.sleep(MAX_RECORD_TIME)
     ####################
 
     # Stop recording messages and producing perception messages
@@ -134,11 +135,11 @@ def run_scenario(scenario, bridge):
 
     # scenario.stop_subprocess(p)
     stop_obstacles(p)
-    sim_time=time.time()-sim_time
+    sim_time = time.time() - sim_time
 
-    orcle_time=time.time()
+    orcle_time = time.time()
     min_dist, all_lanes, min_speed, boundary_dist, accl, hardbreak, collision = run_oracles(scenario.record_name)
-    orcle_time=time.time()-orcle_time
+    orcle_time = time.time() - orcle_time
 
     lanes_only = ""
     for lane in all_lanes:
@@ -149,9 +150,10 @@ def run_scenario(scenario, bridge):
         print(None)
     else:
         print(min_dist, lanes_only, min_speed, boundary_dist,
-              accl, hardbreak, all_lanes, collision, sim_time, orcle_time,sep="\n")
+              accl, hardbreak, all_lanes, collision, sim_time, orcle_time, sep="\n")
 
-    output_result = (min_dist, lanes_only, min_speed, boundary_dist, accl, hardbreak, all_lanes, collision, sim_time, orcle_time)
+    output_result = (
+    min_dist, lanes_only, min_speed, boundary_dist, accl, hardbreak, all_lanes, collision, sim_time, orcle_time)
     # violation_number, code_coverage, execution_time = measure_objectives_individually(scenario)
     # scenario.calculate_fitness(violation_number, code_coverage, execution_time)
 
@@ -160,7 +162,9 @@ def run_scenario(scenario, bridge):
 
     # if violation_number == 0:
     #     scenario.delete_record()
+    # print(output_result)
     return output_result
+
 
 def runScenario(deme, record_name, bridge):
     # to start with a fresh set of obstacles for the current scnerio
@@ -168,6 +172,9 @@ def runScenario(deme, record_name, bridge):
         os.system("rm -f " + obs_folder + "*")
     else:
         os.makedirs(obs_folder)
+
+    obs_apollo_folder = f"{MAP_NAME}/scenorita"
+
 
     global diversity_counter
     diversity_counter = {"V": 0, "P": 0, "B": 0}
@@ -188,29 +195,49 @@ def runScenario(deme, record_name, bridge):
         # ensure there are no two obstacles with similar id
         unique_obs_id = False
         while not unique_obs_id:
-            if os.path.exists(os.path.join(obs_folder, "sunnyvale_loop_obs{}.json".format(ind[0]))):
+            if os.path.exists(os.path.join(obs_folder, "obs_{}.json".format(ind[0]))):
                 ind[0] = random.randint(0, 30000)
             else:
                 unique_obs_id = True
         # generate the desc files (each desc file corresponds to one individual/obstacle)
         desc = generateObsDescFile(ind[0], ind[3], ind[4], ind[5], ind[6], ind[7], obstacle_type[ind[8]])
         desc = produceTrace(p1, p2, path, ltp_dict, desc)
-        filename = "sunnyvale_loop_obs" + str(desc["id"]) + ".json"
+        filename = "obs_" + str(desc["id"]) + ".json"
         with open(os.path.join(obs_folder, filename), 'w') as outfile:
             json.dump(desc, outfile)
 
-    approach_generator = ScenoRITA()
-    scenario = Scenario(False, obs_folder, approach_generator.adc_routing_generate(), record_name)
-    output_result = run_scenario(scenario, bridge)
+    failed = True
+    num_runs = 0
+    while failed:
+        print("---------------------------------------------------")
 
+        # if scenario has been restarted x times, restart the moodules and sim control
+        if num_runs % 10 == 0 and num_runs != 0:
+            cyber_env_init()
+            print("attempted %s run" % num_runs)
+
+        approach_generator = ScenoRITA()
+        scenario = Scenario(False, obs_apollo_folder, approach_generator.adc_routing_generate(), record_name)
+        output_result = run_scenario(scenario, bridge)
+        num_runs = num_runs + 1
+        # print(scenario_player_output)
+        # if the adc didn't move or the adc was travelling outside the map boundaries, then re-run scenrio with new routing info
+        if output_result == 'None':
+            continue
+
+        min_distance = output_result[0]
+        # the return number of obstacles must match the ones in the individual
+        if len(min_distance) != len(deme):
+            continue
+        else:
+            failed = False
     # scenario run successfully
     sim_time = float(output_result[8]) * num_runs
     orcle_time = float(output_result[9]) * num_runs
     lanes, min_distance, speeding_min, uslc_min, fastAccl_min, hardBrake_min = runOracles(output_result,
                                                                                           record_name, deme)
+
     return lanes, min_distance, speeding_min, uslc_min, fastAccl_min, hardBrake_min, sim_time, orcle_time, num_runs
-
-
 
 
 if __name__ == "__main__":
@@ -232,10 +259,10 @@ if __name__ == "__main__":
     with open(os.path.join(dest, features_file), 'w') as ffile:
         ffile.write(labels)
     labels = "RecordName,ObsNum,P,B,V,AVG_OBS2ADC_Distance,Speed_Below_Limit,ADC2LaneBound_Distance,FastAccl,HardBrake\n"
-    with open(os.path.join(dest, ga_file), 'a+') as gfile:
+    with open(os.path.join(dest, ga_file), 'w') as gfile:
         gfile.write(labels)
     labels = "RecordName,Simulation,Oracles,MISC,E2E,RetryNo\n"
-    with open(os.path.join(dest, timer_file), 'a+') as tfile:
+    with open(os.path.join(dest, timer_file), 'w') as tfile:
         tfile.write(labels)
 
     # os.system("rm -rf /apollo/automation/grading_metrics/Safety_Violations/*")
@@ -249,7 +276,8 @@ if __name__ == "__main__":
     for deme in pop:
         e2e_time = time.time()
         record_name = "Generation{}_Scenario{}".format(g, scenario_counter)
-        lanes, min_distance, speeding_min, uslc_min, fastAccl_min, hardBrake_min, sim_time, orcle_time, num_runs = runScenario(deme, record_name, bridge)
+        lanes, min_distance, speeding_min, uslc_min, fastAccl_min, hardBrake_min, sim_time, orcle_time, num_runs = runScenario(
+            deme, record_name, bridge)
         lanes.remove('')
         GLOBAL_LANE_COVERAGE.update(lanes)
         lane_coverage[scenario_counter] = lane_coverage[scenario_counter].union(lanes)
@@ -258,16 +286,15 @@ if __name__ == "__main__":
             obs_min_dist = min_distance[str(ind[0])]
             ind.fitness.values = (obs_min_dist, speeding_min, uslc_min, fastAccl_min, hardBrake_min,)
             sum += obs_min_dist
-        # with open(os.path.join(dest, ga_file), 'a+') as gfile:
-        #     gfile.write("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n"
-        #                 % (
-        #                     record_name, len(deme), diversity_counter["P"], diversity_counter["B"], diversity_counter["V"],
-        #                     sum / len(deme), speeding_min, uslc_min, fastAccl_min, hardBrake_min))
+        with open(os.path.join(dest, ga_file), 'a+') as gfile:
+            gfile.write("%s,%s,%s,%s,%s,%s,%s\n"
+                        % (record_name, len(deme),sum / len(deme), speeding_min, uslc_min, fastAccl_min, hardBrake_min))
         e2e_time = time.time() - e2e_time
         misc_time = e2e_time - sim_time - orcle_time
         with open(os.path.join(dest, timer_file), 'a+') as tfile:
             tfile.write(
-                "{},{:.2f},{:.2f},{:.2f},{:.2f},{}\n".format(record_name, sim_time, orcle_time, misc_time, e2e_time, num_runs))
+                "{},{:.2f},{:.2f},{:.2f},{:.2f},{}\n".format(record_name, sim_time, orcle_time, misc_time, e2e_time,
+                                                             num_runs))
         scenario_counter += 1
 
     while len(GLOBAL_LANE_COVERAGE) < TOTAL_LANES and (time.time() - start_time) <= ETIME:
@@ -276,7 +303,7 @@ if __name__ == "__main__":
         print("-- Generation %i --" % g)
 
         bridge = connect_bridge()
-        cyber_env_init()
+        # cyber_env_init()
 
         for deme in pop:
             e2e_time = time.time()
@@ -300,10 +327,10 @@ if __name__ == "__main__":
                     offspring.append(best_ind)
                     del mutant.fitness.values
 
-
             record_name = "Generation{}_Scenario{}".format(g, scenario_counter)
 
-            lanes, min_distance, speeding_min, uslc_min, fastAccl_min, hardBrake_min, sim_time, orcle_time, num_runs = runScenario(offspring, record_name, bridge)
+            lanes, min_distance, speeding_min, uslc_min, fastAccl_min, hardBrake_min, sim_time, orcle_time, num_runs = runScenario(
+                offspring, record_name, bridge)
             lanes.remove('')
             GLOBAL_LANE_COVERAGE.update(lanes)
             lane_coverage[scenario_counter] = lane_coverage[scenario_counter].union(lanes)
@@ -312,11 +339,9 @@ if __name__ == "__main__":
                 obs_min_dist = min_distance[str(ind[0])]
                 ind.fitness.values = (obs_min_dist, speeding_min, uslc_min, fastAccl_min, hardBrake_min,)
                 sum += obs_min_dist
-            # with open(os.path.join(dest, ga_file), 'a+') as gfile:
-            #     gfile.write("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n"
-            #                 % (record_name, len(deme), diversity_counter["P"], diversity_counter["B"],
-            #                    diversity_counter["V"], sum / len(deme), speeding_min, uslc_min, fastAccl_min,
-            #                    hardBrake_min))
+            with open(os.path.join(dest, ga_file), 'a+') as gfile:
+                gfile.write("%s,%s,%s,%s,%s,%s,%s\n"
+                            % (record_name, len(deme), sum / len(deme), speeding_min, uslc_min, fastAccl_min,hardBrake_min))
             hof.insert(tools.selBest(offspring, 1)[0])
             deme = toolbox.select(deme + offspring, len(offspring))
 

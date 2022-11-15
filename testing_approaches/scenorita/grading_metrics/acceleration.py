@@ -62,7 +62,7 @@ def test_acceleration(messages, accel_target, verbose=False):
     if ORACLE_TYPE == "hard braking":
         max_accel = sys.maxsize
 
-    for channel_name, _, parsed_msg, _, _ in messages:
+    for channel_name, parsed_msg, _ in messages:
         if channel_name == '/apollo/localization/pose':
             current_time = parsed_msg.header.timestamp_sec
             current_speed = calculate_speed(parsed_msg.pose.linear_velocity)
