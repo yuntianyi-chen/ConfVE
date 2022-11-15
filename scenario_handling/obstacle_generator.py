@@ -1,9 +1,8 @@
 from deap import base, creator, tools
-from config import OBS_DIR, APOLLO_ROOT, MAP_NAME
+from config import OBS_DIR, APOLLO_ROOT, MAP_NAME, OBS_GENERATE_MODE
 from scenario_handling.scenario_tools.map_info_parser import *
 from scenario_handling.scenario_tools.feature_generator import *
 import pickle
-
 
 ptl_dict, ltp_dict, diGraph = initialize()
 obstacle_type = ["PEDESTRIAN", "BICYCLE", "VEHICLE"]
@@ -63,14 +62,8 @@ def genetic_obs_individual_init():
     toolbox = base.Toolbox()
     # Attribute generator (9 obstacle attributes)
     toolbox.register("id", random.randint, 0, 30000)
-
-
-
     toolbox.register("start_pos", random.randint, 0, len(ptl_dict.keys()) - 1)
     toolbox.register("end_pos", random.randint, 0, len(ptl_dict.keys()) - 1)
-
-
-
     toolbox.register("theta", random.uniform, -3.14, 3.14)
     toolbox.register("length", random.uniform, 0.2, 14.5)
     toolbox.register("width", random.uniform, 0.3, 2.5)
@@ -125,20 +118,33 @@ def obs_files_generator(obs_deme, scenario_counter):
         obs_counter += 1
 
 
-def obs_settings():
+def obs_settings(setting):
     global NP
-    NP = 10
-    OBS_MAX = 20
-    OBS_MIN = 10
-    # TOTAL_LANES=60
-    # ETIME=43200 # execution time end (in seconds) after 12 hours 
+
+    if setting == "scenoRITA":
+        NP = 50
+        OBS_MAX = 15
+        OBS_MIN = 3
+    else:
+        NP = 10
+        OBS_MAX = 20
+        OBS_MIN = 10
+        # TOTAL_LANES=60
+        # ETIME=43200 # execution time end (in seconds) after 12 hours
     DEME_SIZES = [random.randint(OBS_MIN, OBS_MAX) for p in range(0, NP)]
     # CXPB, MUTPB, ADDPB, DELPB = 0.8, 0.2, 0.1, 0.1
     return DEME_SIZES
 
 
-def obs_generating(toolbox):
-    DEME_SIZES = obs_settings()
+def obs_generating(pop):
+    scenario_counter = 0
+    for obs_deme in pop:
+        obs_files_generator(obs_deme, scenario_counter)
+        scenario_counter += 1
+
+
+def obs_generating_from_initial(toolbox):
+    DEME_SIZES = obs_settings(setting=OBS_GENERATE_MODE)
     pop = [toolbox.deme(n=i) for i in DEME_SIZES]
     pop_pickle_dump_data_path = f"{APOLLO_ROOT}/modules/tools/perception/pop_pickle/{MAP_NAME}_dump_data"
 
@@ -153,7 +159,7 @@ def obs_generating(toolbox):
 
 def generate_obstacles():
     toolbox = genetic_obs_individual_init()
-    obs_generating(toolbox)
+    obs_generating_from_initial(toolbox)
 
 
 if __name__ == "__main__":

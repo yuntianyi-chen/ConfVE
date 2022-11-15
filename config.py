@@ -47,3 +47,6 @@ MAX_PD_COUNT = 5
 RUN_FOR_HOUR = 12
 
 HD_MAP_PATH = f'{MAGGIE_ROOT}/data/maps/{MAP_NAME}/base_map.bin'
+
+
+OBS_GENERATE_MODE = "scenoRITA"

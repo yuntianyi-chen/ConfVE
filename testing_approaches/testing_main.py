@@ -2,25 +2,38 @@ import random
 import time
 from config import APOLLO_ROOT, MODULE_NAME
 from environment.cyber_env_operation import cyber_env_init, delete_records, connect_bridge
-from optimization_algorithms.genetic_algorithm.ga import ga_init, crossover, mutate, select
 from scenario_handling.create_scenarios import create_scenarios
 from scenario_handling.run_scenario import run_scenarios
 from testing_approaches.interface import generate_obs_adc_routes_by_approach, init_obs
-from tools.config_file_handler.parser_apollo import parser2class
+from testing_approaches.scenorita.scenoRITA_ga import scenoRITA_ga_init, crossover, mutate, select
+from deap import tools
 
 
 def ga_main(module_config_path):
-    raw_option_stack, option_tuple_list, option_obj_list, option_num = parser2class(module_config_path)
+    toolbox = scenoRITA_ga_init()
 
-    init_individual_list, generation_limit, option_type_list = ga_init(option_obj_list)
+    NP = 50
+    OBS_MAX = 15
+    OBS_MIN = 3
+    TOTAL_LANES = 60
+    ETIME = 43200  # execution time end (in seconds) after 12 hours
+    GLOBAL_LANE_COVERAGE = set()
+    DEME_SIZES = [random.randint(OBS_MIN, OBS_MAX) for p in range(0, NP)]
+    CXPB, MUTPB, ADDPB, DELPB = 0.8, 0.2, 0.1, 0.1
 
-    individual_list = init_individual_list
+    pop = [toolbox.deme(n=i) for i in DEME_SIZES]
+    hof = tools.HallOfFame(NP)  # best ind in each scenario
+    lane_coverage = {scenario_num: set() for scenario_num in range(1, NP + 1)}
+    scenario_counter = 1
+    g = 0
+
+    # individual_list = init_individual_list
 
     delete_records()
 
     start_time = time.time()
 
-    obstacle_chromosomes_list = init_obs()
+    # obstacle_chromosomes_list = init_obs()
 
     for generation_num in range(generation_limit):
         print("-------------------------------------------------")

@@ -13,8 +13,8 @@ def replay_scenario(record_path):
     return
 
 
-def record_route_info():
-    return
+# def record_route_info():
+#     return
 
 
 def register_obstacles(obs_group_path):
@@ -75,7 +75,7 @@ def run_scenarios(generated_individual, scenario_list, bridge):
         init_x, init_y, dest_x, dest_y = float(adc_route_raw[0]), float(adc_route_raw[1]), float(
             adc_route_raw[2]), float(adc_route_raw[3])
 
-        record_route_info()
+        # record_route_info()
 
         print("    Start recorder...")
         recorder_subprocess = scenario.start_recorder()
