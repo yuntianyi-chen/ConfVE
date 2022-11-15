@@ -2,17 +2,27 @@ import sys
 import math
 import time
 import argparse
-from shapely.geometry import Point
-from multiprocessing import Process, Manager
+# from shapely.geometry import Point
+# from multiprocessing import Process, Manager
+# from automation.auxiliary.map import map_tools
+# from automation.auxiliary.oracles.speeding import calculate_speed
+from testing_approaches.scenorita.auxiliary.record.read_record import read_by_path
+from testing_approaches.scenorita.grading_metrics.collision import construct_adc_polygon
 
-from automation.auxiliary.map import map_tools
-from automation.auxiliary.oracles.speeding import calculate_speed
-from automation.auxiliary.record.read_record import read_by_path
-from automation.grading_metrics.collision import construct_adc_polygon
+from tools.hdmap import map_tools
 
 VERBOSE = False
-SKIP_NUM = 100    # Skip messages to print
+SKIP_NUM = 100  # Skip messages to print
 OFF_LANE_THRESHOLD = 5
+
+
+def calculate_speed(linear_velocity):
+    '''
+    Calculate the speed from linear velocity
+    '''
+    x = linear_velocity.x
+    y = linear_velocity.y
+    return math.sqrt(x ** 2 + y ** 2)
 
 
 def get_args():
@@ -75,17 +85,17 @@ def walk_msg_section(messages: list, lanes: dict, lanes_set: set, speed_list: li
     speeding_coord = None
 
     traveled_lanes = set()
-    current_lane = None     # the lane id based on the latest localization
-    priority_lanes = None   # the lanes most probably for adc to reside
+    current_lane = None  # the lane id based on the latest localization
+    priority_lanes = None  # the lanes most probably for adc to reside
     # the lane adc resides when the adc polygon intersects the lane boundary
     off_road_candidate_lane = None
     intersect_start_time = None
     next_lanes = []
 
     speeding_duration_flag = False
-    speeding_duration_start = None      # start time for speeding violation
-    speeding_duration_end = None        # end time for speeding violation
-    speeding_heading = None             # adc heading when speeding
+    speeding_duration_start = None  # start time for speeding violation
+    speeding_duration_end = None  # end time for speeding violation
+    speeding_heading = None  # adc heading when speeding
     speeding_x = None
     speeding_y = None
     speeding_value = None
@@ -93,7 +103,7 @@ def walk_msg_section(messages: list, lanes: dict, lanes_set: set, speed_list: li
     ulc_duration_flag = False
     ulc_duration_start = None
     ulc_duration_end = None
-    ulc_heading = None                  # adc heading when unsafe lane-change
+    ulc_heading = None  # adc heading when unsafe lane-change
     ulc_x = None
     ulc_y = None
 
@@ -103,7 +113,8 @@ def walk_msg_section(messages: list, lanes: dict, lanes_set: set, speed_list: li
 
     localization_num = 0
     init_timestamp = None
-    for channel_name, _, parsed_msg, _, _ in messages:
+    # for channel_name, _, parsed_msg, _, _ in messages:
+    for channel_name, parsed_msg, _ in messages:
         current_time = parsed_msg.header.timestamp_sec
         if channel_name == '/apollo/planning':
             routing_response_msg = parsed_msg.debug.planning_data.routing
@@ -174,9 +185,9 @@ def walk_msg_section(messages: list, lanes: dict, lanes_set: set, speed_list: li
             if speed_limit != 0 or len(current_lanes) > 1:
                 # Calculating the speed difference is unfair when there's no speed limit
                 if (
-                    localization_num % SKIP_NUM == 0
-                    or speed_limit < current_speed
-                    or localization_num < 5
+                        localization_num % SKIP_NUM == 0
+                        or speed_limit < current_speed
+                        or localization_num < 5
                 ):
                     v_print(current_lane, speed_limit,
                             current_speed, end_time - init_time,
@@ -347,7 +358,7 @@ def main():
     walk_messages(record_path)
     end_time = time.time()
 
-    print(f'speeding elapsed time: {end_time-start_time} seconds')
+    print(f'speeding elapsed time: {end_time - start_time} seconds')
 
 
 if __name__ == '__main__':

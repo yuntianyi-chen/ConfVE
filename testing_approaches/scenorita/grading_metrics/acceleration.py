@@ -2,8 +2,11 @@ import math
 import argparse
 import sys
 
-from apollo_v7_testing.auxiliary.record.read_record import read_by_path
-from apollo_v7_testing.auxiliary.oracles.speeding import calculate_speed
+# from apollo_v7_testing.auxiliary.record.read_record import read_by_path
+# from apollo_v7_testing.auxiliary.oracles.speeding import calculate_speed
+
+from testing_approaches.scenorita.auxiliary.record.read_record import read_by_path
+from testing_approaches.scenorita.grading_metrics.speeding import calculate_speed
 
 VIOLATION_DETECTED = 0
 ORACLE_TYPE = None

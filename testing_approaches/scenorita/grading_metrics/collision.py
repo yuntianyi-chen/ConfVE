@@ -1,11 +1,13 @@
-import sys
+# import sys
 import math
 import argparse
-from multiprocessing import Queue
+# from multiprocessing import Queue
 from shapely.geometry import Polygon, LineString
-from modules.tools.perception.replay_perception import generate_polygon
-from automation.auxiliary.record.read_record import print_msg_num, read_by_path
-from automation.auxiliary.oracles.speeding import calculate_speed
+# from modules.tools.perception.replay_perception import generate_polygon
+from testing_approaches.scenorita.auxiliary.record.read_record import print_msg_num, read_by_path
+# from automation.auxiliary.oracles.speeding import calculate_speed
+from testing_approaches.scenorita.grading_metrics.speeding import calculate_speed
+from tools.utils import generate_polygon
 
 COLLISION_DETECTED = 0
 
