@@ -102,7 +102,7 @@ def run_scenario(scenario, bridge):
     sim_time=time.time()-sim_time
 
     orcle_time=time.time()
-    min_dist, all_lanes, min_speed, boundary_dist, accl, hardbreak, collision = run_oracles()
+    min_dist, all_lanes, min_speed, boundary_dist, accl, hardbreak, collision = run_oracles(scenario.record_name)
     orcle_time=time.time()-orcle_time
 
     lanes_only = ""

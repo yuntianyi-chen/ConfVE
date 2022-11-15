@@ -1,18 +1,21 @@
 import os
 from multiprocessing import Process, Manager
+from config import RECORDS_DIR
 from testing_approaches.scenorita.grading_metrics import acceleration, speeding, collision
 
-TEMP_OUTPUT_PATH = '/apollo/automation/temp_record/'
-OUTPUT_NAME = 'output'
+# TEMP_OUTPUT_PATH = '/apollo/automation/temp_record/'
+TEMP_OUTPUT_PATH = RECORDS_DIR + "/"
 
-def run_oracles():
+# OUTPUT_NAME = 'output'
+
+def run_oracles(record_name):
     target_output_names = []
 
     all_output_names = os.listdir(TEMP_OUTPUT_PATH)
     all_output_names.sort()
 
     for name in all_output_names:
-        if name.startswith(f'{OUTPUT_NAME}.'):
+        if name.startswith(f'{record_name}.'):
             target_output_names.append(name)
 
     processes = []
