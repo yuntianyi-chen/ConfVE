@@ -1,6 +1,6 @@
 import time
 import subprocess
-from config import MAX_RECORD_TIME
+from config import MAX_RECORD_TIME, TRAFFIC_LIGHT_MODE
 from environment.container_settings import get_container_name
 from environment.cyber_env_operation import modules_operation, kill_modules
 from modules.routing.proto.routing_pb2 import RoutingRequest
@@ -85,10 +85,11 @@ def run_scenarios(generated_individual, scenario_list, bridge):
         send_routing_request(init_x, init_y, dest_x, dest_y, bridge)
 
         ####################
-        register_traffic_lights(scenario.traffic_light_control, bridge)
-
-        # Wait for record time
-        # time.sleep(MAX_RECORD_TIME)
+        if TRAFFIC_LIGHT_MODE:
+            register_traffic_lights(scenario.traffic_light_control, bridge)
+        else:
+            # Wait for record time
+            time.sleep(MAX_RECORD_TIME)
         ####################
 
         # Stop recording messages and producing perception messages

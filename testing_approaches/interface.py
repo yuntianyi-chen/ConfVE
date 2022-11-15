@@ -1,7 +1,7 @@
 import os
 from config import APOLLO_ROOT, MAP_NAME, AV_TESTING_APPROACH, OBS_GROUP_COUNT
 from testing_approaches.obstacle_obj import ObsWithFitness
-from testing_approaches.scenorita.scenorita import ScenoRITA
+from testing_approaches.scenorita.interface import ScenoRITA
 
 
 def init_obs():

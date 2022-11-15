@@ -50,3 +50,4 @@ HD_MAP_PATH = f'{MAGGIE_ROOT}/data/maps/{MAP_NAME}/base_map.bin'
 
 
 OBS_GENERATE_MODE = "scenoRITA"
+TRAFFIC_LIGHT_MODE = False

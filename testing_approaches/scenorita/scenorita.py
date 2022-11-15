@@ -1,28 +1,22 @@
 import networkx as nx
-
 from config import MAGGIE_ROOT, OBS_DIR
 from environment.cyber_env_operation import connect_bridge, cyber_env_init
 from scenario_handling.create_scenarios import Scenario
-from scenario_handling.obstacle_generator import obs_generating
-from scenario_handling.run_scenario import run_scenarios, register_obstacles, send_routing_request, \
+from scenario_handling.run_scenario import register_obstacles, send_routing_request, \
     register_traffic_lights, stop_obstacles
-from scenario_handling.scenario_tools import map_tools
 from scenario_handling.scenario_tools.feature_generator import runOracles
 from scenario_handling.scenario_tools.map_info_parser import validatePath, initialize, longerTrace, generateObsDescFile, \
     produceTrace
 import random
-import subprocess
 import os
 import time
 import json
-from deap import base
-from deap import creator
 from deap import tools
-
+from testing_approaches.scenorita.interface import ScenoRITA
 from testing_approaches.scenorita.run_oracles import run_oracles
 from testing_approaches.scenorita.scenoRITA_ga import scenoRITA_ga_init
 
-obs_folder = OBS_DIR
+obs_folder = OBS_DIR+"scenorita/"
 dest = MAGGIE_ROOT + "/data/analysis"
 features_file = "mut_features.csv"
 ga_file = "ga_output.csv"
@@ -32,32 +26,6 @@ timer_file = "execution_time.csv"
 ptl_dict, ltp_dict, diGraph = initialize()
 obstacle_type = ["PEDESTRIAN", "BICYCLE", "VEHICLE"]
 
-class ScenoRITA:
-    def __init__(self):
-        return
-        # self.range_list = range_list
-
-    def obs_routing_generate(self):
-        return
-
-    def adc_routing_generate(self):
-        # this function costs calculating resources
-        ptl_dict, ltp_dict, diGraph = initialize()
-
-        valid_path = False
-        while not valid_path:
-            p_index1 = random.randint(0, len(ptl_dict.keys()) - 1)
-            p_index2 = random.randint(0, len(ptl_dict.keys()) - 1)
-            start_point = tuple(map(float, list(ptl_dict.keys())[p_index1].split('-')))
-            if not map_tools.all_points_not_in_junctions(start_point):
-                p1 = list(ptl_dict.keys())[p_index1]
-                p2 = list(ptl_dict.keys())[p_index2]
-                continue
-            valid_path = validatePath(p_index1, p_index2, ptl_dict, ltp_dict, diGraph)
-        p1 = list(ptl_dict.keys())[p_index1]
-        p2 = list(ptl_dict.keys())[p_index2]
-        adc_routing = p1.replace('-', ',') + "," + p2.replace('-', ',')
-        return adc_routing
 
 def check_trajectory(p_index1, p_index2):
     valid_path = False
@@ -119,7 +87,7 @@ def run_scenario(scenario, bridge):
     send_routing_request(init_x, init_y, dest_x, dest_y, bridge)
 
     ####################
-    register_traffic_lights(scenario.traffic_light_control, bridge)
+    # register_traffic_lights(scenario.traffic_light_control, bridge)
 
     # Wait for record time
     # time.sleep(MAX_RECORD_TIME)
@@ -161,8 +129,11 @@ def run_scenario(scenario, bridge):
 
 def runScenario(deme, record_name, bridge):
     # to start with a fresh set of obstacles for the current scnerio
+    if os.path.exists(obs_folder):
+        os.system("rm -f " + obs_folder + "*")
+    else:
+        os.makedirs(obs_folder)
 
-    os.system("rm -f "+OBS_DIR+"*")
     global diversity_counter
     diversity_counter = {"V": 0, "P": 0, "B": 0}
     for ind in deme:

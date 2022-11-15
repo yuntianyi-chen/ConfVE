@@ -4,7 +4,7 @@ import signal
 import glob
 import subprocess
 import time
-from config import APOLLO_ROOT, MODULE_NAME, MAGGIE_ROOT, DEFAULT_CONFIG_FILE
+from config import APOLLO_ROOT, MODULE_NAME, MAGGIE_ROOT, DEFAULT_CONFIG_FILE, TRAFFIC_LIGHT_MODE
 from environment.container_settings import get_container_name
 from scenario_handling.traffic_light_control.traffic_light_control import TCSection
 from tools.config_file_handler.translator_apollo import option_obj_translator, save2file
@@ -16,7 +16,8 @@ class Scenario:
         self.obs_group_path = obs_group_path
         self.adc_route = adc_route
         self.record_name = record_name
-        self.traffic_light_control = TCSection.get_one()
+        if TRAFFIC_LIGHT_MODE:
+            self.traffic_light_control = TCSection.get_one()
         # self.tm =
 
     def start_recorder(self):
