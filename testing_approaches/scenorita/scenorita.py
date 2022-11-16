@@ -258,7 +258,7 @@ if __name__ == "__main__":
              "c_counter,speeding_counter,uslc_counter,fastAccl_counter,hardBrake_counter,totalV\n"
     with open(os.path.join(dest, features_file), 'w') as ffile:
         ffile.write(labels)
-    labels = "RecordName,ObsNum,P,B,V,AVG_OBS2ADC_Distance,Speed_Below_Limit,ADC2LaneBound_Distance,FastAccl,HardBrake\n"
+    labels = "RecordName,ObsNum,AVG_OBS2ADC_Distance,Speed_Below_Limit,ADC2LaneBound_Distance,FastAccl,HardBrake\n"
     with open(os.path.join(dest, ga_file), 'w') as gfile:
         gfile.write(labels)
     labels = "RecordName,Simulation,Oracles,MISC,E2E,RetryNo\n"
@@ -297,7 +297,9 @@ if __name__ == "__main__":
                                                              num_runs))
         scenario_counter += 1
 
-    while len(GLOBAL_LANE_COVERAGE) < TOTAL_LANES and (time.time() - start_time) <= ETIME:
+    while (time.time() - start_time) <= ETIME:
+
+    # while len(GLOBAL_LANE_COVERAGE) < TOTAL_LANES and (time.time() - start_time) <= ETIME:
         g = g + 1
         scenario_counter = 1
         print("-- Generation %i --" % g)
