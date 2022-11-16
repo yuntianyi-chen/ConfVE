@@ -96,5 +96,6 @@ if __name__ == "__main__":
             if len(agent.memory) > batch_size:
                 agent.train(batch_size)
             if e % 50 == 0:
+                # print(agent)
                 agent.save(output_dir + "weights_"
                            + "{:04d}".format(e) + ".hdf5")
