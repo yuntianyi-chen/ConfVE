@@ -1,10 +1,10 @@
 import os
-import ast
+# import ast
 
 # dest = "/apollo/apollo_v7_testing/output_results"
 from config import MAGGIE_ROOT, APOLLO_RECORDS_DIR
 
-dest = MAGGIE_ROOT + "/data/scenoRITA_oracles"
+dest = MAGGIE_ROOT + "/data/analysis"
 report_name = "mut_features.csv"
 
 

@@ -19,6 +19,7 @@ wscat --connect ws://127.0.0.1:8888/websocket --execute {"enable":true,"type":"T
 cyber_recorder record -o /apollo/records/Generation_0_Config_0_Obs_9 -a &
 cyber_recorder play -f /apollo/records/Generation_0_Config_0_Obs_9.00000 -l
 cyber_recorder info /apollo/records/Generation_0_Config_0_Obs_9.00000
+cyber_recorder play -f /apollo/records/Generation0_Scenario29.00000 -l
 
 6. scenoRITA run
 bazel run --ui_event_filters=-info,-stdout,-stderr --noshow_progress //apollo_v7_testing:creating_scenarios

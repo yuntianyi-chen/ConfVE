@@ -50,5 +50,11 @@ RUN_FOR_HOUR = 12
 HD_MAP_PATH = f'{MAGGIE_ROOT}/data/maps/{MAP_NAME}/base_map.bin'
 
 
+##################################
+###############
+CONFIG_TESTING_MODE = False
+SCENARIO_GENERATION_MODE = True
 OBS_GENERATE_MODE = "scenoRITA"
+##################################
 TRAFFIC_LIGHT_MODE = False
+OPT_MODE = "DRL"  # GA/Random

@@ -304,8 +304,10 @@ if __name__ == "__main__":
         scenario_counter = 1
         print("-- Generation %i --" % g)
 
+        ############
         bridge = connect_bridge()
-        # cyber_env_init()
+        cyber_env_init()
+        #############
 
         for deme in pop:
             e2e_time = time.time()
@@ -330,6 +332,8 @@ if __name__ == "__main__":
                     del mutant.fitness.values
 
             record_name = "Generation{}_Scenario{}".format(g, scenario_counter)
+
+
 
             lanes, min_distance, speeding_min, uslc_min, fastAccl_min, hardBrake_min, sim_time, orcle_time, num_runs = runScenario(
                 offspring, record_name, bridge)
