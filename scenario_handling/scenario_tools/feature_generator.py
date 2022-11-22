@@ -1,8 +1,10 @@
 import os
+import shutil
+
 # import ast
 
 # dest = "/apollo/apollo_v7_testing/output_results"
-from config import MAGGIE_ROOT, APOLLO_RECORDS_DIR
+from config import MAGGIE_ROOT, APOLLO_RECORDS_DIR, OBS_DIR
 
 dest = MAGGIE_ROOT + "/data/analysis"
 report_name = "mut_features.csv"
@@ -145,5 +147,10 @@ def runOracles(scenario_player_output, record_name, scenario):
     else:
         with open(os.path.join(dest, report_name), 'a+') as file:
             file.write(result)
+
+        # save the obstacle files
+        obs_folder = OBS_DIR + "scenorita"
+        destination_dir = f"/home/cloudsky/Research/Apollo/Backup/scenoRITA/temp_obstacles/{record_name}"
+        shutil.copytree(obs_folder, destination_dir)
 
     return lanes, min_distance, speeding_min, uslc_min, fastAccl_min, hardBrake_min

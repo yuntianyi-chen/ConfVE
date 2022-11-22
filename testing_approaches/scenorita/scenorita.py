@@ -1,5 +1,8 @@
+import shutil
+from datetime import date
+
 import networkx as nx
-from config import MAGGIE_ROOT, OBS_DIR, MAX_RECORD_TIME, MAP_NAME
+from config import MAGGIE_ROOT, OBS_DIR, MAX_RECORD_TIME, MAP_NAME, APOLLO_RECORDS_DIR
 from environment.cyber_env_operation import connect_bridge, cyber_env_init
 from scenario_handling.create_scenarios import Scenario
 from scenario_handling.run_scenario import register_obstacles, send_routing_request, \
@@ -368,3 +371,11 @@ if __name__ == "__main__":
     end_time = time.time()
     print("-- Execution Time: %.2f  seconds --\n" % (end_time - start_time))
     print("*** Total Num. of Lanes Covered:%s out of %s ***\n" % (len(GLOBAL_LANE_COVERAGE), TOTAL_LANES))
+
+    obs_folder = OBS_DIR + "scenorita"
+    temp_obs_dir = f"/home/cloudsky/Research/Apollo/Backup/scenoRITA/temp_obstacles"
+    backup_obs_dir = f"/home/cloudsky/Research/Apollo/Backup/scenoRITA/obstacles/{date.today()}"
+    shutil.copytree(temp_obs_dir, backup_obs_dir)
+    shutil.rmtree(temp_obs_dir)
+    backup_record_dir = f"/home/cloudsky/Research/Apollo/Backup/scenoRITA/records/{date.today()}"
+    shutil.copytree(APOLLO_RECORDS_DIR, backup_record_dir)

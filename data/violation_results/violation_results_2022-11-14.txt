@@ -1,2 +1,0 @@
-Violation Results: [('module', 'routing failure')]
-  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_0_Config_0_Obs_0.00000

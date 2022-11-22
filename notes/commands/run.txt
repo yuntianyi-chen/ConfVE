@@ -32,3 +32,4 @@ bash scripts/manual_light.sh
 
 
 
+/home/cloudsky/Research/Apollo/Backup/DoppelTest_records/records_8.26/records/Generation_00074/Scenario_00003/yuqi_apollo_dev_ROUTE_3.Scenario_00003.00000

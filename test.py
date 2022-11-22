@@ -6,13 +6,12 @@ import time
 from datetime import date
 from pathlib import Path
 
-from config import MAGGIE_ROOT
+from config import MAGGIE_ROOT, OBS_DIR, APOLLO_RECORDS_DIR
 
-start_time = time.time()
-
-time.sleep(5)
-
-end_time = time.time()
-
-print("Time cost: " + str((end_time - start_time)/3600))
-
+obs_folder = OBS_DIR + "scenorita"
+temp_obs_dir = f"/home/cloudsky/Research/Apollo/Backup/scenoRITA/temp_obstacles"
+backup_obs_dir = f"/home/cloudsky/Research/Apollo/Backup/scenoRITA/obstacles/{date.today()}"
+shutil.copytree(temp_obs_dir, backup_obs_dir)
+shutil.rmtree(temp_obs_dir)
+backup_record_dir = f"/home/cloudsky/Research/Apollo/Backup/scenoRITA/records/{date.today()}"
+shutil.copytree(APOLLO_RECORDS_DIR, backup_record_dir)
