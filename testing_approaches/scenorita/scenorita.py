@@ -25,6 +25,7 @@ dest = MAGGIE_ROOT + "/data/analysis"
 features_file = "mut_features.csv"
 ga_file = "ga_output.csv"
 timer_file = "execution_time.csv"
+adc_route_file = "adc_route.csv"
 
 ptl_dict, ltp_dict, diGraph = initialize()
 obstacle_type = ["PEDESTRIAN", "BICYCLE", "VEHICLE"]
@@ -220,7 +221,8 @@ def runScenario(deme, record_name, bridge):
             print("attempted %s run" % num_runs)
 
         approach_generator = ScenoRITA()
-        scenario = Scenario(False, obs_apollo_folder, approach_generator.adc_routing_generate(), record_name)
+        adc_route = approach_generator.adc_routing_generate()
+        scenario = Scenario(False, obs_apollo_folder, adc_route, record_name)
         output_result = run_scenario(scenario, bridge)
         num_runs = num_runs + 1
         # print(scenario_player_output)
@@ -238,7 +240,7 @@ def runScenario(deme, record_name, bridge):
     sim_time = float(output_result[8]) * num_runs
     orcle_time = float(output_result[9]) * num_runs
     lanes, min_distance, speeding_min, uslc_min, fastAccl_min, hardBrake_min = runOracles(output_result,
-                                                                                          record_name, deme)
+                                                                                          record_name, deme, adc_route)
 
     return lanes, min_distance, speeding_min, uslc_min, fastAccl_min, hardBrake_min, sim_time, orcle_time, num_runs
 
@@ -267,6 +269,9 @@ if __name__ == "__main__":
     labels = "RecordName,Simulation,Oracles,MISC,E2E,RetryNo\n"
     with open(os.path.join(dest, timer_file), 'w') as tfile:
         tfile.write(labels)
+    labels = "RecordName,x_start,y_start,x_end,y_end\n"
+    with open(os.path.join(dest, adc_route_file), 'w') as rfile:
+        rfile.write(labels)
 
     # os.system("rm -rf /apollo/automation/grading_metrics/Safety_Violations/*")
 

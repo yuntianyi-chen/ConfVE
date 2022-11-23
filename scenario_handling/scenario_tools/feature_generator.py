@@ -8,9 +8,9 @@ from config import MAGGIE_ROOT, APOLLO_RECORDS_DIR, OBS_DIR
 
 dest = MAGGIE_ROOT + "/data/analysis"
 report_name = "mut_features.csv"
+adc_route_file = "adc_route.csv"
 
-
-def runOracles(scenario_player_output, record_name, scenario):
+def runOracles(scenario_player_output, record_name, scenario, adc_route):
     lanes = scenario_player_output[1].split(" ")  # lanes travelled by the adc
     speed_limit = scenario_player_output[6]  # lanes travelled and their speed limit
     collision = scenario_player_output[7]  # collision info
@@ -152,5 +152,8 @@ def runOracles(scenario_player_output, record_name, scenario):
         obs_folder = OBS_DIR + "scenorita"
         destination_dir = f"/home/cloudsky/Research/Apollo/Backup/scenoRITA/temp_obstacles/{record_name}"
         shutil.copytree(obs_folder, destination_dir)
+
+        with open(os.path.join(dest, adc_route_file), 'a+') as rfile:
+            rfile.write(f"{record_name},{adc_route}")
 
     return lanes, min_distance, speeding_min, uslc_min, fastAccl_min, hardBrake_min
