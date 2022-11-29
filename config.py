@@ -35,7 +35,8 @@ RECORDS_DIR = f'{MAGGIE_ROOT}/data/records'
 APOLLO_RECORDS_DIR = f'{APOLLO_ROOT}/records'
 LOG_DIR = f'{MAGGIE_ROOT}/data/Logs'
 CSV_DIR = f'{MAGGIE_ROOT}/data/csv'
-OBS_DIR = f"{APOLLO_ROOT}/modules/tools/perception/obstacles/{MAP_NAME}/obs_in_group"
+# OBS_DIR = f"{APOLLO_ROOT}/modules/tools/perception/obstacles/{MAP_NAME}/obs_in_group"
+OBS_DIR = f"{APOLLO_ROOT}/modules/tools/perception/obstacles/{MAP_NAME}/"
 
 # MAGGIE CONFIGS ====================================
 STREAM_LOGGING_LEVEL = logging.INFO

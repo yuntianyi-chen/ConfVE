@@ -231,6 +231,8 @@ def runScenario(deme, record_name, bridge):
             continue
 
         min_distance = output_result[0]
+        # print(f"min_distance: {len(min_distance)}")
+        # print(f"deme: {len(deme)}")
         # the return number of obstacles must match the ones in the individual
         if len(min_distance) != len(deme):
             continue
