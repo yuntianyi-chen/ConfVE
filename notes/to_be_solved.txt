@@ -1,6 +1,7 @@
 1. Check and Finish the rest of violation types
 2. Deep Reinforcement learning
-3. Run AV Testing techniques (scenoRITA)
+3. Run AV Testing techniques (scenoRITA, DoppelTest, AV-Fuzzer, ADFuzz) (GA, DRL)
+
 4. Code coverage (Branch coverage)
 5. Finish fitness calculation function
 
@@ -11,7 +12,7 @@
 ---------------------
 1. avoid generating the obstacles overlapped with the ego car
 2. avoid generating the ego car above the stop sign line
-3. replay obstacle detection & routing request
+3. replay record by obstacle detection & routing request
 
 
 
