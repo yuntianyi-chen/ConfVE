@@ -1,8 +1,8 @@
-1. Deep Reinforcement learning
-1. Run AV Testing techniques (scenoRITA)
-2. Code coverage (Branch coverage)
-3. Finish fitness calculation function
-4. Finish the rest of violation types
+1. Check and Finish the rest of violation types
+2. Deep Reinforcement learning
+3. Run AV Testing techniques (scenoRITA)
+4. Code coverage (Branch coverage)
+5. Finish fitness calculation function
 
 0. The image of Dreamview is static after running many scenarios (Maybe bridge is disconnected?) (Restart the dreamview to fix this, maybe not the bridge issue)
 
@@ -12,3 +12,9 @@
 1. avoid generating the obstacles overlapped with the ego car
 2. avoid generating the ego car above the stop sign line
 3. replay obstacle detection & routing request
+
+
+
+
+scenoRITA problem:
+1. Fast acceleration includes the max acc limit (>=), DoppelTest doesn't (>)

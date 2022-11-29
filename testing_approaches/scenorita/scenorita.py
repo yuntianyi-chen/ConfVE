@@ -3,7 +3,7 @@ from datetime import date
 
 import networkx as nx
 from config import MAGGIE_ROOT, OBS_DIR, MAX_RECORD_TIME, MAP_NAME, APOLLO_RECORDS_DIR
-from environment.cyber_env_operation import connect_bridge, cyber_env_init
+from environment.cyber_env_operation import connect_bridge, cyber_env_init, delete_records
 from scenario_handling.create_scenarios import Scenario
 from scenario_handling.run_scenario import register_obstacles, send_routing_request, \
     register_traffic_lights, stop_obstacles
@@ -246,6 +246,8 @@ def runScenario(deme, record_name, bridge):
 
 
 if __name__ == "__main__":
+    delete_records()
+
     toolbox = scenoRITA_ga_init()
 
     GLOBAL_LANE_COVERAGE = set()

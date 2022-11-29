@@ -100,7 +100,9 @@ def test_acceleration(messages, accel_target, verbose=False):
                     duration_flag = False
                 max_accel = min(max_accel, accel)
             else:
-                if accel >= accel_target:
+                # if accel >= accel_target:
+                if accel > accel_target:
+
                     if duration_start is None:
                         violation_coord = (
                             parsed_msg.pose.position.x, parsed_msg.pose.position.y)
