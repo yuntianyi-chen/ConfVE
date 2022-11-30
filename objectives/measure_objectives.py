@@ -42,7 +42,7 @@ if __name__ == '__main__':
 
     init_settings()
 
-    record_dir = "/home/cloudsky/Research/Apollo/Backup/scenoRITA/records/2022-11-29"
+    record_dir = "/home/cloudsky/Research/Apollo/Backup/scenoRITA/records/using"
     file_list = listdir(record_dir)
     file_list.sort()
 

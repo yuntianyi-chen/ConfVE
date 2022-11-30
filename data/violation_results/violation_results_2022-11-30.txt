@@ -1,0 +1,20 @@
+Violation Results: [('collision', 16488)]
+  /home/cloudsky/Research/Apollo/Backup/scenoRITA/records/using/Generation31_Scenario33.00000
+Violation Results: [('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/Backup/scenoRITA/records/using/Generation32_Scenario7.00000
+Violation Results: [('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/Backup/scenoRITA/records/using/Generation34_Scenario48.00000
+Violation Results: [('collision', 7246)]
+  /home/cloudsky/Research/Apollo/Backup/scenoRITA/records/using/Generation35_Scenario14.00000
+Violation Results: [('collision', 11294), ('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/Backup/scenoRITA/records/using/Generation36_Scenario33.00000
+Violation Results: [('comfort', 'Acceleration exceeded max'), ('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/Backup/scenoRITA/records/using/Generation37_Scenario19.00000
+Violation Results: [('collision', 4471), ('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/Backup/scenoRITA/records/using/Generation42_Scenario43.00000
+Violation Results: [('collision', 22132)]
+  /home/cloudsky/Research/Apollo/Backup/scenoRITA/records/using/Generation45_Scenario24.00000
+Violation Results: [('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/Backup/scenoRITA/records/using/Generation48_Scenario15.00000
+Violation Results: [('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/Backup/scenoRITA/records/using/Generation54_Scenario31.00000
