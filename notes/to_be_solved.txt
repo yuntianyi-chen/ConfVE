@@ -1,3 +1,5 @@
+0. Store the configuration files of final results and option tuning situation
+0. Store and analyze the violation remove/emerge info
 1. Check and Finish the rest of violation types
 2. Deep Reinforcement learning
 3. Run AV Testing techniques (scenoRITA, DoppelTest, AV-Fuzzer, ADFuzz) (GA, DRL)
