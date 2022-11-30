@@ -48,23 +48,20 @@ class ComfortOracle(OracleInterface):
             return
         self.next_ = message
         # compare velocity
-
         accel_x = self.next_.pose.linear_acceleration.x
         accel_y = self.next_.pose.linear_acceleration.y
         accel_z = self.next_.pose.linear_acceleration.z
 
-        magnitude = math.sqrt(accel_x ** 2 + accel_y ** 2 + accel_z ** 2)
-        # projection = (accel_x * self.next_.pose.linear_velocity.x) + (accel_y * self.next_.pose.linear_velocity.y) + (accel_z * self.next_.pose.linear_velocity.z)
+        accel_value = math.sqrt(accel_x ** 2 + accel_y ** 2 + accel_z ** 2)
 
         prev_velocity = calculate_velocity(self.prev_.pose.linear_velocity)
         next_velocity = calculate_velocity(self.next_.pose.linear_velocity)
         direction = next_velocity - prev_velocity
 
-
         if direction < 0:
-            accel = magnitude * -1
+            accel = accel_value * -1
         else:
-            accel = magnitude
+            accel = accel_value
 
         self.accl.append(accel)
 
