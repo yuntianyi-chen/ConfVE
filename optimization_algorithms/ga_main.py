@@ -1,11 +1,11 @@
 import random
 import time
-from config import APOLLO_ROOT, MODULE_NAME
+from config import APOLLO_ROOT, MODULE_NAME, FITNESS_MODE
 from environment.cyber_env_operation import cyber_env_init, delete_records, connect_bridge
 from optimization_algorithms.genetic_algorithm.ga import ga_init, crossover, mutate, select
 from scenario_handling.create_scenarios import create_scenarios
 from scenario_handling.run_scenario import run_scenarios
-from testing_approaches.interface import generate_obs_adc_routes_by_approach, init_obs
+from testing_approaches.interface import get_record_info_by_approach
 from tools.config_file_handler.parser_apollo import parser2class
 
 
@@ -20,7 +20,7 @@ def ga_main(module_config_path):
 
     start_time = time.time()
 
-    obstacle_chromosomes_list = init_obs()
+    # obstacle_chromosomes_list = init_obs()
 
     for generation_num in range(generation_limit):
         print("-------------------------------------------------")
@@ -33,8 +33,8 @@ def ga_main(module_config_path):
         individual_num = 0
 
         ###################
-
-        obs_group_path_list, adc_routing_list = generate_obs_adc_routes_by_approach(obstacle_chromosomes_list)
+        pre_record_info= get_record_info_by_approach()
+        # obs_group_path_list, adc_routing_list, violation_num_list = get_record_info_by_approach()
         ###################
 
         for generated_individual in individual_list_after_mutate:
@@ -45,12 +45,12 @@ def ga_main(module_config_path):
             if generated_individual.fitness is None:
                 # scenario refers to a config setting with different fixed obstacles and adc routes
                 scenario_list = create_scenarios(generated_individual, option_obj_list, generation_num, individual_num,
-                                                 obs_group_path_list, adc_routing_list)
+                                                 pre_record_info)
 
                 # test each config settings under several groups of obstacles and adc routes
                 run_scenarios(generated_individual, scenario_list, bridge)
 
-                generated_individual.calculate_fitness()
+                generated_individual.calculate_fitness(FITNESS_MODE)
 
                 individual_num += 1
 

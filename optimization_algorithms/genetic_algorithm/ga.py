@@ -9,17 +9,35 @@ class IndividualWithFitness:
         self.value_list = value_list
         self.reset_default()
         # self.range_list = range_list
+        self.violation_intro = 0
+        self.violation_remov = 0
 
-    def update_accumulated_objectives(self, violation_number, code_coverage, execution_time):
-        self.accumulated_objectives[0] += violation_number
+    def update_accumulated_objectives(self, violation_results, code_coverage, execution_time):
+        self.accumulated_objectives[0] += len(violation_results)
         self.accumulated_objectives[1] += code_coverage
         self.accumulated_objectives[2] += execution_time
 
-    def calculate_fitness(self):
+    def calculate_fitness(self, fitness_mode):
         self.violation_number = self.accumulated_objectives[0]
         self.code_coverage = self.accumulated_objectives[1]
         self.execution_time = self.accumulated_objectives[2]
-        self.fitness = self.violation_number * self.code_coverage * self.execution_time
+
+        if fitness_mode == "intro_remov":
+            self.fitness = self.violation_intro+self.violation_remov
+            print(f"       Vio Intro: {self.violation_intro}")
+            print(f"       Vio Remov: {self.violation_remov}")
+
+        else:
+            self.fitness = self.violation_number * self.code_coverage * self.execution_time
+
+    def update_violation_intro_remov(self, violation_results, scenario):
+        for violation in violation_results:
+            if violation not in scenario.original_violation_results:
+                self.violation_intro+=1
+        for violation in scenario.original_violation_results:
+            if violation not in violation_results:
+                self.violation_remov+=1
+
 
     def get_fitness(self):
         return self.fitness
@@ -27,12 +45,12 @@ class IndividualWithFitness:
     def reset_default(self):
         self.fitness = None
         # self.fitness = random.randint(0, 10)
-
         self.violation_number = 0
         self.code_coverage = 0
         self.execution_time = 0
         self.accumulated_objectives = [0, 0, 0]
-
+        self.violation_intro = 0
+        self.violation_remov = 0
 
 def generate_individuals(option_obj_list):
     generated_value_lists = list()

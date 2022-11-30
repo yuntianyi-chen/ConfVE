@@ -99,13 +99,15 @@ def run_scenarios(generated_individual, scenario_list, bridge):
         # scenario.stop_subprocess(p)
         stop_obstacles(p)
 
-        violation_number, code_coverage, execution_time = measure_objectives_individually(scenario)
+        violation_results, code_coverage, execution_time = measure_objectives_individually(scenario)
         # scenario.calculate_fitness(violation_number, code_coverage, execution_time)
 
         # fitness = calculate_fitness(violation_number, code_coverage, execution_time)
-        generated_individual.update_accumulated_objectives(violation_number, code_coverage, execution_time)
+        generated_individual.update_accumulated_objectives(violation_results, code_coverage, execution_time)
+        generated_individual.update_violation_intro_remov(violation_results, scenario)
 
-        if violation_number == 0:
+
+        if len(violation_results) == 0:
             scenario.delete_record()
 
         scenario_count += 1

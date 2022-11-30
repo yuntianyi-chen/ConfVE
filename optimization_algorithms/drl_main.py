@@ -6,7 +6,7 @@ from optimization_algorithms.deep_reinforcement_learning.DrlEnv import DrlEnv
 from optimization_algorithms.genetic_algorithm.ga import ga_init, crossover, mutate, select
 from scenario_handling.create_scenarios import create_scenarios
 from scenario_handling.run_scenario import run_scenarios
-from testing_approaches.interface import generate_obs_adc_routes_by_approach, init_obs
+from testing_approaches.interface import get_record_info_by_approach
 from tools.config_file_handler.parser_apollo import parser2class
 
 
@@ -27,7 +27,7 @@ def drl_main(module_config_path):
 
     start_time = time.time()
 
-    obstacle_chromosomes_list = init_obs()
+    # obstacle_chromosomes_list = init_obs()
 
     for generation_num in range(generation_limit):
         print("-------------------------------------------------")
@@ -41,7 +41,7 @@ def drl_main(module_config_path):
 
         ###################
 
-        obs_group_path_list, adc_routing_list = generate_obs_adc_routes_by_approach(obstacle_chromosomes_list)
+        obs_group_path_list, adc_routing_list = get_record_info_by_approach()
         ###################
 
         for generated_individual in individual_list_after_mutate:

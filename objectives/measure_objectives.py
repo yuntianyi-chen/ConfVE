@@ -8,11 +8,11 @@ from objectives.violation_number.oracles import RecordAnalyzer
 
 def measure_objectives_individually(scenario):
     record_path = f"{APOLLO_ROOT}/records/{scenario.record_name}.00000"
-    violation_number = measure_violation_number(record_path)
+    violation_results = measure_violation_number(record_path)
     # replay_scenario(record_path)
     code_coverage = measure_code_coverage()
     execution_time = measure_execution_time()
-    return violation_number, code_coverage, execution_time
+    return violation_results, code_coverage, execution_time
 
 
 def measure_code_coverage():
@@ -38,16 +38,23 @@ def measure_violation_number(record_path):
 
 
 if __name__ == '__main__':
+    SINGLE_TEST = False
+
     init_settings()
 
-    record_dir = "/home/cloudsky/Research/Apollo/Backup/scenoRITA/records/2022-11-22"
+    record_dir = "/home/cloudsky/Research/Apollo/Backup/scenoRITA/records/2022-11-29"
     file_list = listdir(record_dir)
     file_list.sort()
 
     results=[]
     for i in file_list:
-        result = measure_violation_number(f"{record_dir}/{i}")
-        results.append(result)
+        if SINGLE_TEST == True:
+            if "Generation37_Scenario19.00000" in i:
+                result = measure_violation_number(f"{record_dir}/{i}")
+                results.append(result)
+        else:
+            result = measure_violation_number(f"{record_dir}/{i}")
+            results.append(result)
 
     stat_dict = {}
     for i in results:

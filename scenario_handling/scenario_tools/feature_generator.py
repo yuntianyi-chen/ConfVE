@@ -154,6 +154,6 @@ def runOracles(scenario_player_output, record_name, scenario, adc_route):
         shutil.copytree(obs_folder, destination_dir)
 
         with open(os.path.join(dest, adc_route_file), 'a+') as rfile:
-            rfile.write(f"{record_name},{adc_route}")
+            rfile.write(f"{record_name},{adc_route}\n")
 
     return lanes, min_distance, speeding_min, uslc_min, fastAccl_min, hardBrake_min

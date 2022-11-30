@@ -11,16 +11,19 @@ from tools.config_file_handler.translator_apollo import option_obj_translator, s
 
 
 class Scenario:
-    def __init__(self, config_file_status, obs_group_path, adc_route, record_name):
+    def __init__(self, config_file_status, obs_group_path, adc_route, violation_num, violation_results, record_name):
         self.config_file_status = config_file_status
         self.obs_group_path = obs_group_path
         self.adc_route = adc_route
         self.record_name = record_name
+        self.original_violation_num = violation_num
+        self.original_violation_results = violation_results
         if TRAFFIC_LIGHT_MODE:
             self.traffic_light_control = TCSection.get_one()
         # self.tm =
 
     def start_recorder(self):
+        time.sleep(1)
         cmd = f"docker exec -d {get_container_name()} /apollo/bazel-bin/cyber/tools/cyber_recorder/cyber_recorder record -o /apollo/records/{self.record_name} -a &"
         recorder_subprocess = subprocess.Popen(cmd, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         return recorder_subprocess
@@ -62,17 +65,16 @@ def config_file_generating(generated_individual, option_obj_list, default):
 
 
 # scenario refers to different config settings with fixed obstacles and adc routing
-def create_scenarios(generated_individual, option_obj_list, generation_num, individual_num, obs_group_path_list,
-                     adc_routing_list):
+def create_scenarios(generated_individual, option_obj_list, generation_num, individual_num, pre_record_info):
     config_file_tuned_status = config_file_generating(generated_individual, option_obj_list,
                                                       default=DEFAULT_CONFIG_FILE)
     record_name_list = [f"Generation_{str(generation_num)}_Config_{individual_num}_Obs_{str(i)}" for i in
-                        range(len(adc_routing_list))]
+                        range(len(pre_record_info.adc_routing_list))]
 
     # tm = TrafficControlManager(self.curr_scenario.tc_section)
 
-    scenario_list = [Scenario(config_file_tuned_status, obs_group_path, adc_route, record_name) for
-                     obs_group_path, adc_route, record_name in
-                     zip(obs_group_path_list, adc_routing_list, record_name_list)]
+    scenario_list = [Scenario(config_file_tuned_status, obs_group_path, adc_route, violation_num, violation_results, record_name) for
+                     obs_group_path, adc_route, violation_num, violation_results, record_name in
+                     zip(pre_record_info.obs_group_path_list, pre_record_info.adc_routing_list, pre_record_info.violation_num_list, pre_record_info.violation_results_list, record_name_list)]
     return scenario_list
 

@@ -15,7 +15,7 @@
 3. replay record by obstacle detection & routing request
 
 
-
+Discussion. Time latency, Non-determinism
 
 scenoRITA problem:
 1. Fast acceleration includes the max acc limit (>=), DoppelTest doesn't (>)

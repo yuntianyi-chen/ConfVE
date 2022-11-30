@@ -14,6 +14,8 @@ import random
 import os
 import time
 import json
+
+from testing_approaches.interface import adc_routing_generate
 from testing_approaches.scenorita.interface import ScenoRITA
 from testing_approaches.scenorita.run_oracles import run_oracles
 from testing_approaches.scenorita.scenoRITA_config import OBS_MIN, OBS_MAX, NP, TOTAL_LANES, ETIME, CXPB, MUTPB, ADDPB, \
@@ -220,8 +222,8 @@ def runScenario(deme, record_name, bridge):
             cyber_env_init()
             print("attempted %s run" % num_runs)
 
-        approach_generator = ScenoRITA()
-        adc_route = approach_generator.adc_routing_generate()
+        # approach_generator = ScenoRITA()
+        adc_route = adc_routing_generate()
         scenario = Scenario(False, obs_apollo_folder, adc_route, record_name)
         output_result = run_scenario(scenario, bridge)
         num_runs = num_runs + 1
