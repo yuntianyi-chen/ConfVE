@@ -1,0 +1,2 @@
+1. Enter container with root permission
+docker exec -it apollo_dev_cloudsky /bin/bash

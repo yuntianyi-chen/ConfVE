@@ -1,6 +1,6 @@
 import time
 import subprocess
-from config import MAX_RECORD_TIME, TRAFFIC_LIGHT_MODE
+from config import MAX_RECORD_TIME, TRAFFIC_LIGHT_MODE, SAVE_RECORD
 from environment.container_settings import get_container_name
 from environment.cyber_env_operation import modules_operation, kill_modules
 from modules.routing.proto.routing_pb2 import RoutingRequest
@@ -96,6 +96,8 @@ def run_scenarios(generated_individual, scenario_list, bridge):
         print("    Stop recorder...")
         scenario.stop_recorder(recorder_subprocess)
 
+
+
         # scenario.stop_subprocess(p)
         stop_obstacles(p)
 
@@ -106,8 +108,10 @@ def run_scenarios(generated_individual, scenario_list, bridge):
         generated_individual.update_accumulated_objectives(violation_results, code_coverage, execution_time)
         generated_individual.update_violation_intro_remov(violation_results, scenario)
 
-
-        if len(violation_results) == 0:
+        if SAVE_RECORD == True:
+            if len(violation_results) == 0:
+                scenario.delete_record()
+        else:
             scenario.delete_record()
 
         scenario_count += 1
