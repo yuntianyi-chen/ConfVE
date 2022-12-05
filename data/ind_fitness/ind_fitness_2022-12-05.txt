@@ -2,19 +2,3 @@ Generation_0 Individual_0
   Vio Intro: 0
   Vio Remov: 3
     Fitness: 3
-Generation_0 Individual_1
-  Vio Intro: 0
-  Vio Remov: 5
-    Fitness: 5
-Generation_0 Individual_2
-  Vio Intro: 0
-  Vio Remov: 5
-    Fitness: 5
-Generation_0 Individual_3
-  Vio Intro: 0
-  Vio Remov: 5
-    Fitness: 5
-Generation_0 Individual_4
-  Vio Intro: 1
-  Vio Remov: 5
-    Fitness: 6
