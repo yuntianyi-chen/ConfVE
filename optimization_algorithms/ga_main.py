@@ -1,8 +1,11 @@
+import pickle
 import random
 import time
-from config import APOLLO_ROOT, MODULE_NAME, FITNESS_MODE
+from datetime import date
+
+from config import APOLLO_ROOT, MODULE_NAME, FITNESS_MODE, OPTIMAL_IND_LIST_LENGTH, MAGGIE_ROOT
 from environment.cyber_env_operation import cyber_env_init, delete_records, connect_bridge
-from optimization_algorithms.genetic_algorithm.ga import ga_init, crossover, mutate, select
+from optimization_algorithms.genetic_algorithm.ga import ga_init, crossover, mutate, select, file_init
 from scenario_handling.create_scenarios import create_scenarios
 from scenario_handling.run_scenario import run_scenarios
 from testing_approaches.interface import get_record_info_by_approach
@@ -22,6 +25,12 @@ def ga_main(module_config_path):
 
     # obstacle_chromosomes_list = init_obs()
 
+    optimal_fitness = 0
+    ind_list = []
+
+    violation_save_file_path, ind_fitness_save_file_path = file_init()
+
+
     for generation_num in range(generation_limit):
         print("-------------------------------------------------")
         print(f"Generation_{generation_num}")
@@ -33,24 +42,45 @@ def ga_main(module_config_path):
         individual_num = 0
 
         ###################
-        pre_record_info= get_record_info_by_approach()
+        pre_record_info = get_record_info_by_approach()
         # obs_group_path_list, adc_routing_list, violation_num_list = get_record_info_by_approach()
         ###################
 
         for generated_individual in individual_list_after_mutate:
             print("-------------------------------------------------")
-            print(f"Generation_{generation_num} Individual_{individual_num}")
+            gen_ind_id = f"Generation_{generation_num} Individual_{individual_num}"
+            print(gen_ind_id)
+
             # Restart cyber_env to fix the image static bug here
             cyber_env_init()
-            if generated_individual.fitness is None:
+            if generated_individual.fitness == 0:
+                generated_individual.update_id(gen_ind_id)
+
                 # scenario refers to a config setting with different fixed obstacles and adc routes
                 scenario_list = create_scenarios(generated_individual, option_obj_list, generation_num, individual_num,
                                                  pre_record_info)
 
                 # test each config settings under several groups of obstacles and adc routes
-                run_scenarios(generated_individual, scenario_list, bridge)
+                run_scenarios(generated_individual, scenario_list, bridge, violation_save_file_path)
 
                 generated_individual.calculate_fitness(FITNESS_MODE)
+
+                print(f" Vio Intro: {generated_individual.violation_intro}")
+                print(f" Vio Remov: {generated_individual.violation_remov}")
+                print(f" Fitness: {generated_individual.fitness}")
+
+                ind_list.append(generated_individual)
+
+                if generated_individual.fitness >= optimal_fitness:
+                    with open(ind_fitness_save_file_path, "a") as f:
+                        f.write(f"{gen_ind_id}\n")
+                        f.write(f"  Vio Intro: {generated_individual.violation_intro}\n")
+                        f.write(f"  Vio Remov: {generated_individual.violation_remov}\n")
+                        f.write(f"    Fitness: {generated_individual.fitness}\n")
+                    optimal_fitness = generated_individual.fitness
+                else:
+                    for scenario in scenario_list:
+                        scenario.delete_record()
 
                 individual_num += 1
 
@@ -62,6 +92,12 @@ def ga_main(module_config_path):
 
     end_time = time.time()
     print("Time cost: " + str((end_time - start_time) / 3600) + " hours")
+    ind_list.sort(reverse=True, key=lambda x: x.fitness)
+
+    ind_list_pickle_dump_data_path = f"{MAGGIE_ROOT}/data/pop_pickle/ind_list_{date.today()}"
+
+    with open(ind_list_pickle_dump_data_path, 'wb') as f:
+        pickle.dump(ind_list, f, protocol=4)
 
 
 if __name__ == '__main__':

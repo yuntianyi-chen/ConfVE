@@ -6,9 +6,11 @@ from environment.container_settings import init_settings
 from objectives.violation_number.oracles import RecordAnalyzer
 
 
-def measure_objectives_individually(scenario):
+def measure_objectives_individually(scenario, violation_save_file_path):
     record_path = f"{APOLLO_ROOT}/records/{scenario.record_name}.00000"
-    violation_results = measure_violation_number(record_path)
+    # violation_results = measure_violation_number(record_path)
+    violation_results = measure_violation_number_and_save(record_path, violation_save_file_path)
+
     # replay_scenario(record_path)
     code_coverage = measure_code_coverage()
     execution_time = measure_execution_time()
@@ -32,6 +34,17 @@ def measure_violation_number(record_path):
     if len(results) > 0:
         print(f"          Record Path: {record_path}")
         with open(f"{MAGGIE_ROOT}/data/violation_results/violation_results_{date.today()}.txt", "a") as f:
+            f.write(f"Violation Results: {results}\n")
+            f.write(f"  {record_path}\n")
+    return results
+
+def measure_violation_number_and_save(record_path, save_file_path):
+    ra = RecordAnalyzer(record_path)
+    results = ra.analyze()
+    print(f"      Violation Results: {results}")
+    if len(results) > 0:
+        print(f"          Record Path: {record_path}")
+        with open(save_file_path, "a") as f:
             f.write(f"Violation Results: {results}\n")
             f.write(f"  {record_path}\n")
     return results

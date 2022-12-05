@@ -1,6 +1,8 @@
 import random
 from copy import deepcopy
-from config import GENERATION_LIMIT, INIT_POP_SIZE, SELECT_NUM_RATIO
+from datetime import date
+
+from config import GENERATION_LIMIT, INIT_POP_SIZE, SELECT_NUM_RATIO, MAGGIE_ROOT
 
 
 class IndividualWithFitness:
@@ -24,11 +26,9 @@ class IndividualWithFitness:
 
         if fitness_mode == "intro_remov":
             self.fitness = self.violation_intro+self.violation_remov
-            print(f"       Vio Intro: {self.violation_intro}")
-            print(f"       Vio Remov: {self.violation_remov}")
-
         else:
             self.fitness = self.violation_number * self.code_coverage * self.execution_time
+
 
     def update_violation_intro_remov(self, violation_results, scenario):
         for violation in violation_results:
@@ -38,12 +38,14 @@ class IndividualWithFitness:
             if violation not in violation_results:
                 self.violation_remov+=1
 
+    def update_id(self ,id):
+        self.id = id
 
     def get_fitness(self):
         return self.fitness
 
     def reset_default(self):
-        self.fitness = None
+        self.fitness = 0
         # self.fitness = random.randint(0, 10)
         self.violation_number = 0
         self.code_coverage = 0
@@ -75,6 +77,16 @@ def ga_init(option_obj_list):
     option_type_list = [option_obj.option_type for option_obj in option_obj_list]
     init_individual_list = generate_individuals(option_obj_list, INIT_POP_SIZE)
     return init_individual_list, generation_limit, option_type_list
+
+def file_init():
+    violation_save_file_path = f"{MAGGIE_ROOT}/data/violation_results/violation_results_{date.today()}.txt"
+    ind_fitness_save_file_path = f"{MAGGIE_ROOT}/data/ind_fitness/ind_fitness_{date.today()}.txt"
+
+    with open(violation_save_file_path, "w") as f:
+        print()
+    with open(ind_fitness_save_file_path, "w") as f:
+        print()
+    return violation_save_file_path, ind_fitness_save_file_path
 
 
 def select(individual_list, option_obj_list):

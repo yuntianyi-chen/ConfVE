@@ -66,7 +66,7 @@ def register_traffic_lights(traffic_light_control, bridge):
         runner_time += 100
 
 
-def run_scenarios(generated_individual, scenario_list, bridge):
+def run_scenarios(generated_individual, scenario_list, bridge, violation_save_file_path):
     scenario_count = 0
 
     for scenario in scenario_list:
@@ -101,18 +101,18 @@ def run_scenarios(generated_individual, scenario_list, bridge):
         # scenario.stop_subprocess(p)
         stop_obstacles(p)
 
-        violation_results, code_coverage, execution_time = measure_objectives_individually(scenario)
+        violation_results, code_coverage, execution_time = measure_objectives_individually(scenario, violation_save_file_path)
         # scenario.calculate_fitness(violation_number, code_coverage, execution_time)
 
         # fitness = calculate_fitness(violation_number, code_coverage, execution_time)
         generated_individual.update_accumulated_objectives(violation_results, code_coverage, execution_time)
         generated_individual.update_violation_intro_remov(violation_results, scenario)
 
-        if SAVE_RECORD == True:
-            if len(violation_results) == 0:
-                scenario.delete_record()
-        else:
-            scenario.delete_record()
+        # if SAVE_RECORD == True:
+        #     if len(violation_results) == 0:
+        #         scenario.delete_record()
+        # else:
+        #     scenario.delete_record()
 
         scenario_count += 1
 
