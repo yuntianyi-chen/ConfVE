@@ -1,39 +1,25 @@
 X. Static Analysis
-
 x. Fail to detect collision (bicycle)
 x. replay cannot reflect the configuration changes
-x. Planning module failure
-
-0. Add a report about configuration options tuning
-
-0. Test scenoRITA results: replay records and run process again to see what's the difference
-0. Store the configuration files of final results and option tuning situation
-0. Store and analyze the violation remove/emerge info
+x. Planning module failure not detecting
+x. Add a report about configuration options tuning
+x. Test scenoRITA results: replay records and run process again to see what's the difference
+x. Store the configuration files of final results and option tuning situation
 
 1. Check and Finish the rest of violation types
-
-
-
-
 2. Deep Reinforcement learning
-2.5 T-way testing
-3. Run AV Testing techniques (scenoRITA, DoppelTest, AV-Fuzzer, ADFuzz) (GA, DRL)
-4. Partial path sensitive analysis or interval analysis
+3. T-way testing
+4. Run AV Testing techniques (scenoRITA, DoppelTest, AV-Fuzzer, ADFuzz) (GA, DRL)
 
-4. Code coverage (Branch coverage)
-5. Finish fitness calculation function
+5. Partial path sensitive analysis or interval analysis
+6. Code coverage (Branch coverage)
+7. Finish fitness calculation function
 
-0. The image of Dreamview is static after running many scenarios (Maybe bridge is disconnected?) (Restart the dreamview to fix this, maybe not the bridge issue)
-
-1. Tuning ranges for options
+8. The image of Dreamview is static after running many scenarios (Maybe bridge is disconnected?) (Restart the dreamview to fix this, maybe not the bridge issue)
+9. Tuning ranges for options
 
 ---------------------
 1. avoid generating the obstacles overlapped with the ego car
 2. avoid generating the ego car above the stop sign line
 3. replay record by obstacle detection & routing request
 
-
-Discussion. Time latency, Non-determinism
-
-scenoRITA problem:
-1. Fast acceleration includes the max acc limit (>=), DoppelTest doesn't (>)
