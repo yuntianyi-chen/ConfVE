@@ -32,15 +32,19 @@ class MapParser:
         self.load_stop_signs()
         self.load_lanes()
         self.load_crosswalks()
-        # self.parse_relations()
-        # self.parse_signal_relations()
-        # self.parse_lane_relations()
-        MapParser.__instance = self
+        self.parse_relations()
+        self.parse_signal_relations()
+        self.parse_lane_relations()
+        # MapParser.__instance = self
+        self.load_instance()
 
     @staticmethod
     def get_instance():
         assert not MapParser.__instance is None
         return MapParser.__instance
+
+    def load_instance(self):
+        MapParser.__instance = self
 
     def load_junctions(self):
         self.__junctions = dict()
@@ -67,35 +71,79 @@ class MapParser:
         for cw in self.__map.crosswalk:
             self.__crosswalk[cw.id.id] = cw
 
+    # def parse_relations(self):
+    #     # load signals at junction
+    #     self.__signals_at_junction = defaultdict(lambda: list())
+    #     for sigk, sigv in self.__signals.items():
+    #         for junk, junv in self.__junctions.items():
+    #             if self.__is_overlap(sigv, junv):
+    #                 self.__signals_at_junction[junk].append(sigk)
+    #
+    #     # load lanes at junction
+    #     self.__lanes_at_junction = defaultdict(lambda: list())
+    #     for lank, lanv in self.__lanes.items():
+    #         for junk, junv in self.__junctions.items():
+    #             if self.__is_overlap(lanv, junv):
+    #                 self.__lanes_at_junction[junk].append(lank)
+    #
+    #     # load lanes controlled by signal
+    #     self.__lanes_controlled_by_signal = defaultdict(lambda: list())
+    #     for junk, junv in self.__junctions.items():
+    #         signal_ids = self.__signals_at_junction[junk]
+    #         lane_ids = self.__lanes_at_junction[junk]
+    #         for sid in signal_ids:
+    #             for lid in lane_ids:
+    #                 if self.__is_overlap(self.__signals[sid], self.__lanes[lid]):
+    #                     self.__lanes_controlled_by_signal[sid].append(lid)
+
     def parse_relations(self):
         # load signals at junction
-        self.__signals_at_junction = defaultdict(lambda: list())
+        self.__signals_at_junction = {}
         for sigk, sigv in self.__signals.items():
             for junk, junv in self.__junctions.items():
                 if self.__is_overlap(sigv, junv):
-                    self.__signals_at_junction[junk].append(sigk)
+                    if junk not in self.__signals_at_junction.keys():
+                        self.__signals_at_junction[junk] = [sigk]
+                    else:
+                        self.__signals_at_junction[junk].append(sigk)
 
         # load lanes at junction
-        self.__lanes_at_junction = defaultdict(lambda: list())
+        self.__lanes_at_junction = {}
         for lank, lanv in self.__lanes.items():
             for junk, junv in self.__junctions.items():
                 if self.__is_overlap(lanv, junv):
-                    self.__lanes_at_junction[junk].append(lank)
+                    if junk not in self.__lanes_at_junction.keys():
+                        self.__lanes_at_junction[junk] = [lank]
+                    else:
+                        self.__lanes_at_junction[junk].append(lank)
 
         # load lanes controlled by signal
-        self.__lanes_controlled_by_signal = defaultdict(lambda: list())
+        self.__lanes_controlled_by_signal = {}
         for junk, junv in self.__junctions.items():
-            signal_ids = self.__signals_at_junction[junk]
-            lane_ids = self.__lanes_at_junction[junk]
+            if len(self.__signals_at_junction)==0:
+                signal_ids =[]
+            else:
+                signal_ids = self.__signals_at_junction[junk]
+            if len(self.__lanes_at_junction)==0:
+                lane_ids =[]
+            else:
+                lane_ids = self.__lanes_at_junction[junk]
             for sid in signal_ids:
                 for lid in lane_ids:
                     if self.__is_overlap(self.__signals[sid], self.__lanes[lid]):
-                        self.__lanes_controlled_by_signal[sid].append(lid)
+                        if sid not in self.__lanes_controlled_by_signal.keys():
+                            self.__lanes_controlled_by_signal[sid] = [lid]
+                        else:
+                            self.__lanes_controlled_by_signal[sid].append(lid)
 
     def parse_signal_relations(self):
         g = nx.Graph()
         for junk, junv in self.__junctions.items():
-            signal_ids = self.__signals_at_junction[junk]
+            if len(self.__signals_at_junction)==0:
+                signal_ids =[]
+            else:
+                signal_ids = self.__signals_at_junction[junk]
+            # signal_ids = self.__signals_at_junction[junk]
             for sid1 in signal_ids:
                 g.add_node(sid1)
                 for sid2 in signal_ids:

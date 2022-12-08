@@ -23,3 +23,6 @@ x. Store the configuration files of final results and option tuning situation
 2. avoid generating the ego car above the stop sign line
 3. replay record by obstacle detection & routing request
 
+
+---------------------
+No routing request but have routing response ()

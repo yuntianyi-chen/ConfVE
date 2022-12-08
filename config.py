@@ -63,8 +63,10 @@ MAX_ADC_COUNT = 5
 MAX_PD_COUNT = 5
 RUN_FOR_HOUR = 12
 
-HD_MAP_PATH = f'{MAGGIE_ROOT}/data/maps/{MAP_NAME}/base_map.bin'
 
+MAP_PATH = f'{MAGGIE_ROOT}/data/maps/{MAP_NAME}'
+HD_MAP_PATH = f'{MAP_PATH}/base_map.bin'
+MAP_DATA_PATH = f'{MAP_PATH}/map_pickle_data'
 
 ##################################
 ###############

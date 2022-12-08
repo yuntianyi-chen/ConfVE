@@ -29,6 +29,7 @@ class RecordAnalyzer:
             StopSignOracle(),
             TrafficSignalOracle(),
             UUStopOracle(),
+
             # PlanningCrashOracle(),
             # UnsafeLaneChangeOracle(),
         ]
@@ -38,6 +39,7 @@ class RecordAnalyzer:
     def analyze(self):
         record = Record(self.record_path)
         for topic, message, t in record.read_messages():
+            # print(f"-------------------\n{topic}\n\n{message}\n\n{t}")
             self.oracle_manager.on_new_message(topic, message, t)
         return self.get_results()
 

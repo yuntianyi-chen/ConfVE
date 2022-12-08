@@ -51,7 +51,7 @@ def measure_violation_number_and_save(record_path, save_file_path):
 
 
 if __name__ == '__main__':
-    SINGLE_TEST = True
+    SINGLE_TEST = False
 
     init_settings()
 
@@ -62,12 +62,14 @@ if __name__ == '__main__':
     file_list.sort()
 
     results=[]
-    for i in file_list:
-        if SINGLE_TEST == True:
-            if "Generation_8_Scenario_41_Obs_0.00000" in i:
-                result = measure_violation_number(f"{record_dir}/{i}")
-                results.append(result)
-        else:
+
+    if SINGLE_TEST == True:
+        single_file_name = "Generation_8_Config_41_Obs_0.00000"
+        if single_file_name in file_list:
+            result = measure_violation_number(f"{record_dir}/{single_file_name}")
+            results.append(result)
+    else:
+        for i in file_list:
             result = measure_violation_number(f"{record_dir}/{i}")
             results.append(result)
 
