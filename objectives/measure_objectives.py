@@ -51,18 +51,20 @@ def measure_violation_number_and_save(record_path, save_file_path):
 
 
 if __name__ == '__main__':
-    SINGLE_TEST = False
+    SINGLE_TEST = True
 
     init_settings()
 
-    record_dir = "/home/cloudsky/Research/Apollo/Backup/scenoRITA/records/using"
+    # record_dir = "/home/cloudsky/Research/Apollo/Backup/scenoRITA/records/using"
+    record_dir = "/home/cloudsky/Research/Apollo/Backup/scenoRITA/records/2022-12-06"
+
     file_list = listdir(record_dir)
     file_list.sort()
 
     results=[]
     for i in file_list:
         if SINGLE_TEST == True:
-            if "Generation37_Scenario19.00000" in i:
+            if "Generation_8_Scenario_41_Obs_0.00000" in i:
                 result = measure_violation_number(f"{record_dir}/{i}")
                 results.append(result)
         else:

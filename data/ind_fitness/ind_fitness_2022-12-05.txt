@@ -1,4 +1,0 @@
-Generation_0 Individual_0
-  Vio Intro: 0
-  Vio Remov: 3
-    Fitness: 3

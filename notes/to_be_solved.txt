@@ -1,11 +1,22 @@
 X. Static Analysis
 
+x. Fail to detect collision (bicycle)
+x. replay cannot reflect the configuration changes
+x. Planning module failure
+
+0. Add a report about configuration options tuning
+
 0. Test scenoRITA results: replay records and run process again to see what's the difference
 0. Store the configuration files of final results and option tuning situation
 0. Store and analyze the violation remove/emerge info
 
 1. Check and Finish the rest of violation types
+
+
+
+
 2. Deep Reinforcement learning
+2.5 T-way testing
 3. Run AV Testing techniques (scenoRITA, DoppelTest, AV-Fuzzer, ADFuzz) (GA, DRL)
 4. Partial path sensitive analysis or interval analysis
 

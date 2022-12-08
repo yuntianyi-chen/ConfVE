@@ -1,0 +1,12 @@
+Violation Results: [('collision', 11294), ('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/Backup/scenoRITA/records/2022-12-06/Generation_0_Config_0_Obs_4.00000
+Violation Results: [('collision', 4471), ('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/Backup/scenoRITA/records/2022-12-06/Generation_0_Config_0_Obs_6.00000
+Violation Results: [('collision', 22132), ('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/Backup/scenoRITA/records/2022-12-06/Generation_0_Config_0_Obs_7.00000
+Violation Results: [('collision', 11294)]
+  /home/cloudsky/Research/Apollo/Backup/scenoRITA/records/2022-12-06/Generation_1_Config_23_Obs_4.00000
+Violation Results: [('collision', 4471)]
+  /home/cloudsky/Research/Apollo/Backup/scenoRITA/records/2022-12-06/Generation_1_Config_23_Obs_6.00000
+Violation Results: [('collision', 22132)]
+  /home/cloudsky/Research/Apollo/Backup/scenoRITA/records/2022-12-06/Generation_1_Config_23_Obs_7.00000

@@ -1,2 +1,8 @@
 1. Enter container with root permission
 docker exec -it apollo_dev_cloudsky /bin/bash
+
+2. Command not found
+source cyber/setup.bash
+
+
+cyber_recorder play -f /apollo/records/Generation_1_Config_38_Obs_0.00000 -l
