@@ -26,3 +26,13 @@ x. Store the configuration files of final results and option tuning situation
 
 ---------------------
 No routing request but have routing response ()
+
+
+---
+NSF Proposal:
+1. Write draft Thrust2 in high level 4 pages first
+2. Distinguish bugs and violations in Thrust2
+3. Move something in scenoRITA
+4. Think about configuration-level cause analysis and fault localization
+    Maybe find the relationship between the violation and bug
+    There should never be a violation in specific situation, but the violation occurs
