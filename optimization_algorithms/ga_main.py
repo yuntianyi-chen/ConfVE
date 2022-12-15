@@ -30,7 +30,6 @@ def ga_main(module_config_path):
 
     violation_save_file_path, ind_fitness_save_file_path = file_init()
 
-
     for generation_num in range(generation_limit):
         print("-------------------------------------------------")
         print(f"Generation_{generation_num}")
@@ -101,5 +100,19 @@ def ga_main(module_config_path):
 
 
 if __name__ == '__main__':
-    module_config_path = f"{APOLLO_ROOT}/modules/{MODULE_NAME}/conf/{MODULE_NAME}_config.pb.txt"
-    ga_main(module_config_path)
+    # module_config_path = f"{APOLLO_ROOT}/modules/{MODULE_NAME}/conf/{MODULE_NAME}_config.pb.txt"
+    module_config_path = f"../data/config_files/{MODULE_NAME}/conf/{MODULE_NAME}_config.pb.txt"
+
+    # ga_main(module_config_path)
+    raw_option_stack, option_tuple_list, option_obj_list, option_num = parser2class(module_config_path)
+
+    init_individual_list, generation_limit, option_type_list = ga_init(option_obj_list)
+
+    type_stat_dict = {}
+    for i in option_type_list:
+        if i not in type_stat_dict.keys():
+            type_stat_dict[i] = 1
+        else:
+            type_stat_dict[i] += 1
+
+    print(type_stat_dict)
