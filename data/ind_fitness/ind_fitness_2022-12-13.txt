@@ -1,0 +1,80 @@
+Generation_0 Individual_0
+  Vio Intro: 0
+  Vio Remov: 8
+    Fitness: 8
+Generation_3 Individual_0
+  Vio Intro: 5
+  Vio Remov: 12
+    Fitness: 17
+Generation_3 Individual_1
+  Vio Intro: 5
+  Vio Remov: 12
+    Fitness: 17
+Generation_3 Individual_2
+  Vio Intro: 5
+  Vio Remov: 12
+    Fitness: 17
+Generation_3 Individual_6
+  Vio Intro: 5
+  Vio Remov: 12
+    Fitness: 17
+Generation_3 Individual_7
+  Vio Intro: 5
+  Vio Remov: 12
+    Fitness: 17
+Generation_3 Individual_10
+  Vio Intro: 5
+  Vio Remov: 12
+    Fitness: 17
+Generation_3 Individual_12
+  Vio Intro: 5
+  Vio Remov: 12
+    Fitness: 17
+Generation_3 Individual_14
+  Vio Intro: 5
+  Vio Remov: 12
+    Fitness: 17
+Generation_3 Individual_15
+  Vio Intro: 5
+  Vio Remov: 12
+    Fitness: 17
+Generation_3 Individual_19
+  Vio Intro: 5
+  Vio Remov: 12
+    Fitness: 17
+Generation_3 Individual_20
+  Vio Intro: 5
+  Vio Remov: 12
+    Fitness: 17
+Generation_3 Individual_31
+  Vio Intro: 5
+  Vio Remov: 12
+    Fitness: 17
+Generation_3 Individual_32
+  Vio Intro: 5
+  Vio Remov: 12
+    Fitness: 17
+Generation_3 Individual_36
+  Vio Intro: 5
+  Vio Remov: 12
+    Fitness: 17
+Generation_3 Individual_37
+  Vio Intro: 5
+  Vio Remov: 12
+    Fitness: 17
+Generation_3 Individual_40
+  Vio Intro: 5
+  Vio Remov: 12
+    Fitness: 17
+Generation_3 Individual_42
+  Vio Intro: 5
+  Vio Remov: 12
+    Fitness: 17
+Generation_3 Individual_44
+  Vio Intro: 5
+  Vio Remov: 12
+    Fitness: 17
+Generation_3 Individual_45
+  Vio Intro: 5
+  Vio Remov: 12
+    Fitness: 17

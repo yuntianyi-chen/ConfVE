@@ -1,0 +1,2 @@
+Violation Results: [('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_0_Config_0_Obs_2.00000

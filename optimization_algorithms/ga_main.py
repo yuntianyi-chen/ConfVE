@@ -4,7 +4,7 @@ import time
 from datetime import date
 
 from config import APOLLO_ROOT, MODULE_NAME, FITNESS_MODE, OPTIMAL_IND_LIST_LENGTH, MAGGIE_ROOT
-from environment.cyber_env_operation import cyber_env_init, delete_records, connect_bridge
+from environment.cyber_env_operation import cyber_env_init, delete_records, connect_bridge, delete_data_core
 from optimization_algorithms.genetic_algorithm.ga import ga_init, crossover, mutate, select, file_init
 from scenario_handling.create_scenarios import create_scenarios
 from scenario_handling.run_scenario import run_scenarios
@@ -36,6 +36,7 @@ def ga_main(module_config_path):
         print("-------------------------------------------------")
         # cyber_env_init()
         bridge = connect_bridge()
+        delete_data_core()
         individual_list_after_crossover = crossover(individual_list)
         individual_list_after_mutate = mutate(individual_list_after_crossover, option_type_list)
         individual_num = 0
