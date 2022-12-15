@@ -6,6 +6,17 @@ x. Add a report about configuration options tuning
 x. Test scenoRITA results: replay records and run process again to see what's the difference
 x. Store the configuration files of final results and option tuning situation
 
+x. Why planning module fails, focus on options that lead to module failure
+- Robust system should be able to work though the configuration input is invalid
+- Maybe divide violation removed/emergence
+
+x. Why scenoRITA works on large maps but DoppelTest not so good – say something in the proposal how to solve this issue
+How much time it need to take for DoppelTest to get enough good scenarios
+Test it for more hours
+
+x. Conversion of maps of Apollo to LGSVL
+   Use the common maps
+
 1. Check and Finish the rest of violation types
 2. Deep Reinforcement learning
 3. T-way testing
@@ -18,6 +29,8 @@ x. Store the configuration files of final results and option tuning situation
 8. The image of Dreamview is static after running many scenarios (Maybe bridge is disconnected?) (Restart the dreamview to fix this, maybe not the bridge issue)
 9. Tuning ranges for options
 
+10. How non-determinism is the code coverage when replaying the records?
+
 ---------------------
 1. avoid generating the obstacles overlapped with the ego car
 2. avoid generating the ego car above the stop sign line
@@ -26,39 +39,4 @@ x. Store the configuration files of final results and option tuning situation
 
 ---------------------
 No routing request but have routing response ()
-
-
----
-NSF Proposal:
-1. Write draft Thrust2 in high level 4 pages first
-2. Distinguish bugs and violations in Thrust2
-3. Move something in scenoRITA
-4. Thrust 4: Think about configuration-level cause analysis and fault localization
-    Maybe find the relationship between the violation and bug
-    There should never be a violation in specific situation, but the violation occurs
-
-5. Violation specified option-analysis
-    Get the feasible range for that option
-    Specify which options would result in/highly related to specific violations
-
-    In the process of violation emergence/removal, we could try to remove the new violations
-
-    Calculate the total/accumulated violation removed for each individual?
-
-
-6. How non-determinism is the code coverage when replaying the records?
-
-
-Why scenoRITA works on large maps but DoppelTest not so good – say something in the proposal how to solve this issue
-How much time it need to take for DoppelTest to get enough good scenarios
-Test it for more hours
-
-
-Conversion of maps of Apollo to LGSVL
-Use the common maps
-
-
-Why planning module fails, focus on options that lead to module failure
-- Robust system should be able to work though the configuration input is invalidMaybe divide violation removed/emergence
-
 
