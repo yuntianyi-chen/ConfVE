@@ -40,3 +40,9 @@ x. Conversion of maps of Apollo to LGSVL
 ---------------------
 No routing request but have routing response ()
 
+-----
+Violation specified option-analysis
+    Get the feasible range for that option
+    Specify which options would result in/highly related to specific violations
+    In the process of violation emergence/removal, we still could try to remove new violations
+    Calculate the total/accumulated violation removed for each individual
