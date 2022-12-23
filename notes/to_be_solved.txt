@@ -1,10 +1,11 @@
+x. Filter invalid configurations
+x. Add a report about configuration options tuning
+x. Store the configuration files of final results and option tuning situation
 X. Static Analysis
 x. Fail to detect collision (bicycle)
 x. replay cannot reflect the configuration changes
 x. Planning module failure not detecting
-x. Add a report about configuration options tuning
 x. Test scenoRITA results: replay records and run process again to see what's the difference
-x. Store the configuration files of final results and option tuning situation
 
 x. Why planning module fails, focus on options that lead to module failure
 - Robust system should be able to work though the configuration input is invalid
