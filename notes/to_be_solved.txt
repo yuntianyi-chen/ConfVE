@@ -1,49 +1,72 @@
-x. Filter invalid configurations
-x. Add a report about configuration options tuning
-x. Store the configuration files of final results and option tuning situation
-X. Static Analysis
-x. Fail to detect collision (bicycle)
-x. replay cannot reflect the configuration changes
-x. Planning module failure not detecting
-x. Test scenoRITA results: replay records and run process again to see what's the difference
+-----------------------
+TO DO RIGHT NOW!!!
+-----------------------
+1. Static Analysis
+    Variable dependency
+    Option range: Partial path sensitive analysis or interval analysis
 
-x. Why planning module fails, focus on options that lead to module failure
-- Robust system should be able to work though the configuration input is invalid
-- Maybe divide violation removed/emergence
 
-x. Why scenoRITA works on large maps but DoppelTest not so good – say something in the proposal how to solve this issue
-How much time it need to take for DoppelTest to get enough good scenarios
-Test it for more hours
 
-x. Conversion of maps of Apollo to LGSVL
-   Use the common maps
 
+
+-----------------------
+Design Modification (Also record it in notebook!)
+-----------------------
+1. Focus on bug emergence, don't focus on bug removal currently
+
+2. Tuning ranges for options
+    Gene representation
+    Overall Identification
+
+3. Identify invalid configurations
+    invalid ranges of options
+    Invalid tuning that removes violation but introduces new violations--Masking violations
+
+    Add a report about configuration options tuning
+    Store the configuration files of final results and option tuning situation
+    Why planning module fails, focus on options that lead to module failure
+    Specify which options would result in/highly related to specific violations
+
+4. Start with as many scenarios as possible, to reduce a reasonable the number of scenarios.
+    Initial Scenarios-diversity of vehicle maneuver, traffic controls, code coverage, violation types...
+
+5. Eliminate duplicate:
+    similarity of duplicate	refer to scenoRITA
+
+
+
+
+
+-----------------------
+Important but follow schedule
+-----------------------
 1. Check and Finish the rest of violation types
 2. Deep Reinforcement learning
 3. T-way testing
 4. Run AV Testing techniques (scenoRITA, DoppelTest, AV-Fuzzer, ADFuzz) (GA, DRL)
-
-5. Partial path sensitive analysis or interval analysis
 6. Code coverage (Branch coverage)
-7. Finish fitness calculation function
-
-8. The image of Dreamview is static after running many scenarios (Maybe bridge is disconnected?) (Restart the dreamview to fix this, maybe not the bridge issue)
-9. Tuning ranges for options
-
-10. How non-determinism is the code coverage when replaying the records?
-
----------------------
-1. avoid generating the obstacles overlapped with the ego car
-2. avoid generating the ego car above the stop sign line
-3. replay record by obstacle detection & routing request
 
 
----------------------
-No routing request but have routing response ()
 
------
-Violation specified option-analysis
-    Get the feasible range for that option
-    Specify which options would result in/highly related to specific violations
-    In the process of violation emergence/removal, we still could try to remove new violations
-    Calculate the total/accumulated violation removed for each individual
+
+
+-----------------------
+Not so hurry
+-----------------------
+1. Provide cases that identify a bug, and then fix the bug
+2. avoid generating the obstacles overlapped with the ego car
+3. avoid generating the ego car above the stop sign line
+4. Genetic algorithm implementation.
+    use existing implementations (e.g., deap framework)
+5. replay record by obstacle information & routing request
+6. Fail to detect bicycle collision
+    scenoRITA can
+    DoppelTest cannot
+7. Conversion of maps of Apollo to LGSVL
+    Use the common maps
+8. Why scenoRITA works on large maps but DoppelTest not so good – say something in the proposal how to solve this issue
+    How much time it need to take for DoppelTest to get enough good scenarios
+    Test it for more hours
+
+
+

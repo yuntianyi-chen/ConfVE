@@ -1,2 +1,10 @@
-scenoRITA problem:
+Configuration Testing:
+1. Record Info: No routing request but have routing response
+2. replay records cannot reflect the configuration changes
+3. The image of Dreamview is static after running many scenarios (Maybe bridge is disconnected?) (Restart the dreamview to fix this, maybe not the bridge issue)
+
+
+
+----------
+scenoRITA:
 1. Fast acceleration includes the max acc limit (>=), DoppelTest doesn't (>)
