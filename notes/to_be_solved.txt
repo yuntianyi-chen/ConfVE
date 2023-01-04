@@ -34,13 +34,13 @@ Design Modification (Also record them on notebook!)
 Important but follow schedule
 -----------------------
 x. Run AV Testing techniques (scenoRITA, DoppelTest, AV-Fuzzer, ADFuzz) (GA, DRL, T-way)
-1. Check and Finish the rest of violation types
+1. Code coverage (Branch coverage)
 2. Deep Reinforcement learning
-3. T-way testing
-4. Static Analysis
+3. Check and Finish the rest of violation types
+4. T-way testing
+5. Static Analysis
     Variable dependency
     Option range: Partial path sensitive analysis or interval analysis
-5. Code coverage (Branch coverage)
 6. Traffic Lights
 
 
@@ -51,8 +51,8 @@ x. Run AV Testing techniques (scenoRITA, DoppelTest, AV-Fuzzer, ADFuzz) (GA, DRL
 Not so hurry
 -----------------------
 1. Provide cases that identify a bug, and then fix the bug
-2. avoid generating the obstacles overlapped with the ego car
-3. avoid generating the ego car above the stop sign line
+2. Avoid generating the obstacles overlapped with the ego car
+3. Avoid generating the ego car above the stop sign line
 4. Genetic algorithm implementation.
     use existing implementations (e.g., deap framework)
 5. replay record by obstacle information & routing request
