@@ -1,16 +1,8 @@
 -----------------------
 TO DO RIGHT NOW!!!
 -----------------------
-1. Static Analysis
-    Variable dependency
-    Option range: Partial path sensitive analysis or interval analysis
-
-
-
-
-
 -----------------------
-Design Modification (Also record it in notebook!)
+Design Modification (Also record them on notebook!)
 -----------------------
 1. Focus on bug emergence, don't focus on bug removal currently
 
@@ -27,8 +19,9 @@ Design Modification (Also record it in notebook!)
     Why planning module fails, focus on options that lead to module failure
     Specify which options would result in/highly related to specific violations
 
-4. Start with as many scenarios as possible, to reduce a reasonable the number of scenarios.
+4. Start with as many scenarios as possible, to reduce a reasonable number of scenarios.
     Initial Scenarios-diversity of vehicle maneuver, traffic controls, code coverage, violation types...
+    Mutable population size
 
 5. Eliminate duplicate:
     similarity of duplicate	refer to scenoRITA
@@ -40,11 +33,15 @@ Design Modification (Also record it in notebook!)
 -----------------------
 Important but follow schedule
 -----------------------
+x. Run AV Testing techniques (scenoRITA, DoppelTest, AV-Fuzzer, ADFuzz) (GA, DRL, T-way)
 1. Check and Finish the rest of violation types
 2. Deep Reinforcement learning
 3. T-way testing
-4. Run AV Testing techniques (scenoRITA, DoppelTest, AV-Fuzzer, ADFuzz) (GA, DRL)
-6. Code coverage (Branch coverage)
+4. Static Analysis
+    Variable dependency
+    Option range: Partial path sensitive analysis or interval analysis
+5. Code coverage (Branch coverage)
+6. Traffic Lights
 
 
 
