@@ -35,7 +35,8 @@ SCENARIO_GENERATION_MODE = True
 OBS_GENERATE_MODE = "scenoRITA"
 AV_TESTING_APPROACH = "scenoRITA"
 OBS_GROUP_COUNT = 10
-FITNESS_MODE = "intro_remov"  # or accu_vio_num
+# FITNESS_MODE = "intro_remov"  # or accu_vio_num
+FITNESS_MODE = "intro"  # or accu_vio_num
 
 # DIRECTORIES =======================================
 APOLLO_ROOT = '/home/cloudsky/Research/Apollo/apollo_7.0'

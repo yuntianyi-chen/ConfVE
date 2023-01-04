@@ -14,31 +14,32 @@ class IndividualWithFitness:
         self.violation_intro = 0
         self.violation_remov = 0
 
-    def update_accumulated_objectives(self, violation_results, code_coverage, execution_time):
-        self.accumulated_objectives[0] += len(violation_results)
-        self.accumulated_objectives[1] += code_coverage
-        self.accumulated_objectives[2] += execution_time
-
     def calculate_fitness(self, fitness_mode):
         self.violation_number = self.accumulated_objectives[0]
         self.code_coverage = self.accumulated_objectives[1]
         self.execution_time = self.accumulated_objectives[2]
 
         if fitness_mode == "intro_remov":
-            self.fitness = self.violation_intro+self.violation_remov
+            self.fitness = self.violation_intro + self.violation_remov
+        if fitness_mode == "intro":
+            self.fitness = self.violation_intro
         else:
             self.fitness = self.violation_number * self.code_coverage * self.execution_time
 
+    def update_accumulated_objectives(self, violation_results, code_coverage, execution_time):
+        self.accumulated_objectives[0] += len(violation_results)
+        self.accumulated_objectives[1] += code_coverage
+        self.accumulated_objectives[2] += execution_time
 
     def update_violation_intro_remov(self, violation_results, scenario):
         for violation in violation_results:
             if violation not in scenario.original_violation_results:
-                self.violation_intro+=1
+                self.violation_intro += 1
         for violation in scenario.original_violation_results:
             if violation not in violation_results:
-                self.violation_remov+=1
+                self.violation_remov += 1
 
-    def update_id(self ,id):
+    def update_id(self, id):
         self.id = id
 
     def get_fitness(self):
@@ -53,6 +54,7 @@ class IndividualWithFitness:
         self.accumulated_objectives = [0, 0, 0]
         self.violation_intro = 0
         self.violation_remov = 0
+
 
 def generate_individuals(option_obj_list, population_size):
     generated_value_lists = list()
@@ -77,6 +79,7 @@ def ga_init(option_obj_list):
     option_type_list = [option_obj.option_type for option_obj in option_obj_list]
     init_individual_list = generate_individuals(option_obj_list, INIT_POP_SIZE)
     return init_individual_list, generation_limit, option_type_list
+
 
 def file_init():
     violation_save_file_path = f"{MAGGIE_ROOT}/data/violation_results/violation_results_{date.today()}.txt"
@@ -145,7 +148,6 @@ def mutate(individual_list, option_type_list):
 # def calculate_fitness(violation_number, code_coverage, execution_time):
 #     fitness = random.uniform(0, 100)
 #     return fitness
-
 
 
 def generate_option_value_by_random(option_type, option_value):

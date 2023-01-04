@@ -96,12 +96,11 @@ def run_scenarios(generated_individual, scenario_list, bridge, violation_save_fi
         print("    Stop recorder...")
         scenario.stop_recorder(recorder_subprocess)
 
-
-
         # scenario.stop_subprocess(p)
         stop_obstacles(p)
 
-        violation_results, code_coverage, execution_time = measure_objectives_individually(scenario, violation_save_file_path)
+        violation_results, code_coverage, execution_time = measure_objectives_individually(scenario,
+                                                                                           violation_save_file_path)
         # scenario.calculate_fitness(violation_number, code_coverage, execution_time)
 
         # fitness = calculate_fitness(violation_number, code_coverage, execution_time)

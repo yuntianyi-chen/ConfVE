@@ -68,7 +68,7 @@ def ga_main(module_config_path):
 
                 print(f" Vio Intro: {generated_individual.violation_intro}")
                 print(f" Vio Remov: {generated_individual.violation_remov}")
-                print(f" Fitness: {generated_individual.fitness}")
+                print(f" Fitness(mode: {FITNESS_MODE}): {generated_individual.fitness}")
 
                 ind_list.append(generated_individual)
 
@@ -77,7 +77,7 @@ def ga_main(module_config_path):
                         f.write(f"{gen_ind_id}\n")
                         f.write(f"  Vio Intro: {generated_individual.violation_intro}\n")
                         f.write(f"  Vio Remov: {generated_individual.violation_remov}\n")
-                        f.write(f"    Fitness: {generated_individual.fitness}\n")
+                        f.write(f"  Fitness(mode: {FITNESS_MODE}): {generated_individual.fitness}")
                     optimal_fitness = generated_individual.fitness
                 else:
                     for scenario in scenario_list:
@@ -104,7 +104,7 @@ def ga_main(module_config_path):
 if __name__ == '__main__':
     # module_config_path = f"{APOLLO_ROOT}/modules/{MODULE_NAME}/conf/{MODULE_NAME}_config.pb.txt"
     # module_config_path = f"../data/config_files/{MODULE_NAME}/conf/{MODULE_NAME}_config.pb.txt"
-    module_name ="control"
+    module_name = "control"
 
     conf_files_path = glob.glob(
         f"C:\\Projects\\Research\\Autonomous Vehicles\\apollo\\apollo\\modules\\{module_name}\\conf" + '/**/calibration_table.pb.txt',
