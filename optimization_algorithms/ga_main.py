@@ -1,12 +1,17 @@
 import glob
+import os
 import pickle
 import random
+import shutil
 import time
+from copy import deepcopy
 from datetime import date
-
-from config import APOLLO_ROOT, MODULE_NAME, FITNESS_MODE, OPTIMAL_IND_LIST_LENGTH, MAGGIE_ROOT
+from config import MODULE_NAME, FITNESS_MODE, ENABLE_CROSSOVER, CONFIGURATION_REVERTING, CONFIG_FILE_PATH, \
+    BACKUP_CONFIG_SAVE_PATH
 from environment.cyber_env_operation import cyber_env_init, delete_records, connect_bridge, delete_data_core
 from optimization_algorithms.genetic_algorithm.ga import ga_init, crossover, mutate, select, file_init
+from range_analysis.range_analysis import generate_new_range
+from range_analysis.tuning_option_item import OptionTuningItem
 from scenario_handling.create_scenarios import create_scenarios
 from scenario_handling.run_scenario import run_scenarios
 from testing_approaches.interface import get_record_info_by_approach
@@ -16,7 +21,8 @@ from tools.config_file_handler.parser_apollo import parser2class
 def ga_main(module_config_path):
     raw_option_stack, option_tuple_list, option_obj_list, option_num = parser2class(module_config_path)
 
-    init_individual_list, generation_limit, option_type_list = ga_init(option_obj_list)
+    init_individual_list, generation_limit, option_type_list, range_list, default_option_value_list = ga_init(
+        option_obj_list)
 
     individual_list = init_individual_list
 
@@ -29,7 +35,7 @@ def ga_main(module_config_path):
     optimal_fitness = 0
     ind_list = []
 
-    violation_save_file_path, ind_fitness_save_file_path = file_init()
+    violation_save_file_path, ind_fitness_save_file_path, option_tuning_file_path, ind_list_pickle_dump_data_path = file_init()
 
     for generation_num in range(generation_limit):
         print("-------------------------------------------------")
@@ -38,8 +44,14 @@ def ga_main(module_config_path):
         # cyber_env_init()
         bridge = connect_bridge()
         delete_data_core()
-        individual_list_after_crossover = crossover(individual_list)
-        individual_list_after_mutate = mutate(individual_list_after_crossover, option_type_list)
+
+        if ENABLE_CROSSOVER:
+            individual_list_after_crossover = crossover(individual_list)
+            individual_list_after_mutate = mutate(individual_list_after_crossover, option_type_list, option_obj_list,
+                                                  range_list)
+        else:
+            individual_list_after_mutate = mutate(individual_list, option_type_list, option_obj_list, range_list)
+
         individual_num = 0
 
         ###################
@@ -49,7 +61,7 @@ def ga_main(module_config_path):
 
         for generated_individual in individual_list_after_mutate:
             print("-------------------------------------------------")
-            gen_ind_id = f"Generation_{generation_num} Individual_{individual_num}"
+            gen_ind_id = f"Generation_{str(generation_num)}_Config_{individual_num}"
             print(gen_ind_id)
 
             # Restart cyber_env to fix the image static bug here
@@ -66,13 +78,18 @@ def ga_main(module_config_path):
 
                 generated_individual.calculate_fitness(FITNESS_MODE)
 
-                print(f" Vio Intro: {generated_individual.violation_intro}")
-                print(f" Vio Remov: {generated_individual.violation_remov}")
-                print(f" Fitness(mode: {FITNESS_MODE}): {generated_individual.fitness}")
+                ##############
+                print(f" Vio Emerged Num: {generated_individual.violation_intro}")
+                print(f" Vio Emerged Results: {generated_individual.violations_emerged_results}")
+                # print(f" Vio Removed Num: {generated_individual.violation_remov}")
+                # print(f" Vio Removed Results: {generated_individual.violations_removed_results}")
+                # print(f" Fitness(mode: {FITNESS_MODE}): {generated_individual.fitness}")
+                ##############
 
                 ind_list.append(generated_individual)
 
-                if generated_individual.fitness >= optimal_fitness:
+                # write report
+                if generated_individual.fitness >= optimal_fitness and generated_individual.fitness > 0:
                     with open(ind_fitness_save_file_path, "a") as f:
                         f.write(f"{gen_ind_id}\n")
                         f.write(f"  Vio Intro: {generated_individual.violation_intro}\n")
@@ -83,7 +100,36 @@ def ga_main(module_config_path):
                     for scenario in scenario_list:
                         scenario.delete_record()
 
+                if generated_individual.violation_intro > 0:
+                    option_tuning_item = generated_individual.option_tuning_tracking_list[-1]
+
+                    # report option tuning
+                    report_tuning_situation(generated_individual.value_list, default_option_value_list, option_obj_list)
+
+                    with open(option_tuning_file_path, "a") as f:
+                        f.write(f"{gen_ind_id}\n")
+                        f.write(f"  Option: {option_tuning_item}\n")
+                        f.write(f"  Violation: {generated_individual.violations_emerged_results}\n")
+
+                    # save config file
+                    config_file_save_path = f"{BACKUP_CONFIG_SAVE_PATH}/{date.today()}/{gen_ind_id}"
+                    if not os.path.exists(config_file_save_path):
+                        os.makedirs(config_file_save_path)
+                    shutil.copy(CONFIG_FILE_PATH, f"{config_file_save_path}/{MODULE_NAME}_config.pb.txt")
+
+                    # range analysis
+                    # if pre non-violated, this time violated
+                    if isinstance(option_tuning_item, OptionTuningItem):
+                        cur_range = range_list[option_tuning_item.position]
+                        new_range = generate_new_range(cur_range, option_tuning_item, default_option_value_list)
+                        range_list[option_tuning_item.position] = new_range
+
+                    # revert configuration after detecting violations
+                    generated_individual.configuration_reverting(do_reverting=CONFIGURATION_REVERTING)
+
                 individual_num += 1
+
+                # if save this individual (configuration file)
 
         random.shuffle(individual_list_after_mutate)
 
@@ -95,10 +141,13 @@ def ga_main(module_config_path):
     print("Time cost: " + str((end_time - start_time) / 3600) + " hours")
     ind_list.sort(reverse=True, key=lambda x: x.fitness)
 
-    ind_list_pickle_dump_data_path = f"{MAGGIE_ROOT}/data/pop_pickle/ind_list_{date.today()}"
-
     with open(ind_list_pickle_dump_data_path, 'wb') as f:
         pickle.dump(ind_list, f, protocol=4)
+
+
+def report_tuning_situation(cur_value_list, default_value_list, option_obj_list):
+
+    return
 
 
 if __name__ == '__main__':

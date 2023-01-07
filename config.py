@@ -54,6 +54,10 @@ VIO_NUM_PATH = f"{MAGGIE_ROOT}/data/analysis/{AV_TESTING_APPROACH}/vio_num.csv"
 USING_PRE_RECORD_DIR = f"/home/cloudsky/Research/Apollo/Backup/{AV_TESTING_APPROACH}/records/using"
 
 
+CONFIG_FILE_PATH=f"{APOLLO_ROOT}/modules/{MODULE_NAME}/conf/{MODULE_NAME}_config.pb.txt"
+
+BACKUP_CONFIG_SAVE_PATH = f"/home/cloudsky/Research/Apollo/Backup/{AV_TESTING_APPROACH}/config_files"
+
 # MAGGIE CONFIGS ====================================
 STREAM_LOGGING_LEVEL = logging.INFO
 USE_SIM_CONTROL_STANDALONE = True
@@ -70,8 +74,9 @@ HD_MAP_PATH = f'{MAP_PATH}/base_map.bin'
 MAP_DATA_PATH = f'{MAP_PATH}/map_pickle_data'
 
 ##################################
-###############
-
+# Configuration Control
+CONFIGURATION_REVERTING = False # Tune back after detecting violations
+ENABLE_CROSSOVER = True
 
 ##################################
 TRAFFIC_LIGHT_MODE = False

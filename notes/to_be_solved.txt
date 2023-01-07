@@ -1,35 +1,22 @@
 -----------------------
 TO DO RIGHT NOW!!!
 -----------------------
------------------------
-Design Modification (Also record them on notebook!)
------------------------
-1. Configuration reverting: Tune it back in the optimization process
-    Compare with non-reverting - measure the number of unique violations
+0. Distinguish violations
 
-2. Tuning ranges for options
-    Gene representation
-    Overall Identification
+1. Violation Masking
+    New tuning is masked by previous violation
 
-3. Identify invalid configurations
-    invalid ranges of options
-    Invalid tuning that removes violation but introduces new violations--Masking violations
+2. e_number range
+    initial range for integer and float
 
-    Add a report about configuration options tuning
-    Store the configuration files of final results and option tuning situation
-    Why planning module fails, focus on options that lead to module failure
-    Specify which options would result in/highly related to specific violations
+3. Discuss with Yuqi about cyber recorder
+    record files need to extract obstacles, ego car routing waypoints, traffic light signal
+    cyber records no routing_request. Cannot play routing request. Can play perception.
+    It seems cyber play just replays information, but not reload new configurations. You don't even have to launch modules.
 
-4. Get as many scenarios as possible from scenario generation approaches, reduce a reasonable number of scenarios by filtering.
-    Initial Scenarios-diversity of vehicle maneuver, traffic controls, code coverage, violation types...
-    filtering scenarios
-        threshold - mutable size
-        ranking - get top 10
+4. Discuss with Yuqi about code coverage (Branch coverage)
 
-5. Eliminate duplicate:
-    similarity of duplicate	refer to scenoRITA
-    clustering algorithm to eliminate duplicate at last
-    Think about how to eliminate duplicate in the optimization process - comparison
+5. Check and Finish the rest of violation types
 
 
 
@@ -38,16 +25,21 @@ Design Modification (Also record them on notebook!)
 -----------------------
 Important but follow schedule
 -----------------------
-x. Run AV Testing techniques (scenoRITA, DoppelTest, AV-Fuzzer, ADFuzz) (GA, DRL, T-way)
-1. Code coverage (Branch coverage)
-2. Check and Finish the rest of violation types
-3. T-way testing
-4. Static Analysis
+1. Run AV Testing techniques (scenoRITA, DoppelTest, AV-Fuzzer, ADFuzz) (GA, DRL, T-way)
+2. T-way testing
+3. Static Analysis
     Variable dependency
     Option range: Partial path sensitive analysis or interval analysis
-5. Traffic Lights
-
-
+4. Traffic Lights
+5. Get as many scenarios as possible from scenario generation approaches, reduce a reasonable number of scenarios by filtering.
+    Initial Scenarios-diversity of vehicle maneuver, traffic controls, code coverage, violation types...
+    filtering scenarios
+        threshold - mutable size
+        ranking - get top 10
+6. Eliminate duplicate:
+    similarity of duplicate	refer to scenoRITA
+    clustering algorithm to eliminate duplicate at last
+    Think about how to eliminate duplicate in the optimization process - comparison
 
 
 
@@ -69,6 +61,8 @@ Not so hurry
 8. Why scenoRITA works on large maps but DoppelTest not so good – say something in the proposal how to solve this issue
     How much time it need to take for DoppelTest to get enough good scenarios
     Test it for more hours
+
+
 
 
 

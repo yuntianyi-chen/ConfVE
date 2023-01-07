@@ -11,6 +11,7 @@ from tools.config_file_handler.translator_apollo import option_obj_translator, s
 
 
 class Scenario:
+
     def __init__(self, config_file_status, obs_group_path, adc_route, violation_num, violation_results, record_name):
         self.config_file_status = config_file_status
         self.obs_group_path = obs_group_path

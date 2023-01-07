@@ -21,6 +21,16 @@ cyber_recorder play -f /apollo/records/Generation_0_Config_0_Obs_9.00000 -l
 cyber_recorder info /apollo/records/Generation_0_Config_0_Obs_9.00000
 cyber_recorder play -f /apollo/records/Generation0_Scenario29.00000 -l
 
+
+5.5 cyber_recorder play
+cyber_recorder play -f /apollo/records/Generation31_Scenario33.00000 -c /apollo/perception/obstacles -l
+cyber_recorder play -f /apollo/records/Generation31_Scenario33.00000 -c /apollo/routing_response -l
+cyber_recorder play -f /apollo/records/Generation31_Scenario33.00000 -c /apollo/planning -l
+
+cyber_recorder play -f /apollo/records/Generation31_Scenario33.00000 -k /apollo/routing_request -l
+
+
+
 6. scenoRITA run
 bazel run --ui_event_filters=-info,-stdout,-stderr --noshow_progress //apollo_v7_testing:creating_scenarios
 bazel-bin/apollo_v7_testing/scenario_player/run_automation -rv 586115.2216681268,4140677.470931069,586131.4210111903,4140791.3412697404 -o scenario_0 -mn sunnyvale_loop -ogn 0
@@ -32,4 +42,3 @@ bash scripts/manual_light.sh
 
 
 
-/home/cloudsky/Research/Apollo/Backup/DoppelTest_records/records_8.26/records/Generation_00074/Scenario_00003/yuqi_apollo_dev_ROUTE_3.Scenario_00003.00000

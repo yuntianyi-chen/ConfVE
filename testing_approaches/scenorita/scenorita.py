@@ -16,7 +16,7 @@ import time
 import json
 
 from testing_approaches.interface import adc_routing_generate
-from testing_approaches.scenorita.interface import ScenoRITA
+# from testing_approaches.scenorita.interface import ScenoRITA
 from testing_approaches.scenorita.run_oracles import run_oracles
 from testing_approaches.scenorita.scenoRITA_config import OBS_MIN, OBS_MAX, NP, TOTAL_LANES, ETIME, CXPB, MUTPB, ADDPB, \
     DELPB
@@ -159,7 +159,7 @@ def run_scenario(scenario, bridge):
               accl, hardbreak, all_lanes, collision, sim_time, orcle_time, sep="\n")
 
     output_result = (
-    min_dist, lanes_only, min_speed, boundary_dist, accl, hardbreak, all_lanes, collision, sim_time, orcle_time)
+        min_dist, lanes_only, min_speed, boundary_dist, accl, hardbreak, all_lanes, collision, sim_time, orcle_time)
     # violation_number, code_coverage, execution_time = measure_objectives_individually(scenario)
     # scenario.calculate_fitness(violation_number, code_coverage, execution_time)
 
@@ -180,7 +180,6 @@ def runScenario(deme, record_name, bridge):
         os.makedirs(obs_folder)
 
     obs_apollo_folder = f"{MAP_NAME}/scenorita"
-
 
     global diversity_counter
     diversity_counter = {"V": 0, "P": 0, "B": 0}
@@ -224,7 +223,7 @@ def runScenario(deme, record_name, bridge):
 
         # approach_generator = ScenoRITA()
         adc_route = adc_routing_generate()
-        scenario = Scenario(False, obs_apollo_folder, adc_route, record_name)
+        scenario = Scenario(False, obs_apollo_folder, adc_route, None, None, record_name)
         output_result = run_scenario(scenario, bridge)
         num_runs = num_runs + 1
         # print(scenario_player_output)
@@ -302,7 +301,8 @@ if __name__ == "__main__":
             sum += obs_min_dist
         with open(os.path.join(dest, ga_file), 'a+') as gfile:
             gfile.write("%s,%s,%s,%s,%s,%s,%s\n"
-                        % (record_name, len(deme),sum / len(deme), speeding_min, uslc_min, fastAccl_min, hardBrake_min))
+                        % (
+                        record_name, len(deme), sum / len(deme), speeding_min, uslc_min, fastAccl_min, hardBrake_min))
         e2e_time = time.time() - e2e_time
         misc_time = e2e_time - sim_time - orcle_time
         with open(os.path.join(dest, timer_file), 'a+') as tfile:
@@ -313,7 +313,7 @@ if __name__ == "__main__":
 
     while (time.time() - start_time) <= ETIME:
 
-    # while len(GLOBAL_LANE_COVERAGE) < TOTAL_LANES and (time.time() - start_time) <= ETIME:
+        # while len(GLOBAL_LANE_COVERAGE) < TOTAL_LANES and (time.time() - start_time) <= ETIME:
         g = g + 1
         scenario_counter = 1
         print("-- Generation %i --" % g)
@@ -347,8 +347,6 @@ if __name__ == "__main__":
 
             record_name = "Generation{}_Scenario{}".format(g, scenario_counter)
 
-
-
             lanes, min_distance, speeding_min, uslc_min, fastAccl_min, hardBrake_min, sim_time, orcle_time, num_runs = runScenario(
                 offspring, record_name, bridge)
             lanes.remove('')
@@ -361,7 +359,8 @@ if __name__ == "__main__":
                 sum += obs_min_dist
             with open(os.path.join(dest, ga_file), 'a+') as gfile:
                 gfile.write("%s,%s,%s,%s,%s,%s,%s\n"
-                            % (record_name, len(deme), sum / len(deme), speeding_min, uslc_min, fastAccl_min,hardBrake_min))
+                            % (record_name, len(deme), sum / len(deme), speeding_min, uslc_min, fastAccl_min,
+                               hardBrake_min))
             hof.insert(tools.selBest(offspring, 1)[0])
             deme = toolbox.select(deme + offspring, len(offspring))
 

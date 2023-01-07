@@ -1,0 +1,19 @@
+-----------------------
+Finished
+-----------------------
+x. Configuration reverting: Tune it back in the optimization process
+    Compare with non-reverting - measure the number of unique violations
+    In order to get more unique violations (unique option-violation pairs)
+
+x. Tuning ranges for options
+    Gene representation
+    Overall Identification
+
+    Identify invalid configurations
+    invalid ranges of options
+    Invalid tuning that removes violation but introduces new violations--Masking violations
+
+x.  Add a report about configuration options tuning
+    Store the configuration files of final results and option tuning situation
+    Why planning module fails, focus on options that lead to module failure
+    Specify which options would result in/highly related to specific violations

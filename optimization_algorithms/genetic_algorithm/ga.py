@@ -1,8 +1,10 @@
+import os
 import random
 from copy import deepcopy
 from datetime import date
-
-from config import GENERATION_LIMIT, INIT_POP_SIZE, SELECT_NUM_RATIO, MAGGIE_ROOT
+from config import GENERATION_LIMIT, INIT_POP_SIZE, SELECT_NUM_RATIO, MAGGIE_ROOT, CONFIGURATION_REVERTING
+from range_analysis.range_analysis import range_init
+from range_analysis.tuning_option_item import OptionTuningItem
 
 
 class IndividualWithFitness:
@@ -11,8 +13,25 @@ class IndividualWithFitness:
         self.value_list = value_list
         self.reset_default()
         # self.range_list = range_list
-        self.violation_intro = 0
-        self.violation_remov = 0
+        # self.violation_intro = 0
+        # self.violation_remov = 0
+
+        # self.pre_violated = False
+
+        # self.violations_emerged_results = []
+        # self.violations_removed_results = []
+
+        # self.option_tuning_tracking_list = []
+        self.pre_value_list = []
+        self.option_tuning_tracking_list = []
+
+    def configuration_reverting(self, do_reverting):
+        if do_reverting:
+            temp = deepcopy(self.value_list)
+            self.value_list = deepcopy(self.pre_value_list)
+            self.pre_value_list = temp
+            self.option_tuning_tracking_list.pop()
+            self.reset_default()
 
     def calculate_fitness(self, fitness_mode):
         self.violation_number = self.accumulated_objectives[0]
@@ -34,9 +53,11 @@ class IndividualWithFitness:
     def update_violation_intro_remov(self, violation_results, scenario):
         for violation in violation_results:
             if violation not in scenario.original_violation_results:
+                self.violations_emerged_results.append(violation)
                 self.violation_intro += 1
         for violation in scenario.original_violation_results:
             if violation not in violation_results:
+                self.violations_removed_results.append(violation)
                 self.violation_remov += 1
 
     def update_id(self, id):
@@ -52,8 +73,14 @@ class IndividualWithFitness:
         self.code_coverage = 0
         self.execution_time = 0
         self.accumulated_objectives = [0, 0, 0]
+
         self.violation_intro = 0
         self.violation_remov = 0
+
+        # self.pre_value_list = []
+
+        self.violations_emerged_results = []
+        self.violations_removed_results = []
 
 
 def generate_individuals(option_obj_list, population_size):
@@ -77,19 +104,33 @@ def ga_init(option_obj_list):
     # init_population_size = INIT_POP_SIZE
     generation_limit = GENERATION_LIMIT
     option_type_list = [option_obj.option_type for option_obj in option_obj_list]
+    default_option_value_list = [option_obj.option_value for option_obj in option_obj_list]
+
+    range_list = range_init(option_obj_list)
+
     init_individual_list = generate_individuals(option_obj_list, INIT_POP_SIZE)
-    return init_individual_list, generation_limit, option_type_list
+    return init_individual_list, generation_limit, option_type_list, range_list, default_option_value_list
 
 
 def file_init():
-    violation_save_file_path = f"{MAGGIE_ROOT}/data/violation_results/violation_results_{date.today()}.txt"
-    ind_fitness_save_file_path = f"{MAGGIE_ROOT}/data/ind_fitness/ind_fitness_{date.today()}.txt"
+    # violation_save_file_path = f"{MAGGIE_ROOT}/data/violation_results/violation_results_{date.today()}.txt"
+    # ind_fitness_save_file_path = f"{MAGGIE_ROOT}/data/ind_fitness/ind_fitness_{date.today()}.txt"
+    base_path = f"{MAGGIE_ROOT}/data/exp_results/{date.today()}"
+    if not os.path.exists(base_path):
+        os.makedirs(base_path)
+
+    violation_save_file_path = f"{base_path}/violation_results.txt"
+    ind_fitness_save_file_path = f"{base_path}/ind_fitness.txt"
+    option_tuning_file_path = f"{base_path}/option_tuning.txt"
+    ind_list_pickle_dump_data_path = f"{base_path}/ind_list_pickle_pop"
 
     with open(violation_save_file_path, "w") as f:
         print()
     with open(ind_fitness_save_file_path, "w") as f:
         print()
-    return violation_save_file_path, ind_fitness_save_file_path
+    with open(option_tuning_file_path, "w") as f:
+        print()
+    return violation_save_file_path, ind_fitness_save_file_path, option_tuning_file_path, ind_list_pickle_dump_data_path
 
 
 def select(individual_list, option_obj_list):
@@ -118,6 +159,10 @@ def crossover(individual_list):
             randb = random.randint(0, individual_list_size - 1)
         individual_A = deepcopy(individual_list[randa])
         individual_B = deepcopy(individual_list[randb])
+
+        individual_A.pre_value_list = deepcopy(individual_A.value_list)
+        individual_B.pre_value_list = deepcopy(individual_B.value_list)
+
         position = random.randint(1, len(individual_list[0].value_list) - 1)
         individual_A.value_list = individual_list[randa].value_list[:position] + individual_list[randb].value_list[
                                                                                  position:]
@@ -125,23 +170,36 @@ def crossover(individual_list):
                                                                                  position:]
         # individual_A.fitness = None
         # individual_B.fitness = None
+
         individual_A.reset_default()
         individual_B.reset_default()
+
+        individual_A.option_tuning_tracking_list.append("crossover")
+        individual_B.option_tuning_tracking_list.append("crossover")
 
         new_individual_list.append(individual_A)
         new_individual_list.append(individual_B)
     return individual_list + new_individual_list
 
 
-def mutate(individual_list, option_type_list):
+def mutate(individual_list, option_type_list, option_obj_list, range_list):
     new_individual_list = deepcopy(individual_list)
     for individual_obj in new_individual_list:
         position = random.randint(0, len(individual_list[0].value_list) - 1)
         option_type = option_type_list[position]
         option_value = individual_obj.value_list[position]
-        generated_value = generate_option_value_by_random(option_type, option_value)
+        individual_obj.pre_value_list = deepcopy(individual_obj.value_list)
+
+        # generated_value = generate_option_value_by_random(option_type, option_value)
+        generated_value = generate_option_value_from_range(option_type, option_value, range_list[position])
+
         individual_obj.value_list[position] = generated_value
         individual_obj.reset_default()
+
+        individual_obj.option_tuning_tracking_list.append(
+            OptionTuningItem(position, option_obj_list[position].option_key, individual_obj.pre_value_list[position],
+                               individual_obj.value_list[position], option_obj_list[position]))
+
     return individual_list + new_individual_list
 
 
@@ -150,18 +208,35 @@ def mutate(individual_list, option_type_list):
 #     return fitness
 
 
-def generate_option_value_by_random(option_type, option_value):
+# def generate_option_value_by_random(option_type, option_value):
+#     if option_type == "float":
+#         generated_value = round(random.uniform(0, 100), 2)
+#     elif option_type == "integer":
+#         generated_value = random.randint(1, 10)
+#     elif option_type == "string":
+#         generated_value = option_value
+#     elif option_type == "boolean":
+#         generated_value = random.choice(["true", "false"])
+#     elif option_type == "e_number":
+#         generated_value = option_value
+#     else:
+#         generated_value = None
+#
+#     return str(generated_value)
+
+def generate_option_value_from_range(option_type, option_value, option_range):
     if option_type == "float":
-        generated_value = round(random.uniform(0, 100), 2)
+        round_bit = len(option_value.split(".")[1])
+        generated_value = round(random.uniform(option_range[0], option_range[1]), round_bit)
     elif option_type == "integer":
-        generated_value = random.randint(1, 10)
+        generated_value = random.randint(option_range[0], option_range[1])
+    elif option_type == "boolean":
+        generated_value = random.choice(option_range)
     elif option_type == "string":
         generated_value = option_value
-    elif option_type == "boolean":
-        generated_value = random.choice(["true", "false"])
     elif option_type == "e_number":
         generated_value = option_value
     else:
-        generated_value = None
+        generated_value = option_value
 
     return str(generated_value)
