@@ -1,22 +1,34 @@
 -----------------------
 TO DO RIGHT NOW!!!
 -----------------------
-0. Distinguish violations
+x. Select
 
-1. Violation Masking
+x. e_number range
+
+0. output range analysis at last
+
+0. Distinguish violations
+    rerun records instead of analyzing previous record
+
+0. Violation Masking
     New tuning is masked by previous violation
 
-2. e_number range
-    initial range for integer and float
+1. Code coverage
 
-3. Discuss with Yuqi about cyber recorder
+2. Check and Finish the rest of violation types
+
+3. Schedule a zoom meeting with Yuqi
+    Discuss with Yuqi about cyber recorder
     record files need to extract obstacles, ego car routing waypoints, traffic light signal
     cyber records no routing_request. Cannot play routing request. Can play perception.
     It seems cyber play just replays information, but not reload new configurations. You don't even have to launch modules.
 
-4. Discuss with Yuqi about code coverage (Branch coverage)
+    Discuss code coverage (Branch coverage)
 
-5. Check and Finish the rest of violation types
+    Discuss Scenarios-diversity
+
+    Discuss Eliminate duplicate
+
 
 
 

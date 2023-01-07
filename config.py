@@ -10,7 +10,7 @@ GENERATION_LIMIT = 10
 
 MAX_RECORD_TIME = 10
 INIT_POP_SIZE = 10  # 60 individuals in each generation
-SELECT_NUM_RATIO = [5, 3, 2]
+SELECT_NUM_RATIO = [7, 2, 1]  # [5, 3, 2]
 
 # MAX_RECORD_TIME = 3
 # INIT_POP_SIZE = 3

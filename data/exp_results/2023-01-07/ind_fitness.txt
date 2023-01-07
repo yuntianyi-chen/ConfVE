@@ -1,0 +1,16 @@
+Generation_0_Config_44
+  Vio Intro: 10
+  Vio Remov: 13
+  Fitness(mode: intro): 10
+Generation_1_Config_41
+  Vio Intro: 10
+  Vio Remov: 13
+  Fitness(mode: intro): 10
+Generation_2_Config_25
+  Vio Intro: 10
+  Vio Remov: 13
+  Fitness(mode: intro): 10
+Generation_3_Config_45
+  Vio Intro: 10
+  Vio Remov: 13
+  Fitness(mode: intro): 10

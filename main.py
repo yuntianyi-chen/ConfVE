@@ -1,6 +1,6 @@
 import shutil
 from datetime import date
-from config import MODULE_NAME, APOLLO_ROOT, MAGGIE_ROOT, OPT_MODE, APOLLO_RECORDS_DIR
+from config import MODULE_NAME, MAGGIE_ROOT, OPT_MODE, APOLLO_RECORDS_DIR
 from environment.container_settings import init_settings
 from optimization_algorithms.drl_main import drl_main
 from optimization_algorithms.ga_main import ga_main

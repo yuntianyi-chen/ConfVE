@@ -1,32 +1,27 @@
-import os
 import random
 import csv
 from pandas import read_csv
-from config import APOLLO_ROOT, MAP_NAME, AV_TESTING_APPROACH, OBS_DIR, OBS_GROUP_COUNT, ADC_ROUTE_PATH, \
+from config import APOLLO_ROOT, MAP_NAME, AV_TESTING_APPROACH, OBS_GROUP_COUNT, ADC_ROUTE_PATH, \
     USING_PRE_RECORD_DIR
 from environment.container_settings import init_settings
 from objectives.violation_number.oracles import RecordAnalyzer
 from scenario_handling.scenario_tools.map_info_parser import initialize, validatePath
-# from testing_approaches.obstacle_obj import ObsWithFitness
-# from testing_approaches.scenorita.interface import ScenoRITA
 from scenario_handling.scenario_tools import map_tools
 
 
-# def init_obs():
-#     obstacle_chromosomes_list = [ObsWithFitness() for i in range(OBS_GROUP_COUNT)]
-#     return obstacle_chromosomes_list
-#
 class RecordInfo:
     def __init__(self, obs_group_path_list, adc_routing_list):
         self.obs_group_path_list = obs_group_path_list
         self.adc_routing_list = adc_routing_list
 
     def update_violation(self, violation_results_list, violation_num_list):
-        self.violation_results_list =violation_results_list
-        self.violation_num_list= violation_num_list
+        self.violation_results_list = violation_results_list
+        self.violation_num_list = violation_num_list
+
 
 def obs_routing_generate():
     return
+
 
 def adc_routing_generate():
     # this function costs calculating resources
@@ -47,13 +42,9 @@ def adc_routing_generate():
     adc_routing = p1.replace('-', ',') + "," + p2.replace('-', ',')
     return adc_routing
 
-def get_record_info_by_approach():
-    # approach_generator = None
-    # obs_group_path_list = []
-    # adc_routing_list = []
 
+def get_record_info_by_approach():
     if AV_TESTING_APPROACH == "scenoRITA":
-        # approach_generator = ScenoRITA()
         obs_group_path_list = read_obstacles()
         adc_routing_list = read_adc_routes()
         pre_record_info = RecordInfo(obs_group_path_list, adc_routing_list)
@@ -72,6 +63,7 @@ def get_record_info_by_approach():
 
     return pre_record_info
 
+
 def read_violation_num():
     adc_route_csv = read_csv(ADC_ROUTE_PATH)
     recordname_list = adc_route_csv['RecordName'].tolist()
@@ -79,7 +71,7 @@ def read_violation_num():
     violation_num_list = []
 
     file_list = [f"{USING_PRE_RECORD_DIR}/{i}.00000" for i in recordname_list]
-    violation_results_list=[]
+    violation_results_list = []
     for i in file_list:
         ra = RecordAnalyzer(i)
         results = ra.analyze()
@@ -91,6 +83,7 @@ def read_violation_num():
     print(violation_num_list)
     return violation_results_list, violation_num_list
 
+
 def read_adc_routes():
     adc_routes_list = []
     with open(ADC_ROUTE_PATH, mode='r') as csv_file:
@@ -98,6 +91,7 @@ def read_adc_routes():
         for row in csv_reader:
             adc_routes_list.append(f'{row["x_start"]},{row["y_start"]},{row["x_end"]},{row["y_end"]}')
     return adc_routes_list
+
 
 def read_obstacles():
     # obs_folder = f"{OBS_DIR}/obs_in_group/"
@@ -130,7 +124,7 @@ if __name__ == '__main__':
     violation_num_list = []
 
     file_list = [f"{USING_PRE_RECORD_DIR}/{i}.00000" for i in recordname_list]
-    results_list=[]
+    results_list = []
     for i in file_list:
         ra = RecordAnalyzer(i)
         results = ra.analyze()
@@ -140,4 +134,3 @@ if __name__ == '__main__':
 
     print(results_list)
     print(violation_num_list)
-

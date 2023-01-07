@@ -79,6 +79,8 @@ class ComfortOracle(OracleInterface):
         # if max_accl >= ComfortOracle.MAX_ACCL:
         if max_accl > ComfortOracle.MAX_ACCL:
             result.append(('comfort', 'Acceleration exceeded max'))
+            # result.append(('comfort', 'Acceleration exceeded max', max_accl))
         if min_accl < ComfortOracle.MAX_DCCL:
             result.append(('comfort', 'Deceleration exceeded max'))
+            # result.append(('comfort', 'Deceleration exceeded max', min_accl))
         return result

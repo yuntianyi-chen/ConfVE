@@ -112,10 +112,10 @@ def ga_init(option_obj_list):
     return init_individual_list, generation_limit, option_type_list, range_list, default_option_value_list
 
 
-def file_init():
-    # violation_save_file_path = f"{MAGGIE_ROOT}/data/violation_results/violation_results_{date.today()}.txt"
-    # ind_fitness_save_file_path = f"{MAGGIE_ROOT}/data/ind_fitness/ind_fitness_{date.today()}.txt"
-    base_path = f"{MAGGIE_ROOT}/data/exp_results/{date.today()}"
+def file_init(time_str):
+    # violation_save_file_path = f"{MAGGIE_ROOT}/data/violation_results/violation_results_{time_str}.txt"
+    # ind_fitness_save_file_path = f"{MAGGIE_ROOT}/data/ind_fitness/ind_fitness_{time_str}.txt"
+    base_path = f"{MAGGIE_ROOT}/data/exp_results/{time_str}"
     if not os.path.exists(base_path):
         os.makedirs(base_path)
 
@@ -183,46 +183,42 @@ def crossover(individual_list):
 
 
 def mutate(individual_list, option_type_list, option_obj_list, range_list):
-    new_individual_list = deepcopy(individual_list)
-    for individual_obj in new_individual_list:
-        position = random.randint(0, len(individual_list[0].value_list) - 1)
-        option_type = option_type_list[position]
-        option_value = individual_obj.value_list[position]
-        individual_obj.pre_value_list = deepcopy(individual_obj.value_list)
+    for individual_obj in individual_list:
+        succ_tuning=False
+        while(not succ_tuning):
+            position = random.randint(0, len(individual_list[0].value_list) - 1)
+            option_type = option_type_list[position]
 
-        # generated_value = generate_option_value_by_random(option_type, option_value)
-        generated_value = generate_option_value_from_range(option_type, option_value, range_list[position])
+            if option_type in ["float", "integer", "boolean", "e_number"]:
+                succ_tuning = True
+                option_value = individual_obj.value_list[position]
+                individual_obj.pre_value_list = deepcopy(individual_obj.value_list)
 
-        individual_obj.value_list[position] = generated_value
-        individual_obj.reset_default()
+                # generated_value = generate_option_value_by_random(option_type, option_value)
+                generated_value = generate_option_value_from_range(option_type, option_value, range_list[position])
 
-        individual_obj.option_tuning_tracking_list.append(
-            OptionTuningItem(position, option_obj_list[position].option_key, individual_obj.pre_value_list[position],
-                               individual_obj.value_list[position], option_obj_list[position]))
+                individual_obj.value_list[position] = generated_value
+                individual_obj.reset_default()
 
+                individual_obj.option_tuning_tracking_list.append(
+                    OptionTuningItem(position, option_type, option_obj_list[position].option_key, individual_obj.pre_value_list[position],
+                                       individual_obj.value_list[position], option_obj_list[position]))
+
+    return individual_list
+
+def mutation(individual_list, option_type_list, option_obj_list, range_list):
+    new_individual_list = mutate(deepcopy(individual_list), option_type_list, option_obj_list, range_list)
     return individual_list + new_individual_list
+
+
+def initial_mutation(init_individual_list, option_type_list, option_obj_list, range_list):
+    return mutate(init_individual_list, option_type_list, option_obj_list, range_list)
 
 
 # def calculate_fitness(violation_number, code_coverage, execution_time):
 #     fitness = random.uniform(0, 100)
 #     return fitness
 
-
-# def generate_option_value_by_random(option_type, option_value):
-#     if option_type == "float":
-#         generated_value = round(random.uniform(0, 100), 2)
-#     elif option_type == "integer":
-#         generated_value = random.randint(1, 10)
-#     elif option_type == "string":
-#         generated_value = option_value
-#     elif option_type == "boolean":
-#         generated_value = random.choice(["true", "false"])
-#     elif option_type == "e_number":
-#         generated_value = option_value
-#     else:
-#         generated_value = None
-#
-#     return str(generated_value)
 
 def generate_option_value_from_range(option_type, option_value, option_range):
     if option_type == "float":
@@ -231,11 +227,14 @@ def generate_option_value_from_range(option_type, option_value, option_range):
     elif option_type == "integer":
         generated_value = random.randint(option_range[0], option_range[1])
     elif option_type == "boolean":
-        generated_value = random.choice(option_range)
+        generated_value = "true" if option_value == "false" else "false"
+        # generated_value = random.choice(option_range)
     elif option_type == "string":
         generated_value = option_value
     elif option_type == "e_number":
-        generated_value = option_value
+        exp = random.randint(option_range[0], option_range[1])
+        forward = option_value.split("e")[0]
+        generated_value = f"{forward}e{exp}"
     else:
         generated_value = option_value
 

@@ -14,8 +14,13 @@ def delete_records():
     os.mkdir(f"{APOLLO_ROOT}/records")
 
 def delete_data_core():
-    shutil.rmtree(f"{APOLLO_ROOT}/data/core")
-    os.mkdir(f"{APOLLO_ROOT}/data/core")
+    try:
+        shutil.rmtree(f"{APOLLO_ROOT}/data/core")
+        os.mkdir(f"{APOLLO_ROOT}/data/core")
+    except OSError as ose:
+        print(ose)
+
+
 
 def cyber_env_init():
     print("Closing modules & Dreamview...")
