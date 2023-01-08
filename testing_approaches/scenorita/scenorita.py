@@ -223,7 +223,7 @@ def runScenario(deme, record_name, bridge):
 
         # approach_generator = ScenoRITA()
         adc_route = adc_routing_generate()
-        scenario = Scenario(False, obs_apollo_folder, adc_route, None, None, record_name)
+        scenario = Scenario(obs_apollo_folder, adc_route, record_name)
         output_result = run_scenario(scenario, bridge)
         num_runs = num_runs + 1
         # print(scenario_player_output)

@@ -33,9 +33,9 @@ def measure_violation_number(record_path):
     print(f"      Violation Results: {results}")
     if len(results) > 0:
         print(f"          Record Path: {record_path}")
-        with open(f"{MAGGIE_ROOT}/data/violation_results/violation_results_{date.today()}.txt", "a") as f:
-            f.write(f"Violation Results: {results}\n")
-            f.write(f"  {record_path}\n")
+        # with open(f"{MAGGIE_ROOT}/data/violation_results/violation_results_{date.today()}.txt", "a") as f:
+        #     f.write(f"Violation Results: {results}\n")
+        #     f.write(f"  {record_path}\n")
     return results
 
 def measure_violation_number_and_save(record_path, save_file_path):
@@ -55,8 +55,8 @@ if __name__ == '__main__':
 
     init_settings()
 
-    # record_dir = "/home/cloudsky/Research/Apollo/Backup/scenoRITA/records/using"
-    record_dir = "/home/cloudsky/Research/Apollo/Backup/scenoRITA/records/2022-12-06"
+    record_dir = "/home/cloudsky/Research/Apollo/Backup/scenoRITA/records/using"
+    # record_dir = "/home/cloudsky/Research/Apollo/Backup/scenoRITA/records/2022-12-06"
 
     file_list = listdir(record_dir)
     file_list.sort()
@@ -64,7 +64,8 @@ if __name__ == '__main__':
     results=[]
 
     if SINGLE_TEST == True:
-        single_file_name = "Generation_8_Config_41_Obs_0.00000"
+        single_file_name = "Generation36_Scenario33.00000"
+        # single_file_name = "Generation_8_Config_41_Obs_0.00000"
         if single_file_name in file_list:
             result = measure_violation_number(f"{record_dir}/{single_file_name}")
             results.append(result)

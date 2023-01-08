@@ -1,14 +1,11 @@
 -----------------------
 TO DO RIGHT NOW!!!
 -----------------------
-x. Select
-
-x. e_number range
-
-0. output range analysis at last
-
 0. Distinguish violations
     rerun records instead of analyzing previous record
+
+0. Under some configurations, some scenarios can successfully start, some scenarios cannot
+    In those cannot start, it didn't report planning module failure
 
 0. Violation Masking
     New tuning is masked by previous violation
@@ -16,6 +13,20 @@ x. e_number range
 1. Code coverage
 
 2. Check and Finish the rest of violation types
+    module failure - module is running. received message but module doesn't normally work
+
+    fail to report collision. ego car stops in line, obstacle runs over it. all modules work
+        Generation_6_Config_49
+        Report Tuning...
+          64, dense_dimension_s, 21->-7152
+          93, search_beam_radius_intensity, 0.08->-1541.69
+          116, xy_grid_resolution, 0.3->2623.9
+
+        Generation_7_Config_1
+        Report Tuning...
+          66, sparse_unit_s, 1.0->-5635.5
+          85, max_deceleration, -2.5->-3672.2
+          196, weight_path_length, 0.0->2293.6
 
 3. Schedule a zoom meeting with Yuqi
     Discuss with Yuqi about cyber recorder

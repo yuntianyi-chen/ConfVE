@@ -50,14 +50,14 @@ class IndividualWithFitness:
         self.accumulated_objectives[1] += code_coverage
         self.accumulated_objectives[2] += execution_time
 
-    def update_violation_intro_remov(self, violation_results, scenario):
+    def update_violation_intro_remov(self, violation_results, scenario, scenario_count):
         for violation in violation_results:
             if violation not in scenario.original_violation_results:
-                self.violations_emerged_results.append(violation)
+                self.violations_emerged_results.append((scenario_count, violation))
                 self.violation_intro += 1
         for violation in scenario.original_violation_results:
             if violation not in violation_results:
-                self.violations_removed_results.append(violation)
+                self.violations_removed_results.append((scenario_count, violation))
                 self.violation_remov += 1
 
     def update_id(self, id):
@@ -122,6 +122,8 @@ def file_init(time_str):
     violation_save_file_path = f"{base_path}/violation_results.txt"
     ind_fitness_save_file_path = f"{base_path}/ind_fitness.txt"
     option_tuning_file_path = f"{base_path}/option_tuning.txt"
+    range_analysis_file_path = f"{base_path}/range_analysis.txt"
+
     ind_list_pickle_dump_data_path = f"{base_path}/ind_list_pickle_pop"
 
     with open(violation_save_file_path, "w") as f:
@@ -130,7 +132,9 @@ def file_init(time_str):
         print()
     with open(option_tuning_file_path, "w") as f:
         print()
-    return violation_save_file_path, ind_fitness_save_file_path, option_tuning_file_path, ind_list_pickle_dump_data_path
+    with open(range_analysis_file_path, "w") as f:
+        print()
+    return violation_save_file_path, ind_fitness_save_file_path, option_tuning_file_path, ind_list_pickle_dump_data_path, range_analysis_file_path
 
 
 def select(individual_list, option_obj_list):

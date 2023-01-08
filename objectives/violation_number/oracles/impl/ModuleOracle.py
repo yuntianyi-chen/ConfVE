@@ -16,11 +16,13 @@ class ModuleOracle(OracleInterface):
         self.distance_traveled = -1.0
         self.received_routing = False
         self.received_planning = False
+        self.received_prediction = False
 
     def get_interested_topics(self):
         return [
             '/apollo/routing_response',
-            '/apollo/planning'
+            '/apollo/planning',
+            '/apollo/prediction'
         ]
 
     def on_new_message(self, topic: str, message, t):
@@ -30,13 +32,17 @@ class ModuleOracle(OracleInterface):
             self.received_routing = True
         if topic == '/apollo/planning':
             self.received_planning = True
+        if topic == '/apollo/prediction':
+            self.received_prediction = True
 
     def get_result(self):
         result = list()
         if not self.received_routing:
-            result.append(('module', 'routing failure'))
+            result.append(('module', 'routing failure', 'no routing response'))
         if not self.received_planning:
-            result.append(('module', 'planning failure'))
+            result.append(('module', 'planning failure', 'no planning message'))
+        if not self.received_prediction:
+            result.append(('module', 'prediction failure', 'no prediction message'))
         # elif self.distance_traveled == -1.0:
         #     result.append(('module', 'sim control failure'))
         return result

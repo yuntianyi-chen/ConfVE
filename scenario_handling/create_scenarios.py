@@ -12,28 +12,38 @@ from tools.config_file_handler.translator_apollo import option_obj_translator, s
 
 class Scenario:
 
-    def __init__(self, config_file_status, obs_group_path, adc_route, violation_num, violation_results, record_name):
-        self.config_file_status = config_file_status
+    def __init__(self, obs_group_path, adc_route, record_name):
         self.obs_group_path = obs_group_path
         self.adc_route = adc_route
         self.record_name = record_name
-        self.original_violation_num = violation_num
-        self.original_violation_results = violation_results
+
         if TRAFFIC_LIGHT_MODE:
             self.traffic_light_control = TCSection.get_one()
         # self.tm =
 
+    def update_config_file_status(self, config_file_status):
+        self.config_file_status = config_file_status
+
+    def update_routing_perception_info(self, obs_perception_messages, routing_request_message):
+        self.obs_perception_messages = obs_perception_messages
+        self.routing_request_message = routing_request_message
+
+    def update_original_violations(self, violation_num, violation_results):
+        self.original_violation_num = violation_num
+        self.original_violation_results = violation_results
+
     def start_recorder(self):
-        time.sleep(1)
+        time.sleep(0.5)
         cmd = f"docker exec -d {get_container_name()} /apollo/bazel-bin/cyber/tools/cyber_recorder/cyber_recorder record -o /apollo/records/{self.record_name} -a &"
         recorder_subprocess = subprocess.Popen(cmd, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        time.sleep(0.5)
         return recorder_subprocess
 
     def stop_recorder(self, recorder_subprocess):
         cmd = f"docker exec -d {get_container_name()} /apollo/scripts/my_scripts/stop_recorder.sh"
         subprocess.run(cmd.split())
-        time.sleep(1)
         self.delete_recorder_log()
+        time.sleep(0.5)
 
     def delete_record(self):
         os.remove(f"{APOLLO_ROOT}/records/{self.record_name}.00000")
@@ -66,16 +76,21 @@ def config_file_generating(generated_individual, option_obj_list, default):
 
 
 # scenario refers to different config settings with fixed obstacles and adc routing
-def create_scenarios(generated_individual, option_obj_list, generation_num, individual_num, pre_record_info):
+def create_scenarios(generated_individual, option_obj_list, gen_ind_id, pre_record_info):
     config_file_tuned_status = config_file_generating(generated_individual, option_obj_list,
                                                       default=DEFAULT_CONFIG_FILE)
-    record_name_list = [f"Generation_{str(generation_num)}_Config_{individual_num}_Obs_{str(i)}" for i in
-                        range(len(pre_record_info.adc_routing_list))]
+    record_name_list = [f"{gen_ind_id}_Scenario_{str(i)}" for i in range(len(pre_record_info.adc_routing_list))]
 
     # tm = TrafficControlManager(self.curr_scenario.tc_section)
 
-    scenario_list = [Scenario(config_file_tuned_status, obs_group_path, adc_route, violation_num, violation_results, record_name) for
-                     obs_group_path, adc_route, violation_num, violation_results, record_name in
-                     zip(pre_record_info.obs_group_path_list, pre_record_info.adc_routing_list, pre_record_info.violation_num_list, pre_record_info.violation_results_list, record_name_list)]
+    scenario_list = []
+    for i in range(len(record_name_list)):
+        scenario = Scenario(pre_record_info.obs_group_path_list[i], pre_record_info.adc_routing_list[i],
+                            record_name_list[i])
+        scenario.update_config_file_status(config_file_tuned_status)
+        scenario.update_original_violations(pre_record_info.violation_num_list[i],
+                                            pre_record_info.violation_results_list[i])
+        scenario.update_routing_perception_info(pre_record_info.obs_perception_list[i],
+                                                pre_record_info.routing_request_list[i])
+        scenario_list.append(scenario)
     return scenario_list
-

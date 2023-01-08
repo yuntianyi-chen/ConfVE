@@ -37,8 +37,10 @@ def ga_main(module_config_path):
     ind_list = []
 
     time_str = str(date.today())
-    violation_save_file_path, ind_fitness_save_file_path, option_tuning_file_path, ind_list_pickle_dump_data_path = file_init(time_str)
+    violation_save_file_path, ind_fitness_save_file_path, option_tuning_file_path, ind_list_pickle_dump_data_path, range_analysis_file_path = file_init(
+        time_str)
 
+    pre_record_info = get_record_info_by_approach()
 
     for generation_num in range(generation_limit):
         print("-------------------------------------------------")
@@ -57,7 +59,6 @@ def ga_main(module_config_path):
 
         individual_num = 0
 
-        pre_record_info = get_record_info_by_approach()
 
         for generated_individual in individual_list_after_mutate:
             print("-------------------------------------------------")
@@ -72,7 +73,7 @@ def ga_main(module_config_path):
                 generated_individual.update_id(gen_ind_id)
 
                 # scenario refers to a config setting with different fixed obstacles and adc routes
-                scenario_list = create_scenarios(generated_individual, option_obj_list, generation_num, individual_num,
+                scenario_list = create_scenarios(generated_individual, option_obj_list, gen_ind_id,
                                                  pre_record_info)
 
                 # test each config settings under several groups of obstacles and adc routes
@@ -103,7 +104,10 @@ def ga_main(module_config_path):
                         scenario.delete_record()
 
                 if generated_individual.violation_intro > 0:
-                    option_tuning_item = generated_individual.option_tuning_tracking_list[-1]
+                    if generated_individual.option_tuning_tracking_list:
+                        option_tuning_item = generated_individual.option_tuning_tracking_list[-1]
+                    else:
+                        option_tuning_item = "default"
 
                     # report option tuning
                     with open(option_tuning_file_path, "a") as f:
@@ -118,8 +122,8 @@ def ga_main(module_config_path):
                             cur_range = range_list[option_tuning_item.position]
                             new_range = generate_new_range(cur_range, option_tuning_item, default_option_value_list)
                             range_list[option_tuning_item.position] = new_range
-                            f.write(f"  Range Change: {option_tuning_item.position}, {option_tuning_item.option_key}, {cur_range}->{new_range}\n")
-
+                            f.write(
+                                f"  Range Change: {option_tuning_item.position}, {option_tuning_item.option_key}, {cur_range}->{new_range}\n")
                             # print(f"  Range: {option_tuning_item.position}, {option_tuning_item.option_key}, {cur_range}->{new_range}")
 
                     # save config file
@@ -139,12 +143,24 @@ def ga_main(module_config_path):
         individual_list_after_mutate.sort(reverse=True, key=lambda x: x.fitness)
         individual_list = select(individual_list_after_mutate, option_obj_list)
 
+        # output range analysis every generation
+        update_range_analysis_file(option_obj_list, range_list, range_analysis_file_path, generation_num)
+
     end_time = time.time()
     print("Time cost: " + str((end_time - start_time) / 3600) + " hours")
     ind_list.sort(reverse=True, key=lambda x: x.fitness)
 
     with open(ind_list_pickle_dump_data_path, 'wb') as f:
         pickle.dump(ind_list, f, protocol=4)
+
+
+def update_range_analysis_file(option_obj_list, range_list, range_analysis_file_path, generation_num):
+    with open(range_analysis_file_path, "a") as f:
+        f.write(f"Generation: {generation_num}\n\n")
+        for i in range(len(option_obj_list)):
+            f.write(
+                f"Option (default): {option_obj_list[i].option_id}, {option_obj_list[i].option_type}, {option_obj_list[i].option_key}, {option_obj_list[i].option_value}\n")
+            f.write(f"  Range: {range_list[i]}\n")
 
 
 def report_tuning_situation(cur_value_list, default_value_list, option_obj_list):

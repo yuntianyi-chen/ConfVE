@@ -1,0 +1,270 @@
+Generation_0_Config_0
+  Option Tuning: position: 129, type:integer, key: mumps_mem_percent, pre_value: 6000, cur_value: 2711
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+  Range Change: 129, mumps_mem_percent, [-10001, 10001]->[2711, 10001]
+Generation_0_Config_1
+  Option Tuning: position: 261, type:float, key: pull_over_approach_lon_distance_adjust_factor, pre_value: 1.5, cur_value: 8875.6
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+  Range Change: 261, pull_over_approach_lon_distance_adjust_factor, [-10001, 10001]->[-10001, 8875]
+Generation_0_Config_2
+  Option Tuning: position: 207, type:float, key: jerk_weight, pre_value: 1.0, cur_value: -1823.0
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+  Range Change: 207, jerk_weight, [-10001, 10001]->[-1823, 10001]
+Generation_0_Config_3
+  Option Tuning: position: 81, type:float, key: decel_penalty, pre_value: 1.0, cur_value: -4794.1
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+  Range Change: 81, decel_penalty, [-10001, 10001]->[-4794, 10001]
+Generation_0_Config_4
+  Option Tuning: position: 40, type:integer, key: dense_dimension_s, pre_value: 101, cur_value: -4576
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+  Range Change: 40, dense_dimension_s, [-10001, 10001]->[-4576, 10001]
+Generation_0_Config_5
+  Option Tuning: position: 148, type:float, key: weight_a, pre_value: 1.1, cur_value: -1646.8
+  Violation Emergence Num: 2
+  Violation: [(6, ('comfort', 'Acceleration exceeded max')), (7, ('comfort', 'Deceleration exceeded max'))]
+  Range Change: 148, weight_a, [-10001, 10001]->[-1646, 10001]
+Generation_0_Config_6
+  Option Tuning: position: 120, type:float, key: traj_forward_penalty, pre_value: 1.0, cur_value: -4001.1
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+  Range Change: 120, traj_forward_penalty, [-10001, 10001]->[-4001, 10001]
+Generation_0_Config_7
+  Option Tuning: position: 272, type:boolean, key: reuse_path, pre_value: false, cur_value: true
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+  Range Change: 272, reuse_path, ['true', 'false']->['true', 'false']
+Generation_0_Config_8
+  Option Tuning: position: 144, type:integer, key: max_iter, pre_value: 10000, cur_value: -1734
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+  Range Change: 144, max_iter, [-10001, 10001]->[-1734, 10001]
+Generation_0_Config_10
+  Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+Generation_0_Config_11
+  Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+Generation_0_Config_12
+  Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+Generation_0_Config_13
+  Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+Generation_0_Config_14
+  Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+Generation_0_Config_15
+  Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+Generation_0_Config_16
+  Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+Generation_0_Config_17
+  Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+Generation_0_Config_18
+  Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+Generation_0_Config_19
+  Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+Generation_0_Config_20
+  Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+Generation_0_Config_21
+  Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+Generation_0_Config_22
+  Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+Generation_0_Config_23
+  Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+Generation_0_Config_24
+  Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+Generation_0_Config_25
+  Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+Generation_0_Config_26
+  Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+Generation_0_Config_27
+  Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+Generation_0_Config_28
+  Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+Generation_0_Config_29
+  Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+Generation_0_Config_30
+  Option Tuning: position: 268, type:boolean, key: reckless_change_lane, pre_value: false, cur_value: true
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+  Range Change: 268, reckless_change_lane, ['true', 'false']->['true', 'false']
+Generation_0_Config_31
+  Option Tuning: position: 212, type:float, key: max_forward_v, pre_value: 1.0, cur_value: 8971.2
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+  Range Change: 212, max_forward_v, [-10001, 10001]->[-10001, 8971]
+Generation_0_Config_32
+  Option Tuning: position: 19, type:float, key: l_weight, pre_value: 1.0, cur_value: 7942.8
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+  Range Change: 19, l_weight, [-10001, 10001]->[-10001, 7942]
+Generation_0_Config_33
+  Option Tuning: position: 42, type:float, key: sparse_unit_s, pre_value: 1.0, cur_value: 4974.6
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+  Range Change: 42, sparse_unit_s, [-10001, 10001]->[-10001, 4974]
+Generation_0_Config_34
+  Option Tuning: position: 174, type:float, key: ipopt_acceptable_constr_viol_tol, pre_value: 0.1, cur_value: 3962.2
+  Violation Emergence Num: 1
+  Violation: [(0, ('module', 'routing failure', 'no routing response'))]
+  Range Change: 174, ipopt_acceptable_constr_viol_tol, [-10001, 10001]->[-10001, 3962]
+Generation_0_Config_35
+  Option Tuning: position: 225, type:float, key: gear_shift_unit_t, pre_value: 0.02, cur_value: -552.27
+  Violation Emergence Num: 2
+  Violation: [(4, ('comfort', 'Acceleration exceeded max')), (7, ('comfort', 'Deceleration exceeded max'))]
+  Range Change: 225, gear_shift_unit_t, [-10001, 10001]->[-552, 10001]
+Generation_0_Config_36
+  Option Tuning: position: 246, type:float, key: perception_obstacle_filtering_distance, pre_value: 1000.0, cur_value: -6508.2
+  Violation Emergence Num: 2
+  Violation: [(0, ('module', 'routing failure', 'no routing response')), (7, ('comfort', 'Deceleration exceeded max'))]
+  Range Change: 246, perception_obstacle_filtering_distance, [-10001, 10001]->[-6508, 10001]
+Generation_0_Config_37
+  Option Tuning: position: 180, type:float, key: ipopt_mu_init, pre_value: 0.1, cur_value: 7820.7
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+  Range Change: 180, ipopt_mu_init, [-10001, 10001]->[-10001, 7820]
+Generation_0_Config_38
+  Option Tuning: position: 66, type:float, key: sparse_unit_s, pre_value: 1.0, cur_value: 390.6
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+  Range Change: 66, sparse_unit_s, [-10001, 10001]->[-10001, 390]
+Generation_0_Config_39
+  Option Tuning: position: 85, type:float, key: max_deceleration, pre_value: -2.5, cur_value: -2334.5
+  Violation Emergence Num: 2
+  Violation: [(0, ('comfort', 'Deceleration exceeded max')), (7, ('comfort', 'Deceleration exceeded max'))]
+  Range Change: 85, max_deceleration, [-10001, 10001]->[-2334, 10001]
+Generation_0_Config_40
+  Option Tuning: position: 236, type:float, key: linear_velocity_threshold_on_ego, pre_value: 0.2, cur_value: 865.9
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+  Range Change: 236, linear_velocity_threshold_on_ego, [-10001, 10001]->[-10001, 865]
+Generation_0_Config_41
+  Option Tuning: position: 122, type:float, key: traj_gear_switch_penalty, pre_value: 10.0, cur_value: -7257.4
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+  Range Change: 122, traj_gear_switch_penalty, [-10001, 10001]->[-7257, 10001]
+Generation_0_Config_42
+  Option Tuning: position: 274, type:float, key: static_obstacle_buffer, pre_value: 0.3, cur_value: -3759.1
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+  Range Change: 274, static_obstacle_buffer, [-10001, 10001]->[-3759, 10001]
+Generation_0_Config_43
+  Option Tuning: position: 252, type:float, key: open_space_fallback_stop_distance, pre_value: 2.0, cur_value: 6343.0
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+  Range Change: 252, open_space_fallback_stop_distance, [-10001, 10001]->[-10001, 6343]
+Generation_0_Config_44
+  Option Tuning: position: 46, type:float, key: obstacle_weight, pre_value: 1.0, cur_value: 6810.6
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+  Range Change: 46, obstacle_weight, [-10001, 10001]->[-10001, 6810]
+Generation_0_Config_45
+  Option Tuning: position: 243, type:float, key: parking_depth_buffer, pre_value: 0.2, cur_value: 1439.3
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+  Range Change: 243, parking_depth_buffer, [-10001, 10001]->[-10001, 1439]
+Generation_0_Config_46
+  Option Tuning: position: 53, type:float, key: low_speed_penalty, pre_value: 10.0, cur_value: -164.3
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+  Range Change: 53, low_speed_penalty, [-10001, 10001]->[-164, 10001]
+Generation_0_Config_47
+  Option Tuning: position: 82, type:float, key: positive_jerk_coeff, pre_value: 1.0, cur_value: 6655.2
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+  Range Change: 82, positive_jerk_coeff, [-10001, 10001]->[-10001, 6655]
+Generation_0_Config_48
+  Option Tuning: position: 155, type:float, key: weight_steer_stitching, pre_value: 1.75, cur_value: -8638.86
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+  Range Change: 155, weight_steer_stitching, [-10001, 10001]->[-8638, 10001]
+Generation_0_Config_49
+  Option Tuning: position: 266, type:boolean, key: enable_prioritize_change_lane, pre_value: false, cur_value: true
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+  Range Change: 266, enable_prioritize_change_lane, ['true', 'false']->['true', 'false']
+Generation_0_Config_50
+  Option Tuning: position: 62, type:e_number, key: spatial_potential_penalty, pre_value: 1.0e2, cur_value: 1.0e16
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+  Range Change: 62, spatial_potential_penalty, [-101, 101]->[-101, 16]
+Generation_0_Config_52
+  Option Tuning: position: 83, type:float, key: negative_jerk_coeff, pre_value: 1.0, cur_value: 9116.1
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+  Range Change: 83, negative_jerk_coeff, [-10001, 10001]->[-10001, 9116]
+Generation_0_Config_53
+  Option Tuning: position: 253, type:float, key: open_space_fallback_collision_time_buffer, pre_value: 5.0, cur_value: -5320.8
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+  Range Change: 253, open_space_fallback_collision_time_buffer, [-10001, 10001]->[-5320, 10001]
+Generation_0_Config_54
+  Option Tuning: position: 101, type:float, key: max_centric_acceleration_limit, pre_value: 2.0, cur_value: -1624.6
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+  Range Change: 101, max_centric_acceleration_limit, [-10001, 10001]->[-1624, 10001]
+Generation_0_Config_55
+  Option Tuning: position: 184, type:boolean, key: enable_hand_derivative, pre_value: false, cur_value: true
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+  Range Change: 184, enable_hand_derivative, ['true', 'false']->['true', 'false']
+Generation_0_Config_56
+  Option Tuning: position: 244, type:float, key: roi_line_segment_min_angle, pre_value: 0.15, cur_value: 7434.66
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+  Range Change: 244, roi_line_segment_min_angle, [-10001, 10001]->[-10001, 7434]
+Generation_0_Config_57
+  Option Tuning: position: 71, type:float, key: reference_weight, pre_value: 0.0, cur_value: -5770.6
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+  Range Change: 71, reference_weight, [-10001, 10001]->[-5770, 10001]
+Generation_0_Config_58
+  Option Tuning: position: 62, type:e_number, key: spatial_potential_penalty, pre_value: 1.0e2, cur_value: 1.0e90
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+  Range Change: 62, spatial_potential_penalty, [-101, 16]->[-101, 90]
+Generation_1_Config_0
+  Option Tuning: position: 140, type:float, key: min_safety_distance, pre_value: 0.01, cur_value: 8085.93
+  Violation Emergence Num: 1
+  Violation: [(7, ('comfort', 'Deceleration exceeded max'))]
+  Range Change: 140, min_safety_distance, [-10001, 10001]->[-10001, 8085]

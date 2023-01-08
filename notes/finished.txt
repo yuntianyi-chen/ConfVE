@@ -17,3 +17,12 @@ x.  Add a report about configuration options tuning
     Store the configuration files of final results and option tuning situation
     Why planning module fails, focus on options that lead to module failure
     Specify which options would result in/highly related to specific violations
+
+x. Select ratio
+
+x. e_number range
+
+x. output range analysis at last
+
+x. Extract adc_routing and obs from record messages
+    publish obs through channel

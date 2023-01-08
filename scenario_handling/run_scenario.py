@@ -5,6 +5,7 @@ from environment.container_settings import get_container_name
 from environment.cyber_env_operation import modules_operation, kill_modules
 from modules.routing.proto.routing_pb2 import RoutingRequest
 from objectives.measure_objectives import measure_objectives_individually
+from scenario_handling.message_handling import MessageBroker
 from scenario_handling.traffic_light_control.TrafficControlManager import TrafficControlManager
 from tools.bridge.CyberBridge import Topics
 
@@ -26,6 +27,8 @@ def register_obstacles(obs_group_path):
 def stop_obstacles(p):
     cmd = f"docker exec -d {get_container_name()} /apollo/scripts/my_scripts/stop_obstacles.sh"
     subprocess.run(cmd.split())
+
+
 
 
 def send_routing_request(init_x, init_y, dest_x, dest_y, bridge):
@@ -50,6 +53,16 @@ def send_routing_request(init_x, init_y, dest_x, dest_y, bridge):
     bridge.publish(Topics.RoutingRequest, routing_request.SerializeToString())
 
 
+def register_obstacles_by_channel(bridge, obs_perception_messages):
+    mbk = MessageBroker(bridge, obs_perception_messages)
+    mbk.start()
+    return mbk
+
+def send_routing_request_by_channel(bridge, routing_request_message):
+    bridge.publish(Topics.RoutingRequest, routing_request_message.SerializeToString())
+
+
+
 def register_traffic_lights(traffic_light_control, bridge):
     tm = TrafficControlManager(traffic_light_control)
     runner_time = 0
@@ -71,18 +84,22 @@ def run_scenarios(generated_individual, scenario_list, bridge, violation_save_fi
 
     for scenario in scenario_list:
         print(f"  Scenario_{scenario_count}")
-        adc_route_raw = scenario.adc_route.split(',')
-        init_x, init_y, dest_x, dest_y = float(adc_route_raw[0]), float(adc_route_raw[1]), float(
-            adc_route_raw[2]), float(adc_route_raw[3])
+        # adc_route_raw = scenario.adc_route.split(',')
+        # init_x, init_y, dest_x, dest_y = float(adc_route_raw[0]), float(adc_route_raw[1]), float(
+        #     adc_route_raw[2]), float(adc_route_raw[3])
 
         # record_route_info()
 
         print("    Start recorder...")
         recorder_subprocess = scenario.start_recorder()
 
-        p = register_obstacles(scenario.obs_group_path)
+        # p = register_obstacles(scenario.obs_group_path)
 
-        send_routing_request(init_x, init_y, dest_x, dest_y, bridge)
+        mbk = register_obstacles_by_channel(bridge, scenario.obs_perception_messages)
+
+        # send_routing_request(init_x, init_y, dest_x, dest_y, bridge)
+        send_routing_request_by_channel(bridge, scenario.routing_request_message)
+
 
         ####################
         if TRAFFIC_LIGHT_MODE:
@@ -90,6 +107,7 @@ def run_scenarios(generated_individual, scenario_list, bridge, violation_save_fi
         else:
             # Wait for record time
             time.sleep(MAX_RECORD_TIME)
+
         ####################
 
         # Stop recording messages and producing perception messages
@@ -97,7 +115,8 @@ def run_scenarios(generated_individual, scenario_list, bridge, violation_save_fi
         scenario.stop_recorder(recorder_subprocess)
 
         # scenario.stop_subprocess(p)
-        stop_obstacles(p)
+        # stop_obstacles(p)
+        mbk.stop()
 
         violation_results, code_coverage, execution_time = measure_objectives_individually(scenario,
                                                                                            violation_save_file_path)
@@ -105,7 +124,7 @@ def run_scenarios(generated_individual, scenario_list, bridge, violation_save_fi
 
         # fitness = calculate_fitness(violation_number, code_coverage, execution_time)
         generated_individual.update_accumulated_objectives(violation_results, code_coverage, execution_time)
-        generated_individual.update_violation_intro_remov(violation_results, scenario)
+        generated_individual.update_violation_intro_remov(violation_results, scenario, scenario_count)
 
         # if SAVE_RECORD == True:
         #     if len(violation_results) == 0:

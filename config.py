@@ -5,7 +5,7 @@ Global configurations for the framework
 import logging
 
 # APOLLO CONFIGURATION ==============================
-PERCEPTION_FREQUENCY = 25
+PERCEPTION_FREQUENCY = 10 # used to be 25
 GENERATION_LIMIT = 10
 
 MAX_RECORD_TIME = 10

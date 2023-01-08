@@ -1,0 +1,443 @@
+Generation_0_Config_44
+  Option Tuning: position: 53, type:float, key: low_speed_penalty, pre_value: 10.0, cur_value: -5046.6
+  Violation Emergence Num: 10
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 53, low_speed_penalty, [-10001, 10001]->[-5046, 10001]
+Generation_0_Config_45
+  Option Tuning: position: 197, type:e_number, key: weight_ref_deviation, pre_value: 1e3, cur_value: 1e-97
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 197, weight_ref_deviation, [-101, 101]->[-97, 101]
+Generation_0_Config_49
+  Option Tuning: position: 93, type:float, key: search_beam_radius_intensity, pre_value: 0.08, cur_value: -1541.69
+  Violation Emergence Num: 1
+  Violation: [('comfort', 'Deceleration exceeded max')]
+  Range Change: 93, search_beam_radius_intensity, [-10001, 10001]->[-1541, 10001]
+Generation_0_Config_56
+  Option Tuning: position: 207, type:float, key: jerk_weight, pre_value: 1.0, cur_value: -116.5
+  Violation Emergence Num: 1
+  Violation: [('comfort', 'Acceleration exceeded max')]
+  Range Change: 207, jerk_weight, [-10001, 10001]->[-116, 10001]
+Generation_1_Config_8
+  Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [('comfort', 'Acceleration exceeded max')]
+Generation_1_Config_27
+  Option Tuning: position: 165, type:float, key: max_acceleration_reverse, pre_value: 1.0, cur_value: -3521.4
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 165, max_acceleration_reverse, [-10001, 10001]->[-3521, 10001]
+Generation_1_Config_41
+  Option Tuning: position: 85, type:float, key: max_deceleration, pre_value: -2.5, cur_value: -3672.2
+  Violation Emergence Num: 10
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 85, max_deceleration, [-10001, 10001]->[-3672, 10001]
+Generation_1_Config_54
+  Option Tuning: position: 67, type:float, key: speed_weight, pre_value: 0.0, cur_value: -8677.5
+  Violation Emergence Num: 9
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 67, speed_weight, [-10001, 10001]->[-8677, 10001]
+Generation_2_Config_15
+  Option Tuning: crossover
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+Generation_2_Config_25
+  Option Tuning: position: 218, type:float, key: delta_t, pre_value: 0.5, cur_value: -5603.8
+  Violation Emergence Num: 10
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 218, delta_t, [-10001, 10001]->[-5603, 10001]
+Generation_2_Config_28
+  Option Tuning: position: 64, type:integer, key: dense_dimension_s, pre_value: 21, cur_value: -7152
+  Violation Emergence Num: 9
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 64, dense_dimension_s, [-10001, 10001]->[-7152, 10001]
+Generation_2_Config_30
+  Option Tuning: position: 79, type:float, key: keep_clear_low_speed_penalty, pre_value: 10.0, cur_value: -5553.4
+  Violation Emergence Num: 1
+  Violation: [('comfort', 'Acceleration exceeded max')]
+  Range Change: 79, keep_clear_low_speed_penalty, [-10001, 10001]->[-5553, 10001]
+Generation_2_Config_37
+  Option Tuning: position: 133, type:float, key: ipopt_acceptable_constr_viol_tol, pre_value: 0.1, cur_value: -13.1
+  Violation Emergence Num: 6
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 133, ipopt_acceptable_constr_viol_tol, [-10001, 10001]->[-13, 10001]
+Generation_2_Config_45
+  Option Tuning: position: 208, type:float, key: kappa_penalty_weight, pre_value: 100.0, cur_value: 1609.8
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 208, kappa_penalty_weight, [-10001, 10001]->[-10001, 1609]
+Generation_3_Config_10
+  Option Tuning: crossover
+  Violation Emergence Num: 3
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+Generation_3_Config_12
+  Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [('comfort', 'Deceleration exceeded max')]
+Generation_3_Config_13
+  Option Tuning: crossover
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+Generation_3_Config_20
+  Option Tuning: crossover
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+Generation_3_Config_25
+  Option Tuning: position: 219, type:integer, key: is_near_destination_threshold, pre_value: 1, cur_value: 6378
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 219, is_near_destination_threshold, [-10001, 10001]->[-10001, 6378]
+Generation_3_Config_40
+  Option Tuning: position: 57, type:float, key: decel_penalty, pre_value: 1.0, cur_value: 1547.4
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 57, decel_penalty, [-10001, 10001]->[-10001, 1547]
+Generation_3_Config_43
+  Option Tuning: position: 69, type:float, key: jerk_weight, pre_value: 10.0, cur_value: 419.8
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 69, jerk_weight, [-10001, 10001]->[-10001, 419]
+Generation_3_Config_45
+  Option Tuning: position: 66, type:float, key: sparse_unit_s, pre_value: 1.0, cur_value: -5635.5
+  Violation Emergence Num: 10
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 66, sparse_unit_s, [-10001, 10001]->[-5635, 10001]
+Generation_3_Config_50
+  Option Tuning: position: 67, type:float, key: speed_weight, pre_value: 0.0, cur_value: 7499.7
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 67, speed_weight, [-8677, 10001]->[-8677, 7499]
+Generation_4_Config_8
+  Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [('comfort', 'Deceleration exceeded max')]
+Generation_4_Config_12
+  Option Tuning: crossover
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+Generation_4_Config_27
+  Option Tuning: position: 123, type:float, key: traj_steer_penalty, pre_value: 0.0, cur_value: 7879.5
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 123, traj_steer_penalty, [-10001, 10001]->[-10001, 7879]
+Generation_4_Config_42
+  Option Tuning: position: 95, type:float, key: is_block_angle_threshold, pre_value: 0.5, cur_value: -9188.4
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 95, is_block_angle_threshold, [-10001, 10001]->[-9188, 10001]
+Generation_4_Config_43
+  Option Tuning: position: 189, type:integer, key: reanchoring_trails_num, pre_value: 50, cur_value: -8134
+  Violation Emergence Num: 1
+  Violation: [('comfort', 'Acceleration exceeded max')]
+  Range Change: 189, reanchoring_trails_num, [-10001, 10001]->[-8134, 10001]
+Generation_5_Config_11
+  Option Tuning: crossover
+  Violation Emergence Num: 3
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+Generation_5_Config_17
+  Option Tuning: crossover
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+Generation_5_Config_20
+  Option Tuning: crossover
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+Generation_5_Config_23
+  Option Tuning: position: 153, type:float, key: weight_phi, pre_value: 1.5, cur_value: 3435.0
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 153, weight_phi, [-10001, 10001]->[-10001, 3435]
+Generation_5_Config_25
+  Option Tuning: position: 174, type:float, key: ipopt_acceptable_constr_viol_tol, pre_value: 0.1, cur_value: 2365.2
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 174, ipopt_acceptable_constr_viol_tol, [-10001, 10001]->[-10001, 2365]
+Generation_5_Config_33
+  Option Tuning: position: 81, type:float, key: decel_penalty, pre_value: 1.0, cur_value: -5373.5
+  Violation Emergence Num: 1
+  Violation: [('comfort', 'Deceleration exceeded max')]
+  Range Change: 81, decel_penalty, [-10001, 10001]->[-5373, 10001]
+Generation_5_Config_37
+  Option Tuning: position: 259, type:float, key: pull_over_destination_to_pathend_buffer, pre_value: 4.0, cur_value: -990.8
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 259, pull_over_destination_to_pathend_buffer, [-10001, 10001]->[-990, 10001]
+Generation_5_Config_40
+  Option Tuning: position: 169, type:integer, key: ipopt_print_level, pre_value: 0, cur_value: -8480
+  Violation Emergence Num: 1
+  Violation: [('comfort', 'Deceleration exceeded max')]
+  Range Change: 169, ipopt_print_level, [-10001, 10001]->[-8480, 10001]
+Generation_5_Config_41
+  Option Tuning: position: 120, type:float, key: traj_forward_penalty, pre_value: 1.0, cur_value: 1969.5
+  Violation Emergence Num: 3
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 120, traj_forward_penalty, [-10001, 10001]->[-10001, 1969]
+Generation_5_Config_46
+  Option Tuning: position: 102, type:float, key: point_extension, pre_value: 0.0, cur_value: -3334.8
+  Violation Emergence Num: 1
+  Violation: [('comfort', 'Deceleration exceeded max')]
+  Range Change: 102, point_extension, [-10001, 10001]->[-3334, 10001]
+Generation_5_Config_47
+  Option Tuning: position: 68, type:float, key: accel_weight, pre_value: 10.0, cur_value: -2266.0
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 68, accel_weight, [-10001, 10001]->[-2266, 10001]
+Generation_5_Config_48
+  Option Tuning: position: 150, type:float, key: weight_a_rate, pre_value: 2.5, cur_value: 610.2
+  Violation Emergence Num: 1
+  Violation: [('comfort', 'Deceleration exceeded max')]
+  Range Change: 150, weight_a_rate, [-10001, 10001]->[-10001, 610]
+Generation_5_Config_50
+  Option Tuning: position: 123, type:float, key: traj_steer_penalty, pre_value: 0.0, cur_value: 763.0
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 123, traj_steer_penalty, [-10001, 7879]->[-10001, 763]
+Generation_6_Config_0
+  Option Tuning: position: 82, type:float, key: positive_jerk_coeff, pre_value: 1.0, cur_value: 3036.5
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 82, positive_jerk_coeff, [-10001, 10001]->[-10001, 3036]
+Generation_6_Config_1
+  Option Tuning: position: 47, type:float, key: reference_weight, pre_value: 0.0, cur_value: 2700.5
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 47, reference_weight, [-10001, 10001]->[-10001, 2700]
+Generation_6_Config_3
+  Option Tuning: crossover
+  Violation Emergence Num: 3
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+Generation_6_Config_6
+  Option Tuning: crossover
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+Generation_6_Config_9
+  Option Tuning: crossover
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+Generation_6_Config_10
+  Option Tuning: crossover
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+Generation_6_Config_12
+  Option Tuning: crossover
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+Generation_6_Config_15
+  Option Tuning: crossover
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+Generation_6_Config_19
+  Option Tuning: crossover
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+Generation_6_Config_21
+  Option Tuning: crossover
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+Generation_6_Config_27
+  Option Tuning: position: 146, type:boolean, key: osqp_debug_log, pre_value: false, cur_value: true
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 146, osqp_debug_log, ['true', 'false']->['true', 'false']
+Generation_6_Config_33
+  Option Tuning: position: 162, type:float, key: max_speed_forward, pre_value: 2.0, cur_value: -2208.4
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 162, max_speed_forward, [-10001, 10001]->[-2208, 10001]
+Generation_6_Config_36
+  Option Tuning: position: 27, type:float, key: ref_s_weight, pre_value: 10.0, cur_value: -2501.6
+  Violation Emergence Num: 6
+  Violation: [('comfort', 'Acceleration exceeded max'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 27, ref_s_weight, [-10001, 10001]->[-2501, 10001]
+Generation_6_Config_40
+  Option Tuning: position: 209, type:float, key: ref_s_weight, pre_value: 10.0, cur_value: 8750.3
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 209, ref_s_weight, [-10001, 10001]->[-10001, 8750]
+Generation_6_Config_41
+  Option Tuning: position: 182, type:boolean, key: enable_initial_final_check, pre_value: false, cur_value: true
+  Violation Emergence Num: 1
+  Violation: [('comfort', 'Acceleration exceeded max')]
+  Range Change: 182, enable_initial_final_check, ['true', 'false']->['true', 'false']
+Generation_6_Config_42
+  Option Tuning: position: 226, type:float, key: gear_shift_period_duration, pre_value: 2.0, cur_value: 3679.0
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 226, gear_shift_period_duration, [-10001, 10001]->[-10001, 3679]
+Generation_6_Config_45
+  Option Tuning: position: 260, type:float, key: pull_over_road_edge_buffer, pre_value: 0.15, cur_value: 4479.78
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 260, pull_over_road_edge_buffer, [-10001, 10001]->[-10001, 4479]
+Generation_6_Config_47
+  Option Tuning: position: 54, type:float, key: reference_speed_penalty, pre_value: 10.0, cur_value: -2365.7
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 54, reference_speed_penalty, [-10001, 10001]->[-2365, 10001]
+Generation_6_Config_51
+  Option Tuning: position: 118, type:integer, key: next_node_num, pre_value: 10, cur_value: 5923
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 118, next_node_num, [-10001, 10001]->[-10001, 5923]
+Generation_7_Config_3
+  Option Tuning: crossover
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+Generation_7_Config_4
+  Option Tuning: crossover
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+Generation_7_Config_7
+  Option Tuning: crossover
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+Generation_7_Config_10
+  Option Tuning: crossover
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+Generation_7_Config_11
+  Option Tuning: crossover
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+Generation_7_Config_14
+  Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [('comfort', 'Deceleration exceeded max')]
+Generation_7_Config_15
+  Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [('comfort', 'Acceleration exceeded max')]
+Generation_7_Config_30
+  Option Tuning: position: 102, type:float, key: point_extension, pre_value: 0.0, cur_value: 5789.3
+  Violation Emergence Num: 3
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 102, point_extension, [-3334, 10001]->[-3334, 5789]
+Generation_7_Config_32
+  Option Tuning: position: 34, type:float, key: ref_v_weight, pre_value: 5.0, cur_value: -706.0
+  Violation Emergence Num: 9
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 34, ref_v_weight, [-10001, 10001]->[-706, 10001]
+Generation_7_Config_33
+  Option Tuning: position: 252, type:float, key: open_space_fallback_stop_distance, pre_value: 2.0, cur_value: 9959.0
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 252, open_space_fallback_stop_distance, [-10001, 10001]->[-10001, 9959]
+Generation_7_Config_34
+  Option Tuning: position: 21, type:float, key: ddl_weight, pre_value: 800.0, cur_value: 6253.2
+  Violation Emergence Num: 3
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 21, ddl_weight, [-10001, 10001]->[-10001, 6253]
+Generation_7_Config_40
+  Option Tuning: position: 162, type:float, key: max_speed_forward, pre_value: 2.0, cur_value: 9066.8
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 162, max_speed_forward, [-2208, 10001]->[-2208, 9066]
+Generation_7_Config_41
+  Option Tuning: position: 51, type:e_number, key: default_speed_cost, pre_value: 1.0e3, cur_value: 1.0e-10
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 51, default_speed_cost, [-101, 101]->[-10, 101]
+Generation_7_Config_45
+  Option Tuning: position: 158, type:float, key: weight_second_order_time, pre_value: 13.5, cur_value: 5681.9
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 158, weight_second_order_time, [-10001, 10001]->[-10001, 5681]
+Generation_7_Config_46
+  Option Tuning: position: 127, type:float, key: weight_d, pre_value: 1.0, cur_value: 4622.0
+  Violation Emergence Num: 1
+  Violation: [('comfort', 'Deceleration exceeded max')]
+  Range Change: 127, weight_d, [-10001, 10001]->[-10001, 4622]
+Generation_7_Config_48
+  Option Tuning: position: 140, type:float, key: min_safety_distance, pre_value: 0.01, cur_value: -2663.92
+  Violation Emergence Num: 1
+  Violation: [('comfort', 'Deceleration exceeded max')]
+  Range Change: 140, min_safety_distance, [-10001, 10001]->[-2663, 10001]
+Generation_8_Config_1
+  Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [('comfort', 'Acceleration exceeded max')]
+Generation_8_Config_2
+  Option Tuning: crossover
+  Violation Emergence Num: 3
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+Generation_8_Config_4
+  Option Tuning: crossover
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+Generation_8_Config_9
+  Option Tuning: crossover
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+Generation_8_Config_10
+  Option Tuning: crossover
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+Generation_8_Config_19
+  Option Tuning: crossover
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+Generation_8_Config_22
+  Option Tuning: position: 195, type:e_number, key: weight_fem_pos_deviation, pre_value: 1e7, cur_value: 1e88
+  Violation Emergence Num: 1
+  Violation: [('comfort', 'Deceleration exceeded max')]
+  Range Change: 195, weight_fem_pos_deviation, [-101, 101]->[-101, 88]
+Generation_8_Config_24
+  Option Tuning: position: 83, type:float, key: negative_jerk_coeff, pre_value: 1.0, cur_value: -214.0
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 83, negative_jerk_coeff, [-10001, 10001]->[-214, 10001]
+Generation_8_Config_27
+  Option Tuning: position: 192, type:boolean, key: estimate_bound, pre_value: false, cur_value: true
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 192, estimate_bound, ['true', 'false']->['true', 'false']
+Generation_8_Config_30
+  Option Tuning: position: 122, type:float, key: traj_gear_switch_penalty, pre_value: 10.0, cur_value: -4642.8
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 122, traj_gear_switch_penalty, [-10001, 10001]->[-4642, 10001]
+Generation_8_Config_32
+  Option Tuning: position: 97, type:float, key: total_time, pre_value: 7.0, cur_value: -2224.2
+  Violation Emergence Num: 3
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 97, total_time, [-10001, 10001]->[-2224, 10001]
+Generation_8_Config_34
+  Option Tuning: position: 182, type:boolean, key: enable_initial_final_check, pre_value: false, cur_value: true
+  Violation Emergence Num: 3
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 182, enable_initial_final_check, ['true', 'false']->['true', 'false']
+Generation_8_Config_35
+  Option Tuning: position: 17, type:float, key: ddl_weight, pre_value: 1000.0, cur_value: -4155.2
+  Violation Emergence Num: 1
+  Violation: [('comfort', 'Deceleration exceeded max')]
+  Range Change: 17, ddl_weight, [-10001, 10001]->[-4155, 10001]
+Generation_8_Config_37
+  Option Tuning: position: 164, type:float, key: max_acceleration_forward, pre_value: 2.0, cur_value: -8957.2
+  Violation Emergence Num: 9
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 164, max_acceleration_forward, [-10001, 10001]->[-8957, 10001]
+Generation_8_Config_39
+  Option Tuning: position: 159, type:float, key: weight_end_state, pre_value: 1.0, cur_value: -5840.6
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 159, weight_end_state, [-10001, 10001]->[-5840, 10001]
+Generation_8_Config_40
+  Option Tuning: position: 267, type:boolean, key: enable_remove_change_lane, pre_value: false, cur_value: true
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 267, enable_remove_change_lane, ['true', 'false']->['true', 'false']
+Generation_8_Config_43
+  Option Tuning: position: 121, type:float, key: traj_back_penalty, pre_value: 1.0, cur_value: 818.5
+  Violation Emergence Num: 9
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 121, traj_back_penalty, [-10001, 10001]->[-10001, 818]
+Generation_8_Config_49
+  Option Tuning: position: 46, type:float, key: obstacle_weight, pre_value: 1.0, cur_value: -9889.5
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 46, obstacle_weight, [-10001, 10001]->[-9889, 10001]
+Generation_9_Config_1
+  Option Tuning: position: 64, type:integer, key: dense_dimension_s, pre_value: 21, cur_value: 2087
+  Violation Emergence Num: 5
+  Violation: [('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure'), ('module', 'planning failure')]
+  Range Change: 64, dense_dimension_s, [-7152, 10001]->[-7152, 2087]
