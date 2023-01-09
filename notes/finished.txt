@@ -26,3 +26,7 @@ x. output range analysis at last
 
 x. Extract adc_routing and obs from record messages
     publish obs through channel
+
+x. check records under default configuration first
+    rerun records instead of analyzing previous record
+    to reduce non-determinism

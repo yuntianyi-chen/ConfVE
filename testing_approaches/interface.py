@@ -2,18 +2,21 @@ import os
 import random
 import csv
 from os import listdir
-
 from cyber_record.record import Record
 from pandas import read_csv
 from config import MAP_NAME, AV_TESTING_APPROACH, OBS_GROUP_COUNT, ADC_ROUTE_PATH, \
     DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR, INITIAL_SCENARIO_RECORD_DIR
 from environment.container_settings import init_settings
 from modules.perception.proto.perception_obstacle_pb2 import PerceptionObstacle
-
 from modules.common.proto.geometry_pb2 import Point3D
 from objectives.violation_number.oracles import RecordAnalyzer
-from scenario_handling.scenario_tools.map_info_parser import initialize, validatePath
-from scenario_handling.scenario_tools import map_tools
+from testing_approaches.scenorita.auxiliary.map_info_parser import initialize, validatePath
+# from scenario_handling.scenario_tools.map_info_parser import initialize, validatePath
+from tools.hdmap import map_tools
+
+
+# from scenario_handling.scenario_tools import map_tools
+
 
 # RecordInfo or Generated Info
 class InitialScenarioInfo:
@@ -61,17 +64,20 @@ def adc_routing_generate():
 
 
 def obs_instance(perception_obstacle):
-    points=[]
+    points = []
     for pp in list(perception_obstacle.polygon_point):
         p = Point3D(x=pp.x, y=pp.y, z=pp.z)
         points.append(p)
 
     obs = PerceptionObstacle(
-        id= perception_obstacle.id,
-        position=Point3D(x=perception_obstacle.position.x, y=perception_obstacle.position.y, z=perception_obstacle.position.z),
+        id=perception_obstacle.id,
+        position=Point3D(x=perception_obstacle.position.x, y=perception_obstacle.position.y,
+                         z=perception_obstacle.position.z),
         theta=perception_obstacle.theta,
-        velocity=Point3D(x=perception_obstacle.velocity.x, y=perception_obstacle.velocity.y, z=perception_obstacle.velocity.z),
-        acceleration=Point3D(x=perception_obstacle.acceleration.x, y=perception_obstacle.acceleration.y, z=perception_obstacle.acceleration.z),
+        velocity=Point3D(x=perception_obstacle.velocity.x, y=perception_obstacle.velocity.y,
+                         z=perception_obstacle.velocity.z),
+        acceleration=Point3D(x=perception_obstacle.acceleration.x, y=perception_obstacle.acceleration.y,
+                             z=perception_obstacle.acceleration.z),
         length=perception_obstacle.length,
         width=perception_obstacle.width,
         height=perception_obstacle.height,
@@ -84,16 +90,17 @@ def obs_instance(perception_obstacle):
     # obs = PerceptionObstacle(perception_obstacle)
     return obs
 
+
 def extract_routing_perception_info(scenario_record_dir_path):
     scenario_recordname_list = os.listdir(scenario_record_dir_path)
     scenario_recordname_list.sort()
     scenario_record_file_list = [f"{scenario_record_dir_path}/{recordname}" for recordname in scenario_recordname_list]
 
     obs_perception_list = []
-    routing_request_list=[]
+    routing_request_list = []
     for scenario_record_file_path in scenario_record_file_list:
         record = Record(scenario_record_file_path)
-        temp_list=[]
+        temp_list = []
         for topic, message, t in record.read_messages():
             if topic == "/apollo/perception/obstacles":
                 perception_obstacles = list(message.perception_obstacle)
@@ -107,6 +114,7 @@ def extract_routing_perception_info(scenario_record_dir_path):
         obs_perception_list.append(temp_list)
     return obs_perception_list, routing_request_list
 
+
 # obs_perception, adc_routing, violation_results, violation_num
 def get_record_info_by_approach(obs_perception_list, routing_request_list, scenario_record_dir_path):
     if AV_TESTING_APPROACH == "scenoRITA":
@@ -115,7 +123,8 @@ def get_record_info_by_approach(obs_perception_list, routing_request_list, scena
 
         scenario_recordname_list = listdir(scenario_record_dir_path)
         scenario_recordname_list.sort()
-        scenario_record_file_list = [f"{scenario_record_dir_path}/{recordname}" for recordname in scenario_recordname_list]
+        scenario_record_file_list = [f"{scenario_record_dir_path}/{recordname}" for recordname in
+                                     scenario_recordname_list]
 
         # obs_perception_list, routing_request_list = extract_routing_perception_info(scenario_record_file_list)
 

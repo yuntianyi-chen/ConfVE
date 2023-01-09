@@ -9,12 +9,11 @@ from scenario_handling.toggle_sim_control import run_sim_control
 from tools.bridge.CyberBridge import Topics, CyberBridge
 
 
-
-
 def delete_records(records_path, mk_dir):
     shutil.rmtree(records_path)
     if mk_dir:
         os.mkdir(records_path)
+
 
 def delete_data_core():
     try:
@@ -22,7 +21,6 @@ def delete_data_core():
         os.mkdir(f"{APOLLO_ROOT}/data/core")
     except OSError as ose:
         print(ose)
-
 
 
 def cyber_env_init():
@@ -43,6 +41,7 @@ def connect_bridge():
     bridge = start_bridge()
     register_bridge_publishers(bridge)
     return bridge
+
 
 def close_subprocess():
     cmd = f"docker exec -d {get_container_name()} /apollo/scripts/my_scripts/close_subprocess.sh"

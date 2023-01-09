@@ -1,0 +1,47 @@
+1. cyber recorder
+    record files need to extract obstacles, ego car routing waypoints, traffic light signal
+    cyber records no routing_request. Cannot play routing request. Can play perception.
+    It seems cyber play just replays information, but not reload new configurations. You don't even have to launch modules.
+
+2. traffic lights
+
+3. Scenarios-diversity
+    Get as many scenarios as possible from scenario generation approaches, reduce a reasonable number of scenarios by filtering.
+    Initial Scenarios---diversity of vehicle maneuver, traffic controls, code coverage, violation types...
+    filtering scenarios
+        threshold - mutable size
+        ranking - get top 10
+
+4. Eliminate duplicate
+    violation features
+
+    eliminate at last or in the process?
+
+
+5. Violation types
+    More types
+    Validate current types
+        planning module failure
+            module failure - module is running. received message but module doesn't normally work
+
+        collision
+            fail to report collision. ego car stops in line, obstacle runs over it. all modules work
+                Generation_6_Config_49
+                Report Tuning...
+                  64, dense_dimension_s, 21->-7152
+                  93, search_beam_radius_intensity, 0.08->-1541.69
+                  116, xy_grid_resolution, 0.3->2623.9
+
+                Generation_7_Config_1
+                Report Tuning...
+                  66, sparse_unit_s, 1.0->-5635.5
+                  85, max_deceleration, -2.5->-3672.2
+                  196, weight_path_length, 0.0->2293.6
+
+
+6. Code coverage (Branch coverage)
+
+
+7. Violation Masking & Optimal fitness in genetic algorithm
+
+

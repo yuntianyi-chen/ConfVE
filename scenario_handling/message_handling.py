@@ -1,19 +1,11 @@
 import time
-# from typing import List
 from logging import Logger
 from threading import Thread
 from modules.common.proto.header_pb2 import Header
 from modules.perception.proto.perception_obstacle_pb2 import PerceptionObstacles
-# from apollo.utils import localization_to_obstacle, obstacle_to_polygon
-# from apollo.CyberBridge import Channel, Topics
-# from framework.scenario.PedestrianManager import PedestrianManager
-from utils import get_logger
 from config import PERCEPTION_FREQUENCY
-from tools.bridge.CyberBridge import Channel, Topics
-from tools.utils import localization_to_obstacle, obstacle_to_polygon
+from tools.bridge.CyberBridge import Topics
 
-
-# from apollo.ApolloRunner import ApolloRunner
 
 
 class MessageBroker:

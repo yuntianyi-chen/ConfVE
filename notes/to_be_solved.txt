@@ -1,49 +1,43 @@
 -----------------------
+Need Discussion
+-----------------------
+?. run configuration reverting
+    still violated after reverting?
+    if tune it back, what's the significance of genetic algorithm?
+
+?. Violation Masking
+    New tuning is masked by previous violation
+    Fix: configuration reverting? or (option tuning, violation pair) or eliminate this individual after detecting
+        Once we found optimal, eliminate?
+    give weights to every option tuned. report possibility of each option to cause violations instead of focusing on single option
+
+    What should we do after detecting violations?
+
+? Optimal individual
+    Only occurred when configuration caused module failure in all scenarios
+
+
+-----------------------
 TO DO RIGHT NOW!!!
 -----------------------
-x. check records under default configuration first
-    to reduce non-determinism
-
 0. Distinguish violations
-    rerun records instead of analyzing previous record
+    violation features
+
+    Eliminate duplicate
+    similarity of duplicate	refer to scenoRITA
+    clustering algorithm to eliminate duplicate at last
+    Think about how to eliminate duplicate in the optimization process - comparison
 
 0. Under some configurations, some scenarios can successfully start, some scenarios cannot
     In those cannot start, it didn't report planning module failure
 
-0. Violation Masking
-    New tuning is masked by previous violation
+0. Traffic Lights
 
 1. Code coverage
+    significance: cover more code blocks that could reflect more option tuning.
+    otherwise, some option tunings would never influence the system
 
 2. Check and Finish the rest of violation types
-    module failure - module is running. received message but module doesn't normally work
-
-    fail to report collision. ego car stops in line, obstacle runs over it. all modules work
-        Generation_6_Config_49
-        Report Tuning...
-          64, dense_dimension_s, 21->-7152
-          93, search_beam_radius_intensity, 0.08->-1541.69
-          116, xy_grid_resolution, 0.3->2623.9
-
-        Generation_7_Config_1
-        Report Tuning...
-          66, sparse_unit_s, 1.0->-5635.5
-          85, max_deceleration, -2.5->-3672.2
-          196, weight_path_length, 0.0->2293.6
-
-3. Schedule a zoom meeting with Yuqi
-    Discuss with Yuqi about cyber recorder
-    record files need to extract obstacles, ego car routing waypoints, traffic light signal
-    cyber records no routing_request. Cannot play routing request. Can play perception.
-    It seems cyber play just replays information, but not reload new configurations. You don't even have to launch modules.
-
-    Discuss code coverage (Branch coverage)
-
-    Discuss Scenarios-diversity
-
-    Discuss Eliminate duplicate
-
-
 
 
 
@@ -51,21 +45,12 @@ x. check records under default configuration first
 -----------------------
 Important but follow schedule
 -----------------------
-1. Run AV Testing techniques (scenoRITA, DoppelTest, AV-Fuzzer, ADFuzz) (GA, DRL, T-way)
+1. Run AV Testing techniques (scenoRITA, DoppelTest, AV-Fuzzer, ADFuzz, Random) (GA, T-way)
 2. T-way testing
 3. Static Analysis
     Variable dependency
     Option range: Partial path sensitive analysis or interval analysis
-4. Traffic Lights
-5. Get as many scenarios as possible from scenario generation approaches, reduce a reasonable number of scenarios by filtering.
-    Initial Scenarios-diversity of vehicle maneuver, traffic controls, code coverage, violation types...
-    filtering scenarios
-        threshold - mutable size
-        ranking - get top 10
-6. Eliminate duplicate:
-    similarity of duplicate	refer to scenoRITA
-    clustering algorithm to eliminate duplicate at last
-    Think about how to eliminate duplicate in the optimization process - comparison
+
 
 
 
@@ -73,20 +58,19 @@ Important but follow schedule
 Not so hurry
 -----------------------
 1. Provide cases that identify a bug, and then fix the bug
-0. Deep Reinforcement learning
 2. Avoid generating the obstacles overlapped with the ego car
 3. Avoid generating the ego car above the stop sign line
 4. Genetic algorithm implementation.
     use existing implementations (e.g., deap framework)
-5. replay record by obstacle information & routing request
-6. Fail to detect bicycle collision
+5. Fail to detect bicycle collision
     scenoRITA can
     DoppelTest cannot
-7. Conversion of maps of Apollo to LGSVL
+6. Conversion of maps of Apollo to LGSVL
     Use the common maps
-8. Why scenoRITA works on large maps but DoppelTest not so good – say something in the proposal how to solve this issue
+7. Why scenoRITA works on large maps but DoppelTest not so good – say something in the proposal how to solve this issue
     How much time it need to take for DoppelTest to get enough good scenarios
     Test it for more hours
+8. Deep Reinforcement learning
 
 
 

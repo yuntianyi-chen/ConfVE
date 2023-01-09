@@ -1,0 +1,140 @@
+Generation_0_Config_2
+  Vio Intro: 1
+  Vio Remov: 0
+  Fitness(mode: intro): 1
+Generation_0_Config_12
+  Vio Intro: 1
+  Vio Remov: 5
+  Fitness(mode: intro): 1
+Generation_0_Config_17
+  Vio Intro: 1
+  Vio Remov: 0
+  Fitness(mode: intro): 1
+Generation_0_Config_24
+  Vio Intro: 1
+  Vio Remov: 0
+  Fitness(mode: intro): 1
+Generation_0_Config_25
+  Vio Intro: 1
+  Vio Remov: 0
+  Fitness(mode: intro): 1
+Generation_0_Config_29
+  Vio Intro: 1
+  Vio Remov: 0
+  Fitness(mode: intro): 1
+Generation_0_Config_37
+  Vio Intro: 1
+  Vio Remov: 0
+  Fitness(mode: intro): 1
+Generation_0_Config_39
+  Vio Intro: 1
+  Vio Remov: 0
+  Fitness(mode: intro): 1
+Generation_0_Config_41
+  Vio Intro: 1
+  Vio Remov: 0
+  Fitness(mode: intro): 1
+Generation_0_Config_45
+  Vio Intro: 1
+  Vio Remov: 4
+  Fitness(mode: intro): 1
+Generation_0_Config_49
+  Vio Intro: 1
+  Vio Remov: 0
+  Fitness(mode: intro): 1
+Generation_1_Config_1
+  Vio Intro: 1
+  Vio Remov: 2
+  Fitness(mode: intro): 1
+Generation_1_Config_2
+  Vio Intro: 1
+  Vio Remov: 4
+  Fitness(mode: intro): 1
+Generation_1_Config_10
+  Vio Intro: 1
+  Vio Remov: 4
+  Fitness(mode: intro): 1
+Generation_1_Config_11
+  Vio Intro: 1
+  Vio Remov: 0
+  Fitness(mode: intro): 1
+Generation_1_Config_12
+  Vio Intro: 1
+  Vio Remov: 0
+  Fitness(mode: intro): 1
+Generation_1_Config_13
+  Vio Intro: 1
+  Vio Remov: 4
+  Fitness(mode: intro): 1
+Generation_1_Config_14
+  Vio Intro: 1
+  Vio Remov: 3
+  Fitness(mode: intro): 1
+Generation_1_Config_15
+  Vio Intro: 1
+  Vio Remov: 4
+  Fitness(mode: intro): 1
+Generation_1_Config_16
+  Vio Intro: 1
+  Vio Remov: 1
+  Fitness(mode: intro): 1
+Generation_1_Config_18
+  Vio Intro: 1
+  Vio Remov: 3
+  Fitness(mode: intro): 1
+Generation_1_Config_21
+  Vio Intro: 1
+  Vio Remov: 3
+  Fitness(mode: intro): 1
+Generation_1_Config_22
+  Vio Intro: 1
+  Vio Remov: 3
+  Fitness(mode: intro): 1
+Generation_1_Config_23
+  Vio Intro: 1
+  Vio Remov: 4
+  Fitness(mode: intro): 1
+Generation_1_Config_25
+  Vio Intro: 1
+  Vio Remov: 4
+  Fitness(mode: intro): 1
+Generation_1_Config_32
+  Vio Intro: 1
+  Vio Remov: 4
+  Fitness(mode: intro): 1
+Generation_1_Config_36
+  Vio Intro: 1
+  Vio Remov: 4
+  Fitness(mode: intro): 1
+Generation_1_Config_41
+  Vio Intro: 1
+  Vio Remov: 0
+  Fitness(mode: intro): 1
+Generation_1_Config_43
+  Vio Intro: 1
+  Vio Remov: 3
+  Fitness(mode: intro): 1
+Generation_1_Config_44
+  Vio Intro: 10
+  Vio Remov: 11
+  Fitness(mode: intro): 10
+Generation_2_Config_6
+  Vio Intro: 10
+  Vio Remov: 11
+  Fitness(mode: intro): 10
+Generation_2_Config_25
+  Vio Intro: 11
+  Vio Remov: 11
+  Fitness(mode: intro): 11
+Generation_2_Config_36
+  Vio Intro: 11
+  Vio Remov: 11
+  Fitness(mode: intro): 11
+Generation_6_Config_18
+  Vio Intro: 11
+  Vio Remov: 11
+  Fitness(mode: intro): 11
+Generation_7_Config_29
+  Vio Intro: 11
+  Vio Remov: 11
+  Fitness(mode: intro): 11

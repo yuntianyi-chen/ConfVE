@@ -1,0 +1,10 @@
+/home/cloudsky/Research/Apollo/Backup/scenoRITA/records/initial/Generation31_Scenario33.00000 ------ default_config_Scenario_0
+/home/cloudsky/Research/Apollo/Backup/scenoRITA/records/initial/Generation32_Scenario7.00000 ------ default_config_Scenario_1
+/home/cloudsky/Research/Apollo/Backup/scenoRITA/records/initial/Generation34_Scenario48.00000 ------ default_config_Scenario_2
+/home/cloudsky/Research/Apollo/Backup/scenoRITA/records/initial/Generation35_Scenario14.00000 ------ default_config_Scenario_3
+/home/cloudsky/Research/Apollo/Backup/scenoRITA/records/initial/Generation36_Scenario33.00000 ------ default_config_Scenario_4
+/home/cloudsky/Research/Apollo/Backup/scenoRITA/records/initial/Generation37_Scenario19.00000 ------ default_config_Scenario_5
+/home/cloudsky/Research/Apollo/Backup/scenoRITA/records/initial/Generation42_Scenario43.00000 ------ default_config_Scenario_6
+/home/cloudsky/Research/Apollo/Backup/scenoRITA/records/initial/Generation45_Scenario24.00000 ------ default_config_Scenario_7
+/home/cloudsky/Research/Apollo/Backup/scenoRITA/records/initial/Generation48_Scenario15.00000 ------ default_config_Scenario_8
+/home/cloudsky/Research/Apollo/Backup/scenoRITA/records/initial/Generation54_Scenario31.00000 ------ default_config_Scenario_9

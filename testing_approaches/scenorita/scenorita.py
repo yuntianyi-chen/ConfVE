@@ -1,26 +1,23 @@
 import shutil
-from datetime import date
-
-import networkx as nx
-from config import MAGGIE_ROOT, OBS_DIR, MAX_RECORD_TIME, MAP_NAME, APOLLO_RECORDS_DIR
-from environment.cyber_env_operation import connect_bridge, cyber_env_init, delete_records
-from scenario_handling.create_scenarios import Scenario
-from scenario_handling.run_scenario import register_obstacles, send_routing_request, \
-    register_traffic_lights, stop_obstacles
-from scenario_handling.scenario_tools.feature_generator import runOracles
-from scenario_handling.scenario_tools.map_info_parser import validatePath, initialize, longerTrace, generateObsDescFile, \
-    produceTrace
 import random
 import os
 import time
 import json
-
+from datetime import date
+import networkx as nx
+from config import MAGGIE_ROOT, OBS_DIR, MAX_RECORD_TIME, MAP_NAME, APOLLO_RECORDS_DIR
 from testing_approaches.interface import adc_routing_generate
-# from testing_approaches.scenorita.interface import ScenoRITA
 from testing_approaches.scenorita.run_oracles import run_oracles
 from testing_approaches.scenorita.scenoRITA_config import OBS_MIN, OBS_MAX, NP, TOTAL_LANES, ETIME, CXPB, MUTPB, ADDPB, \
     DELPB
 from deap import base, creator, tools
+from environment.cyber_env_operation import connect_bridge, cyber_env_init, delete_records
+from scenario_handling.create_scenarios import Scenario
+from scenario_handling.run_scenario import register_obstacles, send_routing_request, \
+    register_traffic_lights, stop_obstacles
+from testing_approaches.scenorita.auxiliary.feature_generator import runOracles
+from testing_approaches.scenorita.auxiliary.map_info_parser import validatePath, initialize, longerTrace, generateObsDescFile, \
+    produceTrace
 
 obs_folder = OBS_DIR + "scenorita/"
 dest = MAGGIE_ROOT + "/data/analysis"
@@ -250,7 +247,8 @@ def runScenario(deme, record_name, bridge):
 
 
 if __name__ == "__main__":
-    delete_records()
+    # delete_records()
+    delete_records(records_path=APOLLO_RECORDS_DIR, mk_dir=True)
 
     toolbox = scenoRITA_ga_init()
 

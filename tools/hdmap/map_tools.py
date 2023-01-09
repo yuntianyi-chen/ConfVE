@@ -8,7 +8,7 @@ from config import APOLLO_ROOT, MAP_NAME, MAGGIE_ROOT
 from modules.map.proto import map_pb2
 from modules.routing.proto import topo_graph_pb2
 from shapely.geometry import Point, Polygon, LineString
-import modules.tools.common.proto_utils as proto_utils
+# import modules.tools.common.proto_utils as proto_utils
 
 DEFAULT_SIM_MAP_PATH = f'{MAGGIE_ROOT}/data/maps/{MAP_NAME}/sim_map.bin'
 
@@ -389,6 +389,6 @@ def all_points_not_in_junctions(points) -> bool:
     return True
 
 
-if __name__ == "__main__":
-    load_routing_mapbin()
-    # load_mapbin()
+# if __name__ == "__main__":
+#     load_routing_mapbin()
+#     # load_mapbin()
