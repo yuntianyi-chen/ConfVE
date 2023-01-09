@@ -1,6 +1,9 @@
 import pickle
+import shutil
 from datetime import date
+from os import listdir
 
+from config import APOLLO_RECORDS_DIR, DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR, INITIAL_SCENARIO_RECORD_DIR
 
 # from config import MAGGIE_ROOT
 #
@@ -10,20 +13,8 @@ from datetime import date
 #     data = pickle.load(f)
 #     print()
 
-class AA:
-    def __init__(self):
-        self.aa = None
+a = listdir(INITIAL_SCENARIO_RECORD_DIR)
+a.sort()
 
+print()
 
-a = [123, 444, [34]]
-
-zxc = AA()
-bb=AA()
-
-zxc.aa = a
-bb.aa=a
-print(zxc.aa)
-
-a[0]="asd"
-print(zxc.aa)
-print(bb.aa)

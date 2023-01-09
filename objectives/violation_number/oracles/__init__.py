@@ -38,12 +38,7 @@ class RecordAnalyzer:
 
     def analyze(self):
         record = Record(self.record_path)
-        # messages_list=[]
         for topic, message, t in record.read_messages():
-            # if topic == "/apollo/perception/obstacles":
-            #     print()
-            # print(f"-------------------\n{topic}\n\n{message}\n\n{t}")
-            # messages_list.append((topic, message, t))
             self.oracle_manager.on_new_message(topic, message, t)
         return self.get_results()
 

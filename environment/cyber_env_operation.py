@@ -9,9 +9,12 @@ from scenario_handling.toggle_sim_control import run_sim_control
 from tools.bridge.CyberBridge import Topics, CyberBridge
 
 
-def delete_records():
-    shutil.rmtree(f"{APOLLO_ROOT}/records")
-    os.mkdir(f"{APOLLO_ROOT}/records")
+
+
+def delete_records(records_path, mk_dir):
+    shutil.rmtree(records_path)
+    if mk_dir:
+        os.mkdir(records_path)
 
 def delete_data_core():
     try:

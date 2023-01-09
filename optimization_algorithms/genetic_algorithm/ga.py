@@ -1,8 +1,7 @@
 import os
 import random
 from copy import deepcopy
-from datetime import date
-from config import GENERATION_LIMIT, INIT_POP_SIZE, SELECT_NUM_RATIO, MAGGIE_ROOT, CONFIGURATION_REVERTING
+from config import GENERATION_LIMIT, INIT_POP_SIZE, SELECT_NUM_RATIO, MAGGIE_ROOT
 from range_analysis.range_analysis import range_init
 from range_analysis.tuning_option_item import OptionTuningItem
 
@@ -50,6 +49,9 @@ class IndividualWithFitness:
         self.accumulated_objectives[1] += code_coverage
         self.accumulated_objectives[2] += execution_time
 
+        self.violation_results.append(violation_results)
+
+
     def update_violation_intro_remov(self, violation_results, scenario, scenario_count):
         for violation in violation_results:
             if violation not in scenario.original_violation_results:
@@ -76,6 +78,8 @@ class IndividualWithFitness:
 
         self.violation_intro = 0
         self.violation_remov = 0
+
+        self.violation_results = []
 
         # self.pre_value_list = []
 
@@ -123,6 +127,7 @@ def file_init(time_str):
     ind_fitness_save_file_path = f"{base_path}/ind_fitness.txt"
     option_tuning_file_path = f"{base_path}/option_tuning.txt"
     range_analysis_file_path = f"{base_path}/range_analysis.txt"
+    record_mapping_file_path = f"{base_path}/record_mapping.txt"
 
     ind_list_pickle_dump_data_path = f"{base_path}/ind_list_pickle_pop"
 
@@ -134,7 +139,15 @@ def file_init(time_str):
         print()
     with open(range_analysis_file_path, "w") as f:
         print()
-    return violation_save_file_path, ind_fitness_save_file_path, option_tuning_file_path, ind_list_pickle_dump_data_path, range_analysis_file_path
+    with open(record_mapping_file_path, "w") as f:
+        print()
+
+    # if not os.path.exists(INITIAL_SCENARIO_RECORD_DIR):
+    #     os.makedirs(INITIAL_SCENARIO_RECORD_DIR)
+    # if not os.path.exists(DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR):
+    #     os.makedirs(DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR)
+
+    return violation_save_file_path, ind_fitness_save_file_path, option_tuning_file_path, ind_list_pickle_dump_data_path, range_analysis_file_path,record_mapping_file_path
 
 
 def select(individual_list, option_obj_list):

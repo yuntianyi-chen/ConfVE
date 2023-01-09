@@ -6,15 +6,15 @@ import shutil
 import time
 from datetime import date
 from config import MODULE_NAME, FITNESS_MODE, ENABLE_CROSSOVER, CONFIGURATION_REVERTING, CONFIG_FILE_PATH, \
-    BACKUP_CONFIG_SAVE_PATH
+    BACKUP_CONFIG_SAVE_PATH, DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR, APOLLO_RECORDS_DIR, INITIAL_SCENARIO_RECORD_DIR
 from environment.cyber_env_operation import cyber_env_init, delete_records, connect_bridge, delete_data_core
 from optimization_algorithms.genetic_algorithm.ga import ga_init, crossover, select, file_init, mutation, \
     initial_mutation
 from range_analysis.range_analysis import generate_new_range
 from range_analysis.tuning_option_item import OptionTuningItem
 from scenario_handling.create_scenarios import create_scenarios
-from scenario_handling.run_scenario import run_scenarios
-from testing_approaches.interface import get_record_info_by_approach
+from scenario_handling.run_scenario import run_scenarios, check_default_running
+from testing_approaches.interface import get_record_info_by_approach, extract_routing_perception_info
 from tools.config_file_handler.parser_apollo import parser2class
 
 
@@ -27,7 +27,7 @@ def ga_main(module_config_path):
     # initial mutation
     individual_list = initial_mutation(init_individual_list, option_type_list, option_obj_list, range_list)
 
-    delete_records()
+    delete_records(records_path=APOLLO_RECORDS_DIR, mk_dir=True)
 
     start_time = time.time()
 
@@ -37,10 +37,21 @@ def ga_main(module_config_path):
     ind_list = []
 
     time_str = str(date.today())
-    violation_save_file_path, ind_fitness_save_file_path, option_tuning_file_path, ind_list_pickle_dump_data_path, range_analysis_file_path = file_init(
+    violation_save_file_path, ind_fitness_save_file_path, option_tuning_file_path, ind_list_pickle_dump_data_path, range_analysis_file_path, record_mapping_file_path = file_init(
         time_str)
 
-    pre_record_info = get_record_info_by_approach()
+    obs_perception_list, routing_request_list = extract_routing_perception_info(
+        scenario_record_dir_path=INITIAL_SCENARIO_RECORD_DIR)
+
+    print("Initial Scenario Violation Info:")
+    pre_record_info = get_record_info_by_approach(obs_perception_list, routing_request_list,
+                                                  scenario_record_dir_path=INITIAL_SCENARIO_RECORD_DIR)
+
+    check_default_running(pre_record_info, option_obj_list, violation_save_file_path, record_mapping_file_path)
+
+    print("Default Config Rerun - Initial Scenario Violation Info:")
+    pre_record_info = get_record_info_by_approach(obs_perception_list, routing_request_list,
+                                                  scenario_record_dir_path=DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR)
 
     for generation_num in range(generation_limit):
         print("-------------------------------------------------")
@@ -59,7 +70,6 @@ def ga_main(module_config_path):
 
         individual_num = 0
 
-
         for generated_individual in individual_list_after_mutate:
             print("-------------------------------------------------")
             gen_ind_id = f"Generation_{str(generation_num)}_Config_{individual_num}"
@@ -72,8 +82,10 @@ def ga_main(module_config_path):
             if generated_individual.fitness == 0:
                 generated_individual.update_id(gen_ind_id)
 
+                record_name_list = [f"{gen_ind_id}_Scenario_{str(i)}" for i in range(pre_record_info.count)]
+
                 # scenario refers to a config setting with different fixed obstacles and adc routes
-                scenario_list = create_scenarios(generated_individual, option_obj_list, gen_ind_id,
+                scenario_list = create_scenarios(generated_individual, option_obj_list, record_name_list,
                                                  pre_record_info)
 
                 # test each config settings under several groups of obstacles and adc routes
@@ -82,6 +94,7 @@ def ga_main(module_config_path):
                 generated_individual.calculate_fitness(FITNESS_MODE)
 
                 ##############
+                print(f" Vio Results: {[len(item) for item in generated_individual.violation_results]}")
                 print(f" Vio Emerged Num: {generated_individual.violation_intro}")
                 print(f" Vio Emerged Results: {generated_individual.violations_emerged_results}")
                 # print(f" Vio Removed Num: {generated_individual.violation_remov}")

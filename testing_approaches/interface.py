@@ -1,10 +1,12 @@
+import os
 import random
 import csv
+from os import listdir
 
 from cyber_record.record import Record
 from pandas import read_csv
 from config import MAP_NAME, AV_TESTING_APPROACH, OBS_GROUP_COUNT, ADC_ROUTE_PATH, \
-    USING_PRE_RECORD_DIR
+    DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR, INITIAL_SCENARIO_RECORD_DIR
 from environment.container_settings import init_settings
 from modules.perception.proto.perception_obstacle_pb2 import PerceptionObstacle
 
@@ -13,14 +15,21 @@ from objectives.violation_number.oracles import RecordAnalyzer
 from scenario_handling.scenario_tools.map_info_parser import initialize, validatePath
 from scenario_handling.scenario_tools import map_tools
 
+# RecordInfo or Generated Info
+class InitialScenarioInfo:
+    def __init__(self, is_record_file):
+        self.is_record_file = is_record_file
 
-class RecordInfo:
-    def __init__(self, obs_group_path_list, adc_routing_list, obs_perception_list, routing_request_list):
+    def update_generated_info(self, obs_group_path_list, adc_routing_list):
         self.obs_group_path_list = obs_group_path_list
         self.adc_routing_list = adc_routing_list
+        self.count = len(obs_group_path_list)
 
+    def update_record_info(self, scenario_record_file_list, obs_perception_list, routing_request_list):
+        self.scenario_record_file_list = scenario_record_file_list
         self.obs_perception_list = obs_perception_list
         self.routing_request_list = routing_request_list
+        self.count = len(scenario_record_file_list)
 
     def update_violation(self, violation_results_list, violation_num_list):
         self.violation_results_list = violation_results_list
@@ -75,7 +84,11 @@ def obs_instance(perception_obstacle):
     # obs = PerceptionObstacle(perception_obstacle)
     return obs
 
-def extract_routing_perception_info(scenario_record_file_list):
+def extract_routing_perception_info(scenario_record_dir_path):
+    scenario_recordname_list = os.listdir(scenario_record_dir_path)
+    scenario_recordname_list.sort()
+    scenario_record_file_list = [f"{scenario_record_dir_path}/{recordname}" for recordname in scenario_recordname_list]
+
     obs_perception_list = []
     routing_request_list=[]
     for scenario_record_file_path in scenario_record_file_list:
@@ -95,18 +108,20 @@ def extract_routing_perception_info(scenario_record_file_list):
     return obs_perception_list, routing_request_list
 
 # obs_perception, adc_routing, violation_results, violation_num
-def get_record_info_by_approach():
+def get_record_info_by_approach(obs_perception_list, routing_request_list, scenario_record_dir_path):
     if AV_TESTING_APPROACH == "scenoRITA":
-        obs_group_path_list = read_obstacles()
-        adc_routing_list = read_adc_routes()
+        # adc_route_csv = read_csv(ADC_ROUTE_PATH)
+        # recordname_list = adc_route_csv['RecordName'].tolist()
 
-        adc_route_csv = read_csv(ADC_ROUTE_PATH)
-        recordname_list = adc_route_csv['RecordName'].tolist()
-        scenario_record_file_list = [f"{USING_PRE_RECORD_DIR}/{i}.00000" for i in recordname_list]
+        scenario_recordname_list = listdir(scenario_record_dir_path)
+        scenario_recordname_list.sort()
+        scenario_record_file_list = [f"{scenario_record_dir_path}/{recordname}" for recordname in scenario_recordname_list]
 
-        obs_perception_list, routing_request_list = extract_routing_perception_info(scenario_record_file_list)
+        # obs_perception_list, routing_request_list = extract_routing_perception_info(scenario_record_file_list)
 
-        pre_record_info = RecordInfo(obs_group_path_list, adc_routing_list, obs_perception_list, routing_request_list)
+        pre_record_info = InitialScenarioInfo(is_record_file=True)
+
+        pre_record_info.update_record_info(scenario_record_file_list, obs_perception_list, routing_request_list)
 
         violation_results_list, violation_num_list = read_violation_num(scenario_record_file_list)
         pre_record_info.update_violation(violation_results_list, violation_num_list)
@@ -115,18 +130,9 @@ def get_record_info_by_approach():
         # Randomly generate
         obs_group_path_list = [obs_routing_generate() for i in range(OBS_GROUP_COUNT)]
         adc_routing_list = [adc_routing_generate() for i in range(OBS_GROUP_COUNT)]
-
-        adc_route_csv = read_csv(ADC_ROUTE_PATH)
-        recordname_list = adc_route_csv['RecordName'].tolist()
-        scenario_record_file_list = [f"{USING_PRE_RECORD_DIR}/{i}.00000" for i in recordname_list]
-
-        pre_record_info = RecordInfo(obs_group_path_list, adc_routing_list, scenario_record_file_list)
-        violation_results_list, violation_num_list = read_violation_num(scenario_record_file_list)
-        # violation_num_list = [None for i in range(OBS_GROUP_COUNT)]
-        pre_record_info.update_violation(violation_results_list, violation_num_list)
-
-    # adc_routing = adc_routing_generate()
-    # adc_routing_list = ["586980.86,4140959.45,587283.52,4140882.30" for i in obs_group_path_list]
+        # adc_routing_list = ["586980.86,4140959.45,587283.52,4140882.30" for i in obs_group_path_list]
+        pre_record_info = InitialScenarioInfo(is_record_file=False)
+        pre_record_info.update_generated_info(obs_group_path_list, adc_routing_list)
 
     return pre_record_info
 
@@ -142,7 +148,7 @@ def read_violation_num(file_list):
         violation_results_list.append(results)
         violation_num_list.append(len(results))
 
-    print(violation_results_list)
+        print((f"id:{i}", f"Vio Count:{len(results)}", results))
     print(violation_num_list)
     return violation_results_list, violation_num_list
 
@@ -186,7 +192,7 @@ if __name__ == '__main__':
 
     violation_num_list = []
 
-    file_list = [f"{USING_PRE_RECORD_DIR}/{i}.00000" for i in recordname_list]
+    file_list = [f"{DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR}/{i}.00000" for i in recordname_list]
     results_list = []
     for i in file_list:
         ra = RecordAnalyzer(i)

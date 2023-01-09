@@ -1,6 +1,9 @@
 -----------------------
 TO DO RIGHT NOW!!!
 -----------------------
+x. check records under default configuration first
+    to reduce non-determinism
+
 0. Distinguish violations
     rerun records instead of analyzing previous record
 

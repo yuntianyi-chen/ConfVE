@@ -1,10 +1,14 @@
+import shutil
 import time
 import subprocess
-from config import MAX_RECORD_TIME, TRAFFIC_LIGHT_MODE, SAVE_RECORD
+from config import MAX_RECORD_TIME, TRAFFIC_LIGHT_MODE, INITIAL_SCENARIO_RECORD_DIR, APOLLO_RECORDS_DIR, \
+    DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR
 from environment.container_settings import get_container_name
-from environment.cyber_env_operation import modules_operation, kill_modules
+from environment.cyber_env_operation import connect_bridge, cyber_env_init, delete_records
 from modules.routing.proto.routing_pb2 import RoutingRequest
 from objectives.measure_objectives import measure_objectives_individually
+from optimization_algorithms.genetic_algorithm.ga import generate_individuals
+from scenario_handling.create_scenarios import create_scenarios
 from scenario_handling.message_handling import MessageBroker
 from scenario_handling.traffic_light_control.TrafficControlManager import TrafficControlManager
 from tools.bridge.CyberBridge import Topics
@@ -12,10 +16,6 @@ from tools.bridge.CyberBridge import Topics
 
 def replay_scenario(record_path):
     return
-
-
-# def record_route_info():
-#     return
 
 
 def register_obstacles(obs_group_path):
@@ -27,8 +27,6 @@ def register_obstacles(obs_group_path):
 def stop_obstacles(p):
     cmd = f"docker exec -d {get_container_name()} /apollo/scripts/my_scripts/stop_obstacles.sh"
     subprocess.run(cmd.split())
-
-
 
 
 def send_routing_request(init_x, init_y, dest_x, dest_y, bridge):
@@ -58,9 +56,9 @@ def register_obstacles_by_channel(bridge, obs_perception_messages):
     mbk.start()
     return mbk
 
+
 def send_routing_request_by_channel(bridge, routing_request_message):
     bridge.publish(Topics.RoutingRequest, routing_request_message.SerializeToString())
-
 
 
 def register_traffic_lights(traffic_light_control, bridge):
@@ -82,6 +80,7 @@ def register_traffic_lights(traffic_light_control, bridge):
 def run_scenarios(generated_individual, scenario_list, bridge, violation_save_file_path):
     scenario_count = 0
 
+
     for scenario in scenario_list:
         print(f"  Scenario_{scenario_count}")
         # adc_route_raw = scenario.adc_route.split(',')
@@ -99,7 +98,6 @@ def run_scenarios(generated_individual, scenario_list, bridge, violation_save_fi
 
         # send_routing_request(init_x, init_y, dest_x, dest_y, bridge)
         send_routing_request_by_channel(bridge, scenario.routing_request_message)
-
 
         ####################
         if TRAFFIC_LIGHT_MODE:
@@ -135,3 +133,29 @@ def run_scenarios(generated_individual, scenario_list, bridge, violation_save_fi
         scenario_count += 1
 
     # return accumulated_fitness
+
+
+def check_default_running(pre_record_info, option_obj_list, violation_save_file_path, record_mapping_file_path):
+    default_individual = generate_individuals(option_obj_list, population_size=1)[0]
+
+    record_name_list = [f"default_config_Scenario_{str(i)}" for i in range(pre_record_info.count)]
+
+    output_initial_record2default_mapping(pre_record_info, record_name_list, record_mapping_file_path)
+
+    scenario_list = create_scenarios(default_individual, option_obj_list, record_name_list, pre_record_info)
+    bridge = connect_bridge()
+    cyber_env_init()
+    # test each config settings under several groups of obstacles and adc routes
+    run_scenarios(default_individual, scenario_list, bridge, violation_save_file_path)
+
+    delete_records(records_path=DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR, mk_dir=False)
+    shutil.copytree(APOLLO_RECORDS_DIR, DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR)
+
+
+def output_initial_record2default_mapping(pre_record_info, record_name_list, record_mapping_file_path):
+    for i in range(pre_record_info.count):
+        with open(record_mapping_file_path, "a") as f:
+            f.write(f"{pre_record_info.scenario_record_file_list[i]} ------ {record_name_list[i]}\n")
+
+
+

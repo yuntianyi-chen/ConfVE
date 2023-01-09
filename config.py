@@ -51,7 +51,8 @@ OBS_DIR = f"{APOLLO_ROOT}/modules/tools/perception/obstacles/{MAP_NAME}/"
 # PATH ====================================
 ADC_ROUTE_PATH = f"{MAGGIE_ROOT}/data/analysis/{AV_TESTING_APPROACH}/adc_route.csv"
 VIO_NUM_PATH = f"{MAGGIE_ROOT}/data/analysis/{AV_TESTING_APPROACH}/vio_num.csv"
-USING_PRE_RECORD_DIR = f"/home/cloudsky/Research/Apollo/Backup/{AV_TESTING_APPROACH}/records/using"
+INITIAL_SCENARIO_RECORD_DIR = f"/home/cloudsky/Research/Apollo/Backup/{AV_TESTING_APPROACH}/records/initial"
+DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR = f"/home/cloudsky/Research/Apollo/Backup/{AV_TESTING_APPROACH}/records/initial_default_rerun"
 
 
 CONFIG_FILE_PATH=f"{APOLLO_ROOT}/modules/{MODULE_NAME}/conf/{MODULE_NAME}_config.pb.txt"

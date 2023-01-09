@@ -4,7 +4,7 @@ import signal
 import glob
 import subprocess
 import time
-from config import APOLLO_ROOT, MODULE_NAME, MAGGIE_ROOT, DEFAULT_CONFIG_FILE, TRAFFIC_LIGHT_MODE
+from config import APOLLO_ROOT, MODULE_NAME, MAGGIE_ROOT, DEFAULT_CONFIG_FILE, TRAFFIC_LIGHT_MODE, AV_TESTING_APPROACH
 from environment.container_settings import get_container_name
 from scenario_handling.traffic_light_control.traffic_light_control import TCSection
 from tools.config_file_handler.translator_apollo import option_obj_translator, save2file
@@ -12,14 +12,18 @@ from tools.config_file_handler.translator_apollo import option_obj_translator, s
 
 class Scenario:
 
-    def __init__(self, obs_group_path, adc_route, record_name):
-        self.obs_group_path = obs_group_path
-        self.adc_route = adc_route
+    def __init__(self, record_name):
+        # self.obs_group_path = obs_group_path
+        # self.adc_route = adc_route
         self.record_name = record_name
 
         if TRAFFIC_LIGHT_MODE:
             self.traffic_light_control = TCSection.get_one()
         # self.tm =
+
+    def update_obs_adc(self, obs_group_path, adc_route):
+        self.obs_group_path = obs_group_path
+        self.adc_route = adc_route
 
     def update_config_file_status(self, config_file_status):
         self.config_file_status = config_file_status
@@ -76,21 +80,18 @@ def config_file_generating(generated_individual, option_obj_list, default):
 
 
 # scenario refers to different config settings with fixed obstacles and adc routing
-def create_scenarios(generated_individual, option_obj_list, gen_ind_id, pre_record_info):
-    config_file_tuned_status = config_file_generating(generated_individual, option_obj_list,
-                                                      default=DEFAULT_CONFIG_FILE)
-    record_name_list = [f"{gen_ind_id}_Scenario_{str(i)}" for i in range(len(pre_record_info.adc_routing_list))]
+def create_scenarios(generated_individual, option_obj_list, record_name_list, pre_record_info):
+    config_file_tuned_status = config_file_generating(generated_individual, option_obj_list, default=DEFAULT_CONFIG_FILE)
 
     # tm = TrafficControlManager(self.curr_scenario.tc_section)
 
     scenario_list = []
     for i in range(len(record_name_list)):
-        scenario = Scenario(pre_record_info.obs_group_path_list[i], pre_record_info.adc_routing_list[i],
-                            record_name_list[i])
+        # scenario = Scenario(pre_record_info.obs_group_path_list[i], pre_record_info.adc_routing_list[i], record_name_list[i])
+        scenario = Scenario(record_name_list[i])
         scenario.update_config_file_status(config_file_tuned_status)
-        scenario.update_original_violations(pre_record_info.violation_num_list[i],
-                                            pre_record_info.violation_results_list[i])
-        scenario.update_routing_perception_info(pre_record_info.obs_perception_list[i],
-                                                pre_record_info.routing_request_list[i])
+        if AV_TESTING_APPROACH == "scenoRITA":
+            scenario.update_original_violations(pre_record_info.violation_num_list[i], pre_record_info.violation_results_list[i])
+            scenario.update_routing_perception_info(pre_record_info.obs_perception_list[i], pre_record_info.routing_request_list[i])
         scenario_list.append(scenario)
     return scenario_list
