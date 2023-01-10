@@ -20,24 +20,58 @@ Need Discussion
 -----------------------
 TO DO RIGHT NOW!!!
 -----------------------
-0. Distinguish violations
-    violation features
+0. maps
+    AV-Fuzzer - records
+    DoppelTest - borregas_ave, san_mateo, sunnyvale_loop
+    scenoRITA - borregas_ave, san_mateo
 
+0. Traffic Lights
+    according to scenario violation types
+
+0. Refresh planning module failure
+    Under some configurations, some scenarios can successfully start, some scenarios cannot
+    In those cannot start, it didn't report planning module failure
+
+0. Range recommendation
+    How many options range changed
+
+0. Code coverage
+    significance: cover more code blocks that could reflect more option tuning.
+    otherwise, some option tunings would never influence the system
+
+1. Scenarios-diversity
+    Get as many scenarios as possible from scenario generation approaches, reduce a reasonable number of scenarios by filtering.
+    Initial Scenarios---diversity of vehicle maneuver, traffic controls, code coverage, violation types, lane coverage...
+    filtering scenarios
+        threshold - mutable size
+        ranking - get top 10
+
+1. Check and Finish the rest of violation types
+    More types
+        speeding
+        unsafe lane change
+        lane change at junction
+        (brake taps) threshold
+            some configurations run with a very low speed. Collision. How to distinguish this violation?
+    Validate current types
+        planning module failure
+            module failure - module is running. received message but module doesn't normally work
+                report bugs
+        collision
+            fail to report collision. ego car stops in line, obstacle runs over it. all modules work
+
+2. Distinguish violations
+    violation features
+        option features?
+        violation features?
     Eliminate duplicate
     similarity of duplicate	refer to scenoRITA
     clustering algorithm to eliminate duplicate at last
     Think about how to eliminate duplicate in the optimization process - comparison
 
-0. Under some configurations, some scenarios can successfully start, some scenarios cannot
-    In those cannot start, it didn't report planning module failure
 
-0. Traffic Lights
-
-1. Code coverage
-    significance: cover more code blocks that could reflect more option tuning.
-    otherwise, some option tunings would never influence the system
-
-2. Check and Finish the rest of violation types
+3. experiment
+    keep running to get valid range
 
 
 
@@ -71,8 +105,12 @@ Not so hurry
     How much time it need to take for DoppelTest to get enough good scenarios
     Test it for more hours
 8. Deep Reinforcement learning
-
-
+9. configuration definition
+    config files
+    configurations in the source code (https://github.com/ApolloAuto/apollo/issues/14550)
+10. speed up scenarios
+11. change it into "TwinTest"
+    run one scenario under default configuration, run the same scenario under changed configuration
 
 
 

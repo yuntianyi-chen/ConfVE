@@ -743,3 +743,33 @@ Generation_9_Config_34
   Violation Emergence Num: 1
   Violation: [(0, ('module', 'routing failure', 'no routing response'))]
   Range Change: 74, default_obstacle_cost, [-101, 101]->[-101, 53]
+Generation_9_Config_42
+  Option Tuning: position: 105, type:float, key: dynamic_obs_nudge_speed_ratio, pre_value: 0.8, cur_value: 1989.9
+  Violation Emergence Num: 11
+  Violation: [(0, ('module', 'routing failure', 'no routing response')), (0, ('module', 'planning failure', 'no planning message')), (1, ('module', 'planning failure', 'no planning message')), (2, ('module', 'planning failure', 'no planning message')), (3, ('module', 'planning failure', 'no planning message')), (4, ('module', 'planning failure', 'no planning message')), (5, ('module', 'planning failure', 'no planning message')), (6, ('module', 'planning failure', 'no planning message')), (7, ('module', 'planning failure', 'no planning message')), (8, ('module', 'planning failure', 'no planning message')), (9, ('module', 'planning failure', 'no planning message'))]
+  Range Change: 105, dynamic_obs_nudge_speed_ratio, [-10001, 10001]->[-10001, 1989]
+Generation_9_Config_43
+  Option Tuning: position: 173, type:float, key: ipopt_tol, pre_value: 0.0001, cur_value: -2271.8492
+  Violation Emergence Num: 1
+  Violation: [(0, ('module', 'routing failure', 'no routing response'))]
+  Range Change: 173, ipopt_tol, [-10001, 10001]->[-2271, 10001]
+Generation_9_Config_44
+  Option Tuning: position: 182, type:boolean, key: enable_initial_final_check, pre_value: false, cur_value: true
+  Violation Emergence Num: 1
+  Violation: [(0, ('module', 'routing failure', 'no routing response'))]
+  Range Change: 182, enable_initial_final_check, ['true', 'false']->['true', 'false']
+Generation_9_Config_47
+  Option Tuning: position: 272, type:boolean, key: reuse_path, pre_value: false, cur_value: true
+  Violation Emergence Num: 1
+  Violation: [(9, ('comfort', 'Deceleration exceeded max'))]
+  Range Change: 272, reuse_path, ['true', 'false']->['true', 'false']
+Generation_9_Config_49
+  Option Tuning: position: 211, type:float, key: collision_decrease_ratio, pre_value: 0.0, cur_value: -1876.7
+  Violation Emergence Num: 2
+  Violation: [(0, ('comfort', 'Deceleration exceeded max')), (9, ('comfort', 'Deceleration exceeded max'))]
+  Range Change: 211, collision_decrease_ratio, [-10001, 10001]->[-1876, 10001]
+Generation_9_Config_51
+  Option Tuning: position: 112, type:float, key: static_obs_nudge_speed_ratio, pre_value: 0.6, cur_value: 9706.0
+  Violation Emergence Num: 1
+  Violation: [(9, ('comfort', 'Deceleration exceeded max'))]
+  Range Change: 112, static_obs_nudge_speed_ratio, [-5801, 10001]->[-5801, 9706]

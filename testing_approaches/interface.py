@@ -120,21 +120,15 @@ def get_record_info_by_approach(obs_perception_list, routing_request_list, scena
     if AV_TESTING_APPROACH == "scenoRITA":
         # adc_route_csv = read_csv(ADC_ROUTE_PATH)
         # recordname_list = adc_route_csv['RecordName'].tolist()
-
         scenario_recordname_list = listdir(scenario_record_dir_path)
         scenario_recordname_list.sort()
         scenario_record_file_list = [f"{scenario_record_dir_path}/{recordname}" for recordname in
                                      scenario_recordname_list]
-
         # obs_perception_list, routing_request_list = extract_routing_perception_info(scenario_record_file_list)
-
         pre_record_info = InitialScenarioInfo(is_record_file=True)
-
         pre_record_info.update_record_info(scenario_record_file_list, obs_perception_list, routing_request_list)
-
         violation_results_list, violation_num_list = read_violation_num(scenario_record_file_list)
         pre_record_info.update_violation(violation_results_list, violation_num_list)
-
     else:
         # Randomly generate
         obs_group_path_list = [obs_routing_generate() for i in range(OBS_GROUP_COUNT)]
@@ -142,13 +136,11 @@ def get_record_info_by_approach(obs_perception_list, routing_request_list, scena
         # adc_routing_list = ["586980.86,4140959.45,587283.52,4140882.30" for i in obs_group_path_list]
         pre_record_info = InitialScenarioInfo(is_record_file=False)
         pre_record_info.update_generated_info(obs_group_path_list, adc_routing_list)
-
     return pre_record_info
 
 
 def read_violation_num(file_list):
     violation_num_list = []
-
     violation_results_list = []
     for i in file_list:
         ra = RecordAnalyzer(i)
@@ -156,7 +148,6 @@ def read_violation_num(file_list):
         # print(f"      Violation Results: {results}")
         violation_results_list.append(results)
         violation_num_list.append(len(results))
-
         print((f"id:{i}", f"Vio Count:{len(results)}", results))
     print(violation_num_list)
     return violation_results_list, violation_num_list

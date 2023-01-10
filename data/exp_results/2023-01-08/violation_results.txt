@@ -7202,3 +7202,179 @@ Violation Results: [('collision', 22132), ('comfort', 'Deceleration exceeded max
   /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_38_Scenario_7.00000
 Violation Results: [('comfort', 'Deceleration exceeded max')]
   /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_38_Scenario_8.00000
+Violation Results: [('collision', 16488)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_39_Scenario_0.00000
+Violation Results: [('collision', 11294)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_39_Scenario_4.00000
+Violation Results: [('collision', 4471)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_39_Scenario_6.00000
+Violation Results: [('collision', 22132)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_39_Scenario_7.00000
+Violation Results: [('collision', 16488)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_40_Scenario_0.00000
+Violation Results: [('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_40_Scenario_1.00000
+Violation Results: [('collision', 11294), ('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_40_Scenario_4.00000
+Violation Results: [('collision', 4471), ('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_40_Scenario_6.00000
+Violation Results: [('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_40_Scenario_8.00000
+Violation Results: [('collision', 16488)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_41_Scenario_0.00000
+Violation Results: [('collision', 11294)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_41_Scenario_4.00000
+Violation Results: [('collision', 4471)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_41_Scenario_6.00000
+Violation Results: [('collision', 22132)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_41_Scenario_7.00000
+Violation Results: [('module', 'routing failure', 'no routing response'), ('module', 'planning failure', 'no planning message')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_42_Scenario_0.00000
+Violation Results: [('module', 'planning failure', 'no planning message')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_42_Scenario_1.00000
+Violation Results: [('module', 'planning failure', 'no planning message')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_42_Scenario_2.00000
+Violation Results: [('module', 'planning failure', 'no planning message')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_42_Scenario_3.00000
+Violation Results: [('module', 'planning failure', 'no planning message')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_42_Scenario_4.00000
+Violation Results: [('module', 'planning failure', 'no planning message')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_42_Scenario_5.00000
+Violation Results: [('module', 'planning failure', 'no planning message')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_42_Scenario_6.00000
+Violation Results: [('module', 'planning failure', 'no planning message')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_42_Scenario_7.00000
+Violation Results: [('module', 'planning failure', 'no planning message')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_42_Scenario_8.00000
+Violation Results: [('module', 'planning failure', 'no planning message')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_42_Scenario_9.00000
+Violation Results: [('collision', 16488), ('module', 'routing failure', 'no routing response')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_43_Scenario_0.00000
+Violation Results: [('collision', 11294)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_43_Scenario_4.00000
+Violation Results: [('collision', 4471)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_43_Scenario_6.00000
+Violation Results: [('collision', 22132)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_43_Scenario_7.00000
+Violation Results: [('collision', 16488), ('module', 'routing failure', 'no routing response')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_44_Scenario_0.00000
+Violation Results: [('collision', 11294)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_44_Scenario_4.00000
+Violation Results: [('collision', 4471)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_44_Scenario_6.00000
+Violation Results: [('collision', 22132)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_44_Scenario_7.00000
+Violation Results: [('collision', 16488)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_45_Scenario_0.00000
+Violation Results: [('collision', 11294)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_45_Scenario_4.00000
+Violation Results: [('collision', 4471)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_45_Scenario_6.00000
+Violation Results: [('collision', 22132)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_45_Scenario_7.00000
+Violation Results: [('collision', 16488)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_46_Scenario_0.00000
+Violation Results: [('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_46_Scenario_2.00000
+Violation Results: [('collision', 7246)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_46_Scenario_3.00000
+Violation Results: [('collision', 11294), ('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_46_Scenario_4.00000
+Violation Results: [('collision', 4471), ('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_46_Scenario_6.00000
+Violation Results: [('collision', 22132), ('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_46_Scenario_7.00000
+Violation Results: [('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_46_Scenario_8.00000
+Violation Results: [('collision', 16488)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_47_Scenario_0.00000
+Violation Results: [('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_47_Scenario_1.00000
+Violation Results: [('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_47_Scenario_2.00000
+Violation Results: [('collision', 7246)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_47_Scenario_3.00000
+Violation Results: [('collision', 11294), ('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_47_Scenario_4.00000
+Violation Results: [('collision', 4471), ('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_47_Scenario_6.00000
+Violation Results: [('collision', 22132), ('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_47_Scenario_7.00000
+Violation Results: [('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_47_Scenario_8.00000
+Violation Results: [('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_47_Scenario_9.00000
+Violation Results: [('collision', 16488)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_48_Scenario_0.00000
+Violation Results: [('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_48_Scenario_1.00000
+Violation Results: [('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_48_Scenario_2.00000
+Violation Results: [('collision', 7246)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_48_Scenario_3.00000
+Violation Results: [('collision', 11294), ('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_48_Scenario_4.00000
+Violation Results: [('collision', 4471), ('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_48_Scenario_6.00000
+Violation Results: [('collision', 22132), ('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_48_Scenario_7.00000
+Violation Results: [('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_48_Scenario_8.00000
+Violation Results: [('collision', 16488), ('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_49_Scenario_0.00000
+Violation Results: [('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_49_Scenario_1.00000
+Violation Results: [('collision', 7246)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_49_Scenario_3.00000
+Violation Results: [('collision', 11294), ('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_49_Scenario_4.00000
+Violation Results: [('collision', 4471), ('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_49_Scenario_6.00000
+Violation Results: [('collision', 22132), ('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_49_Scenario_7.00000
+Violation Results: [('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_49_Scenario_8.00000
+Violation Results: [('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_49_Scenario_9.00000
+Violation Results: [('collision', 16488)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_50_Scenario_0.00000
+Violation Results: [('collision', 11294)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_50_Scenario_4.00000
+Violation Results: [('collision', 4471)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_50_Scenario_6.00000
+Violation Results: [('collision', 22132)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_50_Scenario_7.00000
+Violation Results: [('collision', 16488)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_51_Scenario_0.00000
+Violation Results: [('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_51_Scenario_1.00000
+Violation Results: [('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_51_Scenario_2.00000
+Violation Results: [('collision', 7246)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_51_Scenario_3.00000
+Violation Results: [('collision', 11294), ('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_51_Scenario_4.00000
+Violation Results: [('collision', 4471), ('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_51_Scenario_6.00000
+Violation Results: [('collision', 22132), ('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_51_Scenario_7.00000
+Violation Results: [('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_51_Scenario_8.00000
+Violation Results: [('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_51_Scenario_9.00000
+Violation Results: [('collision', 16488)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_52_Scenario_0.00000
+Violation Results: [('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_52_Scenario_1.00000
+Violation Results: [('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_52_Scenario_2.00000
+Violation Results: [('collision', 7246)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_52_Scenario_3.00000
+Violation Results: [('collision', 11294), ('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_52_Scenario_4.00000
+Violation Results: [('collision', 4471), ('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_52_Scenario_6.00000
+Violation Results: [('collision', 22132), ('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_52_Scenario_7.00000
+Violation Results: [('comfort', 'Deceleration exceeded max')]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/Generation_9_Config_52_Scenario_8.00000

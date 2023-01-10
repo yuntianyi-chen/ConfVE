@@ -28,7 +28,7 @@ class RecordAnalyzer:
             ComfortOracle(),
             StopSignOracle(),
             TrafficSignalOracle(),
-            UUStopOracle(),
+            # UUStopOracle(),
 
             # PlanningCrashOracle(),
             # UnsafeLaneChangeOracle(),

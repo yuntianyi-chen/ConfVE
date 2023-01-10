@@ -2,8 +2,10 @@ Configuration Testing:
 1. Record Info: No routing request but have routing response
 2. replay records cannot reflect the configuration changes
 3. The image of Dreamview is static after running many scenarios (Maybe bridge is disconnected?) (Restart the dreamview to fix this, maybe not the bridge issue)
-
-
+4. cyber recorder
+    record files need to extract obstacles, ego car routing waypoints, traffic light signal
+    cyber records no routing_request. Cannot play routing request. Can play perception.
+    It seems cyber play just replays information, but not reload new configurations. You don't even have to launch modules.
 
 ----------
 scenoRITA:

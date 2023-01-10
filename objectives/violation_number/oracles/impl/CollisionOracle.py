@@ -50,12 +50,14 @@ class CollisionOracle(OracleInterface):
             self.distances.append((adc_polygon.distance(obs_polygon), obs.id))
 
     def is_adc_completely_stopped(self) -> bool:
-        adc_pose = self.last_localization.pose
-        adc_velocity = calculate_velocity(adc_pose.linear_velocity)
-
-        # https://github.com/ApolloAuto/apollo/blob/0789b7ea1e1356dde444452ab21b51854781e304/modules/planning/scenarios/stop_sign/unprotected/stage_pre_stop.cc#L237
-        # return adc_velocity <= self.MAX_ABS_SPEED_WHEN_STOPPED
-        return adc_velocity == 0
+        return False
+        #
+        # adc_pose = self.last_localization.pose
+        # adc_velocity = calculate_velocity(adc_pose.linear_velocity)
+        #
+        # # https://github.com/ApolloAuto/apollo/blob/0789b7ea1e1356dde444452ab21b51854781e304/modules/planning/scenarios/stop_sign/unprotected/stage_pre_stop.cc#L237
+        # # return adc_velocity <= self.MAX_ABS_SPEED_WHEN_STOPPED
+        # return adc_velocity == 0
 
     def get_result(self):
         result = list()

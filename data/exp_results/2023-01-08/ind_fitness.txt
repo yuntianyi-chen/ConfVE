@@ -138,3 +138,7 @@ Generation_7_Config_29
   Vio Intro: 11
   Vio Remov: 11
   Fitness(mode: intro): 11
+Generation_9_Config_42
+  Vio Intro: 11
+  Vio Remov: 11
+  Fitness(mode: intro): 11
