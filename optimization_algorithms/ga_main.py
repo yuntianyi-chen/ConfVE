@@ -4,6 +4,7 @@ import pickle
 import random
 import shutil
 import time
+from copy import deepcopy
 from datetime import date
 from config import MODULE_NAME, FITNESS_MODE, ENABLE_CROSSOVER, CONFIGURATION_REVERTING, CONFIG_FILE_PATH, \
     BACKUP_CONFIG_SAVE_PATH, DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR, APOLLO_RECORDS_DIR, INITIAL_SCENARIO_RECORD_DIR
@@ -13,9 +14,19 @@ from optimization_algorithms.genetic_algorithm.ga import ga_init, crossover, sel
 from range_analysis.range_analysis import generate_new_range
 from range_analysis.tuning_option_item import OptionTuningItem
 from scenario_handling.create_scenarios import create_scenarios
+from scenario_handling.message_handling import MessageBroker
 from scenario_handling.run_scenario import run_scenarios, check_default_running
-from testing_approaches.interface import get_record_info_by_approach, extract_routing_perception_info
-from tools.config_file_handler.parser_apollo import parser2class
+from testing_approaches.interface import get_record_info_by_approach, extract_record_info
+from tools.script.config_file_handler.parser_apollo import parser2class
+
+
+# from tools.config_file_handler.parser_apollo import parser2class
+
+
+class GARunner:
+
+    def __init__(self):
+        return
 
 
 def ga_main(module_config_path):
@@ -24,12 +35,18 @@ def ga_main(module_config_path):
     init_individual_list, generation_limit, option_type_list, range_list, default_option_value_list = ga_init(
         option_obj_list)
 
+    original_range_list = deepcopy(range_list)
+
     # initial mutation
     individual_list = initial_mutation(init_individual_list, option_type_list, option_obj_list, range_list)
 
     delete_records(records_path=APOLLO_RECORDS_DIR, mk_dir=True)
 
     start_time = time.time()
+
+    bridge = connect_bridge()
+    message_broker = MessageBroker(bridge)
+
 
     # obstacle_chromosomes_list = init_obs()
 
@@ -40,17 +57,16 @@ def ga_main(module_config_path):
     violation_save_file_path, ind_fitness_save_file_path, option_tuning_file_path, ind_list_pickle_dump_data_path, range_analysis_file_path, record_mapping_file_path = file_init(
         time_str)
 
-    obs_perception_list, routing_request_list = extract_routing_perception_info(
-        scenario_record_dir_path=INITIAL_SCENARIO_RECORD_DIR)
+    obs_perception_list, routing_request_list, traffic_lights_list = extract_record_info(scenario_record_dir_path=INITIAL_SCENARIO_RECORD_DIR)
 
     print("Initial Scenario Violation Info:")
-    pre_record_info = get_record_info_by_approach(obs_perception_list, routing_request_list,
+    pre_record_info = get_record_info_by_approach(obs_perception_list, routing_request_list, traffic_lights_list,
                                                   scenario_record_dir_path=INITIAL_SCENARIO_RECORD_DIR)
 
-    check_default_running(pre_record_info, option_obj_list, violation_save_file_path, record_mapping_file_path)
+    check_default_running(pre_record_info, option_obj_list, violation_save_file_path, record_mapping_file_path, message_broker)
 
     print("Default Config Rerun - Initial Scenario Violation Info:")
-    pre_record_info = get_record_info_by_approach(obs_perception_list, routing_request_list,
+    pre_record_info = get_record_info_by_approach(obs_perception_list, routing_request_list, traffic_lights_list,
                                                   scenario_record_dir_path=DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR)
 
     for generation_num in range(generation_limit):
@@ -58,7 +74,7 @@ def ga_main(module_config_path):
         print(f"Generation_{generation_num}")
         print("-------------------------------------------------")
         # cyber_env_init()
-        bridge = connect_bridge()
+        # bridge = connect_bridge()
         delete_data_core()
 
         if ENABLE_CROSSOVER:
@@ -75,7 +91,7 @@ def ga_main(module_config_path):
             gen_ind_id = f"Generation_{str(generation_num)}_Config_{individual_num}"
             print(gen_ind_id)
 
-            report_tuning_situation(generated_individual.value_list, default_option_value_list, option_obj_list)
+            option_tuning_str= report_tuning_situation(generated_individual.value_list, default_option_value_list, option_obj_list)
 
             # Restart cyber_env to fix the image static bug here
             cyber_env_init()
@@ -89,7 +105,7 @@ def ga_main(module_config_path):
                                                  pre_record_info)
 
                 # test each config settings under several groups of obstacles and adc routes
-                run_scenarios(generated_individual, scenario_list, bridge, violation_save_file_path)
+                run_scenarios(generated_individual, scenario_list, violation_save_file_path, message_broker)
 
                 generated_individual.calculate_fitness(FITNESS_MODE)
 
@@ -112,9 +128,17 @@ def ga_main(module_config_path):
                         f.write(f"  Vio Remov: {generated_individual.violation_remov}\n")
                         f.write(f"  Fitness(mode: {FITNESS_MODE}): {generated_individual.fitness}\n")
                     optimal_fitness = generated_individual.fitness
-                else:
-                    for scenario in scenario_list:
+                # else:
+                #     for scenario in scenario_list:
+                #         scenario.delete_record()
+
+                # save/delete records
+                for scenario in scenario_list:
+                    if scenario.has_emerged_violations:
+                        scenario.save_record(time_str)
+                    else:
                         scenario.delete_record()
+
 
                 if generated_individual.violation_intro > 0:
                     if generated_individual.option_tuning_tracking_list:
@@ -125,7 +149,8 @@ def ga_main(module_config_path):
                     # report option tuning
                     with open(option_tuning_file_path, "a") as f:
                         f.write(f"{gen_ind_id}\n")
-                        f.write(f"  Option Tuning: {option_tuning_item}\n")
+                        f.write(f"  Total Option Tuning:\n    {option_tuning_str}")
+                        f.write(f"  Current Option Tuning: {option_tuning_item}\n")
                         f.write(f"  Violation Emergence Num: {len(generated_individual.violations_emerged_results)}\n")
                         f.write(f"  Violation: {generated_individual.violations_emerged_results}\n")
 
@@ -157,7 +182,7 @@ def ga_main(module_config_path):
         individual_list = select(individual_list_after_mutate, option_obj_list)
 
         # output range analysis every generation
-        update_range_analysis_file(option_obj_list, range_list, range_analysis_file_path, generation_num)
+        update_range_analysis_file(option_obj_list, original_range_list, range_list, range_analysis_file_path, generation_num)
 
     end_time = time.time()
     print("Time cost: " + str((end_time - start_time) / 3600) + " hours")
@@ -167,23 +192,32 @@ def ga_main(module_config_path):
         pickle.dump(ind_list, f, protocol=4)
 
 
-def update_range_analysis_file(option_obj_list, range_list, range_analysis_file_path, generation_num):
-    with open(range_analysis_file_path, "a") as f:
+def update_range_analysis_file(option_obj_list, original_range_list, range_list, range_analysis_file_path, generation_num):
+    with open(range_analysis_file_path, "w") as f:
+        diff_count = 0
         f.write(f"Generation: {generation_num}\n\n")
         for i in range(len(option_obj_list)):
+            if original_range_list[i] != range_list[i]:
+                diff_count+=1
             f.write(
                 f"Option (default): {option_obj_list[i].option_id}, {option_obj_list[i].option_type}, {option_obj_list[i].option_key}, {option_obj_list[i].option_value}\n")
             f.write(f"  Range: {range_list[i]}\n")
+        f.write(f"  Num of changed ranges: {diff_count}\n")
+
 
 
 def report_tuning_situation(cur_value_list, default_value_list, option_obj_list):
-    # diff_list = []
+    option_tuning_str = ""
     print("Report Tuning...")
     for i in range(len(default_value_list)):
         if cur_value_list[i] != default_value_list[i]:
             option_obj = option_obj_list[i]
             # diff_list.append()
-            print(f"  {option_obj.option_id}, {option_obj.option_key}, {default_value_list[i]}->{cur_value_list[i]}")
+            option_tuning_str += f"    {option_obj.option_id}, {option_obj.option_key}, {default_value_list[i]}->{cur_value_list[i]}\n"
+            # option_tuning_str_list.append(option_tuning_str)
+    print(option_tuning_str)
+    return option_tuning_str
+
 
 
 if __name__ == '__main__':

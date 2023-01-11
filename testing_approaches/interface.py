@@ -9,6 +9,8 @@ from config import MAP_NAME, AV_TESTING_APPROACH, OBS_GROUP_COUNT, ADC_ROUTE_PAT
 from environment.container_settings import init_settings
 from modules.perception.proto.perception_obstacle_pb2 import PerceptionObstacle
 from modules.common.proto.geometry_pb2 import Point3D
+
+from modules.perception.proto.traffic_light_detection_pb2 import TrafficLightDetection, TrafficLight
 from objectives.violation_number.oracles import RecordAnalyzer
 from testing_approaches.scenorita.auxiliary.map_info_parser import initialize, validatePath
 # from scenario_handling.scenario_tools.map_info_parser import initialize, validatePath
@@ -28,10 +30,11 @@ class InitialScenarioInfo:
         self.adc_routing_list = adc_routing_list
         self.count = len(obs_group_path_list)
 
-    def update_record_info(self, scenario_record_file_list, obs_perception_list, routing_request_list):
+    def update_record_info(self, scenario_record_file_list, obs_perception_list, routing_request_list, traffic_lights_list):
         self.scenario_record_file_list = scenario_record_file_list
         self.obs_perception_list = obs_perception_list
         self.routing_request_list = routing_request_list
+        self.traffic_lights_list= traffic_lights_list
         self.count = len(scenario_record_file_list)
 
     def update_violation(self, violation_results_list, violation_num_list):
@@ -91,42 +94,85 @@ def obs_instance(perception_obstacle):
     return obs
 
 
-def extract_routing_perception_info(scenario_record_dir_path):
+def traffic_instance(traffic_light):
+    # tld = TrafficLightDetection()
+    # tld.header.timestamp_sec = time()
+    # tld.header.module_name = "MAGGIE"
+    # tld.header.sequence_num = self.sequence_num
+    # self.sequence_num += 1
+    tl=TrafficLight(
+        color=  traffic_light.color,
+        id = traffic_light.id,
+        confidence = traffic_light.confidence
+    )
+    # for k in config:
+    #     tl = tld.traffic_light.add()
+    #     tl.id = k
+    #     tl.confidence = 1
+    #
+    #     if config[k] == 'GREEN':
+    #         tl.color = TrafficLight.GREEN
+    #     elif config[k] == 'YELLOW':
+    #         tl.color = TrafficLight.YELLOW
+    #     else:
+    #         tl.color = TrafficLight.RED
+
+    # return tld
+
+    return tl
+
+def extract_record_info(scenario_record_dir_path):
     scenario_recordname_list = os.listdir(scenario_record_dir_path)
     scenario_recordname_list.sort()
     scenario_record_file_list = [f"{scenario_record_dir_path}/{recordname}" for recordname in scenario_recordname_list]
 
     obs_perception_list = []
     routing_request_list = []
+    traffic_lights_list = []
     for scenario_record_file_path in scenario_record_file_list:
         record = Record(scenario_record_file_path)
-        temp_list = []
+        obs_temp_list = []
+        traffic_temp_list=[]
         for topic, message, t in record.read_messages():
             if topic == "/apollo/perception/obstacles":
                 perception_obstacles = list(message.perception_obstacle)
                 obs_instance_list = [obs_instance(perception_obstacle) for perception_obstacle in perception_obstacles]
                 # temp_list.append((message.header.sequence_num, perception_obstacle))
-                temp_list.append(obs_instance_list)
+                obs_temp_list.append(obs_instance_list)
             elif topic == "/apollo/routing_response":
-                if message.routing_request.header.module_name == "routing routing...":
+                if AV_TESTING_APPROACH == "scenoRITA":
+                    routing_message_module_name = "routing routing..."
+                elif AV_TESTING_APPROACH == "DoppelTest":
+                    routing_message_module_name = "MAGGIE"
+                else:
+                    routing_message_module_name = ""
+                # if message.routing_request.header.module_name == "routing routing...":
+                if message.routing_request.header.module_name == routing_message_module_name:
                     routing_request = message.routing_request
                     routing_request_list.append(routing_request)
-        obs_perception_list.append(temp_list)
-    return obs_perception_list, routing_request_list
+            elif topic == "/apollo/perception/traffic_light":
+                traffic_lights = list(message.traffic_light)
+                traffic_instance_list = [traffic_instance(traffic_light) for traffic_light in traffic_lights]
+                # temp_list.append((message.header.sequence_num, perception_obstacle))
+                traffic_temp_list.append(traffic_instance_list)
+
+        obs_perception_list.append(obs_temp_list)
+        traffic_lights_list.append(traffic_temp_list)
+
+    return obs_perception_list, routing_request_list, traffic_lights_list
 
 
 # obs_perception, adc_routing, violation_results, violation_num
-def get_record_info_by_approach(obs_perception_list, routing_request_list, scenario_record_dir_path):
-    if AV_TESTING_APPROACH == "scenoRITA":
-        # adc_route_csv = read_csv(ADC_ROUTE_PATH)
-        # recordname_list = adc_route_csv['RecordName'].tolist()
+def get_record_info_by_approach(obs_perception_list, routing_request_list, traffic_lights_list, scenario_record_dir_path):
+    if AV_TESTING_APPROACH != "Random":
+        # if AV_TESTING_APPROACH == "scenoRITA":
         scenario_recordname_list = listdir(scenario_record_dir_path)
         scenario_recordname_list.sort()
         scenario_record_file_list = [f"{scenario_record_dir_path}/{recordname}" for recordname in
                                      scenario_recordname_list]
         # obs_perception_list, routing_request_list = extract_routing_perception_info(scenario_record_file_list)
         pre_record_info = InitialScenarioInfo(is_record_file=True)
-        pre_record_info.update_record_info(scenario_record_file_list, obs_perception_list, routing_request_list)
+        pre_record_info.update_record_info(scenario_record_file_list, obs_perception_list, routing_request_list, traffic_lights_list)
         violation_results_list, violation_num_list = read_violation_num(scenario_record_file_list)
         pre_record_info.update_violation(violation_results_list, violation_num_list)
     else:

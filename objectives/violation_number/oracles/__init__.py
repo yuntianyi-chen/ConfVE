@@ -4,8 +4,10 @@ from objectives.violation_number.oracles.OracleManager import OracleManager
 from objectives.violation_number.oracles.impl.CollisionOracle import CollisionOracle
 from objectives.violation_number.oracles.impl.ComfortOracle import ComfortOracle
 from objectives.violation_number.oracles.impl.EStopOracle import EStopOracle
+from objectives.violation_number.oracles.impl.JunctionLaneChangeOracle import JunctionLaneChangeOracle
 from objectives.violation_number.oracles.impl.ModuleOracle import ModuleOracle
 from objectives.violation_number.oracles.impl.PlanningCrashOracle import PlanningCrashOracle
+from objectives.violation_number.oracles.impl.SpeedingOracle import SpeedingOracle
 from objectives.violation_number.oracles.impl.StopSignOracle import StopSignOracle
 from objectives.violation_number.oracles.impl.TrafficSignalOracle import TrafficSignalOracle
 from objectives.violation_number.oracles.impl.UUStopOracle import UUStopOracle
@@ -28,10 +30,12 @@ class RecordAnalyzer:
             ComfortOracle(),
             StopSignOracle(),
             TrafficSignalOracle(),
-            # UUStopOracle(),
+            UUStopOracle(),
+            SpeedingOracle(),
+            JunctionLaneChangeOracle(),
 
             # PlanningCrashOracle(),
-            # UnsafeLaneChangeOracle(),
+            # UnsafeLaneChangeOracle()
         ]
         for o in oracles:
             self.oracle_manager.register_oracle(o)

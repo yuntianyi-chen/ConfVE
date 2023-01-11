@@ -51,33 +51,26 @@ def send_routing_request(init_x, init_y, dest_x, dest_y, bridge):
     bridge.publish(Topics.RoutingRequest, routing_request.SerializeToString())
 
 
-def register_obstacles_by_channel(bridge, obs_perception_messages):
-    mbk = MessageBroker(bridge, obs_perception_messages)
-    mbk.start()
-    return mbk
+def register_obstacles_by_channel(message_broker, obs_perception_messages):
+    message_broker.update_obs_msg(obs_perception_messages)
+    # mbk = MessageBroker(obs_perception_messages)
+    message_broker.obs_start()
+
+def register_traffic_lights_by_channel(message_broker, traffic_control):
+    message_broker.update_traffic_msg(traffic_control)
+    # message_broker.register_traffic_lights(scenario.traffic_control_manager)
+    # mbk = MessageBroker(obs_perception_messages)
+    message_broker.traffic_lights_start()
 
 
 def send_routing_request_by_channel(bridge, routing_request_message):
     bridge.publish(Topics.RoutingRequest, routing_request_message.SerializeToString())
 
 
-def register_traffic_lights(traffic_light_control, bridge):
-    tm = TrafficControlManager(traffic_light_control)
-    runner_time = 0
-    while (True):
-        # Publish TrafficLight
-        tld = tm.get_traffic_configuration(runner_time / 1000)
-        bridge.publish(Topics.TrafficLight, tld.SerializeToString())
-
-        # Check if scenario exceeded upper limit
-        if runner_time / 1000 >= MAX_RECORD_TIME:
-            break
-
-        time.sleep(0.1)
-        runner_time += 100
 
 
-def run_scenarios(generated_individual, scenario_list, bridge, violation_save_file_path):
+
+def run_scenarios(generated_individual, scenario_list, violation_save_file_path, message_broker):
     scenario_count = 0
 
 
@@ -94,17 +87,21 @@ def run_scenarios(generated_individual, scenario_list, bridge, violation_save_fi
 
         # p = register_obstacles(scenario.obs_group_path)
 
-        mbk = register_obstacles_by_channel(bridge, scenario.obs_perception_messages)
+        register_obstacles_by_channel(message_broker, scenario.obs_perception_messages)
+
+        if TRAFFIC_LIGHT_MODE == "read":
+            register_traffic_lights_by_channel(message_broker, scenario.traffic_control_msg)
+        elif TRAFFIC_LIGHT_MODE == "random":
+            register_traffic_lights_by_channel(message_broker, scenario.traffic_control_manager)
 
         # send_routing_request(init_x, init_y, dest_x, dest_y, bridge)
-        send_routing_request_by_channel(bridge, scenario.routing_request_message)
+        send_routing_request_by_channel(message_broker.bridge, scenario.routing_request_message)
 
         ####################
-        if TRAFFIC_LIGHT_MODE:
-            register_traffic_lights(scenario.traffic_light_control, bridge)
-        else:
+
+        # else:
             # Wait for record time
-            time.sleep(MAX_RECORD_TIME)
+        time.sleep(MAX_RECORD_TIME)
 
         ####################
 
@@ -114,8 +111,11 @@ def run_scenarios(generated_individual, scenario_list, bridge, violation_save_fi
 
         # scenario.stop_subprocess(p)
         # stop_obstacles(p)
-        mbk.stop()
+        # print("    Stop Obs...")
+        message_broker.obs_stop()
+        message_broker.traffic_lights_stop()
 
+        # print("    Measure objectives...")
         violation_results, code_coverage, execution_time = measure_objectives_individually(scenario,
                                                                                            violation_save_file_path)
         # scenario.calculate_fitness(violation_number, code_coverage, execution_time)
@@ -123,6 +123,12 @@ def run_scenarios(generated_individual, scenario_list, bridge, violation_save_fi
         # fitness = calculate_fitness(violation_number, code_coverage, execution_time)
         generated_individual.update_accumulated_objectives(violation_results, code_coverage, execution_time)
         generated_individual.update_violation_intro_remov(violation_results, scenario, scenario_count)
+
+        # if len(generated_individual.violations_emerged_results[-1]) == 0:
+        #     scenario.delete_record()
+        # else:
+        #     scenario.save_record()
+
 
         # if SAVE_RECORD == True:
         #     if len(violation_results) == 0:
@@ -135,7 +141,7 @@ def run_scenarios(generated_individual, scenario_list, bridge, violation_save_fi
     # return accumulated_fitness
 
 
-def check_default_running(pre_record_info, option_obj_list, violation_save_file_path, record_mapping_file_path):
+def check_default_running(pre_record_info, option_obj_list, violation_save_file_path, record_mapping_file_path, message_broker):
     default_individual = generate_individuals(option_obj_list, population_size=1)[0]
 
     record_name_list = [f"default_config_Scenario_{str(i)}" for i in range(pre_record_info.count)]
@@ -143,10 +149,9 @@ def check_default_running(pre_record_info, option_obj_list, violation_save_file_
     output_initial_record2default_mapping(pre_record_info, record_name_list, record_mapping_file_path)
 
     scenario_list = create_scenarios(default_individual, option_obj_list, record_name_list, pre_record_info)
-    bridge = connect_bridge()
     cyber_env_init()
     # test each config settings under several groups of obstacles and adc routes
-    run_scenarios(default_individual, scenario_list, bridge, violation_save_file_path)
+    run_scenarios(default_individual, scenario_list, violation_save_file_path, message_broker)
 
     delete_records(records_path=DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR, mk_dir=False)
     shutil.copytree(APOLLO_RECORDS_DIR, DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR)

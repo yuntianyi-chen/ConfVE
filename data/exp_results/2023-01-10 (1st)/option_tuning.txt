@@ -1,0 +1,64 @@
+Generation_0_Config_8
+  Option Tuning: position: 205, type:boolean, key: warm_start, pre_value: true, cur_value: false
+  Violation Emergence Num: 10
+  Violation: [(0, ('module', 'planning failure', 'no planning message')), (1, ('module', 'planning failure', 'no planning message')), (2, ('module', 'planning failure', 'no planning message')), (3, ('module', 'planning failure', 'no planning message')), (4, ('module', 'planning failure', 'no planning message')), (5, ('module', 'planning failure', 'no planning message')), (6, ('module', 'planning failure', 'no planning message')), (7, ('module', 'planning failure', 'no planning message')), (8, ('module', 'planning failure', 'no planning message')), (9, ('module', 'planning failure', 'no planning message'))]
+  Range Change: 205, warm_start, ['true', 'false']->['true', 'false']
+Generation_0_Config_11
+  Option Tuning: crossover
+  Violation Emergence Num: 10
+  Violation: [(0, ('module', 'planning failure', 'no planning message')), (1, ('module', 'planning failure', 'no planning message')), (2, ('module', 'planning failure', 'no planning message')), (3, ('module', 'planning failure', 'no planning message')), (4, ('module', 'planning failure', 'no planning message')), (5, ('module', 'planning failure', 'no planning message')), (6, ('module', 'planning failure', 'no planning message')), (7, ('module', 'planning failure', 'no planning message')), (8, ('module', 'planning failure', 'no planning message')), (9, ('module', 'planning failure', 'no planning message'))]
+Generation_0_Config_18
+  Option Tuning: crossover
+  Violation Emergence Num: 10
+  Violation: [(0, ('module', 'planning failure', 'no planning message')), (1, ('module', 'planning failure', 'no planning message')), (2, ('module', 'planning failure', 'no planning message')), (3, ('module', 'planning failure', 'no planning message')), (4, ('module', 'planning failure', 'no planning message')), (5, ('module', 'planning failure', 'no planning message')), (6, ('module', 'planning failure', 'no planning message')), (7, ('module', 'planning failure', 'no planning message')), (8, ('module', 'planning failure', 'no planning message')), (9, ('module', 'planning failure', 'no planning message'))]
+Generation_0_Config_20
+  Option Tuning: crossover
+  Violation Emergence Num: 10
+  Violation: [(0, ('module', 'planning failure', 'no planning message')), (1, ('module', 'planning failure', 'no planning message')), (2, ('module', 'planning failure', 'no planning message')), (3, ('module', 'planning failure', 'no planning message')), (4, ('module', 'planning failure', 'no planning message')), (5, ('module', 'planning failure', 'no planning message')), (6, ('module', 'planning failure', 'no planning message')), (7, ('module', 'planning failure', 'no planning message')), (8, ('module', 'planning failure', 'no planning message')), (9, ('module', 'planning failure', 'no planning message'))]
+Generation_0_Config_30
+  Option Tuning: position: 125, type:float, key: grid_a_star_xy_resolution, pre_value: 0.25, cur_value: -634.11
+  Violation Emergence Num: 10
+  Violation: [(0, ('module', 'planning failure', 'no planning message')), (1, ('module', 'planning failure', 'no planning message')), (2, ('module', 'planning failure', 'no planning message')), (3, ('module', 'planning failure', 'no planning message')), (4, ('module', 'planning failure', 'no planning message')), (5, ('module', 'planning failure', 'no planning message')), (6, ('module', 'planning failure', 'no planning message')), (7, ('module', 'planning failure', 'no planning message')), (8, ('module', 'planning failure', 'no planning message')), (9, ('module', 'planning failure', 'no planning message'))]
+  Range Change: 125, grid_a_star_xy_resolution, [-10001, 10001]->[-634, 10001]
+Generation_0_Config_38
+  Option Tuning: position: 244, type:float, key: roi_line_segment_min_angle, pre_value: 0.15, cur_value: 6652.25
+  Violation Emergence Num: 10
+  Violation: [(0, ('module', 'planning failure', 'no planning message')), (1, ('module', 'planning failure', 'no planning message')), (2, ('module', 'planning failure', 'no planning message')), (3, ('module', 'planning failure', 'no planning message')), (4, ('module', 'planning failure', 'no planning message')), (5, ('module', 'planning failure', 'no planning message')), (6, ('module', 'planning failure', 'no planning message')), (7, ('module', 'planning failure', 'no planning message')), (8, ('module', 'planning failure', 'no planning message')), (9, ('module', 'planning failure', 'no planning message'))]
+  Range Change: 244, roi_line_segment_min_angle, [-10001, 10001]->[-10001, 6652]
+Generation_0_Config_41
+  Option Tuning: position: 51, type:e_number, key: default_speed_cost, pre_value: 1.0e3, cur_value: 1.0e-30
+  Violation Emergence Num: 10
+  Violation: [(0, ('module', 'planning failure', 'no planning message')), (1, ('module', 'planning failure', 'no planning message')), (2, ('module', 'planning failure', 'no planning message')), (3, ('module', 'planning failure', 'no planning message')), (4, ('module', 'planning failure', 'no planning message')), (5, ('module', 'planning failure', 'no planning message')), (6, ('module', 'planning failure', 'no planning message')), (7, ('module', 'planning failure', 'no planning message')), (8, ('module', 'planning failure', 'no planning message')), (9, ('module', 'planning failure', 'no planning message'))]
+  Range Change: 51, default_speed_cost, [-101, 101]->[-30, 101]
+Generation_0_Config_48
+  Option Tuning: position: 85, type:float, key: max_deceleration, pre_value: -2.5, cur_value: -1616.2
+  Violation Emergence Num: 10
+  Violation: [(0, ('module', 'planning failure', 'no planning message')), (1, ('module', 'planning failure', 'no planning message')), (2, ('module', 'planning failure', 'no planning message')), (3, ('module', 'planning failure', 'no planning message')), (4, ('module', 'planning failure', 'no planning message')), (5, ('module', 'planning failure', 'no planning message')), (6, ('module', 'planning failure', 'no planning message')), (7, ('module', 'planning failure', 'no planning message')), (8, ('module', 'planning failure', 'no planning message')), (9, ('module', 'planning failure', 'no planning message'))]
+  Range Change: 85, max_deceleration, [-10001, 10001]->[-1616, 10001]
+Generation_0_Config_50
+  Option Tuning: position: 160, type:float, key: weight_slack, pre_value: 1.0, cur_value: 6908.6
+  Violation Emergence Num: 10
+  Violation: [(0, ('module', 'planning failure', 'no planning message')), (1, ('module', 'planning failure', 'no planning message')), (2, ('module', 'planning failure', 'no planning message')), (3, ('module', 'planning failure', 'no planning message')), (4, ('module', 'planning failure', 'no planning message')), (5, ('module', 'planning failure', 'no planning message')), (6, ('module', 'planning failure', 'no planning message')), (7, ('module', 'planning failure', 'no planning message')), (8, ('module', 'planning failure', 'no planning message')), (9, ('module', 'planning failure', 'no planning message'))]
+  Range Change: 160, weight_slack, [-10001, 10001]->[-10001, 6908]
+Generation_1_Config_0
+  Option Tuning: position: 125, type:float, key: grid_a_star_xy_resolution, pre_value: 0.25, cur_value: -2460.42
+  Violation Emergence Num: 10
+  Violation: [(0, ('module', 'planning failure', 'no planning message')), (1, ('module', 'planning failure', 'no planning message')), (2, ('module', 'planning failure', 'no planning message')), (3, ('module', 'planning failure', 'no planning message')), (4, ('module', 'planning failure', 'no planning message')), (5, ('module', 'planning failure', 'no planning message')), (6, ('module', 'planning failure', 'no planning message')), (7, ('module', 'planning failure', 'no planning message')), (8, ('module', 'planning failure', 'no planning message')), (9, ('module', 'planning failure', 'no planning message'))]
+  Range Change: 125, grid_a_star_xy_resolution, [-634, 10001]->[-2460, 10001]
+Generation_1_Config_3
+  Option Tuning: crossover
+  Violation Emergence Num: 10
+  Violation: [(0, ('module', 'planning failure', 'no planning message')), (1, ('module', 'planning failure', 'no planning message')), (2, ('module', 'planning failure', 'no planning message')), (3, ('module', 'planning failure', 'no planning message')), (4, ('module', 'planning failure', 'no planning message')), (5, ('module', 'planning failure', 'no planning message')), (6, ('module', 'planning failure', 'no planning message')), (7, ('module', 'planning failure', 'no planning message')), (8, ('module', 'planning failure', 'no planning message')), (9, ('module', 'planning failure', 'no planning message'))]
+Generation_1_Config_8
+  Option Tuning: crossover
+  Violation Emergence Num: 10
+  Violation: [(0, ('module', 'planning failure', 'no planning message')), (1, ('module', 'planning failure', 'no planning message')), (2, ('module', 'planning failure', 'no planning message')), (3, ('module', 'planning failure', 'no planning message')), (4, ('module', 'planning failure', 'no planning message')), (5, ('module', 'planning failure', 'no planning message')), (6, ('module', 'planning failure', 'no planning message')), (7, ('module', 'planning failure', 'no planning message')), (8, ('module', 'planning failure', 'no planning message')), (9, ('module', 'planning failure', 'no planning message'))]
+Generation_1_Config_21
+  Option Tuning: crossover
+  Violation Emergence Num: 10
+  Violation: [(0, ('module', 'planning failure', 'no planning message')), (1, ('module', 'planning failure', 'no planning message')), (2, ('module', 'planning failure', 'no planning message')), (3, ('module', 'planning failure', 'no planning message')), (4, ('module', 'planning failure', 'no planning message')), (5, ('module', 'planning failure', 'no planning message')), (6, ('module', 'planning failure', 'no planning message')), (7, ('module', 'planning failure', 'no planning message')), (8, ('module', 'planning failure', 'no planning message')), (9, ('module', 'planning failure', 'no planning message'))]
+Generation_1_Config_26
+  Option Tuning: position: 238, type:integer, key: roi_longitudinal_range_start, pre_value: 15, cur_value: -7477
+  Violation Emergence Num: 8
+  Violation: [(2, ('module', 'planning failure', 'no planning message')), (3, ('module', 'planning failure', 'no planning message')), (4, ('module', 'planning failure', 'no planning message')), (5, ('module', 'planning failure', 'no planning message')), (6, ('module', 'planning failure', 'no planning message')), (7, ('module', 'planning failure', 'no planning message')), (8, ('module', 'planning failure', 'no planning message')), (9, ('module', 'planning failure', 'no planning message'))]
+  Range Change: 238, roi_longitudinal_range_start, [-10001, 10001]->[-7477, 10001]

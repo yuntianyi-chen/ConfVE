@@ -1,7 +1,5 @@
 from typing import List, Dict, Set, Tuple, Optional
-
 from shapely.geometry import Polygon, LineString, Point
-
 # from apollo.utils import calculate_velocity, generate_adc_polygon, construct_lane_polygon, \
 #     construct_lane_boundary_linestring
 from objectives.violation_number.oracles.OracleInterface import OracleInterface

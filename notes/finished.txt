@@ -30,3 +30,10 @@ x. Extract adc_routing and obs from record messages
 x. check records under default configuration first
     rerun records instead of analyzing previous record
     to reduce non-determinism
+
+x. Python Threading join()
+    force the thread to end
+
+x. Traffic Lights
+    extraction from records
+    enable according to scenario violation types

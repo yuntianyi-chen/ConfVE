@@ -5,10 +5,17 @@ Global configurations for the framework
 import logging
 
 # APOLLO CONFIGURATION ==============================
-PERCEPTION_FREQUENCY = 10 # used to be 25
-GENERATION_LIMIT = 10
+PERCEPTION_FREQUENCY = 25  # used to be 25
+TRAFFIC_LIGHT_FREQUENCY = 10
+MAX_RECORD_TIME = 30   # 10
+AV_TESTING_APPROACH = "DoppelTest"    # scenoRITA/DoppelTest/AV-Fuzzer/ADFuzz/Random
+MAP_NAME = "borregas_ave"   # borregas_ave/sunnyvale_loop
+TRAFFIC_LIGHT_MODE = "read"  # read/random/off
+########################
 
-MAX_RECORD_TIME = 10
+
+
+GENERATION_LIMIT = 10
 INIT_POP_SIZE = 10  # 60 individuals in each generation
 SELECT_NUM_RATIO = [7, 2, 1]  # [5, 3, 2]
 
@@ -23,17 +30,20 @@ APOLLO_VEHICLE_WIDTH = 2.11
 APOLLO_VEHICLE_HEIGHT = 1.48
 APOLLO_VEHICLE_back_edge_to_center = 1.043
 
-MAP_NAME = "sunnyvale_loop"
+
+########################
+
+# CONFIG_TESTING_MODE = False
+# OBS_GENERATE_MODE = "scenoRITA"
 MODULE_NAME = "planning"
 DEFAULT_CONFIG_FILE = False
+SCENARIO_GENERATION_MODE = True
 
 
 OPTIMAL_IND_LIST_LENGTH = 30
 
-CONFIG_TESTING_MODE = False
-SCENARIO_GENERATION_MODE = True
-OBS_GENERATE_MODE = "scenoRITA"
-AV_TESTING_APPROACH = "scenoRITA"
+
+
 OBS_GROUP_COUNT = 10
 # FITNESS_MODE = "intro_remov"  # or accu_vio_num
 FITNESS_MODE = "intro"  # or accu_vio_num
@@ -58,7 +68,7 @@ DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR = f"/home/cloudsky/Research/Apollo/Bac
 CONFIG_FILE_PATH=f"{APOLLO_ROOT}/modules/{MODULE_NAME}/conf/{MODULE_NAME}_config.pb.txt"
 
 BACKUP_CONFIG_SAVE_PATH = f"/home/cloudsky/Research/Apollo/Backup/{AV_TESTING_APPROACH}/config_files"
-
+BACKUP_RECORD_SAVE_PATH = f"/home/cloudsky/Research/Apollo/Backup/{AV_TESTING_APPROACH}/records"
 # MAGGIE CONFIGS ====================================
 STREAM_LOGGING_LEVEL = logging.INFO
 USE_SIM_CONTROL_STANDALONE = True
@@ -80,5 +90,4 @@ CONFIGURATION_REVERTING = False # Tune back after detecting violations
 ENABLE_CROSSOVER = True
 
 ##################################
-TRAFFIC_LIGHT_MODE = False
 OPT_MODE = "GA"  # GA/DRL/Random

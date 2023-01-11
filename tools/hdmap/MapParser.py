@@ -101,22 +101,21 @@ class MapParser:
         self.__signals_at_junction = {}
         for sigk, sigv in self.__signals.items():
             for junk, junv in self.__junctions.items():
-                if self.__is_overlap(sigv, junv):
-                    if junk not in self.__signals_at_junction.keys():
-                        self.__signals_at_junction[junk] = [sigk]
-                    else:
+                if junk not in self.__signals_at_junction.keys():
+                    self.__signals_at_junction[junk] = []
+                else:
+                    if self.__is_overlap(sigv, junv):
                         self.__signals_at_junction[junk].append(sigk)
 
         # load lanes at junction
         self.__lanes_at_junction = {}
         for lank, lanv in self.__lanes.items():
             for junk, junv in self.__junctions.items():
-                if self.__is_overlap(lanv, junv):
-                    if junk not in self.__lanes_at_junction.keys():
-                        self.__lanes_at_junction[junk] = [lank]
-                    else:
+                if junk not in self.__lanes_at_junction.keys():
+                    self.__lanes_at_junction[junk] = []
+                else:
+                    if self.__is_overlap(lanv, junv):
                         self.__lanes_at_junction[junk].append(lank)
-
         # load lanes controlled by signal
         self.__lanes_controlled_by_signal = {}
         for junk, junv in self.__junctions.items():
@@ -130,10 +129,10 @@ class MapParser:
                 lane_ids = self.__lanes_at_junction[junk]
             for sid in signal_ids:
                 for lid in lane_ids:
-                    if self.__is_overlap(self.__signals[sid], self.__lanes[lid]):
-                        if sid not in self.__lanes_controlled_by_signal.keys():
-                            self.__lanes_controlled_by_signal[sid] = [lid]
-                        else:
+                    if sid not in self.__lanes_controlled_by_signal.keys():
+                        self.__lanes_controlled_by_signal[sid] = []
+                    else:
+                        if self.__is_overlap(self.__signals[sid], self.__lanes[lid]):
                             self.__lanes_controlled_by_signal[sid].append(lid)
 
     def parse_signal_relations(self):
@@ -256,6 +255,9 @@ class MapParser:
         target_lanes = self.get_lanes_not_in_junction()
         reachable = self.__get_reachable_from(lane_id)
         return [p for p in reachable if p[-1] in target_lanes]
+
+    def get_junction_by_id(self, j_id: str):
+        return self.__junctions[j_id]
 
     def __get_reachable_from(self, lane_id: str, depth=5):
         if depth == 1:

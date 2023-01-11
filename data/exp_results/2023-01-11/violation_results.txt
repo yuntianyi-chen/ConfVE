@@ -1,0 +1,2 @@
+Violation Results: [('collision', 0)]
+  /home/cloudsky/Research/Apollo/apollo_7.0/records/default_config_Scenario_0.00000

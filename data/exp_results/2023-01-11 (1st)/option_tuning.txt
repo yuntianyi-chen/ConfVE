@@ -1,0 +1,459 @@
+Generation_0_Config_4
+  Total Option Tuning:
+        65, dense_unit_s, 0.25->2752.68
+  Current Option Tuning: position: 65, type:float, key: dense_unit_s, pre_value: 0.25, cur_value: 2752.68
+  Violation Emergence Num: 1
+  Violation: [(2, ('speed violation', ((587063.265225009, 4141220.403654901), '11.23 violates speed limit 11.175999641418457 at lane_25')))]
+  Range Change: 65, dense_unit_s, [-10001, 10001]->[-10001, 2752]
+Generation_0_Config_5
+  Total Option Tuning:
+        40, dense_dimension_s, 101->-7772
+  Current Option Tuning: position: 40, type:integer, key: dense_dimension_s, pre_value: 101, cur_value: -7772
+  Violation Emergence Num: 1
+  Violation: [(0, ('module', 'routing failure', 'no routing response'))]
+  Range Change: 40, dense_dimension_s, [-10001, 10001]->[-7772, 10001]
+Generation_0_Config_7
+  Total Option Tuning:
+        167, max_time_sample_scaling, 1.2->-2128.1
+  Current Option Tuning: position: 167, type:float, key: max_time_sample_scaling, pre_value: 1.2, cur_value: -2128.1
+  Violation Emergence Num: 1
+  Violation: [(1, ('collision', 113265))]
+  Range Change: 167, max_time_sample_scaling, [-10001, 10001]->[-2128, 10001]
+Generation_0_Config_10
+  Total Option Tuning:
+        40, dense_dimension_s, 101->-7772
+    216, max_acc_jerk, 0.5->8481.7
+  Current Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(0, ('module', 'routing failure', 'no routing response'))]
+Generation_0_Config_11
+  Total Option Tuning:
+      Current Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(0, ('module', 'routing failure', 'no routing response'))]
+Generation_0_Config_12
+  Total Option Tuning:
+        220, enable_check_parallel_trajectory, false->true
+  Current Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(2, ('speed violation', ((587063.265225009, 4141220.403654901), '11.19 violates speed limit 11.175999641418457 at lane_25')))]
+Generation_0_Config_13
+  Total Option Tuning:
+        81, decel_penalty, 1.0->-3932.1
+  Current Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(2, ('speed violation', ((587063.265225009, 4141220.403654901), '11.28 violates speed limit 11.175999641418457 at lane_25')))]
+Generation_0_Config_15
+  Total Option Tuning:
+        167, max_time_sample_scaling, 1.2->-2128.1
+  Current Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(0, ('module', 'routing failure', 'no routing response'))]
+Generation_0_Config_16
+  Total Option Tuning:
+        65, dense_unit_s, 0.25->2752.68
+  Current Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(0, ('module', 'routing failure', 'no routing response'))]
+Generation_0_Config_17
+  Total Option Tuning:
+        79, keep_clear_low_speed_penalty, 10.0->660.0
+  Current Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(1, ('collision', 113265))]
+Generation_0_Config_18
+  Total Option Tuning:
+        40, dense_dimension_s, 101->-7772
+  Current Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(2, ('speed violation', ((587063.265225009, 4141220.403654901), '11.28 violates speed limit 11.175999641418457 at lane_25')))]
+Generation_0_Config_19
+  Total Option Tuning:
+        220, enable_check_parallel_trajectory, false->true
+  Current Option Tuning: crossover
+  Violation Emergence Num: 2
+  Violation: [(0, ('module', 'routing failure', 'no routing response')), (2, ('speed violation', ((587063.265225009, 4141220.403654901), '11.22 violates speed limit 11.175999641418457 at lane_25')))]
+Generation_0_Config_20
+  Total Option Tuning:
+        81, decel_penalty, 1.0->-3932.1
+  Current Option Tuning: crossover
+  Violation Emergence Num: 2
+  Violation: [(0, ('module', 'routing failure', 'no routing response')), (2, ('speed violation', ((587063.265225009, 4141220.403654901), '11.18 violates speed limit 11.175999641418457 at lane_25')))]
+Generation_0_Config_22
+  Total Option Tuning:
+        65, dense_unit_s, 0.25->2752.68
+  Current Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(0, ('module', 'routing failure', 'no routing response'))]
+Generation_0_Config_24
+  Total Option Tuning:
+        220, enable_check_parallel_trajectory, false->true
+  Current Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(0, ('module', 'routing failure', 'no routing response'))]
+Generation_0_Config_25
+  Total Option Tuning:
+        253, open_space_fallback_collision_time_buffer, 5.0->-4996.3
+  Current Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(2, ('speed violation', ((587063.265225009, 4141220.403654901), '11.18 violates speed limit 11.175999641418457 at lane_25')))]
+Generation_0_Config_26
+  Total Option Tuning:
+      Current Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(0, ('module', 'routing failure', 'no routing response'))]
+Generation_0_Config_27
+  Total Option Tuning:
+        79, keep_clear_low_speed_penalty, 10.0->660.0
+    167, max_time_sample_scaling, 1.2->-2128.1
+  Current Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(1, ('collision', 113265))]
+Generation_0_Config_29
+  Total Option Tuning:
+        159, weight_end_state, 1.0->7916.5
+  Current Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(0, ('module', 'routing failure', 'no routing response'))]
+Generation_0_Config_30
+  Total Option Tuning:
+        32, lat_acc_weight, 1000.0->6279.3
+    69, jerk_weight, 10.0->-5153.6
+  Current Option Tuning: position: 69, type:float, key: jerk_weight, pre_value: 10.0, cur_value: -5153.6
+  Violation Emergence Num: 2
+  Violation: [(0, ('module', 'routing failure', 'no routing response')), (1, ('collision', 113265))]
+  Range Change: 69, jerk_weight, [-10001, 10001]->[-5153, 10001]
+Generation_0_Config_34
+  Total Option Tuning:
+        65, dense_unit_s, 0.25->2752.68
+    261, pull_over_approach_lon_distance_adjust_factor, 1.5->-9256.8
+  Current Option Tuning: position: 261, type:float, key: pull_over_approach_lon_distance_adjust_factor, pre_value: 1.5, cur_value: -9256.8
+  Violation Emergence Num: 1
+  Violation: [(0, ('module', 'routing failure', 'no routing response'))]
+  Range Change: 261, pull_over_approach_lon_distance_adjust_factor, [-10001, 10001]->[-9256, 10001]
+Generation_0_Config_37
+  Total Option Tuning:
+        167, max_time_sample_scaling, 1.2->-2128.1
+    212, max_forward_v, 1.0->1792.5
+  Current Option Tuning: position: 212, type:float, key: max_forward_v, pre_value: 1.0, cur_value: 1792.5
+  Violation Emergence Num: 1
+  Violation: [(0, ('module', 'routing failure', 'no routing response'))]
+  Range Change: 212, max_forward_v, [-10001, 10001]->[-10001, 1792]
+Generation_0_Config_39
+  Total Option Tuning:
+        15, l_weight, 1.0->2862.6
+    159, weight_end_state, 1.0->7916.5
+  Current Option Tuning: position: 15, type:float, key: l_weight, pre_value: 1.0, cur_value: 2862.6
+  Violation Emergence Num: 1
+  Violation: [(2, ('speed violation', ((587063.265225009, 4141220.403654901), '11.18 violates speed limit 11.175999641418457 at lane_25')))]
+  Range Change: 15, l_weight, [-10001, 10001]->[-10001, 2862]
+Generation_0_Config_41
+  Total Option Tuning:
+        166, min_time_sample_scaling, 0.8->-4060.0
+  Current Option Tuning: position: 166, type:float, key: min_time_sample_scaling, pre_value: 0.8, cur_value: -4060.0
+  Violation Emergence Num: 1
+  Violation: [(2, ('speed violation', ((587063.265225009, 4141220.403654901), '11.21 violates speed limit 11.175999641418457 at lane_25')))]
+  Range Change: 166, min_time_sample_scaling, [-10001, 10001]->[-4060, 10001]
+Generation_0_Config_42
+  Total Option Tuning:
+        141, alpha, 1.0->4647.5
+    220, enable_check_parallel_trajectory, false->true
+  Current Option Tuning: position: 141, type:float, key: alpha, pre_value: 1.0, cur_value: 4647.5
+  Violation Emergence Num: 1
+  Violation: [(2, ('speed violation', ((587063.265225009, 4141220.403654901), '11.24 violates speed limit 11.175999641418457 at lane_25')))]
+  Range Change: 141, alpha, [-10001, 10001]->[-10001, 4647]
+Generation_0_Config_44
+  Total Option Tuning:
+        159, weight_end_state, 1.0->7916.5
+    265, enable_lane_change_urgency_check, false->true
+  Current Option Tuning: position: 265, type:boolean, key: enable_lane_change_urgency_check, pre_value: false, cur_value: true
+  Violation Emergence Num: 11
+  Violation: [(1, ('module', 'planning failure', 'no planning message')), (2, ('module', 'planning failure', 'no planning message')), (3, ('module', 'planning failure', 'no planning message')), (4, ('module', 'planning failure', 'no planning message')), (5, ('module', 'planning failure', 'no planning message')), (6, ('collision', 292440)), (6, ('collision', 678202)), (6, ('module', 'planning failure', 'no planning message')), (7, ('module', 'planning failure', 'no planning message')), (8, ('module', 'planning failure', 'no planning message')), (9, ('module', 'planning failure', 'no planning message'))]
+  Range Change: 265, enable_lane_change_urgency_check, ['true', 'false']->['true', 'false']
+Generation_0_Config_45
+  Total Option Tuning:
+        145, polish, true->false
+    167, max_time_sample_scaling, 1.2->-2128.1
+  Current Option Tuning: position: 145, type:boolean, key: polish, pre_value: true, cur_value: false
+  Violation Emergence Num: 1
+  Violation: [(1, ('collision', 113265))]
+  Range Change: 145, polish, ['true', 'false']->['true', 'false']
+Generation_0_Config_46
+  Total Option Tuning:
+        65, dense_unit_s, 0.25->2752.68
+    208, kappa_penalty_weight, 100.0->6295.9
+  Current Option Tuning: position: 208, type:float, key: kappa_penalty_weight, pre_value: 100.0, cur_value: 6295.9
+  Violation Emergence Num: 2
+  Violation: [(0, ('module', 'routing failure', 'no routing response')), (2, ('speed violation', ((587063.265225009, 4141220.403654901), '11.25 violates speed limit 11.175999641418457 at lane_25')))]
+  Range Change: 208, kappa_penalty_weight, [-10001, 10001]->[-10001, 6295]
+Generation_0_Config_47
+  Total Option Tuning:
+        79, keep_clear_low_speed_penalty, 10.0->660.0
+    193, default_bound, 2.0->8931.1
+  Current Option Tuning: position: 193, type:float, key: default_bound, pre_value: 2.0, cur_value: 8931.1
+  Violation Emergence Num: 1
+  Violation: [(0, ('module', 'routing failure', 'no routing response'))]
+  Range Change: 193, default_bound, [-10001, 10001]->[-10001, 8931]
+Generation_0_Config_51
+  Total Option Tuning:
+        40, dense_dimension_s, 101->-7772
+    253, open_space_fallback_collision_time_buffer, 5.0->2341.8
+  Current Option Tuning: position: 253, type:float, key: open_space_fallback_collision_time_buffer, pre_value: 5.0, cur_value: 2341.8
+  Violation Emergence Num: 1
+  Violation: [(0, ('module', 'routing failure', 'no routing response'))]
+  Range Change: 253, open_space_fallback_collision_time_buffer, [-10001, 10001]->[-10001, 2341]
+Generation_0_Config_52
+  Total Option Tuning:
+        65, dense_unit_s, 0.25->2752.68
+    245, roi_line_segment_length, 1.0->-1520.1
+  Current Option Tuning: position: 245, type:float, key: roi_line_segment_length, pre_value: 1.0, cur_value: -1520.1
+  Violation Emergence Num: 1
+  Violation: [(2, ('speed violation', ((587063.265225009, 4141220.403654901), '11.22 violates speed limit 11.175999641418457 at lane_25')))]
+  Range Change: 245, roi_line_segment_length, [-10001, 10001]->[-1520, 10001]
+Generation_0_Config_55
+  Total Option Tuning:
+        110, point_extension, 0.0->-8331.0
+    253, open_space_fallback_collision_time_buffer, 5.0->-4996.3
+  Current Option Tuning: position: 110, type:float, key: point_extension, pre_value: 0.0, cur_value: -8331.0
+  Violation Emergence Num: 1
+  Violation: [(2, ('speed violation', ((587063.265225009, 4141220.403654901), '11.34 violates speed limit 11.175999641418457 at lane_25')))]
+  Range Change: 110, point_extension, [-10001, 10001]->[-8331, 10001]
+Generation_0_Config_57
+  Total Option Tuning:
+        79, keep_clear_low_speed_penalty, 10.0->660.0
+    167, max_time_sample_scaling, 1.2->-2128.1
+    231, distance_search_range, 2.0->-8194.0
+  Current Option Tuning: position: 231, type:float, key: distance_search_range, pre_value: 2.0, cur_value: -8194.0
+  Violation Emergence Num: 2
+  Violation: [(0, ('module', 'routing failure', 'no routing response')), (2, ('speed violation', ((587063.265225009, 4141220.403654901), '11.19 violates speed limit 11.175999641418457 at lane_25')))]
+  Range Change: 231, distance_search_range, [-10001, 10001]->[-8194, 10001]
+Generation_1_Config_1
+  Total Option Tuning:
+        87, is_lane_changing, true->false
+    220, enable_check_parallel_trajectory, false->true
+  Current Option Tuning: position: 87, type:boolean, key: is_lane_changing, pre_value: true, cur_value: false
+  Violation Emergence Num: 1
+  Violation: [(2, ('speed violation', ((587063.265225009, 4141220.403654901), '11.29 violates speed limit 11.175999641418457 at lane_25')))]
+  Range Change: 87, is_lane_changing, ['true', 'false']->['true', 'false']
+Generation_1_Config_2
+  Total Option Tuning:
+        159, weight_end_state, 1.0->7916.5
+    260, pull_over_road_edge_buffer, 0.15->5631.72
+  Current Option Tuning: default
+  Violation Emergence Num: 1
+  Violation: [(0, ('module', 'routing failure', 'no routing response'))]
+Generation_1_Config_4
+  Total Option Tuning:
+        32, lat_acc_weight, 1000.0->6279.3
+    69, jerk_weight, 10.0->-5153.6
+    167, max_time_sample_scaling, 1.2->-2128.1
+  Current Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(2, ('speed violation', ((587063.265225009, 4141220.403654901), '11.19 violates speed limit 11.175999641418457 at lane_25')))]
+Generation_1_Config_5
+  Total Option Tuning:
+        208, kappa_penalty_weight, 100.0->6295.9
+  Current Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(0, ('module', 'routing failure', 'no routing response'))]
+Generation_1_Config_6
+  Total Option Tuning:
+        65, dense_unit_s, 0.25->2752.68
+    167, max_time_sample_scaling, 1.2->-2128.1
+  Current Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(0, ('module', 'routing failure', 'no routing response'))]
+Generation_1_Config_8
+  Total Option Tuning:
+        167, max_time_sample_scaling, 1.2->-2128.1
+  Current Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(0, ('module', 'routing failure', 'no routing response'))]
+Generation_1_Config_10
+  Total Option Tuning:
+        65, dense_unit_s, 0.25->2752.68
+    208, kappa_penalty_weight, 100.0->6295.9
+  Current Option Tuning: crossover
+  Violation Emergence Num: 2
+  Violation: [(0, ('module', 'routing failure', 'no routing response')), (2, ('speed violation', ((587063.265225009, 4141220.403654901), '11.19 violates speed limit 11.175999641418457 at lane_25')))]
+Generation_1_Config_11
+  Total Option Tuning:
+        79, keep_clear_low_speed_penalty, 10.0->660.0
+    167, max_time_sample_scaling, 1.2->-2128.1
+    265, enable_lane_change_urgency_check, false->true
+  Current Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(0, ('module', 'routing failure', 'no routing response'))]
+Generation_1_Config_13
+  Total Option Tuning:
+        159, weight_end_state, 1.0->7916.5
+    260, pull_over_road_edge_buffer, 0.15->5631.72
+  Current Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(2, ('speed violation', ((587063.265225009, 4141220.403654901), '11.18 violates speed limit 11.175999641418457 at lane_25')))]
+Generation_1_Config_14
+  Total Option Tuning:
+        65, dense_unit_s, 0.25->2752.68
+    208, kappa_penalty_weight, 100.0->6295.9
+  Current Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(0, ('module', 'routing failure', 'no routing response'))]
+Generation_1_Config_16
+  Total Option Tuning:
+        87, is_lane_changing, true->false
+    220, enable_check_parallel_trajectory, false->true
+  Current Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(1, ('collision', 113265))]
+Generation_1_Config_18
+  Total Option Tuning:
+        65, dense_unit_s, 0.25->2752.68
+    167, max_time_sample_scaling, 1.2->-2128.1
+  Current Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(0, ('module', 'routing failure', 'no routing response'))]
+Generation_1_Config_20
+  Total Option Tuning:
+      Current Option Tuning: crossover
+  Violation Emergence Num: 2
+  Violation: [(0, ('module', 'routing failure', 'no routing response')), (1, ('collision', 113265))]
+Generation_1_Config_22
+  Total Option Tuning:
+        159, weight_end_state, 1.0->7916.5
+    265, enable_lane_change_urgency_check, false->true
+  Current Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(0, ('module', 'routing failure', 'no routing response'))]
+Generation_1_Config_23
+  Total Option Tuning:
+        159, weight_end_state, 1.0->7916.5
+    265, enable_lane_change_urgency_check, false->true
+    270, change_lane_fail_freeze_time, 1.0->-9568.7
+  Current Option Tuning: position: 270, type:float, key: change_lane_fail_freeze_time, pre_value: 1.0, cur_value: -9568.7
+  Violation Emergence Num: 1
+  Violation: [(0, ('module', 'routing failure', 'no routing response'))]
+  Range Change: 270, change_lane_fail_freeze_time, [-10001, 10001]->[-9568, 10001]
+Generation_1_Config_24
+  Total Option Tuning:
+        81, decel_penalty, 1.0->-3932.1
+    253, open_space_fallback_collision_time_buffer, 5.0->-8503.0
+  Current Option Tuning: position: 253, type:float, key: open_space_fallback_collision_time_buffer, pre_value: 5.0, cur_value: -8503.0
+  Violation Emergence Num: 1
+  Violation: [(0, ('module', 'routing failure', 'no routing response'))]
+  Range Change: 253, open_space_fallback_collision_time_buffer, [-10001, 2341]->[-8503, 2341]
+Generation_1_Config_25
+  Total Option Tuning:
+        61, max_deceleration, -4.0->-6893.0
+    79, keep_clear_low_speed_penalty, 10.0->660.0
+    167, max_time_sample_scaling, 1.2->-2128.1
+    231, distance_search_range, 2.0->-8194.0
+  Current Option Tuning: position: 61, type:float, key: max_deceleration, pre_value: -4.0, cur_value: -6893.0
+  Violation Emergence Num: 2
+  Violation: [(0, ('module', 'routing failure', 'no routing response')), (2, ('speed violation', ((587063.265225009, 4141220.403654901), '11.25 violates speed limit 11.175999641418457 at lane_25')))]
+  Range Change: 61, max_deceleration, [-10001, 10001]->[-6893, 10001]
+Generation_1_Config_26
+  Total Option Tuning:
+        155, weight_steer_stitching, 1.75->4794.76
+    220, enable_check_parallel_trajectory, false->true
+  Current Option Tuning: position: 155, type:float, key: weight_steer_stitching, pre_value: 1.75, cur_value: 4794.76
+  Violation Emergence Num: 2
+  Violation: [(0, ('module', 'routing failure', 'no routing response')), (1, ('collision', 113265))]
+  Range Change: 155, weight_steer_stitching, [-10001, 10001]->[-10001, 4794]
+Generation_1_Config_27
+  Total Option Tuning:
+        32, lat_acc_weight, 1000.0->6279.3
+    69, jerk_weight, 10.0->-5153.6
+    218, delta_t, 0.5->-9567.6
+  Current Option Tuning: position: 218, type:float, key: delta_t, pre_value: 0.5, cur_value: -9567.6
+  Violation Emergence Num: 2
+  Violation: [(0, ('module', 'routing failure', 'no routing response')), (2, ('speed violation', ((587063.265225009, 4141220.403654901), '11.19 violates speed limit 11.175999641418457 at lane_25')))]
+  Range Change: 218, delta_t, [-10001, 10001]->[-9567, 10001]
+Generation_1_Config_28
+  Total Option Tuning:
+        65, dense_unit_s, 0.25->2752.68
+    75, default_speed_cost, 1.0e3->1.0e36
+    208, kappa_penalty_weight, 100.0->6295.9
+  Current Option Tuning: position: 75, type:e_number, key: default_speed_cost, pre_value: 1.0e3, cur_value: 1.0e36
+  Violation Emergence Num: 2
+  Violation: [(1, ('collision', 113265)), (2, ('speed violation', ((587063.265225009, 4141220.403654901), '11.51 violates speed limit 11.175999641418457 at lane_25')))]
+  Range Change: 75, default_speed_cost, [-101, 101]->[-101, 36]
+Generation_1_Config_31
+  Total Option Tuning:
+        62, spatial_potential_penalty, 1.0e2->1.0e-99
+    87, is_lane_changing, true->false
+    220, enable_check_parallel_trajectory, false->true
+  Current Option Tuning: position: 62, type:e_number, key: spatial_potential_penalty, pre_value: 1.0e2, cur_value: 1.0e-99
+  Violation Emergence Num: 2
+  Violation: [(0, ('module', 'routing failure', 'no routing response')), (2, ('speed violation', ((587063.265225009, 4141220.403654901), '11.21 violates speed limit 11.175999641418457 at lane_25')))]
+  Range Change: 62, spatial_potential_penalty, [-101, 101]->[-99, 101]
+Generation_1_Config_33
+  Total Option Tuning:
+        77, low_speed_penalty, 10.0->-8773.9
+  Current Option Tuning: position: 77, type:float, key: low_speed_penalty, pre_value: 10.0, cur_value: -8773.9
+  Violation Emergence Num: 2
+  Violation: [(0, ('module', 'routing failure', 'no routing response')), (2, ('speed violation', ((587063.265225009, 4141220.403654901), '11.19 violates speed limit 11.175999641418457 at lane_25')))]
+  Range Change: 77, low_speed_penalty, [-10001, 10001]->[-8773, 10001]
+Generation_1_Config_34
+  Total Option Tuning:
+        32, lat_acc_weight, 1000.0->6279.3
+    69, jerk_weight, 10.0->-5153.6
+    167, max_time_sample_scaling, 1.2->-2128.1
+    226, gear_shift_period_duration, 2.0->-6784.7
+  Current Option Tuning: position: 226, type:float, key: gear_shift_period_duration, pre_value: 2.0, cur_value: -6784.7
+  Violation Emergence Num: 1
+  Violation: [(2, ('speed violation', ((587063.265225009, 4141220.403654901), '11.18 violates speed limit 11.175999641418457 at lane_25')))]
+  Range Change: 226, gear_shift_period_duration, [-10001, 10001]->[-6784, 10001]
+Generation_1_Config_35
+  Total Option Tuning:
+        57, decel_penalty, 1.0->9552.6
+    208, kappa_penalty_weight, 100.0->6295.9
+  Current Option Tuning: position: 57, type:float, key: decel_penalty, pre_value: 1.0, cur_value: 9552.6
+  Violation Emergence Num: 1
+  Violation: [(0, ('module', 'routing failure', 'no routing response'))]
+  Range Change: 57, decel_penalty, [-10001, 10001]->[-10001, 9552]
+Generation_1_Config_40
+  Total Option Tuning:
+        65, dense_unit_s, 0.25->2752.68
+    208, kappa_penalty_weight, 100.0->6295.9
+    260, pull_over_road_edge_buffer, 0.15->16.91
+  Current Option Tuning: position: 260, type:float, key: pull_over_road_edge_buffer, pre_value: 0.15, cur_value: 16.91
+  Violation Emergence Num: 1
+  Violation: [(0, ('module', 'routing failure', 'no routing response'))]
+  Range Change: 260, pull_over_road_edge_buffer, [-10001, 10001]->[-10001, 16]
+Generation_1_Config_41
+  Total Option Tuning:
+        79, keep_clear_low_speed_penalty, 10.0->660.0
+    93, search_beam_radius_intensity, 0.08->-2477.34
+    167, max_time_sample_scaling, 1.2->-2128.1
+    265, enable_lane_change_urgency_check, false->true
+  Current Option Tuning: position: 93, type:float, key: search_beam_radius_intensity, pre_value: 0.08, cur_value: -2477.34
+  Violation Emergence Num: 2
+  Violation: [(0, ('module', 'routing failure', 'no routing response')), (1, ('collision', 113265))]
+  Range Change: 93, search_beam_radius_intensity, [-10001, 10001]->[-2477, 10001]
+Generation_1_Config_42
+  Total Option Tuning:
+        159, weight_end_state, 1.0->7916.5
+    217, delta_t, 0.2->577.1
+    231, distance_search_range, 2.0->-8194.0
+  Current Option Tuning: position: 217, type:float, key: delta_t, pre_value: 0.2, cur_value: 577.1
+  Violation Emergence Num: 3
+  Violation: [(0, ('module', 'routing failure', 'no routing response')), (8, ('module', 'planning failure', 'no planning message')), (9, ('module', 'planning failure', 'no planning message'))]
+  Range Change: 217, delta_t, [-10001, 10001]->[-10001, 577]
+Generation_1_Config_44
+  Total Option Tuning:
+        65, dense_unit_s, 0.25->2752.68
+    208, kappa_penalty_weight, 100.0->6295.9
+    260, pull_over_road_edge_buffer, 0.15->8650.53
+  Current Option Tuning: position: 260, type:float, key: pull_over_road_edge_buffer, pre_value: 0.15, cur_value: 8650.53
+  Violation Emergence Num: 1
+  Violation: [(1, ('collision', 113265))]
+  Range Change: 260, pull_over_road_edge_buffer, [-10001, 16]->[-10001, 8650]
+Generation_1_Config_45
+  Total Option Tuning:
+        180, ipopt_mu_init, 0.1->-6139.0
+    253, open_space_fallback_collision_time_buffer, 5.0->-4996.3
+    272, reuse_path, false->true
+  Current Option Tuning: position: 180, type:float, key: ipopt_mu_init, pre_value: 0.1, cur_value: -6139.0
+  Violation Emergence Num: 1
+  Violation: [(0, ('module', 'routing failure', 'no routing response'))]
+  Range Change: 180, ipopt_mu_init, [-10001, 10001]->[-6139, 10001]

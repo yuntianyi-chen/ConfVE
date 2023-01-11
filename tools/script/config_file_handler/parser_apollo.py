@@ -5,7 +5,10 @@ import glob
 # import pandas as pd
 from copy import deepcopy
 
-from tools.config_file_handler.translator_apollo import option_obj_translator, save2file
+from tools.script.config_file_handler.translator_apollo import option_obj_translator, save2file
+
+
+# from tools.config_file_handler.translator_apollo import option_obj_translator, save2file
 
 
 def analyze_all_modules():

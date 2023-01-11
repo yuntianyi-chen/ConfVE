@@ -1,0 +1,10 @@
+/home/cloudsky/Research/Apollo/Backup/DoppelTest/records/initial/0.00000 ------ default_config_Scenario_0
+/home/cloudsky/Research/Apollo/Backup/DoppelTest/records/initial/1.00000 ------ default_config_Scenario_1
+/home/cloudsky/Research/Apollo/Backup/DoppelTest/records/initial/2.00000 ------ default_config_Scenario_2
+/home/cloudsky/Research/Apollo/Backup/DoppelTest/records/initial/3.00000 ------ default_config_Scenario_3
+/home/cloudsky/Research/Apollo/Backup/DoppelTest/records/initial/4.00000 ------ default_config_Scenario_4
+/home/cloudsky/Research/Apollo/Backup/DoppelTest/records/initial/5.00000 ------ default_config_Scenario_5
+/home/cloudsky/Research/Apollo/Backup/DoppelTest/records/initial/6.00000 ------ default_config_Scenario_6
+/home/cloudsky/Research/Apollo/Backup/DoppelTest/records/initial/7.00000 ------ default_config_Scenario_7
+/home/cloudsky/Research/Apollo/Backup/DoppelTest/records/initial/8.00000 ------ default_config_Scenario_8
+/home/cloudsky/Research/Apollo/Backup/DoppelTest/records/initial/9.00000 ------ default_config_Scenario_9
