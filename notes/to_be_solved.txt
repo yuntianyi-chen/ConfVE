@@ -1,70 +1,62 @@
------------------------
-Need Discussion
------------------------
-?. run configuration reverting
-    still violated after reverting?
-    if tune it back, what's the significance of genetic algorithm?
+?. Check and Finish the rest of violation types
+    More types
+        speeding - speed violation threshold
+        lane change at junction
+        unsafe lane change
+        (brake taps) threshold
+            some configurations run with a very low speed. Collision. How to distinguish this violation?
+    Validate current types
+        planning module failure - module is running. received message but module doesn't normally work
+        Under some configurations, some scenarios can successfully start, some scenarios cannot
+        In those cannot start, it didn't report planning module failure
 
-?. Violation Masking
-    New tuning is masked by previous violation
-    Fix: configuration reverting? or (option tuning, violation pair) or eliminate this individual after detecting
-        Once we found optimal, eliminate?
-    give weights to every option tuned. report possibility of each option to cause violations instead of focusing on single option
 
-    What should we do after detecting violations?
+?. what if planning module failure was caused by not launching planning module normally
+    not caused by config file but launching itself
 
-? Optimal individual
-    Only occurred when configuration caused module failure in all scenarios
+?. multi-objective fitness function
+    how to change fitness function
+
 
 
 -----------------------
 TO DO RIGHT NOW!!!
 -----------------------
-0. Update planning module failure oracle
-    Under some configurations, some scenarios can successfully start, some scenarios cannot
-    In those cannot start, it didn't report planning module failure
-   Collision
-    collision obs type
+0. multi-container & Refactoring project
 
-0. Code coverage
+0. Not selecting individuals that contain module failure violations to avoid violation masking
+
+0. Emerged violation results file
+    output a csv file including features of violations
+    stats about violation types, total num, unique nums
+    add a report to build correlation between options and violation types
+
+0. to reduce non-determinism
+    rerun bug-revealing ones and default configuration, not all
+        e.g., once planning failure occurs, rerun to decide
+
+3. Distinguish violations
+        module failure - ([option id list], violation results)
+    Eliminate duplicate
+        similarity of duplicate	refer to scenoRITA
+        clustering algorithm to eliminate duplicate at last
+        Think about how to eliminate duplicate in the optimization process
+             comparison similarity of features?
+
+
+1. test code coverage
+    use it to select initial scenarios
     significance: cover more code blocks that could reflect more option tuning.
     otherwise, some option tunings would never influence the system
 
-1. Scenarios-diversity
+2. Scenarios-diversity
     Get as many scenarios as possible from scenario generation approaches, reduce a reasonable number of scenarios by filtering.
     Initial Scenarios---diversity of vehicle maneuver, traffic controls, code coverage, violation types, lane coverage...
     filtering scenarios
         threshold - mutable size
         ranking - get top 10
 
-1. Check and Finish the rest of violation types
-    More types (Yuqi)
-        speeding
-        unsafe lane change
-        lane change at junction
-        (brake taps) threshold
-            some configurations run with a very low speed. Collision. How to distinguish this violation?
-    Validate current types
-        planning module failure
-            module failure - module is running. received message but module doesn't normally work
-                report bugs
 
-2. Distinguish violations
-    violation features
-        option features?
-        violation features?
-    Eliminate duplicate
-    similarity of duplicate	refer to scenoRITA
-    clustering algorithm to eliminate duplicate at last
-    Think about how to eliminate duplicate in the optimization process - comparison
-
-3. experiment
-    keep running to get valid range
-
-4. run experiments on different maps and same recording time
-    AV-Fuzzer - San Francisco
-    DoppelTest - borregas_ave, san_mateo, sunnyvale_loop
-    scenoRITA - borregas_ave, san_mateo
 
 
 
@@ -73,11 +65,17 @@ TO DO RIGHT NOW!!!
 Important but follow schedule
 -----------------------
 1. Run AV Testing techniques (scenoRITA, DoppelTest, AV-Fuzzer, ADFuzz, Random) (GA, T-way)
+    different maps and same recording time
+        AV-Fuzzer - San Francisco
+        DoppelTest - borregas_ave, san_mateo, sunnyvale_loop
+        scenoRITA - borregas_ave, san_mateo
 2. T-way testing
 3. Static Analysis
     Variable dependency
     Option range: Partial path sensitive analysis or interval analysis
-
+4. check violations are highly potentially bug-revealing
+    semi-manual-automated way
+5. let Tuan and Xiang analyze violated record.
 
 
 
@@ -106,6 +104,7 @@ Not so hurry
 10. speed up scenarios
 11. change it into "TwinTest"
     run one scenario under default configuration, run the same scenario under changed configuration
+12. keep experiment running to get valid range
 
 
 

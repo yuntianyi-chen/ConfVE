@@ -37,3 +37,15 @@ x. Python Threading join()
 x. Traffic Lights
     extraction from records
     enable according to scenario violation types
+
+
+x. Violation Masking
+    New tuning is masked by previous violation
+    Fix: configuration reverting? or (option tuning, violation pair) or eliminate this individual after detecting
+        Once we found optimal, eliminate?
+    give weights to every option tuned. report possibility of each option to cause violations instead of focusing on single option?
+
+    What should we do after detecting violations?
+        Not selecting individuals that contain module failure violations
+
+

@@ -6,7 +6,7 @@ import shutil
 import time
 from copy import deepcopy
 from datetime import date
-from config import MODULE_NAME, FITNESS_MODE, ENABLE_CROSSOVER, CONFIGURATION_REVERTING, CONFIG_FILE_PATH, \
+from config import MODULE_NAME, FITNESS_MODE, CONFIGURATION_REVERTING, CONFIG_FILE_PATH, \
     BACKUP_CONFIG_SAVE_PATH, DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR, APOLLO_RECORDS_DIR, INITIAL_SCENARIO_RECORD_DIR
 from environment.cyber_env_operation import cyber_env_init, delete_records, connect_bridge, delete_data_core
 from optimization_algorithms.genetic_algorithm.ga import ga_init, crossover, select, file_init, mutation, \
@@ -19,8 +19,6 @@ from scenario_handling.run_scenario import run_scenarios, check_default_running
 from testing_approaches.interface import get_record_info_by_approach, extract_record_info
 from tools.script.config_file_handler.parser_apollo import parser2class
 
-
-# from tools.config_file_handler.parser_apollo import parser2class
 
 
 class GARunner:
@@ -77,12 +75,12 @@ def ga_main(module_config_path):
         # bridge = connect_bridge()
         delete_data_core()
 
-        if ENABLE_CROSSOVER:
-            individual_list_after_crossover = crossover(individual_list)
-            individual_list_after_mutate = mutation(individual_list_after_crossover, option_type_list, option_obj_list,
-                                                    range_list)
-        else:
-            individual_list_after_mutate = mutation(individual_list, option_type_list, option_obj_list, range_list)
+        # if ENABLE_CROSSOVER:
+        individual_list_after_crossover = crossover(individual_list)
+        individual_list_after_mutate = mutation(individual_list_after_crossover, option_type_list, option_obj_list,
+                                                range_list)
+        # else:
+        #     individual_list_after_mutate = mutation(individual_list, option_type_list, option_obj_list, range_list)
 
         individual_num = 0
 
@@ -149,7 +147,7 @@ def ga_main(module_config_path):
                     # report option tuning
                     with open(option_tuning_file_path, "a") as f:
                         f.write(f"{gen_ind_id}\n")
-                        f.write(f"  Total Option Tuning:\n    {option_tuning_str}")
+                        f.write(f"  Total Option Tuning:\n{option_tuning_str}")
                         f.write(f"  Current Option Tuning: {option_tuning_item}\n")
                         f.write(f"  Violation Emergence Num: {len(generated_individual.violations_emerged_results)}\n")
                         f.write(f"  Violation: {generated_individual.violations_emerged_results}\n")

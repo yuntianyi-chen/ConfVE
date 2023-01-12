@@ -26,8 +26,6 @@ class ModuleOracle(OracleInterface):
         ]
 
     def on_new_message(self, topic: str, message, t):
-        # print(f"-------------------\n{topic}\n\n{message}\n\n{t}")
-
         if topic == '/apollo/routing_response':
             self.received_routing = True
         if topic == '/apollo/planning':

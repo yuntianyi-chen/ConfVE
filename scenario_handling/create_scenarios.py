@@ -54,7 +54,7 @@ class Scenario:
         time.sleep(0.5)
         cmd = f"docker exec -d {get_container_name()} /apollo/bazel-bin/cyber/tools/cyber_recorder/cyber_recorder record -o /apollo/records/{self.record_name} -a &"
         recorder_subprocess = subprocess.Popen(cmd, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        time.sleep(0.5)
+        time.sleep(1)
         return recorder_subprocess
 
     def stop_recorder(self, recorder_subprocess):

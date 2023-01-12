@@ -87,7 +87,7 @@ MAP_DATA_PATH = f'{MAP_PATH}/map_pickle_data'
 ##################################
 # Configuration Control
 CONFIGURATION_REVERTING = False # Tune back after detecting violations
-ENABLE_CROSSOVER = True
+# ENABLE_CROSSOVER = True
 
 ##################################
 OPT_MODE = "GA"  # GA/DRL/Random

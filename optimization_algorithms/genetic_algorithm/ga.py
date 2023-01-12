@@ -2,7 +2,7 @@ import os
 import random
 from copy import deepcopy
 from config import GENERATION_LIMIT, INIT_POP_SIZE, SELECT_NUM_RATIO, MAGGIE_ROOT, \
-    DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR
+    DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR, AV_TESTING_APPROACH
 from range_analysis.range_analysis import range_init
 from range_analysis.tuning_option_item import OptionTuningItem
 
@@ -121,7 +121,7 @@ def ga_init(option_obj_list):
 def file_init(time_str):
     # violation_save_file_path = f"{MAGGIE_ROOT}/data/violation_results/violation_results_{time_str}.txt"
     # ind_fitness_save_file_path = f"{MAGGIE_ROOT}/data/ind_fitness/ind_fitness_{time_str}.txt"
-    base_path = f"{MAGGIE_ROOT}/data/exp_results/{time_str}"
+    base_path = f"{MAGGIE_ROOT}/data/exp_results/{AV_TESTING_APPROACH}/{time_str}"
     if not os.path.exists(base_path):
         os.makedirs(base_path)
 

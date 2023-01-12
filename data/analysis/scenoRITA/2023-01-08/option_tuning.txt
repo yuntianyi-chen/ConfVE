@@ -4,22 +4,27 @@ Generation_0_Config_2
   Violation: [(9, ('comfort', 'Deceleration exceeded max'))]
   Range Change: 93, search_beam_radius_intensity, [-10001, 10001]->[-10001, 9894]
 Generation_0_Config_12
+    220, enable_check_parallel_trajectory, false->true
   Option Tuning: crossover
   Violation Emergence Num: 1
   Violation: [(9, ('comfort', 'Deceleration exceeded max'))]
 Generation_0_Config_17
+    79, keep_clear_low_speed_penalty, 10.0->660.0
   Option Tuning: crossover
   Violation Emergence Num: 1
   Violation: [(9, ('comfort', 'Deceleration exceeded max'))]
 Generation_0_Config_24
+    220, enable_check_parallel_trajectory, false->true
   Option Tuning: crossover
   Violation Emergence Num: 1
   Violation: [(9, ('comfort', 'Deceleration exceeded max'))]
 Generation_0_Config_25
+    253, open_space_fallback_collision_time_buffer, 5.0->-4996.3
   Option Tuning: crossover
   Violation Emergence Num: 1
   Violation: [(5, ('comfort', 'Deceleration exceeded max'))]
 Generation_0_Config_29
+    159, weight_end_state, 1.0->7916.5
   Option Tuning: crossover
   Violation Emergence Num: 1
   Violation: [(9, ('comfort', 'Deceleration exceeded max'))]

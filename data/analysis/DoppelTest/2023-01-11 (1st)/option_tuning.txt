@@ -370,7 +370,7 @@ Generation_1_Config_27
   Range Change: 218, delta_t, [-10001, 10001]->[-9567, 10001]
 Generation_1_Config_28
   Total Option Tuning:
-        65, dense_unit_s, 0.25->2752.68
+    65, dense_unit_s, 0.25->2752.68
     75, default_speed_cost, 1.0e3->1.0e36
     208, kappa_penalty_weight, 100.0->6295.9
   Current Option Tuning: position: 75, type:e_number, key: default_speed_cost, pre_value: 1.0e3, cur_value: 1.0e36
@@ -395,7 +395,7 @@ Generation_1_Config_33
   Range Change: 77, low_speed_penalty, [-10001, 10001]->[-8773, 10001]
 Generation_1_Config_34
   Total Option Tuning:
-        32, lat_acc_weight, 1000.0->6279.3
+    32, lat_acc_weight, 1000.0->6279.3
     69, jerk_weight, 10.0->-5153.6
     167, max_time_sample_scaling, 1.2->-2128.1
     226, gear_shift_period_duration, 2.0->-6784.7
@@ -422,7 +422,7 @@ Generation_1_Config_40
   Range Change: 260, pull_over_road_edge_buffer, [-10001, 10001]->[-10001, 16]
 Generation_1_Config_41
   Total Option Tuning:
-        79, keep_clear_low_speed_penalty, 10.0->660.0
+    79, keep_clear_low_speed_penalty, 10.0->660.0
     93, search_beam_radius_intensity, 0.08->-2477.34
     167, max_time_sample_scaling, 1.2->-2128.1
     265, enable_lane_change_urgency_check, false->true
@@ -441,7 +441,7 @@ Generation_1_Config_42
   Range Change: 217, delta_t, [-10001, 10001]->[-10001, 577]
 Generation_1_Config_44
   Total Option Tuning:
-        65, dense_unit_s, 0.25->2752.68
+    65, dense_unit_s, 0.25->2752.68
     208, kappa_penalty_weight, 100.0->6295.9
     260, pull_over_road_edge_buffer, 0.15->8650.53
   Current Option Tuning: position: 260, type:float, key: pull_over_road_edge_buffer, pre_value: 0.15, cur_value: 8650.53

@@ -1,0 +1,40 @@
+Generation_0_Config_0
+  Vio Intro: 1
+  Vio Remov: 0
+  Fitness(mode: intro): 1
+Generation_0_Config_1
+  Vio Intro: 1
+  Vio Remov: 0
+  Fitness(mode: intro): 1
+Generation_0_Config_2
+  Vio Intro: 1
+  Vio Remov: 0
+  Fitness(mode: intro): 1
+Generation_0_Config_4
+  Vio Intro: 11
+  Vio Remov: 3
+  Fitness(mode: intro): 11
+Generation_0_Config_12
+  Vio Intro: 12
+  Vio Remov: 3
+  Fitness(mode: intro): 12
+Generation_0_Config_16
+  Vio Intro: 12
+  Vio Remov: 3
+  Fitness(mode: intro): 12
+Generation_0_Config_19
+  Vio Intro: 13
+  Vio Remov: 3
+  Fitness(mode: intro): 13
+Generation_2_Config_21
+  Vio Intro: 13
+  Vio Remov: 3
+  Fitness(mode: intro): 13
+Generation_3_Config_22
+  Vio Intro: 13
+  Vio Remov: 3
+  Fitness(mode: intro): 13
+Generation_3_Config_48
+  Vio Intro: 13
+  Vio Remov: 3
+  Fitness(mode: intro): 13
