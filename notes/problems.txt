@@ -10,3 +10,4 @@ Configuration Testing:
 ----------
 scenoRITA:
 1. Fast acceleration includes the max acc limit (>=), DoppelTest doesn't (>)
+2. produceTrace() in map_info_parser.py --- temp, p1, p2

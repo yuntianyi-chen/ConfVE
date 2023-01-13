@@ -31,6 +31,8 @@ TO DO RIGHT NOW!!!
     stats about violation types, total num, unique nums
     add a report to build correlation between options and violation types
 
+0. if map exists, if not, generate and save
+
 0. to reduce non-determinism
     rerun bug-revealing ones and default configuration, not all
         e.g., once planning failure occurs, rerun to decide

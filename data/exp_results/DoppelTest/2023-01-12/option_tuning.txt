@@ -1,0 +1,60 @@
+Generation_0_Config_2
+  Total Option Tuning:
+    35, ref_s_weight, 100.0->-4711.6
+  Current Option Tuning: position: 35, type:float, key: ref_s_weight, pre_value: 100.0, cur_value: -4711.6
+  Violation Emergence Num: 11
+  Violation: [(1, ('uu_stop', 'stop by SS_stopsign_0')), (2, ('module', 'planning failure', 'no planning message')), (3, ('module', 'planning failure', 'no planning message')), (4, ('module', 'planning failure', 'no planning message')), (5, ('module', 'planning failure', 'no planning message')), (6, ('collision', 292440)), (6, ('collision', 678202)), (6, ('module', 'planning failure', 'no planning message')), (7, ('module', 'planning failure', 'no planning message')), (8, ('module', 'planning failure', 'no planning message')), (9, ('module', 'planning failure', 'no planning message'))]
+  Range Change: 35, ref_s_weight, [-10001, 10001]->[-4711, 10001]
+Generation_0_Config_7
+  Total Option Tuning:
+    131, ipopt_max_iter, 100->-2789
+  Current Option Tuning: position: 131, type:integer, key: ipopt_max_iter, pre_value: 100, cur_value: -2789
+  Violation Emergence Num: 1
+  Violation: [(1, ('collision', 113265))]
+  Range Change: 131, ipopt_max_iter, [-10001, 10001]->[-2789, 10001]
+Generation_0_Config_9
+  Total Option Tuning:
+    34, ref_v_weight, 5.0->-7779.1
+  Current Option Tuning: position: 34, type:float, key: ref_v_weight, pre_value: 5.0, cur_value: -7779.1
+  Violation Emergence Num: 4
+  Violation: [(1, ('uu_stop', 'stop by SS_stopsign_0')), (2, ('uu_stop', 'stop by SS_stopsign_1')), (6, ('collision', 292440)), (6, ('collision', 678202))]
+  Range Change: 34, ref_v_weight, [-10001, 10001]->[-7779, 10001]
+Generation_0_Config_11
+  Total Option Tuning:
+    84, max_acceleration, 2.0->-1636.2
+    243, parking_depth_buffer, 0.2->-1615.0
+  Current Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(1, ('collision', 113265))]
+defaultGeneration_0_Config_12
+  Total Option Tuning:
+    34, ref_v_weight, 5.0->-7779.1
+  Current Option Tuning: crossover
+  Violation Emergence Num: 4
+  Violation: [(1, ('uu_stop', 'stop by SS_stopsign_0')), (2, ('uu_stop', 'stop by SS_stopsign_1')), (6, ('collision', 292440)), (6, ('collision', 678202))]
+defaultGeneration_0_Config_15
+  Total Option Tuning:
+    34, ref_v_weight, 5.0->-7779.1
+  Current Option Tuning: crossover
+  Violation Emergence Num: 4
+  Violation: [(1, ('uu_stop', 'stop by SS_stopsign_0')), (2, ('uu_stop', 'stop by SS_stopsign_1')), (6, ('collision', 292440)), (6, ('collision', 678202))]
+defaultGeneration_0_Config_18
+  Total Option Tuning:
+    147, weight_steer, 0.3->-8902.8
+  Current Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(1, ('collision', 113265))]
+defaultGeneration_0_Config_22
+  Total Option Tuning:
+    44, accel_weight, 10.0->382.0
+  Current Option Tuning: crossover
+  Violation Emergence Num: 1
+  Violation: [(1, ('collision', 113265))]
+defaultGeneration_0_Config_32
+  Total Option Tuning:
+    35, ref_s_weight, 100.0->-4711.6
+    110, point_extension, 0.0->4520.7
+  Current Option Tuning: position: 110, type:float, key: point_extension, pre_value: 0.0, cur_value: 4520.7
+  Violation Emergence Num: 11
+  Violation: [(1, ('uu_stop', 'stop by SS_stopsign_0')), (2, ('module', 'planning failure', 'no planning message')), (3, ('module', 'planning failure', 'no planning message')), (4, ('module', 'planning failure', 'no planning message')), (5, ('module', 'planning failure', 'no planning message')), (6, ('collision', 292440)), (6, ('collision', 678202)), (6, ('module', 'planning failure', 'no planning message')), (7, ('module', 'planning failure', 'no planning message')), (8, ('module', 'planning failure', 'no planning message')), (9, ('module', 'planning failure', 'no planning message'))]
+  Range Change: 110, point_extension, [-10001, 10001]->[-10001, 4520]
