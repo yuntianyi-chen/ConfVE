@@ -4,7 +4,7 @@ import signal
 import glob
 import subprocess
 import time
-from config import APOLLO_ROOT, TRAFFIC_LIGHT_MODE, BACKUP_RECORD_SAVE_DIR
+from config import APOLLO_ROOT, TRAFFIC_LIGHT_MODE, BACKUP_RECORD_SAVE_DIR, APOLLO_RECORDS_DIR
 from environment.container_settings import get_container_name
 from tools.traffic_light_control.TrafficControlManager import TrafficControlManager
 
@@ -54,13 +54,10 @@ class Scenario:
         time.sleep(0.5)
 
     def delete_record(self):
-        os.remove(f"{APOLLO_ROOT}/records/{self.record_name}.00000")
+        os.remove(f"{APOLLO_RECORDS_DIR}/{self.record_name}.00000")
 
-    def save_record(self, time_str):
-        backup_record_file_save_path = f"{BACKUP_RECORD_SAVE_DIR}/{time_str}"
-        if not os.path.exists(backup_record_file_save_path):
-            os.makedirs(backup_record_file_save_path)
-        shutil.copy(f"{APOLLO_ROOT}/records/{self.record_name}.00000",
+    def save_record(self, backup_record_file_save_path):
+        shutil.copy(f"{APOLLO_RECORDS_DIR}/{self.record_name}.00000",
                     f"{backup_record_file_save_path}/{self.record_name}.00000")
 
     def stop_subprocess(self, p):

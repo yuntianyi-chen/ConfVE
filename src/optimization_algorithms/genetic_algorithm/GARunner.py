@@ -3,7 +3,6 @@ import time
 from config import DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR, APOLLO_RECORDS_DIR, INITIAL_SCENARIO_RECORD_DIR, DEFAULT_CONFIG_FILE_PATH, GENERATION_LIMIT, INIT_POP_SIZE
 from config_file_handler.parser_apollo import config_file_parser2obj
 from environment.MapLoader import MapLoader
-from environment.cyber_env_operation import delete_records, delete_data_core
 from optimization_algorithms.genetic_algorithm.ga import crossover, select, mutation, generate_individuals, mutate
 from range_analysis.RangeAnalyzer import RangeAnalyzer
 from scenario_handling.FileOutputManager import FileOutputManager
@@ -20,10 +19,11 @@ class GARunner:
 
     def ga_runner(self):
         start_time = time.time()
-        delete_records(records_path=APOLLO_RECORDS_DIR, mk_dir=True)
+
         config_file_obj = config_file_parser2obj(DEFAULT_CONFIG_FILE_PATH)
         range_analyzer = RangeAnalyzer(config_file_obj)
         file_output_manager = FileOutputManager()
+        file_output_manager.delete_dir(dir_path=APOLLO_RECORDS_DIR, mk_dir=True)
         message_handler = MessageHandler()
 
         print("Initial Scenario Violation Info:")
@@ -46,7 +46,7 @@ class GARunner:
             print(f"Generation_{generation_num}")
             print("-------------------------------------------------")
 
-            delete_data_core()
+            file_output_manager.delete_data_core()
 
             individual_list_after_crossover = crossover(individual_list)
             individual_list_after_mutate = mutation(individual_list_after_crossover, config_file_obj, range_analyzer)

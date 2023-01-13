@@ -3,8 +3,8 @@ import pickle
 import shutil
 from datetime import date
 from config import BACKUP_CONFIG_SAVE_DIR, MODULE_NAME, CURRENT_CONFIG_FILE_PATH, FITNESS_MODE, \
-    AV_TESTING_APPROACH, DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR, APOLLO_RECORDS_DIR, PROJECT_ROOT
-from environment.cyber_env_operation import delete_records
+    AV_TESTING_APPROACH, DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR, APOLLO_RECORDS_DIR, PROJECT_ROOT, \
+    BACKUP_RECORD_SAVE_DIR, APOLLO_ROOT
 
 
 class FileOutputManager:
@@ -39,14 +39,28 @@ class FileOutputManager:
         with open(self.record_mapping_file_path, "w") as f:
             print()
 
-        if os.path.exists(DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR):
-            delete_records(records_path=DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR, mk_dir=False)
+        self.delete_dir(dir_path=DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR, mk_dir=False)
+        self.backup_record_file_save_path = f"{BACKUP_RECORD_SAVE_DIR}/{self.time_str}"
+        self.delete_dir(dir_path=self.backup_record_file_save_path, mk_dir=True)
+        self.config_file_save_path = f"{BACKUP_CONFIG_SAVE_DIR}/{self.time_str}"
+        self.delete_dir(dir_path=self.config_file_save_path, mk_dir=True)
+
+
+    def delete_data_core(self):
+        try:
+            shutil.rmtree(f"{APOLLO_ROOT}/data/core")
+            os.mkdir(f"{APOLLO_ROOT}/data/core")
+        except OSError as ose:
+            print(ose)
+
+    def delete_dir(self, dir_path, mk_dir):
+        if os.path.exists(dir_path):
+            shutil.rmtree(dir_path)
+        if mk_dir:
+            os.mkdir(dir_path)
 
     def save_config_file(self, gen_ind_id):
-        config_file_save_path = f"{BACKUP_CONFIG_SAVE_DIR}/{self.time_str}/{gen_ind_id}"
-        if not os.path.exists(config_file_save_path):
-            os.makedirs(config_file_save_path)
-        shutil.copy(CURRENT_CONFIG_FILE_PATH, f"{config_file_save_path}/{MODULE_NAME}_config.pb.txt")
+        shutil.copy(CURRENT_CONFIG_FILE_PATH, f"{self.config_file_save_path}/{gen_ind_id}/{MODULE_NAME}_config.pb.txt")
 
     def print_violation_results(self, generated_individual):
         print(f" Vio Results: {[len(item) for item in generated_individual.violation_results_list]}")
@@ -60,7 +74,7 @@ class FileOutputManager:
     def handle_scenario_record(self, scenario_list):
         for scenario in scenario_list:
             if scenario.has_emerged_violations:
-                scenario.save_record(self.time_str)
+                scenario.save_record(self.backup_record_file_save_path)
             else:
                 scenario.delete_record()
 
