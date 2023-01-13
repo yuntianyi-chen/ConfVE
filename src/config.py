@@ -33,6 +33,7 @@ DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR = f"/home/cloudsky/Research/Apollo/Bac
 BACKUP_CONFIG_SAVE_DIR = f"/home/cloudsky/Research/Apollo/Backup/{AV_TESTING_APPROACH}/config_files"
 BACKUP_RECORD_SAVE_DIR = f"/home/cloudsky/Research/Apollo/Backup/{AV_TESTING_APPROACH}/records"
 MAP_DIR = f'{PROJECT_ROOT}/data/maps/{MAP_NAME}'
+MY_SCRIPTS_DIR = f"{APOLLO_ROOT}/scripts/my_scripts"
 
 # FILE PATH
 MANUAL_ADC_ROUTE_PATH = f"{PROJECT_ROOT}/data/analysis/{AV_TESTING_APPROACH}/adc_route.csv"
@@ -40,7 +41,6 @@ DEFAULT_CONFIG_FILE_PATH = f"{PROJECT_ROOT}/data/config_files/{MODULE_NAME}/conf
 CURRENT_CONFIG_FILE_PATH = f"{APOLLO_ROOT}/modules/{MODULE_NAME}/conf/{MODULE_NAME}_config.pb.txt"
 HD_MAP_PATH = f'{MAP_DIR}/base_map.bin'
 MAP_DATA_PATH = f'{MAP_DIR}/map_pickle_data'
-
 
 ########################
 # For randomly generating scenarios
@@ -55,3 +55,6 @@ APOLLO_VEHICLE_LENGTH = 4.933
 APOLLO_VEHICLE_WIDTH = 2.11
 APOLLO_VEHICLE_HEIGHT = 1.48
 APOLLO_VEHICLE_back_edge_to_center = 1.043
+
+
+OBS_TYPE_DICT = {3: "PEDESTRIAN", 4: "BICYCLE", 5: "VEHICLE"}

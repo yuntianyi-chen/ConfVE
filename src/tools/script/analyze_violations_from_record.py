@@ -1,13 +1,12 @@
 from os import listdir
-
+from config import INITIAL_SCENARIO_RECORD_DIR
 from environment.MapLoader import MapLoader
-# from environment.container_settings import load_map_data
 from objectives.measure_objectives import measure_violation_number
 
 if __name__ == '__main__':
     SINGLE_TEST = False
     MapLoader()
-    record_dir = "/home/cloudsky/Research/Apollo/Backup/scenoRITA/records/using"
+    record_dir = INITIAL_SCENARIO_RECORD_DIR
     file_list = listdir(record_dir)
     file_list.sort()
     results = []

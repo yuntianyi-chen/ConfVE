@@ -4,7 +4,7 @@ import shutil
 from datetime import date
 from config import BACKUP_CONFIG_SAVE_DIR, MODULE_NAME, CURRENT_CONFIG_FILE_PATH, FITNESS_MODE, \
     AV_TESTING_APPROACH, DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR, APOLLO_RECORDS_DIR, PROJECT_ROOT, \
-    BACKUP_RECORD_SAVE_DIR, APOLLO_ROOT
+    BACKUP_RECORD_SAVE_DIR, APOLLO_ROOT, MY_SCRIPTS_DIR
 
 
 class FileOutputManager:
@@ -12,7 +12,6 @@ class FileOutputManager:
     def __init__(self):
         self.time_str = str(date.today())
         self.optimal_fitness = 0
-        # option_obj_list, original_range_list, range_list
         self.file_init()
 
     def file_init(self):
@@ -25,19 +24,24 @@ class FileOutputManager:
         self.option_tuning_file_path = f"{base_path}/option_tuning.txt"
         self.range_analysis_file_path = f"{base_path}/range_analysis.txt"
         self.record_mapping_file_path = f"{base_path}/record_mapping.txt"
+        self.vio_csv_path = f"{base_path}/vio_csv.csv"
 
         self.ind_list_pickle_dump_data_path = f"{base_path}/ind_list_pickle_pop"
 
         with open(self.violation_save_file_path, "w") as f:
-            print()
+            pass
         with open(self.ind_fitness_save_file_path, "w") as f:
-            print()
+            pass
         with open(self.option_tuning_file_path, "w") as f:
-            print()
+            pass
         with open(self.range_analysis_file_path, "w") as f:
-            print()
+            pass
         with open(self.record_mapping_file_path, "w") as f:
-            print()
+            pass
+        with open(self.vio_csv_path, "w") as f:
+            f.write("record_name, violation_type, violation_info, scenario_id, related_options")
+
+
 
         self.delete_dir(dir_path=DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR, mk_dir=False)
         self.backup_record_file_save_path = f"{BACKUP_RECORD_SAVE_DIR}/{self.time_str}"
@@ -45,6 +49,13 @@ class FileOutputManager:
         self.config_file_save_path = f"{BACKUP_CONFIG_SAVE_DIR}/{self.time_str}"
         self.delete_dir(dir_path=self.config_file_save_path, mk_dir=True)
 
+        self.move_scripts()
+
+    def move_scripts(self):
+        target_scripts_dir = MY_SCRIPTS_DIR
+        if not os.path.exists(target_scripts_dir):
+            source_scripts_dir = f"{PROJECT_ROOT}/data/scripts"
+            shutil.copytree(source_scripts_dir, target_scripts_dir)
 
     def delete_data_core(self):
         try:
@@ -60,13 +71,8 @@ class FileOutputManager:
             os.mkdir(dir_path)
 
     def save_config_file(self, gen_ind_id):
+        os.mkdir(f"{self.config_file_save_path}/{gen_ind_id}")
         shutil.copy(CURRENT_CONFIG_FILE_PATH, f"{self.config_file_save_path}/{gen_ind_id}/{MODULE_NAME}_config.pb.txt")
-
-    def print_violation_results(self, generated_individual):
-        print(f" Vio Results: {[len(item) for item in generated_individual.violation_results_list]}")
-        print(f" Vio Emerged Num: {generated_individual.violation_intro}")
-        print(f" Vio Emerged Results: {generated_individual.violations_emerged_results}")
-
 
     def save_default_scenarios(self):
         shutil.copytree(APOLLO_RECORDS_DIR, DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR)
@@ -87,6 +93,11 @@ class FileOutputManager:
         if individual.fitness > self.optimal_fitness:
             self.optimal_fitness = individual.fitness
 
+    def print_violation_results(self, generated_individual):
+        print(f" Vio Results: {[len(item) for item in generated_individual.violation_results_list]}")
+        print(f" Vio Emerged Num: {generated_individual.violation_intro}")
+        print(f" Vio Emerged Results: {generated_individual.violations_emerged_results}")
+
     def save_violation_results(self, generated_individual, scenario_list):
         for i in range(len(scenario_list)):
             violation_results = generated_individual.violation_results_list[i]
@@ -94,6 +105,13 @@ class FileOutputManager:
                 with open(self.violation_save_file_path, "a") as f:
                     f.write(f"Record: {scenario_list[i].record_name}\n")
                     f.write(f"  Violation Results: {violation_results}\n")
+
+    def save_violation_stats(self):
+        # f.write("record_name, violation_type, violation_info, scenario_id, related_options")
+
+        with open(self.vio_csv_path, "w") as f:
+            f.write("")
+
 
     def output_initial_record2default_mapping(self, pre_record_info, name_prefix):
         record_name_list = [f"{name_prefix}_Scenario_{str(i)}" for i in range(pre_record_info.count)]
@@ -131,10 +149,9 @@ class FileOutputManager:
             f.write(f"  Current Option Tuning: {option_tuning_item}\n")
             f.write(f"  Violation Emergence Num: {len(generated_individual.violations_emerged_results)}\n")
             f.write(f"  Violation: {generated_individual.violations_emerged_results}\n")
-            f.write(range_change_str)
+            f.write(f"{range_change_str}\n")
 
     def save_individual_by_pickle(self, ind_list):
         ind_list.sort(reverse=True, key=lambda x: x.fitness)
         with open(self.ind_list_pickle_dump_data_path, 'wb') as f:
             pickle.dump(ind_list, f, protocol=4)
-

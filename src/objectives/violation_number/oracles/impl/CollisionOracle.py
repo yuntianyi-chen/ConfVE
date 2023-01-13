@@ -1,5 +1,7 @@
 import math
 from typing import List, Optional, Tuple
+
+from config import OBS_TYPE_DICT
 from objectives.violation_number.oracles.OracleInterface import OracleInterface
 from modules.localization.proto.localization_pb2 import LocalizationEstimate
 from modules.perception.proto.perception_obstacle_pb2 import PerceptionObstacles
@@ -13,7 +15,7 @@ from tools.utils import generate_adc_polygon, calculate_velocity
 class CollisionOracle(OracleInterface):
     last_localization: Optional[LocalizationEstimate]
     last_perception: Optional[PerceptionObstacles]
-    distances: List[Tuple[float, int]]
+    distances: List[Tuple[float, int, str]]
 
     def __init__(self) -> None:
         self.last_localization = None
@@ -47,7 +49,7 @@ class CollisionOracle(OracleInterface):
 
         for obs in self.last_perception.perception_obstacle:
             obs_polygon = Polygon([[x.x, x.y] for x in obs.polygon_point])
-            self.distances.append((adc_polygon.distance(obs_polygon), obs.id))
+            self.distances.append((adc_polygon.distance(obs_polygon), obs.id, OBS_TYPE_DICT[obs.type]))
 
     def is_adc_completely_stopped(self) -> bool:
         return False
@@ -65,7 +67,7 @@ class CollisionOracle(OracleInterface):
             return result
         for dis in self.distances:
             if dis[0] == 0.0:
-                violation = ('collision', dis[1])
+                violation = ('collision', f"{dis[1]} : {dis[2]}")
                 if violation not in result:
                     result.append(violation)
         return result

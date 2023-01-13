@@ -22,22 +22,22 @@
 -----------------------
 TO DO RIGHT NOW!!!
 -----------------------
-0. multi-container & Refactoring project
-
-0. Not selecting individuals that contain module failure violations to avoid violation masking
-
 0. Emerged violation results file
     output a csv file including features of violations
     stats about violation types, total num, unique nums
     add a report to build correlation between options and violation types
 
-0. if map exists, if not, generate and save
+0. Not selecting individuals that contain module failure violations to avoid violation masking
+
+0. multi-container
 
 0. to reduce non-determinism
     rerun bug-revealing ones and default configuration, not all
         e.g., once planning failure occurs, rerun to decide
 
-3. Distinguish violations
+1. bug-revealing violations judge
+
+1. Distinguish violations
         module failure - ([option id list], violation results)
     Eliminate duplicate
         similarity of duplicate	refer to scenoRITA
@@ -45,13 +45,12 @@ TO DO RIGHT NOW!!!
         Think about how to eliminate duplicate in the optimization process
              comparison similarity of features?
 
-
-1. test code coverage
+2. test code coverage
     use it to select initial scenarios
     significance: cover more code blocks that could reflect more option tuning.
     otherwise, some option tunings would never influence the system
 
-2. Scenarios-diversity
+3. Scenarios-diversity
     Get as many scenarios as possible from scenario generation approaches, reduce a reasonable number of scenarios by filtering.
     Initial Scenarios---diversity of vehicle maneuver, traffic controls, code coverage, violation types, lane coverage...
     filtering scenarios

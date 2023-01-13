@@ -36,11 +36,11 @@ class ModuleOracle(OracleInterface):
     def get_result(self):
         result = list()
         if not self.received_routing:
-            result.append(('module', 'routing failure', 'no routing response'))
+            result.append(('module', 'routing failure'))
         if not self.received_planning:
-            result.append(('module', 'planning failure', 'no planning message'))
+            result.append(('module', 'planning failure'))
         if not self.received_prediction:
-            result.append(('module', 'prediction failure', 'no prediction message'))
+            result.append(('module', 'prediction failure'))
         # elif self.distance_traveled == -1.0:
         #     result.append(('module', 'sim control failure'))
         return result

@@ -38,7 +38,6 @@ x. Traffic Lights
     extraction from records
     enable according to scenario violation types
 
-
 x. Violation Masking
     New tuning is masked by previous violation
     Fix: configuration reverting? or (option tuning, violation pair) or eliminate this individual after detecting
@@ -48,4 +47,8 @@ x. Violation Masking
     What should we do after detecting violations?
         Not selecting individuals that contain module failure violations
 
+x. Refactoring project
 
+x. if map exists, if not, generate and save
+
+x. auto move scripts to apollo dir

@@ -1,0 +1,15 @@
+Generation_0_Config_5
+  Total Option Tuning:
+    93, search_beam_radius_intensity, 0.08->-5799.58
+  Current Option Tuning: position: 93, type:float, key: search_beam_radius_intensity, pre_value: 0.08, cur_value: -5799.58
+  Violation Emergence Num: 2
+  Violation: [(8, ('module', 'planning failure', 'no planning message')), (9, ('module', 'planning failure', 'no planning message'))]
+  Range Change: 93, search_beam_radius_intensity, [-10001, 10001]->[-5799, 10001]
+Generation_0_Config_10
+  Total Option Tuning:
+    93, search_beam_radius_intensity, 0.08->-5799.58
+    123, traj_steer_penalty, 0.0->8978.8
+  Current Option Tuning: crossover
+  Violation Emergence Num: 2
+  Violation: [(8, ('module', 'planning failure', 'no planning message')), (9, ('module', 'planning failure', 'no planning message'))]
+  Range Change: default

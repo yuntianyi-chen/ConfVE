@@ -1,9 +1,9 @@
+import os
+import shutil
 
-def aa(alist):
-    alist[0]=9
+from config import MY_SCRIPTS_DIR, PROJECT_ROOT
 
-if __name__ == '__main__':
-    range_list = [1, 2, 3]
-    aa(range_list)
-
-    print(range_list)
+target_scripts_dir = f"{MY_SCRIPTS_DIR}/ddd"
+if not os.path.exists(target_scripts_dir):
+    source_scripts_dir = f"{PROJECT_ROOT}/data/scripts"
+    shutil.copytree(source_scripts_dir, target_scripts_dir)

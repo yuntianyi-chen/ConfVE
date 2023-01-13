@@ -1,14 +1,9 @@
 from itertools import groupby
-from typing import List, Dict, Set, Tuple, Optional
+from typing import List
 from shapely.geometry import Polygon
-# from apollo.utils import generate_adc_polygon, \
-#     construct_lane_boundary_linestring, generate_adc_polygon
-# from framework.oracles.OracleInterface import OracleInterface
-# from hdmap.MapParser import MapParser
 from datetime import datetime
-
-from objectives.violation_number.oracles.OracleInterface import OracleInterface
 from tools.hdmap.MapParser import MapParser
+from objectives.violation_number.oracles.OracleInterface import OracleInterface
 from tools.utils import generate_adc_polygon, construct_lane_boundary_linestring
 
 

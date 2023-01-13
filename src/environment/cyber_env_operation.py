@@ -1,9 +1,6 @@
-import os
-import shutil
 import subprocess
 import time
 import docker
-from config import APOLLO_ROOT
 from environment.container_settings import get_container_name
 from environment.toggle_sim_control import run_sim_control
 from tools.bridge.CyberBridge import Topics, CyberBridge
@@ -40,11 +37,6 @@ def kill_modules():
     time.sleep(1)
 
 
-def register_bridge_publishers(bridge):
-    for c in [Topics.Localization, Topics.Obstacles, Topics.TrafficLight, Topics.RoutingRequest]:
-        bridge.add_publisher(c)
-
-
 def dreamview_operation(operation):
     cmd = f"docker exec -d {get_container_name()} bash /apollo/scripts/bootstrap.sh {operation}"
     subprocess.run(cmd.split())
@@ -66,17 +58,6 @@ def modules_operation(operation):
     time.sleep(3)
 
 
-def cyber_setup():
-    cmd = f"docker exec -d {get_container_name()} source /apollo/cyber/setup.bash"
-    subprocess.run(cmd.split())
-    time.sleep(1)
-
-
-def get_docker_container_ip():
-    docker_container_info = docker.from_env().containers.get(get_container_name())
-    return docker_container_info.attrs['NetworkSettings']['IPAddress']
-
-
 def start_bridge():
     cmd = f"docker exec -d {get_container_name()} /apollo/scripts/bridge.sh"
     subprocess.run(cmd.split())
@@ -88,3 +69,19 @@ def start_bridge():
             return bridge
         except ConnectionRefusedError:
             time.sleep(1)
+
+
+def cyber_setup():
+    cmd = f"docker exec -d {get_container_name()} source /apollo/cyber/setup.bash"
+    subprocess.run(cmd.split())
+    time.sleep(1)
+
+
+def get_docker_container_ip():
+    docker_container_info = docker.from_env().containers.get(get_container_name())
+    return docker_container_info.attrs['NetworkSettings']['IPAddress']
+
+
+def register_bridge_publishers(bridge):
+    for c in [Topics.Localization, Topics.Obstacles, Topics.TrafficLight, Topics.RoutingRequest]:
+        bridge.add_publisher(c)

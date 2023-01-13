@@ -80,13 +80,6 @@ class TrafficSignalOracle(OracleInterface):
                 or self.is_adc_completely_stopped() is False:
             self.violated_at_traffic_signal_ids.add(crossing_traffic_signal_id)
 
-    def get_result(self):
-        result = list()
-        for traffic_signal_id in self.violated_at_traffic_signal_ids:
-            violation = ('traffic_signal', traffic_signal_id)
-            result.append(violation)
-        return result
-
     def parse_traffic_signal_stop_line_string_on_map(self, map_parser: MapParser) -> None:
         self.traffic_signal_stop_line_string_dict = dict()
         traffic_signal_ids = map_parser.get_signals()
@@ -129,3 +122,10 @@ class TrafficSignalOracle(OracleInterface):
             return True
 
         return False
+
+    def get_result(self):
+        result = list()
+        for traffic_signal_id in self.violated_at_traffic_signal_ids:
+            violation = ('traffic_signal', traffic_signal_id)
+            result.append(violation)
+        return result
