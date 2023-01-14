@@ -52,3 +52,10 @@ x. Refactoring project
 x. if map exists, if not, generate and save
 
 x. auto move scripts to apollo dir
+
+x. Emerged violation results file
+    output a csv file including features of violations
+    stats about violation types, total num, unique nums
+    add a report to build correlation between options and violation types
+
+x. Not selecting individuals that contain module failure violations to avoid violation masking

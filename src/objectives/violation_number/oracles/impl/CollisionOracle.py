@@ -67,7 +67,7 @@ class CollisionOracle(OracleInterface):
             return result
         for dis in self.distances:
             if dis[0] == 0.0:
-                violation = ('collision', f"{dis[1]} : {dis[2]}")
+                violation = ('collision', f"{dis[1]}: {dis[2]}")
                 if violation not in result:
                     result.append(violation)
         return result

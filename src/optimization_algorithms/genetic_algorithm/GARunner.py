@@ -66,14 +66,14 @@ class GARunner:
                                                      name_prefix=gen_ind_id)
 
                     # test each config settings under several groups of obstacles and adc routes
-                    run_scenarios(generated_individual, scenario_list, message_handler)
+                    run_scenarios(generated_individual, scenario_list, message_handler, is_default_running=False)
 
                     generated_individual.calculate_fitness()
 
                     ind_list.append(generated_individual)
 
                     file_output_manager.print_violation_results(generated_individual)
-                    file_output_manager.save_violation_results(generated_individual, scenario_list)
+                    file_output_manager.save_total_violation_results(generated_individual, scenario_list)
                     file_output_manager.handle_scenario_record(scenario_list)
 
                     if generated_individual.fitness > 0:
@@ -85,10 +85,11 @@ class GARunner:
                         range_change_str = range_analyzer.range_analyze(option_tuning_item, config_file_obj)
                         file_output_manager.save_config_file(gen_ind_id)
                         file_output_manager.save_fitness_result(generated_individual, gen_ind_id)
+                        file_output_manager.save_emerged_violation_stats(generated_individual, scenario_list)
                         file_output_manager.save_option_tuning_file(generated_individual, gen_ind_id,
                                                                     option_tuning_item,
                                                                     range_change_str)
-
+                        file_output_manager.save_count_dict_file()
                         # revert configuration after detecting violations
                         # generated_individual.configuration_reverting(do_reverting=CONFIGURATION_REVERTING)
 

@@ -22,13 +22,6 @@
 -----------------------
 TO DO RIGHT NOW!!!
 -----------------------
-0. Emerged violation results file
-    output a csv file including features of violations
-    stats about violation types, total num, unique nums
-    add a report to build correlation between options and violation types
-
-0. Not selecting individuals that contain module failure violations to avoid violation masking
-
 0. multi-container
 
 0. to reduce non-determinism

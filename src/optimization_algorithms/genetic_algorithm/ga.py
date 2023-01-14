@@ -1,7 +1,8 @@
 import random
 from copy import deepcopy
-from config import SELECT_NUM_RATIO, FITNESS_MODE
+from config import SELECT_NUM_RATIO, FITNESS_MODE, DETERMINISM_RERUN_TIMES
 from range_analysis.OptionTuningItem import OptionTuningItem
+from scenario_handling.run_scenarios import run_scenarios, start_running
 
 
 class IndividualWithFitness:
@@ -32,22 +33,25 @@ class IndividualWithFitness:
         else:
             self.fitness = self.violation_number * self.code_coverage * self.execution_time
 
-    def update_accumulated_objectives(self, violation_results, code_coverage, execution_time):
-        self.accumulated_objectives[0] += len(violation_results)
-        self.accumulated_objectives[1] += code_coverage
-        self.accumulated_objectives[2] += execution_time
-        self.violation_results_list.append(violation_results)
+    def update_accumulated_objectives(self, objectives):
+        self.accumulated_objectives[0] += len(objectives.violation_results)
+        self.accumulated_objectives[1] += objectives.code_coverage
+        self.accumulated_objectives[2] += objectives.execution_time
 
-    def update_violation_intro_remov(self, violation_results, scenario, scenario_count):
-        for violation in violation_results:
-            if violation not in scenario.original_violation_results:
-                scenario.update_violations()
-                self.violations_emerged_results.append((scenario_count, violation))
-                self.violation_intro += 1
-        for violation in scenario.original_violation_results:
-            if violation not in violation_results:
-                self.violations_removed_results.append((scenario_count, violation))
-                self.violation_remov += 1
+        self.violation_results_list.append(objectives.violation_results)
+
+    def update_violation_intro_remov(self, violations_emerged_results, violations_removed_results):
+        self.violations_emerged_results = violations_emerged_results
+        self.violation_intro = len(violations_emerged_results)
+        self.violations_removed_results = violations_removed_results
+        self.violation_remov = len(violations_removed_results)
+
+    def update_allow_selection(self):
+        for emerged_violation in self.violations_emerged_results:
+            if emerged_violation[1][0] == "module":
+                self.allow_selection = False
+                print(f"Not select for {emerged_violation[1][1]}")
+                break
 
     def update_id(self, id):
         self.id = id
@@ -70,6 +74,21 @@ class IndividualWithFitness:
         self.violations_emerged_results = []
         self.violations_removed_results = []
 
+        self.allow_selection = True
+
+        self.confirmed_determinism = False
+        self.confirmed_bug_revealing = False
+
+    def confirm_determinism(self, scenario, scenario_count, message_handler):
+        accumulated_emerged_results = []
+        for i in range(DETERMINISM_RERUN_TIMES):
+            violations_emerged_results, violations_removed_results, objectives = start_running(scenario, scenario_count,
+                                                                                               message_handler)
+            for emerged_violation in violations_emerged_results:
+                if emerged_violation not in accumulated_emerged_results:
+                    accumulated_emerged_results.append(emerged_violation)
+        return accumulated_emerged_results
+
 
 def generate_individuals(config_file_obj, population_size):
     generated_value_lists = list()
@@ -88,9 +107,11 @@ def generate_individuals(config_file_obj, population_size):
 
 
 def select(individual_list, config_file_obj):
+    filtered_individual_list = [item for item in individual_list if item.allow_selection]
+
     # select x with the least fitness, y randomly from the remaining, z new generated
     select_num_ratio = SELECT_NUM_RATIO
-    new_individual_list = get_unduplicated(individual_list, select_num_ratio, config_file_obj)
+    new_individual_list = get_unduplicated(filtered_individual_list, select_num_ratio, config_file_obj)
     return new_individual_list
 
 

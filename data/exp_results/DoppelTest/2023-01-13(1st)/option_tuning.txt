@@ -1,15 +1,87 @@
-Generation_0_Config_5
+Generation_0_Config_0
   Total Option Tuning:
-    93, search_beam_radius_intensity, 0.08->-5799.58
-  Current Option Tuning: position: 93, type:float, key: search_beam_radius_intensity, pre_value: 0.08, cur_value: -5799.58
-  Violation Emergence Num: 2
-  Violation: [(8, ('module', 'planning failure', 'no planning message')), (9, ('module', 'planning failure', 'no planning message'))]
-  Range Change: 93, search_beam_radius_intensity, [-10001, 10001]->[-5799, 10001]
-Generation_0_Config_10
+    263, allow_lane_borrowing, true->false
+  Current Option Tuning: position: 263, type:boolean, key: allow_lane_borrowing, pre_value: true, cur_value: false
+  Violation Emergence Num: 1
+  Violation: [(2, ('stop_sign', 'stopsign_1'))]
+  Range Change: 263, allow_lane_borrowing, ['true', 'false']->['true', 'false']
+
+Generation_0_Config_3
   Total Option Tuning:
-    93, search_beam_radius_intensity, 0.08->-5799.58
-    123, traj_steer_penalty, 0.0->8978.8
+    30, acc_weight, 2.0->-8560.1
+  Current Option Tuning: position: 30, type:float, key: acc_weight, pre_value: 2.0, cur_value: -8560.1
+  Violation Emergence Num: 12
+  Violation: [(0, ('module', 'planning failure', 'no planning message')), (1, ('module', 'planning failure', 'no planning message')), (2, ('module', 'planning failure', 'no planning message')), (3, ('module', 'planning failure', 'no planning message')), (4, ('module', 'planning failure', 'no planning message')), (5, ('module', 'planning failure', 'no planning message')), (6, ('collision', 292440)), (6, ('collision', 678202)), (6, ('module', 'planning failure', 'no planning message')), (7, ('module', 'planning failure', 'no planning message')), (8, ('module', 'planning failure', 'no planning message')), (9, ('module', 'planning failure', 'no planning message'))]
+  Range Change: 30, acc_weight, [-10001, 10001]->[-8560, 10001]
+
+Generation_0_Config_13
+  Total Option Tuning:
+    30, acc_weight, 2.0->-8560.1
   Current Option Tuning: crossover
-  Violation Emergence Num: 2
-  Violation: [(8, ('module', 'planning failure', 'no planning message')), (9, ('module', 'planning failure', 'no planning message'))]
+  Violation Emergence Num: 12
+  Violation: [(0, ('module', 'planning failure', 'no planning message')), (1, ('module', 'planning failure', 'no planning message')), (2, ('module', 'planning failure', 'no planning message')), (3, ('module', 'planning failure', 'no planning message')), (4, ('module', 'planning failure', 'no planning message')), (5, ('module', 'planning failure', 'no planning message')), (6, ('collision', 292440)), (6, ('collision', 678202)), (6, ('module', 'planning failure', 'no planning message')), (7, ('module', 'planning failure', 'no planning message')), (8, ('module', 'planning failure', 'no planning message')), (9, ('module', 'planning failure', 'no planning message'))]
   Range Change: default
+
+Generation_0_Config_14
+  Total Option Tuning:
+    30, acc_weight, 2.0->-8560.1
+    51, default_speed_cost, 1.0e3->1.0e-62
+  Current Option Tuning: crossover
+  Violation Emergence Num: 12
+  Violation: [(0, ('module', 'planning failure', 'no planning message')), (1, ('module', 'planning failure', 'no planning message')), (2, ('module', 'planning failure', 'no planning message')), (3, ('module', 'planning failure', 'no planning message')), (4, ('module', 'planning failure', 'no planning message')), (5, ('module', 'planning failure', 'no planning message')), (6, ('collision', 292440)), (6, ('collision', 678202)), (6, ('module', 'planning failure', 'no planning message')), (7, ('module', 'planning failure', 'no planning message')), (8, ('module', 'planning failure', 'no planning message')), (9, ('module', 'planning failure', 'no planning message'))]
+  Range Change: default
+
+Generation_0_Config_25
+  Total Option Tuning:
+    30, acc_weight, 2.0->-8560.1
+  Current Option Tuning: crossover
+  Violation Emergence Num: 12
+  Violation: [(0, ('module', 'planning failure', 'no planning message')), (1, ('module', 'planning failure', 'no planning message')), (2, ('module', 'planning failure', 'no planning message')), (3, ('module', 'planning failure', 'no planning message')), (4, ('module', 'planning failure', 'no planning message')), (5, ('module', 'planning failure', 'no planning message')), (6, ('collision', 292440)), (6, ('collision', 678202)), (6, ('module', 'planning failure', 'no planning message')), (7, ('module', 'planning failure', 'no planning message')), (8, ('module', 'planning failure', 'no planning message')), (9, ('module', 'planning failure', 'no planning message'))]
+  Range Change: default
+
+Generation_0_Config_31
+  Total Option Tuning:
+    149, weight_steer_rate, 3.0->4509.0
+    168, use_fix_time, false->true
+  Current Option Tuning: position: 168, type:boolean, key: use_fix_time, pre_value: false, cur_value: true
+  Violation Emergence Num: 1
+  Violation: [(1, ('collision', 113265))]
+  Range Change: 168, use_fix_time, ['true', 'false']->['true', 'false']
+
+Generation_0_Config_33
+  Total Option Tuning:
+    30, acc_weight, 2.0->-8560.1
+    198, apply_curvature_constraint, true->false
+  Current Option Tuning: position: 198, type:boolean, key: apply_curvature_constraint, pre_value: true, cur_value: false
+  Violation Emergence Num: 12
+  Violation: [(0, ('module', 'planning failure', 'no planning message')), (1, ('module', 'planning failure', 'no planning message')), (2, ('module', 'planning failure', 'no planning message')), (3, ('module', 'planning failure', 'no planning message')), (4, ('module', 'planning failure', 'no planning message')), (5, ('module', 'planning failure', 'no planning message')), (6, ('collision', 292440)), (6, ('collision', 678202)), (6, ('module', 'planning failure', 'no planning message')), (7, ('module', 'planning failure', 'no planning message')), (8, ('module', 'planning failure', 'no planning message')), (9, ('module', 'planning failure', 'no planning message'))]
+  Range Change: 198, apply_curvature_constraint, ['true', 'false']->['true', 'false']
+
+Generation_0_Config_39
+  Total Option Tuning:
+    102, point_extension, 0.0->1236.9
+    228, initial_gear_check_horizon, 15->-2069
+  Current Option Tuning: position: 228, type:integer, key: initial_gear_check_horizon, pre_value: 15, cur_value: -2069
+  Violation Emergence Num: 12
+  Violation: [(0, ('module', 'planning failure', 'no planning message')), (1, ('module', 'planning failure', 'no planning message')), (2, ('module', 'planning failure', 'no planning message')), (3, ('module', 'planning failure', 'no planning message')), (4, ('module', 'planning failure', 'no planning message')), (5, ('module', 'planning failure', 'no planning message')), (6, ('collision', 292440)), (6, ('collision', 678202)), (6, ('module', 'planning failure', 'no planning message')), (7, ('module', 'planning failure', 'no planning message')), (8, ('module', 'planning failure', 'no planning message')), (9, ('module', 'planning failure', 'no planning message'))]
+  Range Change: 228, initial_gear_check_horizon, [-10001, 10001]->[-2069, 10001]
+
+Generation_0_Config_43
+  Total Option Tuning:
+    30, acc_weight, 2.0->-8560.1
+    73, go_up_buffer, 5.0->2007.0
+  Current Option Tuning: position: 73, type:float, key: go_up_buffer, pre_value: 5.0, cur_value: 2007.0
+  Violation Emergence Num: 12
+  Violation: [(0, ('module', 'planning failure', 'no planning message')), (1, ('module', 'planning failure', 'no planning message')), (2, ('module', 'planning failure', 'no planning message')), (3, ('module', 'planning failure', 'no planning message')), (4, ('module', 'planning failure', 'no planning message')), (5, ('module', 'planning failure', 'no planning message')), (6, ('collision', 292440)), (6, ('collision', 678202)), (6, ('module', 'planning failure', 'no planning message')), (7, ('module', 'planning failure', 'no planning message')), (8, ('module', 'planning failure', 'no planning message')), (9, ('module', 'planning failure', 'no planning message'))]
+  Range Change: 73, go_up_buffer, [-10001, 10001]->[-10001, 2007]
+
+Generation_0_Config_44
+  Total Option Tuning:
+    30, acc_weight, 2.0->-8560.1
+    51, default_speed_cost, 1.0e3->1.0e-62
+    250, open_space_prediction_time_period, 5.0->1898.0
+  Current Option Tuning: position: 250, type:float, key: open_space_prediction_time_period, pre_value: 5.0, cur_value: 1898.0
+  Violation Emergence Num: 12
+  Violation: [(0, ('module', 'planning failure', 'no planning message')), (1, ('module', 'planning failure', 'no planning message')), (2, ('module', 'planning failure', 'no planning message')), (3, ('module', 'planning failure', 'no planning message')), (4, ('module', 'planning failure', 'no planning message')), (5, ('module', 'planning failure', 'no planning message')), (6, ('collision', 292440)), (6, ('collision', 678202)), (6, ('module', 'planning failure', 'no planning message')), (7, ('module', 'planning failure', 'no planning message')), (8, ('module', 'planning failure', 'no planning message')), (9, ('module', 'planning failure', 'no planning message'))]
+  Range Change: 250, open_space_prediction_time_period, [-10001, 10001]->[-10001, 1898]
+

@@ -1,6 +1,6 @@
 import time
 import subprocess
-from config import MAX_RECORD_TIME, TRAFFIC_LIGHT_MODE
+from config import MAX_RECORD_TIME, TRAFFIC_LIGHT_MODE, DETERMINISM_RERUN_TIMES
 from environment.container_settings import get_container_name
 from environment.cyber_env_operation import cyber_env_init
 from modules.routing.proto.routing_pb2 import RoutingRequest
@@ -57,37 +57,74 @@ def send_routing_request_by_channel(bridge, routing_request_message):
     bridge.publish(Topics.RoutingRequest, routing_request_message.SerializeToString())
 
 
-def run_scenarios(generated_individual, scenario_list, message_handler):
+def start_running(scenario, scenario_count, message_handler):
+    print(f"  Scenario_{scenario_count}")
+    print("    Start recorder...")
+    recorder_subprocess = scenario.start_recorder()
+    register_obstacles_by_channel(message_handler, scenario.obs_perception_messages)
+
+    if TRAFFIC_LIGHT_MODE == "read":
+        register_traffic_lights_by_channel(message_handler, scenario.traffic_control_msg)
+    elif TRAFFIC_LIGHT_MODE == "random":
+        register_traffic_lights_by_channel(message_handler, scenario.traffic_control_manager)
+
+    send_routing_request_by_channel(message_handler.bridge, scenario.routing_request_message)
+
+
+    time.sleep(MAX_RECORD_TIME)
+    # Stop recording messages and producing perception messages
+    print("    Stop recorder...")
+    scenario.stop_recorder(recorder_subprocess)
+
+    message_handler.obs_stop()
+    message_handler.traffic_lights_stop()
+
+    objectives = measure_objectives_individually(scenario)
+    violations_emerged_results, violations_removed_results = check_emerged_violations(objectives.violation_results, scenario,
+                                                                                      scenario_count)
+    return violations_emerged_results, violations_removed_results, objectives
+
+
+
+def run_scenarios(generated_individual, scenario_list, message_handler, is_default_running):
     # Restart cyber_env
     cyber_env_init()
 
     scenario_count = 0
 
     for scenario in scenario_list:
-        print(f"  Scenario_{scenario_count}")
-        print("    Start recorder...")
-        recorder_subprocess = scenario.start_recorder()
-        register_obstacles_by_channel(message_handler, scenario.obs_perception_messages)
+        ########
+        # make sure no conflicts in record name when start running
+        ########
+        if is_default_running:
+            accumulated_emerged_results = generated_individual.confirm_determinism(scenario, scenario_count, message_handler)
 
-        if TRAFFIC_LIGHT_MODE == "read":
-            register_traffic_lights_by_channel(message_handler, scenario.traffic_control_msg)
-        elif TRAFFIC_LIGHT_MODE == "random":
-            register_traffic_lights_by_channel(message_handler, scenario.traffic_control_manager)
+        else:
+            violations_emerged_results, violations_removed_results, objectives = start_running(scenario, scenario_count,
+                                                                                               message_handler)
+            if len(violations_emerged_results) > 0:
+                accumulated_emerged_results = generated_individual.confirm_determinism(scenario, scenario_count, message_handler)
 
-        send_routing_request_by_channel(message_handler.bridge, scenario.routing_request_message)
-        time.sleep(MAX_RECORD_TIME)
-        # Stop recording messages and producing perception messages
-        print("    Stop recorder...")
-        scenario.stop_recorder(recorder_subprocess)
-
-        message_handler.obs_stop()
-        message_handler.traffic_lights_stop()
-
-        violation_results, code_coverage, execution_time = measure_objectives_individually(scenario)
-        generated_individual.update_accumulated_objectives(violation_results, code_coverage, execution_time)
-        generated_individual.update_violation_intro_remov(violation_results, scenario, scenario_count)
+            generated_individual.update_violation_intro_remov(violations_emerged_results, violations_removed_results)
+            generated_individual.update_allow_selection()
+            generated_individual.update_accumulated_objectives(objectives)
 
         scenario_count += 1
+
+def check_emerged_violations(violation_results, scenario, scenario_count):
+    violations_emerged_results=[]
+    violations_removed_results=[]
+    for violation in violation_results:
+        if violation not in scenario.original_violation_results:
+            scenario.update_violations()
+            violations_emerged_results.append((scenario_count, violation))
+            # self.violation_intro += 1
+    for violation in scenario.original_violation_results:
+        if violation not in violation_results:
+            violations_removed_results.append((scenario_count, violation))
+            # self.violation_remov += 1
+    return violations_emerged_results, violations_removed_results
+
 
 
 def check_default_running(pre_record_info, config_file_obj, file_output_manager, message_broker):
@@ -95,6 +132,6 @@ def check_default_running(pre_record_info, config_file_obj, file_output_manager,
     name_prefix = "default"
     file_output_manager.output_initial_record2default_mapping(pre_record_info, name_prefix)
     scenario_list = create_scenarios(default_individual, config_file_obj, pre_record_info, name_prefix)
-    run_scenarios(default_individual, scenario_list, message_broker)
-    file_output_manager.save_violation_results(default_individual, scenario_list)
+    run_scenarios(default_individual, scenario_list, message_broker, is_default_running = True)
+    file_output_manager.save_total_violation_results(default_individual, scenario_list)
     file_output_manager.save_default_scenarios()

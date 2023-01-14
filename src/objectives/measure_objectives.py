@@ -1,3 +1,4 @@
+from objectives.Objectives import Objectives
 from objectives.violation_number.oracles import RecordAnalyzer
 
 
@@ -5,7 +6,9 @@ def measure_objectives_individually(scenario):
     violation_results = measure_violation_number(scenario.record_path)
     code_coverage = measure_code_coverage()
     execution_time = measure_execution_time()
-    return violation_results, code_coverage, execution_time
+    objectives = Objectives(violation_results, code_coverage, execution_time)
+
+    return objectives
 
 
 def measure_code_coverage():

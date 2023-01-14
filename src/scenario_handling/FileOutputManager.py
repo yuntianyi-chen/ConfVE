@@ -14,6 +14,10 @@ class FileOutputManager:
         self.optimal_fitness = 0
         self.file_init()
 
+        self.violation_type_count_dict = {}
+        self.related_option_count_dict = {}
+        self.scenario_violation_count_dict={}
+
     def file_init(self):
         base_path = f"{PROJECT_ROOT}/data/exp_results/{AV_TESTING_APPROACH}/{self.time_str}"
         if not os.path.exists(base_path):
@@ -24,6 +28,7 @@ class FileOutputManager:
         self.option_tuning_file_path = f"{base_path}/option_tuning.txt"
         self.range_analysis_file_path = f"{base_path}/range_analysis.txt"
         self.record_mapping_file_path = f"{base_path}/record_mapping.txt"
+        self.count_dict_file_path = f"{base_path}/count_dict.txt"
         self.vio_csv_path = f"{base_path}/vio_csv.csv"
 
         self.ind_list_pickle_dump_data_path = f"{base_path}/ind_list_pickle_pop"
@@ -38,10 +43,10 @@ class FileOutputManager:
             pass
         with open(self.record_mapping_file_path, "w") as f:
             pass
+        with open(self.count_dict_file_path, "w") as f:
+            pass
         with open(self.vio_csv_path, "w") as f:
-            f.write("record_name, violation_type, violation_info, scenario_id, related_options")
-
-
+            f.write("record_name, violation_type, violation_info, scenario_id, related_options\n")
 
         self.delete_dir(dir_path=DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR, mk_dir=False)
         self.backup_record_file_save_path = f"{BACKUP_RECORD_SAVE_DIR}/{self.time_str}"
@@ -98,25 +103,87 @@ class FileOutputManager:
         print(f" Vio Emerged Num: {generated_individual.violation_intro}")
         print(f" Vio Emerged Results: {generated_individual.violations_emerged_results}")
 
-    def save_violation_results(self, generated_individual, scenario_list):
-        for i in range(len(scenario_list)):
-            violation_results = generated_individual.violation_results_list[i]
-            if len(violation_results) > 0:
-                with open(self.violation_save_file_path, "a") as f:
+    def save_total_violation_results(self, generated_individual, scenario_list):
+        with open(self.violation_save_file_path, "a") as f:
+            for i in range(len(scenario_list)):
+                violation_results = generated_individual.violation_results_list[i]
+                if len(violation_results) > 0:
                     f.write(f"Record: {scenario_list[i].record_name}\n")
-                    f.write(f"  Violation Results: {violation_results}\n")
+                    f.write(f"  Violation Results: {violation_results}\n\n")
 
-    def save_violation_stats(self):
+    def report_tuning_situation(self, generated_individual, config_file_obj):
+        self.option_tuning_id_list = []
+        option_tuning_str = ""
+        print("Report Tuning...")
+        for i in range(len(config_file_obj.default_option_value_list)):
+            if generated_individual.value_list[i] != config_file_obj.default_option_value_list[i]:
+                option_obj = config_file_obj.option_obj_list[i]
+                option_tuning_str += f"    {option_obj.option_id}, {option_obj.option_key}, {config_file_obj.default_option_value_list[i]}->{generated_individual.value_list[i]}\n"
+
+                self.option_tuning_id_list.append(option_obj.option_id)
+        print(option_tuning_str)
+        self.option_tuning_str = option_tuning_str
+
+    def save_option_tuning_file(self, generated_individual, gen_ind_id, option_tuning_item, range_change_str):
+        with open(self.option_tuning_file_path, "a") as f:
+            f.write(f"{gen_ind_id}\n")
+            f.write(f"  Total Option Tuning:\n{self.option_tuning_str}")
+            f.write(f"  Current Option Tuning: {option_tuning_item}\n")
+            f.write(f"  Violation Emergence Num: {len(generated_individual.violations_emerged_results)}\n")
+            f.write(f"  Violation Emerged: {generated_individual.violations_emerged_results}\n")
+            f.write(f"{range_change_str}\n")
+
+    def save_emerged_violation_stats(self, generated_individual, scenario_list):
         # f.write("record_name, violation_type, violation_info, scenario_id, related_options")
 
-        with open(self.vio_csv_path, "w") as f:
-            f.write("")
+        with open(self.vio_csv_path, "a") as f:
+            for vio_emerged_tuple in generated_individual.violations_emerged_results:
+                violated_scenario_id = vio_emerged_tuple[0]
+                violation_item_tuple = vio_emerged_tuple[1]
+
+                record_name = scenario_list[violated_scenario_id].record_name
+                violation_type = violation_item_tuple[0]
+                violation_info = violation_item_tuple[1]
+                scenario_id = violated_scenario_id
+
+                related_options = ""
+                for option_id in self.option_tuning_id_list:
+                    related_options += f"#{option_id}" if related_options else str(option_id)
+
+                    if option_id in self.related_option_count_dict.keys():
+                        self.related_option_count_dict[option_id] += 1
+                    else:
+                        self.related_option_count_dict[option_id] = 1
+
+                if violation_type in self.violation_type_count_dict.keys():
+                    self.violation_type_count_dict[violation_type]+=1
+                else:
+                    self.violation_type_count_dict[violation_type]=1
+
+                if scenario_id in self.scenario_violation_count_dict.keys():
+                    self.scenario_violation_count_dict[scenario_id] += 1
+                else:
+                    self.scenario_violation_count_dict[scenario_id] = 1
+
+                f.write(f"{record_name},{violation_type},{violation_info},{scenario_id},{related_options}\n")
+
+
+    def save_count_dict_file(self):
+        with open(self.count_dict_file_path, "a") as f:
+            f.write(f"Violation Type Count\n")
+            f.write(f"{self.violation_type_count_dict}\n\n")
+            f.write(f"----------------------------------\n")
+            f.write(f"Scenario Violations Count\n")
+            f.write(f"{self.scenario_violation_count_dict}\n\n")
+            f.write(f"----------------------------------\n")
+            f.write(f"Related Options (id: occurring time)\n")
+            f.write(f"{self.related_option_count_dict}\n")
 
 
     def output_initial_record2default_mapping(self, pre_record_info, name_prefix):
         record_name_list = [f"{name_prefix}_Scenario_{str(i)}" for i in range(pre_record_info.count)]
-        for i in range(pre_record_info.count):
-            with open(self.record_mapping_file_path, "a") as f:
+        with open(self.record_mapping_file_path, "a") as f:
+            for i in range(pre_record_info.count):
                 f.write(f"{pre_record_info.scenario_record_file_list[i]} ------ {record_name_list[i]}\n")
 
     def update_range_analysis_file(self, config_file_obj, range_analyzer, generation_num):
@@ -131,25 +198,6 @@ class FileOutputManager:
                     f"Option (default): {option_obj_list[i].option_id}, {option_obj_list[i].option_type}, {option_obj_list[i].option_key}, {option_obj_list[i].option_value}\n")
                 f.write(f"  Range: {range_analyzer.range_list[i]}\n")
             f.write(f"  Num of changed ranges: {diff_count}\n")
-
-    def report_tuning_situation(self, generated_individual, config_file_obj):
-        option_tuning_str = ""
-        print("Report Tuning...")
-        for i in range(len(config_file_obj.default_option_value_list)):
-            if generated_individual.value_list[i] != config_file_obj.default_option_value_list[i]:
-                option_obj = config_file_obj.option_obj_list[i]
-                option_tuning_str += f"    {option_obj.option_id}, {option_obj.option_key}, {config_file_obj.default_option_value_list[i]}->{generated_individual.value_list[i]}\n"
-        print(option_tuning_str)
-        self.option_tuning_str = option_tuning_str
-
-    def save_option_tuning_file(self, generated_individual, gen_ind_id, option_tuning_item, range_change_str):
-        with open(self.option_tuning_file_path, "a") as f:
-            f.write(f"{gen_ind_id}\n")
-            f.write(f"  Total Option Tuning:\n{self.option_tuning_str}")
-            f.write(f"  Current Option Tuning: {option_tuning_item}\n")
-            f.write(f"  Violation Emergence Num: {len(generated_individual.violations_emerged_results)}\n")
-            f.write(f"  Violation: {generated_individual.violations_emerged_results}\n")
-            f.write(f"{range_change_str}\n")
 
     def save_individual_by_pickle(self, ind_list):
         ind_list.sort(reverse=True, key=lambda x: x.fitness)

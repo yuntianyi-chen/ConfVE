@@ -4,7 +4,7 @@ import signal
 import glob
 import subprocess
 import time
-from config import APOLLO_ROOT, TRAFFIC_LIGHT_MODE, BACKUP_RECORD_SAVE_DIR, APOLLO_RECORDS_DIR
+from config import APOLLO_ROOT, TRAFFIC_LIGHT_MODE, APOLLO_RECORDS_DIR
 from environment.container_settings import get_container_name
 from tools.traffic_light_control.TrafficControlManager import TrafficControlManager
 
