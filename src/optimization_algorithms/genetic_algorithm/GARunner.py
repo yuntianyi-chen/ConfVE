@@ -1,3 +1,4 @@
+import os
 import random
 import time
 from config import DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR, APOLLO_RECORDS_DIR, INITIAL_SCENARIO_RECORD_DIR, DEFAULT_CONFIG_FILE_PATH, GENERATION_LIMIT, INIT_POP_SIZE
@@ -29,11 +30,15 @@ class GARunner:
         print("Initial Scenario Violation Info:")
         initial_record_info = MessageGenerator().get_record_info_by_approach(scenario_record_dir_path=INITIAL_SCENARIO_RECORD_DIR)
 
-        check_default_running(initial_record_info, config_file_obj, file_output_manager, message_handler)
+        if os.path.exists(file_output_manager.default_violation_dump_data_path):
+            default_violation_results_list = file_output_manager.load_default_violation_results_by_pickle()
+        else:
+            default_violation_results_list = check_default_running(initial_record_info, config_file_obj,
+                                                                   file_output_manager, message_handler)
 
         print("Default Config Rerun - Initial Scenario Violation Info:")
 
-        pre_record_info = initial_record_info.update(scenario_record_dir_path=DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR)
+        pre_record_info = initial_record_info.update(default_violation_results_list)
 
         init_individual_list = generate_individuals(config_file_obj, INIT_POP_SIZE)
 
@@ -104,4 +109,4 @@ class GARunner:
 
         end_time = time.time()
         print("Time cost: " + str((end_time - start_time) / 3600) + " hours")
-        file_output_manager.save_individual_by_pickle(ind_list)
+        file_output_manager.dump_individual_by_pickle(ind_list)

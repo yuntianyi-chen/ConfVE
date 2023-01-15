@@ -59,3 +59,7 @@ x. Emerged violation results file
     add a report to build correlation between options and violation types
 
 x. Not selecting individuals that contain module failure violations to avoid violation masking
+
+x. to reduce non-determinism
+    rerun bug-revealing ones and default configuration, not all
+        e.g., once planning failure occurs, rerun to decide

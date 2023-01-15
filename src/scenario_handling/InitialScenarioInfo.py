@@ -25,7 +25,7 @@ class InitialScenarioInfo:
         self.scenario_record_file_list = scenario_record_file_list
         self.count = len(scenario_record_file_list)
 
-    def update_violation(self):
+    def update_violation_by_measuring(self):
         violation_num_list = []
         violation_results_list = []
         for i in self.scenario_record_file_list:
@@ -38,9 +38,16 @@ class InitialScenarioInfo:
         self.violation_results_list = violation_results_list
         self.violation_num_list = violation_num_list
 
-    def update(self, scenario_record_dir_path):
-        self.update_record_path(scenario_record_dir_path)
-        self.update_violation()
+    def update_violation_directly(self, violation_results_list):
+        self.violation_results_list = violation_results_list
+        violation_num_list = [len(vr) for vr in violation_results_list]
+        print(violation_results_list)
+        print(violation_num_list)
+        self.violation_num_list = violation_num_list
+
+    def update(self, violation_results_list):
+        # self.update_record_path(scenario_record_dir_path)
+        self.update_violation_directly(violation_results_list)
         return self
 
     def extract_record_info(self):

@@ -55,6 +55,9 @@ class MessageHandler:
         elif TRAFFIC_LIGHT_MODE == "random":
             self.traffic_control_manager = traffic_control
 
+
+
+
     def register_traffic_lights(self):
         runner_time = 0
         index = 0
@@ -91,3 +94,15 @@ class MessageHandler:
     def traffic_lights_stop(self):
         self.traffic_is_running = False
         self.t_traffic.join()
+
+    def register_obstacles_by_channel(self, obs_perception_messages):
+        self.update_obs_msg(obs_perception_messages)
+        self.obs_start()
+
+    def register_traffic_lights_by_channel(self, traffic_control):
+        self.update_traffic_msg(traffic_control)
+        self.traffic_lights_start()
+
+    def send_routing_request_by_channel(self, routing_request_message):
+        self.bridge.publish(Topics.RoutingRequest, routing_request_message.SerializeToString())
+

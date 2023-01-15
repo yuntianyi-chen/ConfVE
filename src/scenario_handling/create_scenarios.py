@@ -30,7 +30,7 @@ def create_scenarios(generated_individual, config_file_obj, pre_record_info, nam
 
     scenario_list = []
     for i in range(len(record_name_list)):
-        scenario = Scenario(record_name_list[i])
+        scenario = Scenario(record_name_list[i], i)
         scenario.update_config_file_status(config_file_tuned_status)
         if AV_TESTING_APPROACH != "Random":
             scenario.update_original_violations(pre_record_info.violation_num_list[i],

@@ -1,0 +1,8 @@
+Generation_0_Config_0
+  Total Option Tuning:
+    60, max_acceleration, 2.0->9320.0
+  Current Option Tuning: position: 60, type:float, key: max_acceleration, pre_value: 2.0, cur_value: 9320.0
+  Violation Emergence Num: 3
+  Violation Emerged: [(0, ('collision', '0: PEDESTRIAN')), (5, ('collision', '2: PEDESTRIAN')), (8, ('collision', '945942: VEHICLE'))]
+  Range Change: 60, max_acceleration, [-10001, 10001]->[-10001, 9320]
+

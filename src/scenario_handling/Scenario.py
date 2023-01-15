@@ -1,5 +1,4 @@
 import os
-import shutil
 import signal
 import glob
 import subprocess
@@ -10,13 +9,24 @@ from tools.traffic_light_control.TrafficControlManager import TrafficControlMana
 
 
 class Scenario:
-    def __init__(self, record_name):
-        self.record_name = record_name
+    def __init__(self, record_name, id):
+        self.scenario_id = id
         self.has_emerged_violations = False
-        self.record_path = f"{APOLLO_ROOT}/records/{self.record_name}.00000"
 
-    def update_violations(self):
-        self.has_emerged_violations = True
+        self.update_record_name_and_path(record_name)
+
+        self.confirmed_record_name_list = []
+        # self.record_name = record_name
+        # self.record_path = f"{APOLLO_ROOT}/records/{self.record_name}.00000"
+        # self.need_confirm_determinism = False
+
+    def update_record_name_and_path(self, new_record_name):
+        self.record_name = new_record_name
+        self.record_path = f"{APOLLO_RECORDS_DIR}/{self.record_name}.00000"
+
+    def update_emerged_status(self, violations_emerged_results):
+        if len(violations_emerged_results) > 0:
+            self.has_emerged_violations = True
 
     def update_traffic_lights(self, traffic_light_control):
         if TRAFFIC_LIGHT_MODE == "read":
@@ -53,12 +63,12 @@ class Scenario:
         self.delete_recorder_log()
         time.sleep(0.5)
 
-    def delete_record(self):
-        os.remove(f"{APOLLO_RECORDS_DIR}/{self.record_name}.00000")
-
-    def save_record(self, backup_record_file_save_path):
-        shutil.copy(f"{APOLLO_RECORDS_DIR}/{self.record_name}.00000",
-                    f"{backup_record_file_save_path}/{self.record_name}.00000")
+    # def delete_record(self):
+    #     os.remove(f"{APOLLO_RECORDS_DIR}/{self.record_name}.00000")
+    #
+    # def save_record(self, backup_record_file_save_path):
+    #     shutil.copy(f"{APOLLO_RECORDS_DIR}/{self.record_name}.00000",
+    #                 f"{backup_record_file_save_path}/{self.record_name}.00000")
 
     def stop_subprocess(self, p):
         try:

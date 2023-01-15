@@ -14,7 +14,7 @@ class MessageGenerator:
         if AV_TESTING_APPROACH != "Random":
             pre_record_info = InitialScenarioInfo(is_record_file=True)
             pre_record_info.update_record_path(scenario_record_dir_path)
-            pre_record_info.update_violation()
+            pre_record_info.update_violation_by_measuring()
             pre_record_info.extract_record_info()
         else:
             # Randomly generate

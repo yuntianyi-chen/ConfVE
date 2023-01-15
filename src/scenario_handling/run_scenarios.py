@@ -1,13 +1,17 @@
+import os.path
 import time
 import subprocess
-from config import MAX_RECORD_TIME, TRAFFIC_LIGHT_MODE, DETERMINISM_RERUN_TIMES
+from copy import deepcopy
+
+from config import MAX_RECORD_TIME, TRAFFIC_LIGHT_MODE
 from environment.container_settings import get_container_name
-from environment.cyber_env_operation import cyber_env_init
 from modules.routing.proto.routing_pb2 import RoutingRequest
 from objectives.measure_objectives import measure_objectives_individually
 from optimization_algorithms.genetic_algorithm.ga import generate_individuals
 from scenario_handling.create_scenarios import create_scenarios
 from tools.bridge.CyberBridge import Topics
+from environment.cyber_env_operation import cyber_env_init
+from config import DETERMINISM_RERUN_TIMES, DETERMINISM_CONFIRMED_TIMES
 
 
 def register_obstacles(obs_group_path):
@@ -43,33 +47,18 @@ def send_routing_request(init_x, init_y, dest_x, dest_y, bridge):
     bridge.publish(Topics.RoutingRequest, routing_request.SerializeToString())
 
 
-def register_obstacles_by_channel(message_handler, obs_perception_messages):
-    message_handler.update_obs_msg(obs_perception_messages)
-    message_handler.obs_start()
-
-
-def register_traffic_lights_by_channel(message_handler, traffic_control):
-    message_handler.update_traffic_msg(traffic_control)
-    message_handler.traffic_lights_start()
-
-
-def send_routing_request_by_channel(bridge, routing_request_message):
-    bridge.publish(Topics.RoutingRequest, routing_request_message.SerializeToString())
-
-
-def start_running(scenario, scenario_count, message_handler):
-    print(f"  Scenario_{scenario_count}")
+def start_running(scenario, message_handler):
+    print(f"  Scenario_{scenario.scenario_id}")
     print("    Start recorder...")
     recorder_subprocess = scenario.start_recorder()
-    register_obstacles_by_channel(message_handler, scenario.obs_perception_messages)
+    message_handler.register_obstacles_by_channel(scenario.obs_perception_messages)
 
     if TRAFFIC_LIGHT_MODE == "read":
-        register_traffic_lights_by_channel(message_handler, scenario.traffic_control_msg)
+        message_handler.register_traffic_lights_by_channel(scenario.traffic_control_msg)
     elif TRAFFIC_LIGHT_MODE == "random":
-        register_traffic_lights_by_channel(message_handler, scenario.traffic_control_manager)
+        message_handler.register_traffic_lights_by_channel(scenario.traffic_control_manager)
 
-    send_routing_request_by_channel(message_handler.bridge, scenario.routing_request_message)
-
+    message_handler.send_routing_request_by_channel(scenario.routing_request_message)
 
     time.sleep(MAX_RECORD_TIME)
     # Stop recording messages and producing perception messages
@@ -80,51 +69,51 @@ def start_running(scenario, scenario_count, message_handler):
     message_handler.traffic_lights_stop()
 
     objectives = measure_objectives_individually(scenario)
-    violations_emerged_results, violations_removed_results = check_emerged_violations(objectives.violation_results, scenario,
-                                                                                      scenario_count)
+    violations_emerged_results, violations_removed_results = check_emerged_violations(objectives.violation_results, scenario)
     return violations_emerged_results, violations_removed_results, objectives
-
 
 
 def run_scenarios(generated_individual, scenario_list, message_handler, is_default_running):
     # Restart cyber_env
     cyber_env_init()
 
-    scenario_count = 0
-
     for scenario in scenario_list:
-        ########
-        # make sure no conflicts in record name when start running
-        ########
         if is_default_running:
-            accumulated_emerged_results = generated_individual.confirm_determinism(scenario, scenario_count, message_handler)
-
+            # if module failure happens when default running, please rerun the program
+            determined_emerged_results, all_emerged_results = confirm_determinism(scenario, message_handler)
+            print(f"Default Violations:{all_emerged_results}")
+            generated_individual.violations_emerged_results_list.append(all_emerged_results)
         else:
-            violations_emerged_results, violations_removed_results, objectives = start_running(scenario, scenario_count,
-                                                                                               message_handler)
+            violations_emerged_results, violations_removed_results, objectives = start_running(scenario, message_handler)
+
+            # if bug-revealing, confirm determinism
+
             if len(violations_emerged_results) > 0:
-                accumulated_emerged_results = generated_individual.confirm_determinism(scenario, scenario_count, message_handler)
+                determined_emerged_results, all_emerged_results = confirm_determinism(scenario, message_handler)
+                violations_emerged_results = determined_emerged_results
+
+            scenario.update_emerged_status(violations_emerged_results)
 
             generated_individual.update_violation_intro_remov(violations_emerged_results, violations_removed_results)
             generated_individual.update_allow_selection()
+
             generated_individual.update_accumulated_objectives(objectives)
 
-        scenario_count += 1
 
-def check_emerged_violations(violation_results, scenario, scenario_count):
-    violations_emerged_results=[]
-    violations_removed_results=[]
+def check_emerged_violations(violation_results, scenario):
+    violations_emerged_results = []
+    violations_removed_results = []
     for violation in violation_results:
         if violation not in scenario.original_violation_results:
-            scenario.update_violations()
-            violations_emerged_results.append((scenario_count, violation))
+            # scenario.update_emerged_status()
+            # violations_emerged_results.append((scenario.scenario_id, violation))
+            violations_emerged_results.append(violation)
             # self.violation_intro += 1
     for violation in scenario.original_violation_results:
         if violation not in violation_results:
-            violations_removed_results.append((scenario_count, violation))
+            violations_removed_results.append(violation)
             # self.violation_remov += 1
     return violations_emerged_results, violations_removed_results
-
 
 
 def check_default_running(pre_record_info, config_file_obj, file_output_manager, message_broker):
@@ -132,6 +121,45 @@ def check_default_running(pre_record_info, config_file_obj, file_output_manager,
     name_prefix = "default"
     file_output_manager.output_initial_record2default_mapping(pre_record_info, name_prefix)
     scenario_list = create_scenarios(default_individual, config_file_obj, pre_record_info, name_prefix)
-    run_scenarios(default_individual, scenario_list, message_broker, is_default_running = True)
-    file_output_manager.save_total_violation_results(default_individual, scenario_list)
+    run_scenarios(default_individual, scenario_list, message_broker, is_default_running=True)
+
+    # file_output_manager.save_total_violation_results(default_individual, scenario_list)
     file_output_manager.save_default_scenarios()
+
+    default_violation_results_list = default_individual.violations_emerged_results_list
+
+    file_output_manager.dump_default_violation_results_by_pickle(default_violation_results_list)
+    return default_violation_results_list
+
+
+def confirm_determinism(scenario, message_handler):
+    cyber_env_init()
+
+    accumulated_emerged_results_count_dict = {}
+    all_emerged_results= []
+    for i in range(DETERMINISM_RERUN_TIMES):
+
+        temp_scenario = deepcopy(scenario)
+        temp_record_name = f"{temp_scenario.record_name}_rerun_{i}"
+        temp_scenario.update_record_name_and_path(temp_record_name)
+
+        scenario.confirmed_record_name_list.append(temp_record_name)
+
+        violations_emerged_results, violations_removed_results, objectives = start_running(temp_scenario,
+                                                                                           message_handler)
+        for emerged_violation in violations_emerged_results:
+            # emerged_violation = emerged_violation_tuple[1]
+            if emerged_violation not in accumulated_emerged_results_count_dict.keys():
+                accumulated_emerged_results_count_dict[emerged_violation] = 1
+            else:
+                accumulated_emerged_results_count_dict[emerged_violation] += 1
+
+        for violation in objectives.violation_results:
+            # violation_tuple = (scenario.scenario_id, violation)
+            if violation not in all_emerged_results:
+                all_emerged_results.append(violation)
+    determined_emerged_results = [(scenario.scenario_id, k) for k, v in
+                                   accumulated_emerged_results_count_dict.items() if
+                                   v >= DETERMINISM_CONFIRMED_TIMES]
+    return determined_emerged_results, all_emerged_results
+    # return accumulated_emerged_results_count_dict

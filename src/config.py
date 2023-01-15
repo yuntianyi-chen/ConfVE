@@ -11,7 +11,9 @@ AV_TESTING_APPROACH = "DoppelTest"  # scenoRITA/DoppelTest/AV-Fuzzer/ADFuzz/Rand
 MAP_NAME = "borregas_ave"  # borregas_ave/sunnyvale_loop
 TRAFFIC_LIGHT_MODE = "read"  # read/random/off
 
+# Rerun 5 times if occurred >= 3 times, confirmed
 DETERMINISM_RERUN_TIMES = 5
+DETERMINISM_CONFIRMED_TIMES = 3
 
 # TESTING SETTINGS
 OPT_MODE = "GA"  # GA/DRL/Random

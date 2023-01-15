@@ -1,0 +1,9 @@
+Record: Generation_0_Config_0_Scenario_0
+  Violation Results: [('collision', '0: PEDESTRIAN')]
+
+Record: Generation_0_Config_0_Scenario_5
+  Violation Results: [('collision', '2: PEDESTRIAN')]
+
+Record: Generation_0_Config_0_Scenario_8
+  Violation Results: [('collision', '945942: VEHICLE')]
+

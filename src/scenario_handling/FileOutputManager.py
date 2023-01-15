@@ -16,7 +16,7 @@ class FileOutputManager:
 
         self.violation_type_count_dict = {}
         self.related_option_count_dict = {}
-        self.scenario_violation_count_dict={}
+        self.scenario_violation_count_dict = {}
 
     def file_init(self):
         base_path = f"{PROJECT_ROOT}/data/exp_results/{AV_TESTING_APPROACH}/{self.time_str}"
@@ -32,6 +32,7 @@ class FileOutputManager:
         self.vio_csv_path = f"{base_path}/vio_csv.csv"
 
         self.ind_list_pickle_dump_data_path = f"{base_path}/ind_list_pickle_pop"
+        self.default_violation_dump_data_path = f"{base_path}/default_violation_pickle_pop"
 
         with open(self.violation_save_file_path, "w") as f:
             pass
@@ -85,9 +86,21 @@ class FileOutputManager:
     def handle_scenario_record(self, scenario_list):
         for scenario in scenario_list:
             if scenario.has_emerged_violations:
-                scenario.save_record(self.backup_record_file_save_path)
+                self.save_record(scenario.record_name)
+                for comfirmed_record_name in scenario.confirmed_record_name_list:
+                    self.save_record(comfirmed_record_name)
             else:
-                scenario.delete_record()
+                self.delete_record(scenario.record_name)
+                if len(scenario.confirmed_record_name_list) > 0:
+                    for comfirmed_record_name in scenario.confirmed_record_name_list:
+                        self.delete_record(comfirmed_record_name)
+
+    def delete_record(self, record_name):
+        os.remove(f"{APOLLO_RECORDS_DIR}/{record_name}.00000")
+
+    def save_record(self, record_name):
+        shutil.copy(f"{APOLLO_RECORDS_DIR}/{record_name}.00000",
+                    f"{self.backup_record_file_save_path}/{record_name}.00000")
 
     def save_fitness_result(self, individual, gen_ind_id):
         with open(self.ind_fitness_save_file_path, "a") as f:
@@ -156,9 +169,9 @@ class FileOutputManager:
                         self.related_option_count_dict[option_id] = 1
 
                 if violation_type in self.violation_type_count_dict.keys():
-                    self.violation_type_count_dict[violation_type]+=1
+                    self.violation_type_count_dict[violation_type] += 1
                 else:
-                    self.violation_type_count_dict[violation_type]=1
+                    self.violation_type_count_dict[violation_type] = 1
 
                 if scenario_id in self.scenario_violation_count_dict.keys():
                     self.scenario_violation_count_dict[scenario_id] += 1
@@ -166,7 +179,6 @@ class FileOutputManager:
                     self.scenario_violation_count_dict[scenario_id] = 1
 
                 f.write(f"{record_name},{violation_type},{violation_info},{scenario_id},{related_options}\n")
-
 
     def save_count_dict_file(self):
         with open(self.count_dict_file_path, "a") as f:
@@ -178,7 +190,6 @@ class FileOutputManager:
             f.write(f"----------------------------------\n")
             f.write(f"Related Options (id: occurring time)\n")
             f.write(f"{self.related_option_count_dict}\n")
-
 
     def output_initial_record2default_mapping(self, pre_record_info, name_prefix):
         record_name_list = [f"{name_prefix}_Scenario_{str(i)}" for i in range(pre_record_info.count)]
@@ -199,7 +210,15 @@ class FileOutputManager:
                 f.write(f"  Range: {range_analyzer.range_list[i]}\n")
             f.write(f"  Num of changed ranges: {diff_count}\n")
 
-    def save_individual_by_pickle(self, ind_list):
+    def dump_individual_by_pickle(self, ind_list):
         ind_list.sort(reverse=True, key=lambda x: x.fitness)
         with open(self.ind_list_pickle_dump_data_path, 'wb') as f:
             pickle.dump(ind_list, f, protocol=4)
+
+    def dump_default_violation_results_by_pickle(self, default_violation_results_list):
+        with open(self.default_violation_dump_data_path, 'wb') as f:
+            pickle.dump(default_violation_results_list, f, protocol=4)
+
+    def load_default_violation_results_by_pickle(self):
+        default_violation_results_list = pickle.load(open(self.default_violation_dump_data_path, 'rb'))
+        return default_violation_results_list
