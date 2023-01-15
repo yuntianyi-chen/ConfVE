@@ -1,7 +1,7 @@
 import os
 import random
 import time
-from config import DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR, APOLLO_RECORDS_DIR, INITIAL_SCENARIO_RECORD_DIR, DEFAULT_CONFIG_FILE_PATH, GENERATION_LIMIT, INIT_POP_SIZE
+from config import APOLLO_RECORDS_DIR, INITIAL_SCENARIO_RECORD_DIR, DEFAULT_CONFIG_FILE_PATH, GENERATION_LIMIT, INIT_POP_SIZE
 from config_file_handler.parser_apollo import config_file_parser2obj
 from environment.MapLoader import MapLoader
 from optimization_algorithms.genetic_algorithm.ga import crossover, select, mutation, generate_individuals, mutate

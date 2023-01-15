@@ -1,9 +1,7 @@
-import os.path
 import time
 import subprocess
 from copy import deepcopy
-
-from config import MAX_RECORD_TIME, TRAFFIC_LIGHT_MODE
+from config import MAX_RECORD_TIME, TRAFFIC_LIGHT_MODE, DEFAULT_DETERMINISM_RERUN_TIMES
 from environment.container_settings import get_container_name
 from modules.routing.proto.routing_pb2 import RoutingRequest
 from objectives.measure_objectives import measure_objectives_individually
@@ -69,7 +67,8 @@ def start_running(scenario, message_handler):
     message_handler.traffic_lights_stop()
 
     objectives = measure_objectives_individually(scenario)
-    violations_emerged_results, violations_removed_results = check_emerged_violations(objectives.violation_results, scenario)
+    violations_emerged_results, violations_removed_results = check_emerged_violations(objectives.violation_results,
+                                                                                      scenario)
     return violations_emerged_results, violations_removed_results, objectives
 
 
@@ -80,16 +79,19 @@ def run_scenarios(generated_individual, scenario_list, message_handler, is_defau
     for scenario in scenario_list:
         if is_default_running:
             # if module failure happens when default running, please rerun the program
-            determined_emerged_results, all_emerged_results = confirm_determinism(scenario, message_handler)
+            determined_emerged_results, all_emerged_results = confirm_determinism(scenario, message_handler,
+                                                                                  rerun_times=DEFAULT_DETERMINISM_RERUN_TIMES)
             print(f"Default Violations:{all_emerged_results}")
             generated_individual.violations_emerged_results_list.append(all_emerged_results)
         else:
-            violations_emerged_results, violations_removed_results, objectives = start_running(scenario, message_handler)
+            violations_emerged_results, violations_removed_results, objectives = start_running(scenario,
+                                                                                               message_handler)
 
             # if bug-revealing, confirm determinism
 
             if len(violations_emerged_results) > 0:
-                determined_emerged_results, all_emerged_results = confirm_determinism(scenario, message_handler)
+                determined_emerged_results, all_emerged_results = confirm_determinism(scenario, message_handler,
+                                                                                      rerun_times=DETERMINISM_RERUN_TIMES)
                 violations_emerged_results = determined_emerged_results
 
             scenario.update_emerged_status(violations_emerged_results)
@@ -132,12 +134,12 @@ def check_default_running(pre_record_info, config_file_obj, file_output_manager,
     return default_violation_results_list
 
 
-def confirm_determinism(scenario, message_handler):
+def confirm_determinism(scenario, message_handler, rerun_times):
     cyber_env_init()
 
     accumulated_emerged_results_count_dict = {}
-    all_emerged_results= []
-    for i in range(DETERMINISM_RERUN_TIMES):
+    all_emerged_results = []
+    for i in range(rerun_times):
 
         temp_scenario = deepcopy(scenario)
         temp_record_name = f"{temp_scenario.record_name}_rerun_{i}"
@@ -159,7 +161,7 @@ def confirm_determinism(scenario, message_handler):
             if violation not in all_emerged_results:
                 all_emerged_results.append(violation)
     determined_emerged_results = [(scenario.scenario_id, k) for k, v in
-                                   accumulated_emerged_results_count_dict.items() if
-                                   v >= DETERMINISM_CONFIRMED_TIMES]
+                                  accumulated_emerged_results_count_dict.items() if
+                                  v >= DETERMINISM_CONFIRMED_TIMES]
     return determined_emerged_results, all_emerged_results
     # return accumulated_emerged_results_count_dict

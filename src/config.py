@@ -13,6 +13,7 @@ TRAFFIC_LIGHT_MODE = "read"  # read/random/off
 
 # Rerun 5 times if occurred >= 3 times, confirmed
 DETERMINISM_RERUN_TIMES = 5
+DEFAULT_DETERMINISM_RERUN_TIMES = 10
 DETERMINISM_CONFIRMED_TIMES = 3
 
 # TESTING SETTINGS

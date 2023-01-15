@@ -12,13 +12,8 @@ class Scenario:
     def __init__(self, record_name, id):
         self.scenario_id = id
         self.has_emerged_violations = False
-
         self.update_record_name_and_path(record_name)
-
         self.confirmed_record_name_list = []
-        # self.record_name = record_name
-        # self.record_path = f"{APOLLO_ROOT}/records/{self.record_name}.00000"
-        # self.need_confirm_determinism = False
 
     def update_record_name_and_path(self, new_record_name):
         self.record_name = new_record_name
