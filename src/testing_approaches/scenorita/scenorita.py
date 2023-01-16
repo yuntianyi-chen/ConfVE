@@ -1,22 +1,24 @@
+import glob
 import shutil
 import random
 import os
+import subprocess
 import time
 import json
 from datetime import date
 import networkx as nx
-from config import OBS_DIR, MAX_RECORD_TIME, MAP_NAME, APOLLO_RECORDS_DIR, PROJECT_ROOT
+from config import OBS_DIR, MAX_RECORD_TIME, MAP_NAME, APOLLO_RECORDS_DIR, PROJECT_ROOT, APOLLO_ROOT
+from modules.routing.proto.routing_pb2 import RoutingRequest
 from scenario_handling.MessageGenerator import MessageGenerator
 from testing_approaches.scenorita.run_oracles import run_oracles
 from testing_approaches.scenorita.scenoRITA_config import OBS_MIN, OBS_MAX, NP, TOTAL_LANES, ETIME, CXPB, MUTPB, ADDPB, \
     DELPB
 from deap import base, creator, tools
-from environment.cyber_env_operation import connect_bridge, cyber_env_init
 from scenario_handling.create_scenarios import Scenario
-from scenario_handling.run_scenarios import register_obstacles, send_routing_request, stop_obstacles
 from testing_approaches.scenorita.auxiliary.feature_generator import runOracles
 from testing_approaches.scenorita.auxiliary.map_info_parser import validatePath, initialize, longerTrace, generateObsDescFile, \
     produceTrace
+from tools.bridge.CyberBridge import Topics
 
 obs_folder = OBS_DIR + "scenorita/"
 dest = PROJECT_ROOT + "/data/analysis"
@@ -27,6 +29,64 @@ adc_route_file = "adc_route.csv"
 
 ptl_dict, ltp_dict, diGraph = initialize()
 obstacle_type = ["PEDESTRIAN", "BICYCLE", "VEHICLE"]
+
+
+
+def send_routing_request(init_x, init_y, dest_x, dest_y, bridge):
+    routing_request = RoutingRequest()
+
+    # define header
+    # routing_request.header.timestamp_sec = cyber_time.Time.now().to_sec()
+    routing_request.header.timestamp_sec = time.time()
+
+    routing_request.header.module_name = "routing routing..."
+    routing_request.header.sequence_num = 0
+
+    # define way points (start and end)
+    start_waypoint = routing_request.waypoint.add()
+    start_waypoint.pose.x = init_x
+    start_waypoint.pose.y = init_y
+
+    end_waypoint = routing_request.waypoint.add()
+    end_waypoint.pose.x = dest_x
+    end_waypoint.pose.y = dest_y
+
+    bridge.publish(Topics.RoutingRequest, routing_request.SerializeToString())
+
+def get_container_name():
+    return "apollo_dev_cloudsky"
+
+
+
+
+def start_recorder():
+    # time.sleep(0.5)
+    cmd = f"docker exec -d {get_container_name()} /apollo/bazel-bin/cyber/tools/cyber_recorder/cyber_recorder record -o /apollo/records/{self.record_name} -a &"
+    subprocess.Popen(cmd, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    # time.sleep(1)
+    # return recorder_subprocess
+
+def stop_recorder():
+    cmd = f"docker exec -d {get_container_name()} /apollo/scripts/my_scripts/stop_recorder.sh"
+    subprocess.run(cmd.split())
+    delete_recorder_log()
+    time.sleep(0.5)
+
+
+def delete_recorder_log():
+    files = glob.glob(f'{APOLLO_ROOT}/cyber_recorder.log.INFO.*')
+    for file in files:
+        os.remove(file)
+
+def register_obstacles(obs_group_path):
+    cmd = f"docker exec -d {get_container_name()} /apollo/modules/tools/perception/obstacles_perception.bash " + obs_group_path
+    p = subprocess.Popen(cmd.split(), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    return p
+
+
+def stop_obstacles(p):
+    cmd = f"docker exec -d {get_container_name()} /apollo/scripts/my_scripts/stop_obstacles.sh"
+    subprocess.run(cmd.split())
 
 
 def scenoRITA_ga_init():

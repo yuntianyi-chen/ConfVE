@@ -38,8 +38,8 @@ class SpeedingOracle(OracleInterface):
             lane_id, lane_speed_limit, lane_curve = lane
             if round(ego_position.distance(lane_curve), 1) <= 0.1:
                 if ego_velocity > lane_speed_limit:
-                    self.result = ((p.x, p.y),
-                                   f'{ego_velocity} violates speed limit {lane_speed_limit} at {lane_id}')
+                    # self.result = ((p.x, p.y), f'{ego_velocity} violates speed limit {lane_speed_limit} at {lane_id}')
+                    self.result = f'{round(ego_velocity, 1)} violates speed limit {lane_speed_limit} at {lane_id}'
 
     def get_result(self):
         if self.result is None:

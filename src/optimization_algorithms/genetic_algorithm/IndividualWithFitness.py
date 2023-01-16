@@ -37,11 +37,11 @@ class IndividualWithFitness:
 
         self.violation_results_list.append(objectives.violation_results)
 
-    def update_allow_selection(self):
-        for emerged_violation in self.violations_emerged_results:
-            if emerged_violation[1][0] == "module":
+    def update_allow_selection(self, violations_emerged_results):
+        for emerged_violation in violations_emerged_results:
+            if emerged_violation[0] == "module":
                 self.allow_selection = False
-                print(f"Not select for {emerged_violation[1][1]}")
+                print(f"Not select for {emerged_violation[1]}")
                 break
 
     def update_id(self, id):
@@ -66,15 +66,17 @@ class IndividualWithFitness:
         self.violations_emerged_results_list = []
 
         self.violations_removed_results = []
+        self.violations_removed_results_list = []
 
         self.allow_selection = True
 
-        # self.confirmed_determinism = False
-        # self.confirmed_bug_revealing = False
+    def update_violation_intro_remov(self, violations_emerged_results, violations_removed_results, scenario):
+        violations_emerged_results_with_sid = [(scenario.scenario_id, v) for v in violations_emerged_results]
+        self.violations_emerged_results_list.append(violations_emerged_results_with_sid)
+        self.violations_emerged_results += violations_emerged_results_with_sid
+        self.violation_intro += len(violations_emerged_results_with_sid)
 
-    def update_violation_intro_remov(self, violations_emerged_results, violations_removed_results):
-        self.violations_emerged_results_list.append(violations_emerged_results)
-        self.violations_emerged_results += violations_emerged_results
-        self.violation_intro += len(violations_emerged_results)
-        self.violations_removed_results += violations_removed_results
-        self.violation_remov += len(violations_removed_results)
+        violations_removed_results_with_sid = [(scenario.scenario_id, v) for v in violations_removed_results]
+        self.violations_removed_results_list.append(violations_removed_results_with_sid)
+        self.violations_removed_results += violations_removed_results_with_sid
+        self.violation_remov += len(violations_removed_results_with_sid)

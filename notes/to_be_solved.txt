@@ -17,14 +17,14 @@
 ?. multi-objective fitness function
     how to change fitness function
 
+?. Non-determinism is an important thing in virtual testing
 
+?. why speeding violation sometimes happens in scenario1, sometimes not.
 
 -----------------------
 TO DO RIGHT NOW!!!
 -----------------------
-0. multi-container
-
-0. save the default running results for reading
+0. check scenario2 stop sign violation, why it often happens for first time running
 
 1. bug-revealing violations judge
 

@@ -1,13 +1,13 @@
-from apollo.ApolloContainer import ApolloContainer
-from utils import get_logger
-from hdmap.MapParser import MapParser
-from config import HD_MAP_PATH, APOLLO_ROOT
 import shutil
+from config import HD_MAP_PATH, APOLLO_ROOT
+from environment.Container import Container
+from tools.hdmap.MapParser import MapParser
 
-logger = get_logger('MAIN')
+# logger = get_logger('MAIN')
 mp = MapParser(HD_MAP_PATH)
 
-containers = [ApolloContainer(APOLLO_ROOT, f'ROUTE_{x}') for x in range(3)]
+containers = [Container(APOLLO_ROOT, f'ROUTE_{x}') for x in range(3)]
+
 for ctn in containers:
     ctn.start_instance()
     ctn.stop_modules()

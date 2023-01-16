@@ -2,19 +2,18 @@ import time
 from threading import Thread
 from modules.common.proto.header_pb2 import Header
 from modules.perception.proto.perception_obstacle_pb2 import PerceptionObstacles
-from config import PERCEPTION_FREQUENCY, TRAFFIC_LIGHT_FREQUENCY, TRAFFIC_LIGHT_MODE
+from config import OBS_PERCEPTION_FREQUENCY, TRAFFIC_LIGHT_FREQUENCY, TRAFFIC_LIGHT_MODE
 from modules.perception.proto.traffic_light_detection_pb2 import TrafficLightDetection
-from environment.cyber_env_operation import connect_bridge
 from tools.bridge.CyberBridge import Topics
 
 
 class MessageHandler:
 
-    def __init__(self) -> None:
-        bridge = connect_bridge()
+    def __init__(self, bridge) -> None:
         self.bridge = bridge
         self.obs_is_running = False
         self.traffic_is_running = False
+
 
     def register_obs_perception(self):
         header_sequence_num = 0
@@ -35,7 +34,7 @@ class MessageHandler:
 
             header_sequence_num += 1
             index += 1
-            time.sleep(1 / PERCEPTION_FREQUENCY)
+            time.sleep(1 / OBS_PERCEPTION_FREQUENCY)
 
     def update_obs_msg(self, obs_perception_messages):
         self.obs_perception_messages = obs_perception_messages
@@ -54,9 +53,6 @@ class MessageHandler:
             self.traffic_control_msg = traffic_control
         elif TRAFFIC_LIGHT_MODE == "random":
             self.traffic_control_manager = traffic_control
-
-
-
 
     def register_traffic_lights(self):
         runner_time = 0

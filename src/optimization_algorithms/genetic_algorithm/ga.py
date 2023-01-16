@@ -7,13 +7,9 @@ from range_analysis.OptionTuningItem import OptionTuningItem
 
 def generate_individuals(config_file_obj, population_size):
     generated_value_lists = list()
-
     for i in range(population_size):
         generated_value_list = list()
         for option_value in config_file_obj.default_option_value_list:
-            # option_type = option_obj.option_type
-            # option_value = option_obj.option_value
-            # generated_value = generate_option_value_by_random(option_type, option_value)
             generated_value = option_value
             generated_value_list.append(generated_value)
         generated_value_lists.append(generated_value_list)
@@ -23,7 +19,6 @@ def generate_individuals(config_file_obj, population_size):
 
 def select(individual_list, config_file_obj):
     filtered_individual_list = [item for item in individual_list if item.allow_selection]
-
     # select x with the least fitness, y randomly from the remaining, z new generated
     select_num_ratio = SELECT_NUM_RATIO
     new_individual_list = get_unduplicated(filtered_individual_list, select_num_ratio, config_file_obj)

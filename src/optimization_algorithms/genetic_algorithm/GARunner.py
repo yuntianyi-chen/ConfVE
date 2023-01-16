@@ -1,7 +1,8 @@
 import os
 import random
 import time
-from config import APOLLO_RECORDS_DIR, INITIAL_SCENARIO_RECORD_DIR, DEFAULT_CONFIG_FILE_PATH, GENERATION_LIMIT, INIT_POP_SIZE
+from config import APOLLO_RECORDS_DIR, INITIAL_SCENARIO_RECORD_DIR, DEFAULT_CONFIG_FILE_PATH, GENERATION_LIMIT, \
+    INIT_POP_SIZE
 from config_file_handler.parser_apollo import config_file_parser2obj
 from environment.MapLoader import MapLoader
 from optimization_algorithms.genetic_algorithm.ga import crossover, select, mutation, generate_individuals, mutate
@@ -9,14 +10,18 @@ from range_analysis.RangeAnalyzer import RangeAnalyzer
 from scenario_handling.FileOutputManager import FileOutputManager
 from scenario_handling.MessageGenerator import MessageGenerator
 from scenario_handling.create_scenarios import create_scenarios
-from scenario_handling.MessageHandler import MessageHandler
 from scenario_handling.run_scenarios import run_scenarios, check_default_running
 
 
 class GARunner:
-    def __init__(self):
+    def __init__(self, containers):
         MapLoader()
+        self.containers = containers
+
         self.ga_runner()
+
+
+
 
     def ga_runner(self):
         start_time = time.time()
@@ -25,16 +30,16 @@ class GARunner:
         range_analyzer = RangeAnalyzer(config_file_obj)
         file_output_manager = FileOutputManager()
         file_output_manager.delete_dir(dir_path=APOLLO_RECORDS_DIR, mk_dir=True)
-        message_handler = MessageHandler()
+
 
         print("Initial Scenario Violation Info:")
-        initial_record_info = MessageGenerator().get_record_info_by_approach(scenario_record_dir_path=INITIAL_SCENARIO_RECORD_DIR)
+        initial_record_info = MessageGenerator().get_record_info_by_approach(
+            scenario_record_dir_path=INITIAL_SCENARIO_RECORD_DIR)
 
         if os.path.exists(file_output_manager.default_violation_dump_data_path):
             default_violation_results_list = file_output_manager.load_default_violation_results_by_pickle()
         else:
-            default_violation_results_list = check_default_running(initial_record_info, config_file_obj,
-                                                                   file_output_manager, message_handler)
+            default_violation_results_list = check_default_running(initial_record_info, config_file_obj, file_output_manager, self.containers)
 
         print("Default Config Rerun - Initial Scenario Violation Info:")
 
@@ -71,7 +76,7 @@ class GARunner:
                                                      name_prefix=gen_ind_id)
 
                     # test each config settings under several groups of obstacles and adc routes
-                    run_scenarios(generated_individual, scenario_list, message_handler, is_default_running=False)
+                    run_scenarios(generated_individual, scenario_list, self.containers)
 
                     generated_individual.calculate_fitness()
 

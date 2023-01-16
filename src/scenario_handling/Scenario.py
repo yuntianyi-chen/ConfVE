@@ -1,16 +1,10 @@
-import os
-import signal
-import glob
-import subprocess
-import time
-from config import APOLLO_ROOT, TRAFFIC_LIGHT_MODE, APOLLO_RECORDS_DIR
-from environment.container_settings import get_container_name
+from config import TRAFFIC_LIGHT_MODE, APOLLO_RECORDS_DIR
 from tools.traffic_light_control.TrafficControlManager import TrafficControlManager
 
 
 class Scenario:
-    def __init__(self, record_name, id):
-        self.scenario_id = id
+    def __init__(self, record_name, scenario_id):
+        self.scenario_id = scenario_id
         self.has_emerged_violations = False
         self.update_record_name_and_path(record_name)
         self.confirmed_record_name_list = []
@@ -45,34 +39,5 @@ class Scenario:
         self.original_violation_num = violation_num
         self.original_violation_results = violation_results
 
-    def start_recorder(self):
-        # time.sleep(0.5)
-        cmd = f"docker exec -d {get_container_name()} /apollo/bazel-bin/cyber/tools/cyber_recorder/cyber_recorder record -o /apollo/records/{self.record_name} -a &"
-        recorder_subprocess = subprocess.Popen(cmd, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        # time.sleep(1)
-        return recorder_subprocess
 
-    def stop_recorder(self, recorder_subprocess):
-        cmd = f"docker exec -d {get_container_name()} /apollo/scripts/my_scripts/stop_recorder.sh"
-        subprocess.run(cmd.split())
-        self.delete_recorder_log()
-        time.sleep(0.5)
 
-    # def delete_record(self):
-    #     os.remove(f"{APOLLO_RECORDS_DIR}/{self.record_name}.00000")
-    #
-    # def save_record(self, backup_record_file_save_path):
-    #     shutil.copy(f"{APOLLO_RECORDS_DIR}/{self.record_name}.00000",
-    #                 f"{backup_record_file_save_path}/{self.record_name}.00000")
-
-    def stop_subprocess(self, p):
-        try:
-            os.kill(p.pid, signal.SIGINT)
-            p.kill()
-        except OSError:
-            print("stopped")
-
-    def delete_recorder_log(self):
-        files = glob.glob(f'{APOLLO_ROOT}/cyber_recorder.log.INFO.*')
-        for file in files:
-            os.remove(file)

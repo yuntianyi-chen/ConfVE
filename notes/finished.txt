@@ -63,3 +63,10 @@ x. Not selecting individuals that contain module failure violations to avoid vio
 x. to reduce non-determinism
     rerun bug-revealing ones and default configuration, not all
         e.g., once planning failure occurs, rerun to decide
+
+x. save the default running results for reading
+
+
+x. auto start container
+
+x. multi-container

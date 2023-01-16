@@ -4,12 +4,19 @@ Global configurations for the framework
 
 
 # IMPORTANT CONFIGURATION
-PERCEPTION_FREQUENCY = 25  # used to be 25
-TRAFFIC_LIGHT_FREQUENCY = 10
+OBS_PERCEPTION_FREQUENCY = 25  # 10/25
 MAX_RECORD_TIME = 30  # 10
 AV_TESTING_APPROACH = "DoppelTest"  # scenoRITA/DoppelTest/AV-Fuzzer/ADFuzz/Random
 MAP_NAME = "borregas_ave"  # borregas_ave/sunnyvale_loop
+
+CONTAINER_NUM = 10
+
+# APOLLO SETTINGS
+TRAFFIC_LIGHT_FREQUENCY = 10
 TRAFFIC_LIGHT_MODE = "read"  # read/random/off
+
+
+USE_SIM_CONTROL_STANDALONE = False
 
 # Rerun 5 times if occurred >= 3 times, confirmed
 DETERMINISM_RERUN_TIMES = 5

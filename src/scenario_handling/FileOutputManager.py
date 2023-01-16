@@ -49,9 +49,10 @@ class FileOutputManager:
         with open(self.vio_csv_path, "w") as f:
             f.write("record_name, violation_type, violation_info, scenario_id, related_options\n")
 
-        self.delete_dir(dir_path=DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR, mk_dir=False)
+
         self.backup_record_file_save_path = f"{BACKUP_RECORD_SAVE_DIR}/{self.time_str}"
         self.delete_dir(dir_path=self.backup_record_file_save_path, mk_dir=True)
+
         self.config_file_save_path = f"{BACKUP_CONFIG_SAVE_DIR}/{self.time_str}"
         self.delete_dir(dir_path=self.config_file_save_path, mk_dir=True)
 
@@ -81,6 +82,7 @@ class FileOutputManager:
         shutil.copy(CURRENT_CONFIG_FILE_PATH, f"{self.config_file_save_path}/{gen_ind_id}/{MODULE_NAME}_config.pb.txt")
 
     def save_default_scenarios(self):
+        self.delete_dir(dir_path=DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR, mk_dir=False)
         shutil.copytree(APOLLO_RECORDS_DIR, DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR)
 
     def handle_scenario_record(self, scenario_list):
