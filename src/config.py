@@ -9,7 +9,7 @@ MAX_RECORD_TIME = 30  # 10
 AV_TESTING_APPROACH = "DoppelTest"  # scenoRITA/DoppelTest/AV-Fuzzer/ADFuzz/Random
 MAP_NAME = "borregas_ave"  # borregas_ave/sunnyvale_loop
 
-CONTAINER_NUM = 10
+CONTAINER_NUM = 5  # 5/10
 
 # APOLLO SETTINGS
 TRAFFIC_LIGHT_FREQUENCY = 10

@@ -72,3 +72,6 @@ class Dreamview:
         #     "type": "Reset"
         # })
         self.ws = create_connection(self.url)
+        self.start_sim_control()
+
+

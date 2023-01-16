@@ -17,11 +17,7 @@ class GARunner:
     def __init__(self, containers):
         MapLoader()
         self.containers = containers
-
         self.ga_runner()
-
-
-
 
     def ga_runner(self):
         start_time = time.time()
@@ -30,7 +26,6 @@ class GARunner:
         range_analyzer = RangeAnalyzer(config_file_obj)
         file_output_manager = FileOutputManager()
         file_output_manager.delete_dir(dir_path=APOLLO_RECORDS_DIR, mk_dir=True)
-
 
         print("Initial Scenario Violation Info:")
         initial_record_info = MessageGenerator().get_record_info_by_approach(

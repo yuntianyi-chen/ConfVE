@@ -49,8 +49,6 @@ class Container:
         self.apollo_root = apollo_root
         self.username = username
 
-        self.bridge = self.connect_bridge()
-        self.message_handler = MessageHandler(self.bridge)
 
         # self.logger = get_logger(f"ApolloContainer[{self.container_name}]")
 
@@ -133,6 +131,9 @@ class Container:
         cmd = f"docker exec {self.container_name} ./scripts/bootstrap.sh {s1}"
         subprocess.run(cmd.split(), stdout=subprocess.PIPE,
                        stderr=subprocess.PIPE)
+
+        time.sleep(1)
+
         if op == 'stop':
             self.dreamview = None
         else:
@@ -344,11 +345,14 @@ class Container:
 
 #####################################################
 
+    def create_message_handler(self):
+        self.message_handler = MessageHandler(self.bridge)
+
+
     def connect_bridge(self):
-        print("Start bridge...")
-        bridge = self.start_bridge_simply()
+        # print("Start bridge...")
+        self.bridge = self.start_bridge_simply()
         self.register_bridge_publishers()
-        return bridge
 
     def start_bridge_simply(self):
         cmd = f"docker exec -d {self.container_name} /apollo/scripts/bridge.sh"
@@ -376,22 +380,25 @@ class Container:
 
 
     def cyber_env_init(self):
-        print("Closing modules & Dreamview...")
+        # print("Closing modules & Dreamview...")
         self.modules_operation(operation="stop")
+        self.kill_modules()
+        # print("Restart Dreamview...")
         self.close_subprocess()
-        print("Restart Dreamview...")
         self.start_dreamview()
-        # self.dreamview_operation(operation="start")
-        print("Start sim control...")
+        # print("Start sim control...")
         self.dreamview.reset()
-        # run_sim_control()
-        print("Restarting modules...")
-        # kill_modules()
+        # print("Restarting modules...")
         self.modules_operation(operation="start")
 
     def close_subprocess(self):
         cmd = f"docker exec -d {self.container_name} /apollo/scripts/my_scripts/close_subprocess.sh"
         subprocess.run(cmd.split())
+
+    def kill_modules(self):
+        cmd = f"docker exec -d {self.container_name} bash /apollo/scripts/my_scripts/kill_modules.sh"
+        subprocess.run(cmd.split())
+        # time.sleep(1)
 
     def dreamview_operation(self, operation):
         cmd = f"docker exec -d {self.container_name} bash /apollo/scripts/bootstrap.sh {operation}"

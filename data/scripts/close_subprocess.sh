@@ -20,4 +20,5 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 
 ps -ef | grep -E 'cyber_recorder|obstacles_perception|replay_perception|dreamview|monitor' | grep -v 'grep' | awk '{print $2}' | xargs kill -9
 
+#ps -ef | grep -E 'cyber_recorder|obstacles_perception|replay_perception' | grep -v 'grep' | awk '{print $2}' | xargs kill -9
 
