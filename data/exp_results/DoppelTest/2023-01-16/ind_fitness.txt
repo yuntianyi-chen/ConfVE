@@ -1,0 +1,12 @@
+Generation_0_Config_5
+  Vio Intro: 1
+  Vio Remov: 2
+  Fitness(mode: emerge): 1
+Generation_0_Config_8
+  Vio Intro: 1
+  Vio Remov: 2
+  Fitness(mode: emerge): 1
+Generation_0_Config_20
+  Vio Intro: 1
+  Vio Remov: 2
+  Fitness(mode: emerge): 1

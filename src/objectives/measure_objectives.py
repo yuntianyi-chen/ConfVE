@@ -7,7 +7,6 @@ def measure_objectives_individually(scenario):
     code_coverage = measure_code_coverage()
     execution_time = measure_execution_time()
     objectives = Objectives(violation_results, code_coverage, execution_time)
-
     return objectives
 
 
@@ -22,10 +21,7 @@ def measure_execution_time():
 def measure_violation_number(record_path):
     ra = RecordAnalyzer(record_path)
     results = ra.analyze()
-    print(f"      Violation Results: {results}")
     if len(results) > 0:
-        print(f"          Record Path: {record_path}")
+        print(f"  Record Path: {record_path}")
+        print(f"    Violation Results: {results}")
     return results
-
-
-

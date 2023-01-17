@@ -5,7 +5,7 @@ import time
 import docker
 import subprocess
 # from utils import get_logger
-from config import USE_SIM_CONTROL_STANDALONE, APOLLO_ROOT
+from config import APOLLO_ROOT
 from environment.Dreamview import Dreamview
 from scenario_handling.MessageHandler import MessageHandler
 from tools.bridge.CyberBridge import CyberBridge, Topics
@@ -48,8 +48,6 @@ class Container:
         """
         self.apollo_root = apollo_root
         self.username = username
-
-
         # self.logger = get_logger(f"ApolloContainer[{self.container_name}]")
 
     @property
@@ -398,7 +396,6 @@ class Container:
     def kill_modules(self):
         cmd = f"docker exec -d {self.container_name} bash /apollo/scripts/my_scripts/kill_modules.sh"
         subprocess.run(cmd.split())
-        # time.sleep(1)
 
     def dreamview_operation(self, operation):
         cmd = f"docker exec -d {self.container_name} bash /apollo/scripts/bootstrap.sh {operation}"
@@ -411,13 +408,10 @@ class Container:
     def modules_operation(self, operation):
         cmd = f"docker exec -d {self.container_name} bash /apollo/scripts/routing.sh {operation}"
         subprocess.run(cmd.split())
-        # time.sleep(0.5)
         cmd = f"docker exec -d {self.container_name} bash /apollo/scripts/planning.sh {operation}"
         subprocess.run(cmd.split())
-        # time.sleep(0.5)
         cmd = f"docker exec -d {self.container_name} bash /apollo/scripts/prediction.sh {operation}"
         subprocess.run(cmd.split())
-        # time.sleep(3)
 
 
 
@@ -426,17 +420,13 @@ class Container:
 
 
     def start_recorder(self, record_name):
-        # time.sleep(0.5)
         cmd = f"docker exec -d {self.container_name} /apollo/bazel-bin/cyber/tools/cyber_recorder/cyber_recorder record -o /apollo/records/{record_name} -a &"
         subprocess.Popen(cmd, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        # time.sleep(1)
-        # return recorder_subprocess
 
     def stop_recorder(self):
         cmd = f"docker exec -d {self.container_name} /apollo/scripts/my_scripts/stop_recorder.sh"
         subprocess.run(cmd.split())
         self.delete_recorder_log()
-        # time.sleep(0.5)
 
     def delete_recorder_log(self):
         files = glob.glob(f'{APOLLO_ROOT}/cyber_recorder.log.INFO.*')

@@ -10,7 +10,6 @@
         Under some configurations, some scenarios can successfully start, some scenarios cannot
         In those cannot start, it didn't report planning module failure
 
-
 ?. what if planning module failure was caused by not launching planning module normally
     not caused by config file but launching itself
 
@@ -21,10 +20,13 @@
 
 ?. why speeding violation sometimes happens in scenario1, sometimes not.
 
+?. check scenario2 stop sign violation, why it often happens for first time running
+
+
 -----------------------
 TO DO RIGHT NOW!!!
 -----------------------
-0. check scenario2 stop sign violation, why it often happens for first time running
+?. load new records if finding bug-revealing violations in previous scenarios
 
 1. bug-revealing violations judge
 

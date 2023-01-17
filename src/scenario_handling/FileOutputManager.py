@@ -32,7 +32,7 @@ class FileOutputManager:
         self.vio_csv_path = f"{base_path}/vio_csv.csv"
 
         self.ind_list_pickle_dump_data_path = f"{base_path}/ind_list_pickle_pop"
-        self.default_violation_dump_data_path = f"{base_path}/default_violation_pickle_pop"
+        self.default_violation_dump_data_path = f"{base_path}/default_violation_pickle"
 
         with open(self.violation_save_file_path, "w") as f:
             pass
@@ -129,7 +129,7 @@ class FileOutputManager:
     def report_tuning_situation(self, generated_individual, config_file_obj):
         self.option_tuning_id_list = []
         option_tuning_str = ""
-        print("Report Tuning...")
+        # print("Report Tuning...")
         for i in range(len(config_file_obj.default_option_value_list)):
             if generated_individual.value_list[i] != config_file_obj.default_option_value_list[i]:
                 option_obj = config_file_obj.option_obj_list[i]
@@ -224,3 +224,6 @@ class FileOutputManager:
     def load_default_violation_results_by_pickle(self):
         default_violation_results_list = pickle.load(open(self.default_violation_dump_data_path, 'rb'))
         return default_violation_results_list
+
+
+

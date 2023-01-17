@@ -34,7 +34,8 @@ class GARunner:
         if os.path.exists(file_output_manager.default_violation_dump_data_path):
             default_violation_results_list = file_output_manager.load_default_violation_results_by_pickle()
         else:
-            default_violation_results_list = check_default_running(initial_record_info, config_file_obj, file_output_manager, self.containers)
+            default_violation_results_list = check_default_running(initial_record_info, config_file_obj,
+                                                                   file_output_manager, self.containers)
 
         print("Default Config Rerun - Initial Scenario Violation Info:")
 

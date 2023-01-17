@@ -1,0 +1,4 @@
+record_name, violation_type, violation_info, scenario_id, related_options
+Generation_0_Config_5_Scenario_8,comfort,Deceleration exceeded max,8,204
+Generation_0_Config_8_Scenario_8,comfort,Deceleration exceeded max,8,245
+Generation_0_Config_20_Scenario_8,comfort,Deceleration exceeded max,8,78

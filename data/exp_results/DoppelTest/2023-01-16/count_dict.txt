@@ -1,0 +1,30 @@
+Violation Type Count
+{'comfort': 1}
+
+----------------------------------
+Scenario Violations Count
+{8: 1}
+
+----------------------------------
+Related Options (id: occurring time)
+{204: 1}
+Violation Type Count
+{'comfort': 2}
+
+----------------------------------
+Scenario Violations Count
+{8: 2}
+
+----------------------------------
+Related Options (id: occurring time)
+{204: 1, 245: 1}
+Violation Type Count
+{'comfort': 3}
+
+----------------------------------
+Scenario Violations Count
+{8: 3}
+
+----------------------------------
+Related Options (id: occurring time)
+{204: 1, 245: 1, 78: 1}
