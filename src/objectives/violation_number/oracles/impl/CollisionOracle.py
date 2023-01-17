@@ -1,6 +1,4 @@
-import math
 from typing import List, Optional, Tuple
-
 from config import OBS_TYPE_DICT
 from objectives.violation_number.oracles.OracleInterface import OracleInterface
 from modules.localization.proto.localization_pb2 import LocalizationEstimate
@@ -8,7 +6,6 @@ from modules.perception.proto.perception_obstacle_pb2 import PerceptionObstacles
 # from apollo.utils import generate_adc_polygon, calculate_velocity
 from shapely.geometry import Polygon
 import numpy as np
-
 from tools.utils import generate_adc_polygon, calculate_velocity
 
 

@@ -26,15 +26,17 @@ def stop_running(container):
 
 
 def run_default_scenarios(generated_individual, scenario_list, containers):
-    for scenario, container in zip(scenario_list, containers):
+    for scenario in scenario_list:
         # if module failure happens when default running, please rerun the program
-        violations_emerged_results, all_emerged_results = confirm_determinism(scenario, container,
+        violations_emerged_results, all_emerged_results = confirm_determinism(scenario, containers,
                                                                               rerun_times=DEFAULT_DETERMINISM_RERUN_TIMES)
         print(f"Default Violations:{all_emerged_results}")
         generated_individual.violations_emerged_results_list.append(all_emerged_results)
 
 
 def run_scenarios(generated_individual, scenario_list, containers):
+    print("Normal Run...")
+
     run_scenarios_by_division(scenario_list, containers)
 
     for scenario in scenario_list:
@@ -114,13 +116,15 @@ def confirm_determinism(scenario, containers, rerun_times):
         scenario.confirmed_record_name_list.append(temp_record_name)
         rerun_scenario_list.append(temp_scenario)
 
+    print("Rerun...")
+
     run_scenarios_by_division(rerun_scenario_list, containers)
 
     accumulated_emerged_results_count_dict = {}
     all_emerged_results = []
 
     for temp_scenario in rerun_scenario_list:
-        print(f"Scenario_{temp_scenario.scenario_id}")
+        # print(f"Scenario_{temp_scenario.scenario_id}")
         objectives = measure_objectives_individually(temp_scenario)
         violations_emerged_results, violations_removed_results = check_emerged_violations(objectives.violation_results,
                                                                                           temp_scenario)

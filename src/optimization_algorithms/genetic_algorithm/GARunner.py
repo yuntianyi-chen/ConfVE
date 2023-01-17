@@ -59,47 +59,48 @@ class GARunner:
 
             individual_num = 0
             for generated_individual in individual_list_after_mutate:
+                generated_individual.reset_default()
                 print("-------------------------------------------------")
                 gen_ind_id = f"Generation_{str(generation_num)}_Config_{individual_num}"
                 print(gen_ind_id)
                 file_output_manager.report_tuning_situation(generated_individual, config_file_obj)
 
-                if generated_individual.fitness == 0:
-                    generated_individual.update_id(gen_ind_id)
+                # if generated_individual.fitness == 0:
+                generated_individual.update_id(gen_ind_id)
 
-                    # scenario refers to a config setting with different fixed obstacles, traffic lights(if existing), and adc routes
-                    scenario_list = create_scenarios(generated_individual, config_file_obj, pre_record_info,
-                                                     name_prefix=gen_ind_id)
+                # scenario refers to a config setting with different fixed obstacles, traffic lights(if existing), and adc routes
+                scenario_list = create_scenarios(generated_individual, config_file_obj, pre_record_info,
+                                                 name_prefix=gen_ind_id)
 
-                    # test each config settings under several groups of obstacles and adc routes
-                    run_scenarios(generated_individual, scenario_list, self.containers)
+                # test each config settings under several groups of obstacles and adc routes
+                run_scenarios(generated_individual, scenario_list, self.containers)
 
-                    generated_individual.calculate_fitness()
+                generated_individual.calculate_fitness()
 
-                    ind_list.append(generated_individual)
+                ind_list.append(generated_individual)
 
-                    file_output_manager.print_violation_results(generated_individual)
-                    file_output_manager.save_total_violation_results(generated_individual, scenario_list)
-                    file_output_manager.handle_scenario_record(scenario_list)
+                file_output_manager.print_violation_results(generated_individual)
+                file_output_manager.save_total_violation_results(generated_individual, scenario_list)
+                file_output_manager.handle_scenario_record(scenario_list)
 
-                    if generated_individual.fitness > 0:
-                        if generated_individual.option_tuning_tracking_list:
-                            option_tuning_item = generated_individual.option_tuning_tracking_list[-1]
-                        else:
-                            option_tuning_item = "default"
+                if generated_individual.fitness > 0:
+                    if generated_individual.option_tuning_tracking_list:
+                        option_tuning_item = generated_individual.option_tuning_tracking_list[-1]
+                    else:
+                        option_tuning_item = "default"
 
-                        range_change_str = range_analyzer.range_analyze(option_tuning_item, config_file_obj)
-                        file_output_manager.save_config_file(gen_ind_id)
-                        file_output_manager.save_fitness_result(generated_individual, gen_ind_id)
-                        file_output_manager.save_emerged_violation_stats(generated_individual, scenario_list)
-                        file_output_manager.save_option_tuning_file(generated_individual, gen_ind_id,
-                                                                    option_tuning_item,
-                                                                    range_change_str)
-                        file_output_manager.save_count_dict_file()
-                        # revert configuration after detecting violations
-                        # generated_individual.configuration_reverting(do_reverting=CONFIGURATION_REVERTING)
+                    range_change_str = range_analyzer.range_analyze(option_tuning_item, config_file_obj)
+                    file_output_manager.save_config_file(gen_ind_id)
+                    file_output_manager.save_fitness_result(generated_individual, gen_ind_id)
+                    file_output_manager.save_emerged_violation_stats(generated_individual, scenario_list)
+                    file_output_manager.save_option_tuning_file(generated_individual, gen_ind_id,
+                                                                option_tuning_item,
+                                                                range_change_str)
+                    file_output_manager.save_count_dict_file()
+                    # revert configuration after detecting violations
+                    # generated_individual.configuration_reverting(do_reverting=CONFIGURATION_REVERTING)
 
-                    individual_num += 1
+                individual_num += 1
 
             random.shuffle(individual_list_after_mutate)
             # Fitness the more, the better, currently, for testing

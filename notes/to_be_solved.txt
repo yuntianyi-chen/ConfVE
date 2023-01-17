@@ -10,9 +10,6 @@
         Under some configurations, some scenarios can successfully start, some scenarios cannot
         In those cannot start, it didn't report planning module failure
 
-?. what if planning module failure was caused by not launching planning module normally
-    not caused by config file but launching itself
-
 ?. multi-objective fitness function
     how to change fitness function
 
@@ -26,9 +23,8 @@
 -----------------------
 TO DO RIGHT NOW!!!
 -----------------------
-?. load new records if finding bug-revealing violations in previous scenarios
-
-1. bug-revealing violations judge
+?. Fixed scenarios are too limited for testing
+    load new records if finding bug-revealing violations in previous scenarios
 
 1. Distinguish violations
         module failure - ([option id list], violation results)
@@ -50,6 +46,7 @@ TO DO RIGHT NOW!!!
         threshold - mutable size
         ranking - get top 10
 
+4. bug-revealing violations judge
 
 
 
@@ -69,7 +66,7 @@ Important but follow schedule
     Option range: Partial path sensitive analysis or interval analysis
 4. check violations are highly potentially bug-revealing
     semi-manual-automated way
-5. let Tuan and Xiang analyze violated record.
+    let Tuan and Xiang analyze violated record
 
 
 
