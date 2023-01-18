@@ -94,14 +94,17 @@ def check_default_running(pre_record_info, config_file_obj, file_output_manager,
 
 
 def run_scenarios_by_division(scenario_list, containers):
-    sub_scenario_list_list = [scenario_list[x:x + len(containers)] for x in range(0, len(scenario_list), len(containers))]
+    time.sleep(2)
+
+    sub_scenario_list_list = [scenario_list[x:x + len(containers)] for x in
+                              range(0, len(scenario_list), len(containers))]
     for sub_scenario_list in sub_scenario_list_list:
         for scenario, container in zip(sub_scenario_list, containers):
             start_running(scenario, container)
         time.sleep(MAX_RECORD_TIME)
         for container in containers:
             stop_running(container)
-    time.sleep(1)
+        time.sleep(2)
 
 
 def confirm_determinism(scenario, containers, rerun_times):

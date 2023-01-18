@@ -1,6 +1,0 @@
-record_name, violation_type, violation_info, scenario_id, related_options
-Generation_0_Config_0_Scenario_4,module,planning crash: no planning decision and not moving,4,42
-Generation_0_Config_2_Scenario_2,collision,855363: VEHICLE,2,183
-Generation_0_Config_3_Scenario_2,collision,855363: VEHICLE,2,199
-Generation_0_Config_4_Scenario_2,collision,855363: VEHICLE,2,221
-Generation_0_Config_5_Scenario_2,collision,855363: VEHICLE,2,105

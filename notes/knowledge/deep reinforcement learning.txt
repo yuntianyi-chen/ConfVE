@@ -1,5 +1,0 @@
-Reward - Goal
-
-Policy - Action
-
-Value Function - Long-term Goal

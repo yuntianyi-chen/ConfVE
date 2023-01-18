@@ -384,13 +384,13 @@ class Container:
         # print("Restart Dreamview...")
         self.close_subprocess()
         self.start_dreamview()
-        time.sleep(1)
+        time.sleep(0.5)
         # print("Start sim control...")
         self.dreamview.reset()
-        time.sleep(1)
+        time.sleep(0.5)
         # print("Restarting modules...")
         self.modules_operation(operation="start")
-        time.sleep(1)
+        time.sleep(0.5)
 
     def close_subprocess(self):
         cmd = f"docker exec -d {self.container_name} /apollo/scripts/my_scripts/close_subprocess.sh"

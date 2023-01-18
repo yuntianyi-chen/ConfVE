@@ -1,8 +1,0 @@
-Generation_0 Individual_0
-  Vio Intro: 10
-  Vio Remov: 13
-    Fitness: 23
-Generation_1 Individual_44
-  Vio Intro: 10
-  Vio Remov: 13
-    Fitness: 23

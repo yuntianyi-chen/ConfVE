@@ -4,10 +4,10 @@ Global configurations for the framework
 
 
 # IMPORTANT CONFIGURATION
-OBS_PERCEPTION_FREQUENCY = 25  # 10/25
-MAX_RECORD_TIME = 30  # 10
-AV_TESTING_APPROACH = "DoppelTest"  # scenoRITA/DoppelTest/AV-Fuzzer/ADFuzz/Random
-MAP_NAME = "borregas_ave"  # borregas_ave/sunnyvale_loop
+OBS_PERCEPTION_FREQUENCY = 10  # 10/25
+MAX_RECORD_TIME = 10  # 10
+AV_TESTING_APPROACH = "scenoRITA"  # scenoRITA/DoppelTest/AV-Fuzzer/ADFuzz/Random
+MAP_NAME = "sunnyvale_loop"  # borregas_ave/sunnyvale_loop
 
 CONTAINER_NUM = 5  # 5/10
 
@@ -40,10 +40,11 @@ PROJECT_ROOT = '/home/cloudsky/Research/Apollo/AV_Config_Testing'
 RECORDS_DIR = f'{PROJECT_ROOT}/data/records'
 APOLLO_RECORDS_DIR = f'{APOLLO_ROOT}/records'
 OBS_DIR = f"{APOLLO_ROOT}/modules/tools/perception/obstacles/{MAP_NAME}/"
-INITIAL_SCENARIO_RECORD_DIR = f"/home/cloudsky/Research/Apollo/Backup/{AV_TESTING_APPROACH}/records/initial"
-DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR = f"/home/cloudsky/Research/Apollo/Backup/{AV_TESTING_APPROACH}/records/initial_default_rerun"
-BACKUP_CONFIG_SAVE_DIR = f"/home/cloudsky/Research/Apollo/Backup/{AV_TESTING_APPROACH}/config_files"
-BACKUP_RECORD_SAVE_DIR = f"/home/cloudsky/Research/Apollo/Backup/{AV_TESTING_APPROACH}/records"
+BACKUP_SAVE_DIR = f"/home/cloudsky/Research/Apollo/Backup/{AV_TESTING_APPROACH}"
+BACKUP_CONFIG_SAVE_DIR = f"{BACKUP_SAVE_DIR}/config_files/{MAP_NAME}"
+BACKUP_RECORD_SAVE_DIR = f"{BACKUP_SAVE_DIR}/records/{MAP_NAME}"
+INITIAL_SCENARIO_RECORD_DIR = f"{BACKUP_RECORD_SAVE_DIR}/initial"
+DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR = f"{BACKUP_RECORD_SAVE_DIR}/initial_default_rerun"
 MAP_DIR = f'{PROJECT_ROOT}/data/maps/{MAP_NAME}'
 MY_SCRIPTS_DIR = f"{APOLLO_ROOT}/scripts/my_scripts"
 

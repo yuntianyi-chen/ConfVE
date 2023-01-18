@@ -1,4 +1,0 @@
-record_name, violation_type, violation_info, scenario_id, related_options
-Generation_0_Config_0_Scenario_0,collision,0: PEDESTRIAN,0,60
-Generation_0_Config_0_Scenario_5,collision,2: PEDESTRIAN,5,60
-Generation_0_Config_0_Scenario_8,collision,945942: VEHICLE,8,60
