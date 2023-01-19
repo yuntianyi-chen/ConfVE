@@ -7,20 +7,27 @@ from tools.utils import calculate_velocity
 
 class SpeedingOracle(OracleInterface):
 
+    TOLERANCE = 0.05
+
     def __init__(self) -> None:
         self.result = None
         self.mp = MapParser.get_instance()
-        self.lanes = list()
+        self.lanes = dict()
+
+        self.min_speed_limit = None
 
         for lane in self.mp.get_lanes():
             lane_obj = self.mp.get_lane_by_id(lane)
             speed_limit = lane_obj.speed_limit
             central_curve = self.mp.get_lane_central_curve(lane)
-            self.lanes.append(
-                (lane, speed_limit, central_curve)
-            )
+            self.lanes[lane] = (speed_limit, central_curve)
 
-        self.lanes.sort(key=lambda x: x[1])  # sort lanes by speed limit
+            if self.min_speed_limit is None or speed_limit < self.min_speed_limit:
+                self.min_speed_limit = speed_limit
+        
+        self.min_speed_limit = np.min(speed_limit)
+
+        self.cached_lanes = set()
 
     def get_interested_topics(self) -> List[str]:
         return ['/apollo/localization/pose']
@@ -34,12 +41,30 @@ class SpeedingOracle(OracleInterface):
         ego_position = Point(p.x, p.y, p.z)
         ego_velocity = calculate_velocity(message.pose.linear_velocity)
 
-        for lane in self.lanes:
-            lane_id, lane_speed_limit, lane_curve = lane
-            if round(ego_position.distance(lane_curve), 1) <= 0.1:
-                if ego_velocity > lane_speed_limit*1.05:
-                    # self.result = ((p.x, p.y), f'{ego_velocity} violates speed limit {lane_speed_limit} at {lane_id}')
-                    self.result = f'{round(ego_velocity)} violates speed limit {lane_speed_limit} at {lane_id}'
+        if ego_velocity <= self.min_speed_limit * (1 + SpeedingOracle.TOLERANCE):
+            # cannot violate any speed limit
+            return
+
+        for lane_id in self.cached_lanes:
+            lane_speed_limit, lane_curve = self.lanes[lane_id]
+            ego_position.distance(lane_curve)
+            if ego_position.distance(lane_curve) <= 1:
+                if ego_velocity > lane_speed_limit * (1 + SpeedingOracle.TOLERANCE):
+                    self.result = ((p.x, p.y),
+                        f'{ego_velocity} violates speed limit {lane_speed_limit} at {lane_id}')
+                return
+
+        for lane_id in self.lanes:
+            lane_speed_limit, lane_curve = self.lanes[lane_id]
+            if round(ego_position.distance(lane_curve), 1) <= 1:
+                self.update_cached_lanes(lane_id)
+                if ego_velocity > lane_speed_limit * (1 + SpeedingOracle.TOLERANCE):
+                    self.result = ((p.x, p.y),
+                                   f'{ego_velocity} violates speed limit {lane_speed_limit} at {lane_id}')
+                return
+
+    def update_cached_lanes(self, lane_id:str):
+        self.cached_lanes.add(lane_id)
 
     def get_result(self):
         if self.result is None:
