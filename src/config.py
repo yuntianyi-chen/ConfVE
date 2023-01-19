@@ -2,12 +2,11 @@
 Global configurations for the framework
 """
 
-
 # IMPORTANT CONFIGURATION
 OBS_PERCEPTION_FREQUENCY = 10  # 10/25
 MAX_RECORD_TIME = 10  # 10
 AV_TESTING_APPROACH = "scenoRITA"  # scenoRITA/DoppelTest/AV-Fuzzer/ADFuzz/Random
-MAP_NAME = "sunnyvale_loop"  # borregas_ave/sunnyvale_loop
+MAP_NAME = "sunnyvale_loop"  # borregas_ave/sunnyvale_loop/San Francisco
 
 CONTAINER_NUM = 5  # 5/10
 
@@ -15,8 +14,6 @@ CONTAINER_NUM = 5  # 5/10
 TRAFFIC_LIGHT_FREQUENCY = 10
 TRAFFIC_LIGHT_MODE = "read"  # read/random/off
 
-
-USE_SIM_CONTROL_STANDALONE = False
 
 # Rerun 5 times if occurred >= 3 times, confirmed
 DETERMINISM_RERUN_TIMES = 5

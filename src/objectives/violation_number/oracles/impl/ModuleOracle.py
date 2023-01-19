@@ -63,16 +63,16 @@ class ModuleOracle(OracleInterface):
     def get_result(self):
         result = list()
         if not self.received_routing:
-            result.append(('module', 'routing failure'))
+            result.append(('module', 'Routing fails to start'))
         if not self.received_planning:
-            result.append(('module', 'planning failure'))
+            result.append(('module', 'Planning fails to start'))
         if not self.received_prediction:
-            result.append(('module', 'prediction failure'))
+            result.append(('module', 'Prediction fails to start'))
 
         if self.received_planning and self.received_routing and self.received_prediction:
             if self.distance_traveled == 0:
                 if self.has_normal_planning_decision:
-                    result.append(('module', 'other crash: has planning decision but not moving'))
+                    result.append(('module', 'Running car stops indefinitely'))
                 else:
-                    result.append(('module', 'planning crash: no planning decision and not moving'))
+                    result.append(('module', 'Planning generates garbage'))
         return result
