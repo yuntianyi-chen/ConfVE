@@ -90,7 +90,7 @@ class ComfortOracle(OracleInterface):
                 features['duration'] = delta_t
                 features['type'] = 1.0
                 violations.append(Violation(
-                    'ComfortOracle',
+                    'AccelOracle',
                     features,
                 ))
             elif k == -1:
@@ -98,7 +98,7 @@ class ComfortOracle(OracleInterface):
                 features['duration'] = delta_t
                 features['type'] = -1.0
                 violations.append(Violation(
-                    'ComfortOracle',
+                    'DecelOracle',
                     features,
                 ))
 

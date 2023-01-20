@@ -129,7 +129,6 @@ def confirm_determinism(scenario, containers, rerun_times):
         objectives = measure_objectives_individually(temp_scenario)
         violations_emerged_results, violations_removed_results = check_emerged_violations(objectives.violation_results,
                                                                                           temp_scenario)
-
         for emerged_violation in violations_emerged_results:
             if emerged_violation not in accumulated_emerged_results_count_dict.keys():
                 accumulated_emerged_results_count_dict[emerged_violation] = 1

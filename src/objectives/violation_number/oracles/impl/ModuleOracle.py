@@ -7,11 +7,11 @@ class ModuleOracle(OracleInterface):
     """
     Module Oracle is responsible for checking and categorizing module failures
     Its features include:
-        * x: float
-        * y: float
-        * heading: float
-        * speed: float
-        * type: int
+        # * x: float
+        # * y: float
+        # * heading: float
+        # * speed: float
+        # * type: int
 
     :todo: update the names
     Error code for type includes:
@@ -21,6 +21,7 @@ class ModuleOracle(OracleInterface):
 
         * 500: Car never moved
         * 501: Planning generates garbage
+        * 600: SimControlFailure
     """
     distance_traveled: float
 
@@ -32,6 +33,7 @@ class ModuleOracle(OracleInterface):
         self.received_routing = False
         self.received_planning = False
         self.received_prediction = False
+        self.received_localization = False
 
         self.has_normal_planning_decision = False
         self.distance_traveled = 0
@@ -58,6 +60,7 @@ class ModuleOracle(OracleInterface):
 
         # if self.distance_traveled <= 0:
         if topic == '/apollo/localization/pose':
+            self.received_localization = True
             self.last_localization = message
             if self.prev_ is None and self.next_ is None:
                 self.prev_ = message
@@ -78,43 +81,51 @@ class ModuleOracle(OracleInterface):
 
     def get_result(self):
         result = list()
-        feature = self.get_basic_info_from_localization(self.last_localization)
-        if not self.received_routing:
-            # result.append(('module', 'Routing fails to start'))
-            vf = dict(feature)
-            vf['type'] = 400
-            result.append(Violation(
-                'ModuleOracle', vf
-            ))
-        if not self.received_prediction:
-            # result.append(('module', 'Prediction fails to start'))
-            vf = dict(feature)
-            vf['type'] = 401
-            result.append(Violation(
-                'ModuleOracle', vf
-            ))
-        if not self.received_planning:
-            # result.append(('module', 'Planning fails to start'))
-            vf = dict(feature)
-            vf['type'] = 402
-            result.append(Violation(
-                'ModuleOracle', vf
-            ))
+        if self.received_localization:
+            feature = self.get_basic_info_from_localization(self.last_localization)
+            if not self.received_routing:
+                # result.append(('module', 'Routing fails to start'))
+                vf = dict(feature)
+                vf['type'] = 400
+                result.append(Violation(
+                    'RoutingFailure', vf
+                ))
+            if not self.received_prediction:
+                # result.append(('module', 'Prediction fails to start'))
+                vf = dict(feature)
+                vf['type'] = 401
+                result.append(Violation(
+                    'PredictionFailure', vf
+                ))
+            if not self.received_planning:
+                # result.append(('module', 'Planning fails to start'))
+                vf = dict(feature)
+                vf['type'] = 402
+                result.append(Violation(
+                    'PlanningFailure', vf
+                ))
 
-        if self.received_planning and self.received_routing and self.received_prediction:
-            if self.distance_traveled == 0:
-                if self.has_normal_planning_decision:
-                    # result.append(('module', 'Running car stops indefinitely'))
-                    vf = dict(feature)
-                    vf['type'] = 500
-                    result.append(Violation(
-                        'ModuleOracle', vf
-                    ))
-                else:
-                    # result.append(('module', 'Planning generates garbage'))
-                    vf = dict(feature)
-                    vf['type'] = 501
-                    result.append(Violation(
-                        'ModuleOracle', vf
-                    ))
+            if self.received_planning and self.received_routing and self.received_prediction:
+                if self.distance_traveled == 0:
+                    if self.has_normal_planning_decision:
+                        # result.append(('module', 'Running car stops indefinitely'))
+                        vf = dict(feature)
+                        vf['type'] = 500
+                        result.append(Violation(
+                            'CarNeverMoved', vf
+                        ))
+                    else:
+                        # result.append(('module', 'Planning generates garbage'))
+                        vf = dict(feature)
+                        vf['type'] = 501
+                        result.append(Violation(
+                            'PlanningGeneratesGarbage', vf
+                        ))
+        else:
+            if self.received_planning and self.received_routing and self.received_prediction:
+                vf = dict()
+                vf['type'] = 600
+                result.append(Violation(
+                    'SimControlFailure', vf
+                ))
         return result
