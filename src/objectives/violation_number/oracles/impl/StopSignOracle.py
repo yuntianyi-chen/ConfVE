@@ -1,9 +1,6 @@
 import re
 from typing import List, Dict, Set
-
 from shapely.geometry import Polygon, LineString
-
-# from apollo.utils import calculate_velocity, generate_adc_polygon
 from objectives.violation_number.oracles.OracleInterface import OracleInterface
 from objectives.violation_number.oracles.Violation import Violation
 from tools.hdmap.MapParser import MapParser

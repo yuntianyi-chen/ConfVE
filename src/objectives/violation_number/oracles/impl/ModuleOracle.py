@@ -1,8 +1,5 @@
-from typing import Optional
-from objectives.violation_number.oracles.OracleInterface import OracleInterface
-from modules.localization.proto.localization_pb2 import LocalizationEstimate
 from shapely.geometry import Point
-
+from objectives.violation_number.oracles.OracleInterface import OracleInterface
 from objectives.violation_number.oracles.Violation import Violation
 
 

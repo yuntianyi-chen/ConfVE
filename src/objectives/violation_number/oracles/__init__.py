@@ -1,5 +1,4 @@
 from cyber_record.record import Record
-
 from objectives.violation_number.oracles.OracleManager import OracleManager
 from objectives.violation_number.oracles.impl.CollisionOracle import CollisionOracle
 from objectives.violation_number.oracles.impl.ComfortOracle import ComfortOracle

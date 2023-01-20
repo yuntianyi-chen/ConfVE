@@ -1,10 +1,7 @@
-# from framework.oracles.OracleInterface import OracleInterface
 from typing import List
 from shapely.geometry import Polygon, Point
 from objectives.violation_number.oracles.OracleInterface import OracleInterface
 from tools.hdmap.MapParser import MapParser
-
-# from hdmap.MapParser import MapParser
 
 
 class JunctionLaneChangeOracle(OracleInterface):

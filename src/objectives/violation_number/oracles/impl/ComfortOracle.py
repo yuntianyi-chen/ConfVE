@@ -6,7 +6,7 @@ from typing import List, Optional
 # from apollo.utils import calculate_velocity
 from objectives.violation_number.oracles.OracleInterface import OracleInterface
 from modules.localization.proto.localization_pb2 import LocalizationEstimate
-import numpy as np
+# import numpy as np
 
 from objectives.violation_number.oracles.Violation import Violation
 from tools.utils import calculate_velocity

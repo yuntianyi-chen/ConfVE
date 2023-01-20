@@ -10,12 +10,10 @@ from config import DETERMINISM_RERUN_TIMES, DETERMINISM_CONFIRMED_TIMES
 def start_running(scenario, container):
     container.start_recorder(scenario.record_name)
     container.message_handler.register_obstacles_by_channel(scenario.obs_perception_messages)
-
     if TRAFFIC_LIGHT_MODE == "read":
         container.message_handler.register_traffic_lights_by_channel(scenario.traffic_control_msg)
     elif TRAFFIC_LIGHT_MODE == "random":
         container.message_handler.register_traffic_lights_by_channel(scenario.traffic_control_manager)
-
     container.message_handler.send_routing_request_by_channel(scenario.routing_request_message)
 
 
