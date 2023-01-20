@@ -5,3 +5,5 @@
 /data/exp_results/
 /backup/
 /backup_code/
+.idea/
+*.pyc
