@@ -5,6 +5,7 @@ from shapely.geometry import Polygon, LineString
 
 # from apollo.utils import calculate_velocity, generate_adc_polygon
 from objectives.violation_number.oracles.OracleInterface import OracleInterface
+from objectives.violation_number.oracles.Violation import Violation
 from tools.hdmap.MapParser import MapParser
 from modules.localization.proto.localization_pb2 import LocalizationEstimate
 from modules.planning.proto.decision_pb2 import STOP_REASON_STOP_SIGN
@@ -14,10 +15,16 @@ from tools.utils import generate_adc_polygon, calculate_velocity
 
 class StopSignOracle(OracleInterface):
     """
-    *Idea for checking if ADC had stopped at stop sign:
+    Stop sign oracle is responsible for checking if ADC had stopped at stop sign:
     Just after ADC crossed the stop line (not intersecting stop line anymore), oracle checks frames in past 5 seconds to see if:
     (1) the STOP_REASON_STOP_SIGN decision was there for this stop_sign_id, and
     (2) ADC reaches 0.0 m/s around the time when this STOP decision is made
+    Its features include:
+        * x:            float
+        * y:            float
+        * heading:      float
+        * speed:        float
+        * ssid:         int     # here we use the index of that ID from list of all stop sign IDs as feature
     """
 
     past_localization_list: List[LocalizationEstimate]
@@ -31,13 +38,15 @@ class StopSignOracle(OracleInterface):
     # Apollo: virtual_obstacle_id = STOP_SIGN_VO_ID_PREFIX + stop_sign_overlap.object_id;
     STOP_SIGN_VO_ID_PREFIX = "SS_"
 
-    checked = set()
+    checked: Set
 
     def __init__(self):
         self.violated_at_stop_sign_ids = set()
-
+        self.checked = set()
         self.parse_stop_sign_stop_line_string_on_map(MapParser.get_instance())
         self.reset_all_oracle_states()
+        self.violations = list()
+        self.sorted_stop_sign_ids = sorted(MapParser.get_instance().get_stop_signs())
 
     def get_interested_topics(self):
         return [
@@ -96,7 +105,13 @@ class StopSignOracle(OracleInterface):
                 break
 
         if not is_adc_followed_stop_sign_rule:
-            self.violated_at_stop_sign_ids.add(crossing_stop_sign_id)
+            features = self.get_basic_info_from_localization(self.past_localization_list[-1])
+            features['ssid'] = self.sorted_stop_sign_ids.index(crossing_stop_sign_id)
+            self.violations.append(Violation(
+                'StopSignOracle',
+                features
+            ))
+            # self.violated_at_stop_sign_ids.add(crossing_stop_sign_id)
 
         self.reset_all_oracle_states()
 

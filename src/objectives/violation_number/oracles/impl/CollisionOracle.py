@@ -6,10 +6,26 @@ from modules.perception.proto.perception_obstacle_pb2 import PerceptionObstacles
 # from apollo.utils import generate_adc_polygon, calculate_velocity
 from shapely.geometry import Polygon
 import numpy as np
+
+from objectives.violation_number.oracles.Violation import Violation
 from tools.utils import generate_adc_polygon, calculate_velocity
 
 
 class CollisionOracle(OracleInterface):
+    """
+    Collision Oracle is responsible for checking whether collision occurred between the ego vehicle and another
+    road traffic participants.
+    Its features include:
+        x:              float
+        y:              float
+        heading:        float
+        speed:          float
+        obs_x:          float
+        obs_y:          float
+        obs_heading:    float
+        obs_speed:      float
+        obs_type:       int
+    """
     last_localization: Optional[LocalizationEstimate]
     last_perception: Optional[PerceptionObstacles]
     distances: List[Tuple[float, int, str]]
@@ -17,7 +33,8 @@ class CollisionOracle(OracleInterface):
     def __init__(self) -> None:
         self.last_localization = None
         self.last_perception = None
-        self.distances = list()
+        self.excluded_obs = set()
+        self.violations = list()
 
     def get_interested_topics(self):
         return [
@@ -38,33 +55,37 @@ class CollisionOracle(OracleInterface):
         # begin analyze
         adc_pose = self.last_localization.pose
 
-        if self.is_adc_completely_stopped():
-            return
-
         adc_polygon_pts = generate_adc_polygon(adc_pose.position, adc_pose.heading)
         adc_polygon = Polygon([[x.x, x.y] for x in adc_polygon_pts])
 
         for obs in self.last_perception.perception_obstacle:
+            obs_id = obs.id
+            if obs_id in self.excluded_obs:
+                # obstacle may pass through ego vehicle if they are not smart
+                continue
             obs_polygon = Polygon([[x.x, x.y] for x in obs.polygon_point])
-            self.distances.append((adc_polygon.distance(obs_polygon), obs.id, OBS_TYPE_DICT[obs.type]))
+            if adc_polygon.distance(obs_polygon) == 0:
+                # collision occurred
+                features = self.get_basic_info_from_localization(self.last_localization)
+                features['obs_x'] = obs.position.x
+                features['obs_y'] = obs.position.y
+                features['obs_heading'] = obs.theta
+                features['obs_speed'] = calculate_velocity(obs.velocity)
+                features['obs_type'] = obs.type
+                self.excluded_obs.add(obs_id)
+                self.violations.append(
+                    Violation(
+                        'CollisionOracle',
+                        features
+                    )
+                )
 
     def is_adc_completely_stopped(self) -> bool:
-        return False
-        #
-        # adc_pose = self.last_localization.pose
-        # adc_velocity = calculate_velocity(adc_pose.linear_velocity)
-        #
-        # # https://github.com/ApolloAuto/apollo/blob/0789b7ea1e1356dde444452ab21b51854781e304/modules/planning/scenarios/stop_sign/unprotected/stage_pre_stop.cc#L237
-        # # return adc_velocity <= self.MAX_ABS_SPEED_WHEN_STOPPED
-        # return adc_velocity == 0
+        adc_pose = self.last_localization.pose
+        adc_velocity = calculate_velocity(adc_pose.linear_velocity)
+        # https://github.com/ApolloAuto/apollo/blob/0789b7ea1e1356dde444452ab21b51854781e304/modules/planning/scenarios/stop_sign/unprotected/stage_pre_stop.cc#L237
+        # return adc_velocity <= self.MAX_ABS_SPEED_WHEN_STOPPED
+        return adc_velocity == 0
 
     def get_result(self):
-        result = list()
-        if len(self.distances) == 0:
-            return result
-        for dis in self.distances:
-            if dis[0] == 0.0:
-                violation = ('collision', f"{dis[1]}: {dis[2]}")
-                if violation not in result:
-                    result.append(violation)
-        return result
+        return self.violations
