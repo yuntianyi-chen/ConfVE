@@ -1,11 +1,21 @@
 from typing import List
 from objectives.violation_number.oracles.OracleInterface import OracleInterface
+from objectives.violation_number.oracles.Violation import Violation
 from tools.hdmap.MapParser import MapParser
 from shapely.geometry import Point
 from tools.utils import calculate_velocity
 
 
 class SpeedingOracle(OracleInterface):
+    """
+    Speeding Oracle is responsible for checking if the ego vehicle violates speed limit at any point
+    Its features include:
+        * x:            float
+        * y:            float
+        * heading:      float
+        * speed:        float
+        * speed_limit:  float
+    """
 
     TOLERANCE = 0.05
 
@@ -29,6 +39,8 @@ class SpeedingOracle(OracleInterface):
 
         self.cached_lanes = set()
 
+        self.violations = list()
+
     def get_interested_topics(self) -> List[str]:
         return ['/apollo/localization/pose']
 
@@ -50,8 +62,14 @@ class SpeedingOracle(OracleInterface):
             ego_position.distance(lane_curve)
             if ego_position.distance(lane_curve) <= 1:
                 if ego_velocity > lane_speed_limit * (1 + SpeedingOracle.TOLERANCE):
-                    self.result = ((p.x, p.y),
-                        f'{ego_velocity} violates speed limit {lane_speed_limit} at {lane_id}')
+                    features = self.get_basic_info_from_localization(message)
+                    features['speed_limit'] = lane_speed_limit
+                    self.violations.append(
+                        Violation(
+                            'SpeedingOracle',
+                            features
+                        )
+                    )
                 return
 
         for lane_id in self.lanes:
@@ -59,16 +77,18 @@ class SpeedingOracle(OracleInterface):
             if round(ego_position.distance(lane_curve), 1) <= 1:
                 self.update_cached_lanes(lane_id)
                 if ego_velocity > lane_speed_limit * (1 + SpeedingOracle.TOLERANCE):
-                    self.result = ((p.x, p.y),
-                                   f'{ego_velocity} violates speed limit {lane_speed_limit} at {lane_id}')
+                    features = self.get_basic_info_from_localization(message)
+                    features['speed_limit'] = lane_speed_limit
+                    self.violations.append(
+                        Violation(
+                            'SpeedingOracle',
+                            features
+                        )
+                    )
                 return
 
     def update_cached_lanes(self, lane_id:str):
         self.cached_lanes.add(lane_id)
 
     def get_result(self):
-        if self.result is None:
-            return list()
-        return [
-            ('speed violation', self.result)
-        ]
+        return self.violations
