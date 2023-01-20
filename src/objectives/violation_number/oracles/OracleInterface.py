@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List
+from modules.localization.proto.localization_pb2 import LocalizationEstimate
+from tools.utils import calculate_velocity
 
 
 class OracleInterface(ABC):
@@ -15,3 +17,14 @@ class OracleInterface(ABC):
     @abstractmethod
     def get_result(self):
         return list()
+
+    @staticmethod
+    def get_basic_info_from_localization(message: LocalizationEstimate):
+        speed = calculate_velocity(message.pose.linear_velocity)
+        features = {
+            'x': message.pose.position.x,
+            'y': message.pose.position.y,
+            'heading': message.pose.heading,
+            'speed': speed,
+        }
+        return features
