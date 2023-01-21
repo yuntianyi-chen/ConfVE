@@ -72,7 +72,8 @@ class CollisionOracle(OracleInterface):
                 self.violations.append(
                     Violation(
                         'CollisionOracle',
-                        features
+                        features,
+                        str(obs_id)
                     )
                 )
 

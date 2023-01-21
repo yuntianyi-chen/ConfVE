@@ -10,9 +10,14 @@ MAP_NAME = "sunnyvale_loop"  # borregas_ave/sunnyvale_loop/San Francisco
 
 CONTAINER_NUM = 5  # 5/10
 
+MODULE_ORACLES = ["RoutingFailure", "PredictionFailure", "PlanningFailure", "CarNeverMoved","PlanningGeneratesGarbage","SimControlFailure"]
+
+MAX_INITIAL_SCENARIOS = 10
+
 # APOLLO SETTINGS
 TRAFFIC_LIGHT_FREQUENCY = 10
 TRAFFIC_LIGHT_MODE = "read"  # read/random/off
+
 
 
 # Rerun 5 times if occurred >= 3 times, confirmed

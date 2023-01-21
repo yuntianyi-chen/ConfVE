@@ -106,7 +106,8 @@ class StopSignOracle(OracleInterface):
             features['ssid'] = self.sorted_stop_sign_ids.index(crossing_stop_sign_id)
             self.violations.append(Violation(
                 'StopSignOracle',
-                features
+                features,
+                str(features['ssid'])
             ))
             # self.violated_at_stop_sign_ids.add(crossing_stop_sign_id)
 

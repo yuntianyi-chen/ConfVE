@@ -92,6 +92,7 @@ class ComfortOracle(OracleInterface):
                 violations.append(Violation(
                     'AccelOracle',
                     features,
+                    str(features['accel'])
                 ))
             elif k == -1:
                 features = dict(traces[0][2])
@@ -100,6 +101,7 @@ class ComfortOracle(OracleInterface):
                 violations.append(Violation(
                     'DecelOracle',
                     features,
+                    str(features['accel'])
                 ))
 
         return violations

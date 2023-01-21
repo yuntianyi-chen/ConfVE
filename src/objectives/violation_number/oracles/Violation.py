@@ -6,3 +6,4 @@ from typing import Dict
 class Violation:
     main_type: str
     features: Dict
+    key_label: str

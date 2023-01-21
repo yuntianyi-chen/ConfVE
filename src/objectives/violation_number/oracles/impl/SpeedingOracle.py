@@ -98,6 +98,7 @@ class SpeedingOracle(OracleInterface):
                 violations.append(Violation(
                     'SpeedingOracle',
                     features,
+                    str(features['speed'])
                 ))
 
         return violations

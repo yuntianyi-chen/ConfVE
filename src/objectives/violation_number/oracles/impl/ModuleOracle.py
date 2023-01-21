@@ -21,6 +21,7 @@ class ModuleOracle(OracleInterface):
 
         * 500: Car never moved
         * 501: Planning generates garbage
+
         * 600: SimControlFailure
     """
     distance_traveled: float
@@ -88,21 +89,21 @@ class ModuleOracle(OracleInterface):
                 vf = dict(feature)
                 vf['type'] = 400
                 result.append(Violation(
-                    'RoutingFailure', vf
+                    'RoutingFailure', vf, str(vf['type'])
                 ))
             if not self.received_prediction:
                 # result.append(('module', 'Prediction fails to start'))
                 vf = dict(feature)
                 vf['type'] = 401
                 result.append(Violation(
-                    'PredictionFailure', vf
+                    'PredictionFailure', vf, str(vf['type'])
                 ))
             if not self.received_planning:
                 # result.append(('module', 'Planning fails to start'))
                 vf = dict(feature)
                 vf['type'] = 402
                 result.append(Violation(
-                    'PlanningFailure', vf
+                    'PlanningFailure', vf, str(vf['type'])
                 ))
 
             if self.received_planning and self.received_routing and self.received_prediction:
@@ -112,20 +113,20 @@ class ModuleOracle(OracleInterface):
                         vf = dict(feature)
                         vf['type'] = 500
                         result.append(Violation(
-                            'CarNeverMoved', vf
+                            'CarNeverMoved', vf, str(vf['type'])
                         ))
                     else:
                         # result.append(('module', 'Planning generates garbage'))
                         vf = dict(feature)
                         vf['type'] = 501
                         result.append(Violation(
-                            'PlanningGeneratesGarbage', vf
+                            'PlanningGeneratesGarbage', vf, str(vf['type'])
                         ))
         else:
             if self.received_planning and self.received_routing and self.received_prediction:
                 vf = dict()
                 vf['type'] = 600
                 result.append(Violation(
-                    'SimControlFailure', vf
+                    'SimControlFailure', vf, str(vf['type'])
                 ))
         return result
