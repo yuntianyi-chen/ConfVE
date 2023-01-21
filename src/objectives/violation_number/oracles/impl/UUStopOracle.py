@@ -3,15 +3,23 @@ from objectives.violation_number.oracles.OracleInterface import OracleInterface
 from modules.localization.proto.localization_pb2 import LocalizationEstimate
 from modules.planning.proto.decision_pb2 import STOP_REASON_STOP_SIGN
 from modules.planning.proto.planning_pb2 import ADCTrajectory
+from objectives.violation_number.oracles.Violation import Violation
+from tools.hdmap.MapParser import MapParser
 from tools.utils import calculate_velocity
 
 
 class UUStopOracle(OracleInterface):
     """
-        *Idea for checking if ADC had (unusual) stopped at stop sign for too long:
-        If the ADC stopped at speed of 0.0 m/s, check if:
-        (1) the STOP_REASON_STOP_SIGN decision is being made
-        (2) ADC stopped there for more than 10s
+    Unusual Stop Oracle is responsible for checking if the ADS makes a stop decision for stop sign and stops there
+    for more than 10 seconds. In a normal scenario, once ADS stops for a stop sign, it should enter a stop sign
+    scenario, remove that stop sign, and proceed when the road is clear. Therefore stopping for more than 10 seconds
+    for stop sign is unusual, it is, however, possible that the ADS stops for other reasons.
+    Its features include:
+        * x:            float
+        * y:            float
+        * heading:      float
+        * speed:        float
+        * reason_code:  int     # stop reason code modules/planning/proto/decision.proto StopReasonCode
     """
 
     last_localization = Optional[LocalizationEstimate]
@@ -32,6 +40,9 @@ class UUStopOracle(OracleInterface):
         self.last_planning = None
 
         self.first_stop_timestamp = None
+
+        self.violations = list()
+        self.sorted_stop_sign_ids = sorted(MapParser.get_instance().get_stop_signs())
 
     def get_interested_topics(self):
         return [
@@ -75,7 +86,14 @@ class UUStopOracle(OracleInterface):
         adc_total_stop_time = last_stop_timestamp - self.first_stop_timestamp
         if adc_total_stop_time > self.ADC_MAX_STOP_TIME_ON_STOP_SIGN_IN_SECOND:
             last_stop_reason = self.last_planning.decision.main_decision.stop.reason
-            self.violated_stop_sign_stopped_times.append((adc_total_stop_time, str(last_stop_reason)))
+            # self.violated_stop_sign_stopped_times.append((adc_total_stop_time, str(last_stop_reason)))
+            features = self.get_basic_info_from_localization(self.last_localization)
+            features['reason_code'] = self.last_planning.decision.main_decision.stop.reason_code
+            self.violations.append(Violation(
+                'UUStopOracle',
+                features,
+                str(features['reason_code'])
+            ))
 
     def is_planning_main_decision_to_stop_at_stop_sign(self, planning_message: ADCTrajectory) -> bool:
         try:
@@ -90,9 +108,4 @@ class UUStopOracle(OracleInterface):
         return False
 
     def get_result(self):
-        result = list()
-        for ssst in self.violated_stop_sign_stopped_times:
-            violation = ('uu_stop', ssst[1])
-            if violation not in result:
-                result.append(violation)
-        return result
+        return self.violations
