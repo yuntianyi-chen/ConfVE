@@ -2,12 +2,24 @@ from itertools import groupby
 from typing import List
 from datetime import datetime
 from shapely.geometry import Polygon
+
+from objectives.violation_number.oracles.Violation import Violation
 from tools.hdmap.MapParser import MapParser
 from objectives.violation_number.oracles.OracleInterface import OracleInterface
 from tools.utils import generate_adc_polygon, construct_lane_boundary_linestring
 
 
 class UnsafeLaneChangeOracle(OracleInterface):
+    """
+    Unsafe Lane Change Oracle is responsible for checking if the vehicle spends a higher than usual
+    amount of time on the lane boundaries, which is unsafe.
+        * x:            float
+        * y:            float
+        * heading:      float
+        * speed:        float
+        * boundary_id:  str
+        * duration:     float
+    """
     ADC_INTERSECTING_LANE_BOUNDARY_MAX_LOOK_BACK_FRAMES_IN_SECOND = 5.0
     PRUNE_DISTANCE = 150
 
@@ -16,7 +28,7 @@ class UnsafeLaneChangeOracle(OracleInterface):
         self.boundaries = dict()
         self.get_boundaries()
         self.boundary_ids = sorted(self.boundaries.keys())
-        self.__data = list() # [ (intersects?, timestamp, boundary_id) ]
+        self.__data = list()  # [ (intersects?, timestamp, boundary_id, feature) ]
 
         self.searchable_boundary_ids = set(self.boundary_ids)
 
@@ -35,7 +47,9 @@ class UnsafeLaneChangeOracle(OracleInterface):
             distance = ego_polygon.distance(self.boundaries[bid])
             if distance == 0:
                 # intersection found
-                self.__data.append((True, t, bid))
+                features = self.get_basic_info_from_localization(message)
+                features['boundary_id'] = bid
+                self.__data.append((True, t, bid, features))
                 return
             if distance > UnsafeLaneChangeOracle.PRUNE_DISTANCE:
                 pending_removal_boundary_ids.add(bid)
@@ -43,7 +57,7 @@ class UnsafeLaneChangeOracle(OracleInterface):
         self.searchable_boundary_ids = self.searchable_boundary_ids - pending_removal_boundary_ids
 
         # no intersection
-        self.__data.append((False, t, ''))
+        self.__data.append((False, t, '', {}))
         
     def get_interested_topics(self) -> List[str]:
         return ["/apollo/localization/pose"]
@@ -56,8 +70,16 @@ class UnsafeLaneChangeOracle(OracleInterface):
             if intersects and len(traces) > 1:
                 start_time = datetime.fromtimestamp(traces[0][1]/1000000000)
                 end_time = datetime.fromtimestamp(traces[-1][1]/1000000000)
-                deltaT = (end_time - start_time).total_seconds()
+                delta_t = (end_time - start_time).total_seconds()
 
-                if deltaT > self.ADC_INTERSECTING_LANE_BOUNDARY_MAX_LOOK_BACK_FRAMES_IN_SECOND:
-                    violations.append(('unsafe_lane_change', b_id))
+                if delta_t > self.ADC_INTERSECTING_LANE_BOUNDARY_MAX_LOOK_BACK_FRAMES_IN_SECOND:
+                    features = dict(traces[0][3])
+                    features['duration'] = delta_t
+                    violations.append(
+                        Violation(
+                            'UnsafeLaneChangeOracle',
+                            features,
+                            str(features['boundary_id'])
+                        )
+                    )
         return violations

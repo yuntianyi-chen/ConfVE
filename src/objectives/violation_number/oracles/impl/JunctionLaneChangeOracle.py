@@ -1,10 +1,20 @@
 from typing import List
 from shapely.geometry import Polygon, Point
 from objectives.violation_number.oracles.OracleInterface import OracleInterface
+from objectives.violation_number.oracles.Violation import Violation
 from tools.hdmap.MapParser import MapParser
 
 
 class JunctionLaneChangeOracle(OracleInterface):
+    """
+    Junction Lane Change Oracle is responsible for checking if the ADS makes a lane-change decision while inside a
+    junction.
+        * x:            float
+        * y:            float
+        * heading:      float
+        * speed:        float
+        * junction_id:  str
+    """
     def __init__(self) -> None:
         super().__init__()
         self.mp = MapParser.get_instance()
@@ -16,7 +26,7 @@ class JunctionLaneChangeOracle(OracleInterface):
                 (j_id, junction_polygon)
             )
         self.last_localization = None
-        self.violation = None
+        self.violation = list()
 
     def get_interested_topics(self) -> List[str]:
         return [
@@ -47,15 +57,22 @@ class JunctionLaneChangeOracle(OracleInterface):
         # modules/routing/proto/routing.proto#70
         changing_lane = change_lane_type is not None and change_lane_type in [
             1, 2]
-
-        if changing_lane and self.current_junction() != '':
+        junction_id = self.current_junction()
+        if changing_lane and junction_id != '':
+            features = self.get_basic_info_from_localization(self.last_localization)
+            features['junction_id'] = junction_id
+            self.violation.append(Violation(
+                'JunctionLaneChangeOracle',
+                features,
+                str(features['junction_id'])
+            ))
             self.violation = f'Lane Change at Junction {self.current_junction()}'
 
     def on_localization(self, message):
         self.last_localization = message
 
     def on_new_message(self, topic: str, message, t):
-        if self.violation is not None:
+        if len(self.violation) > 0:
             # violation already tracked
             return
         if topic == '/apollo/planning':
@@ -64,6 +81,4 @@ class JunctionLaneChangeOracle(OracleInterface):
             self.on_localization(message)
 
     def get_result(self):
-        if self.violation is None:
-            return []
-        return [('Junction Violation', self.violation)]
+        return self.violation
