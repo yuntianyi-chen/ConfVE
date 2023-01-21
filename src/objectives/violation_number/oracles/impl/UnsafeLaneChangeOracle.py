@@ -17,7 +17,7 @@ class UnsafeLaneChangeOracle(OracleInterface):
         * y:            float
         * heading:      float
         * speed:        float
-        * boundary_id:  str
+        * boundary_id:  int     # index of the boundary ID in a sorted list
         * duration:     float
     """
     ADC_INTERSECTING_LANE_BOUNDARY_MAX_LOOK_BACK_FRAMES_IN_SECOND = 5.0
@@ -48,7 +48,7 @@ class UnsafeLaneChangeOracle(OracleInterface):
             if distance == 0:
                 # intersection found
                 features = self.get_basic_info_from_localization(message)
-                features['boundary_id'] = bid
+                features['boundary_id'] = self.boundary_ids.index(bid)
                 self.__data.append((True, t, bid, features))
                 return
             if distance > UnsafeLaneChangeOracle.PRUNE_DISTANCE:

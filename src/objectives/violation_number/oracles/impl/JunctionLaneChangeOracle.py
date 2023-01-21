@@ -13,7 +13,7 @@ class JunctionLaneChangeOracle(OracleInterface):
         * y:            float
         * heading:      float
         * speed:        float
-        * junction_id:  str
+        * junction_id:  int     # index of junction_id in a sorted list
     """
     def __init__(self) -> None:
         super().__init__()
@@ -25,6 +25,7 @@ class JunctionLaneChangeOracle(OracleInterface):
             self.junctions.append(
                 (j_id, junction_polygon)
             )
+        self.junction_ids = sorted(self.mp.get_junctions())
         self.last_localization = None
         self.violation = list()
 
@@ -60,7 +61,7 @@ class JunctionLaneChangeOracle(OracleInterface):
         junction_id = self.current_junction()
         if changing_lane and junction_id != '':
             features = self.get_basic_info_from_localization(self.last_localization)
-            features['junction_id'] = junction_id
+            features['junction_id'] = self.junction_ids.index(junction_id)
             self.violation.append(Violation(
                 'JunctionLaneChangeOracle',
                 features,
