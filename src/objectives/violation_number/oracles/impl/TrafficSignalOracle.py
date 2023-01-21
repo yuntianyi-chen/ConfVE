@@ -2,6 +2,7 @@ import re
 from typing import Dict, Optional, Set
 from shapely.geometry import LineString, Polygon
 from objectives.violation_number.oracles.OracleInterface import OracleInterface
+from objectives.violation_number.oracles.Violation import Violation
 from tools.hdmap.MapParser import MapParser
 from modules.localization.proto.localization_pb2 import LocalizationEstimate
 from modules.perception.proto.traffic_light_detection_pb2 import TrafficLightDetection, TrafficLight
@@ -12,10 +13,14 @@ from tools.utils import generate_adc_polygon, calculate_velocity
 
 class TrafficSignalOracle(OracleInterface):
     """
-        *Idea for checking if ADC had crossed the stop line when signal was RED:
-        If the traffic light status is being RED and an ADC intersecting stop line at this time. Check if:
-        (1) the STOP_REASON_SIGNAL decision is being made for this signal_id, and
-        (2) ADC speed is 0.0 m/s at this time
+    Traffic signal oracle is responsible for checking if the vehicle violates red light, i.e., when facing a
+    red light signal, it should not be crossing the stop line.
+    Its features include:
+        * x:            float
+        * y:            float
+        * heading:      float
+        * speed:        float
+        * tsid:         int     # here we use the index of that ID from list of all stop sign IDs as feature
     """
 
     last_localization = Optional[LocalizationEstimate]
@@ -35,6 +40,9 @@ class TrafficSignalOracle(OracleInterface):
         self.last_planning = None
 
         self.parse_traffic_signal_stop_line_string_on_map(MapParser.get_instance())
+
+        self.violations = list()
+        self.sorted_signal_ids = sorted(MapParser.get_instance().get_signals())
 
     def get_interested_topics(self):
         return [
@@ -75,8 +83,14 @@ class TrafficSignalOracle(OracleInterface):
         if self.is_planning_main_decision_to_stop_at_traffic_signal(self.last_planning,
                                                                     crossing_traffic_signal_id) is False \
                 or self.is_adc_completely_stopped() is False:
-            self.violated_at_traffic_signal_ids.add(crossing_traffic_signal_id)
-
+            # self.violated_at_traffic_signal_ids.add(crossing_traffic_signal_id)
+            features = self.get_basic_info_from_localization(self.past_localization_list[-1])
+            features['tsid'] = self.sorted_signal_ids.index(crossing_traffic_signal_id)
+            self.violations.append(Violation(
+                'TrafficSignalOracle',
+                features,
+                str(features['tsid'])
+            ))
     def parse_traffic_signal_stop_line_string_on_map(self, map_parser: MapParser) -> None:
         self.traffic_signal_stop_line_string_dict = dict()
         traffic_signal_ids = map_parser.get_signals()
