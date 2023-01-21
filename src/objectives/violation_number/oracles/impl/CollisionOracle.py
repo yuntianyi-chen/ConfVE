@@ -16,6 +16,7 @@ class CollisionOracle(OracleInterface):
         y:              float
         heading:        float
         speed:          float
+        obs_id:         int
         obs_x:          float
         obs_y:          float
         obs_heading:    float
@@ -63,6 +64,7 @@ class CollisionOracle(OracleInterface):
             if adc_polygon.distance(obs_polygon) == 0:
                 # collision occurred
                 features = self.get_basic_info_from_localization(self.last_localization)
+                features['obs_id'] = obs.id
                 features['obs_x'] = obs.position.x
                 features['obs_y'] = obs.position.y
                 features['obs_heading'] = obs.theta
