@@ -41,6 +41,7 @@ FITNESS_MODE = "emerge"  # emerge/emerge_and_removal
 APOLLO_ROOT = '/home/cloudsky/Research/Apollo/apollo_7.0'
 PROJECT_ROOT = '/home/cloudsky/Research/Apollo/AV_Config_Testing'
 RECORDS_DIR = f'{PROJECT_ROOT}/data/records'
+FEATURES_CSV_DIR = f'{PROJECT_ROOT}/data/violation_features'
 APOLLO_RECORDS_DIR = f'{APOLLO_ROOT}/records'
 OBS_DIR = f"{APOLLO_ROOT}/modules/tools/perception/obstacles/{MAP_NAME}/"
 BACKUP_SAVE_DIR = f"/home/cloudsky/Research/Apollo/Backup/{AV_TESTING_APPROACH}"

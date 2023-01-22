@@ -31,12 +31,9 @@ class FileOutputManager:
         self.count_dict_file_path = f"{base_dir}/count_dict.txt"
         self.vio_csv_path = f"{base_dir}/vio_csv.csv"
 
-
-        self.vio_features_dir = f"{base_dir}/vio_features"
+        self.vio_features_dir = f"{base_dir}/violation_features"
         if not os.path.exists(self.vio_features_dir):
             os.makedirs(self.vio_features_dir)
-
-
 
         self.ind_list_pickle_dump_data_path = f"{base_dir}/ind_list_pickle_pop"
         self.default_violation_dump_data_path = f"{base_dir}/default_violation_pickle"
@@ -55,9 +52,6 @@ class FileOutputManager:
             pass
         with open(self.vio_csv_path, "w") as f:
             f.write("record_name,violation_type,violation_info,scenario_id,related_options\n")
-
-
-
 
         self.backup_record_file_save_path = f"{BACKUP_RECORD_SAVE_DIR}/{self.time_str}"
         self.delete_dir(dir_path=self.backup_record_file_save_path, mk_dir=True)
@@ -125,7 +119,7 @@ class FileOutputManager:
     def print_violation_results(self, generated_individual):
         print(f" Vio Total Results: {[len(item) for item in generated_individual.violation_results_list]}")
         print(f" Vio Emerged Num: {generated_individual.violation_intro}")
-        print(f" Vio Emerged Results: {[(k,v.main_type) for k,v in generated_individual.violations_emerged_results]}")
+        print(f" Vio Emerged Results: {[(k, v.main_type) for k, v in generated_individual.violations_emerged_results]}")
 
     def save_total_violation_results(self, generated_individual, scenario_list):
         with open(self.violation_save_file_path, "a") as f:
@@ -154,14 +148,9 @@ class FileOutputManager:
             f.write(f"  Total Option Tuning:\n{self.option_tuning_str}")
             f.write(f"  Current Option Tuning: {option_tuning_item}\n")
             f.write(f"  Violation Emergence Num: {len(generated_individual.violations_emerged_results)}\n")
-            f.write(f"  Violation Emerged: {[(k,v.main_type) for k,v in generated_individual.violations_emerged_results]}\n")
+            f.write(
+                f"  Violation Emerged: {[(k, v.main_type) for k, v in generated_individual.violations_emerged_results]}\n")
             f.write(f"{range_change_str}\n")
-
-
-
-
-
-
 
     def save_vio_features(self, generated_individual, scenario_list):
         for vio_emerged_tuple in generated_individual.violations_emerged_results:
@@ -178,27 +167,15 @@ class FileOutputManager:
             violation_features = violation_item_obj.features
             # violation_key = violation_item_obj.key_label
 
-            self.vio_features_csv_path = f"{self.vio_features_dir}/{violation_type}_features.csv"
+            self.vio_features_csv_path = f"{self.vio_features_dir}/{violation_type}.csv"
             if os.path.exists(self.vio_features_csv_path):
                 with open(self.vio_features_csv_path, "a") as f:
-                    features_values_str = ",".join(map(str,violation_features.values()))
+                    features_values_str = ",".join(map(str, violation_features.values()))
                     f.write(f"{record_name},{violated_scenario_id},{features_values_str}\n")
             else:
                 with open(self.vio_features_csv_path, "w") as f:
                     features_keys_str = ",".join(violation_features.keys())
                     f.write(f"record_name,record_id,{features_keys_str}\n")
-
-
-
-
-
-
-
-
-
-
-
-
 
     def save_emerged_violation_stats(self, generated_individual, scenario_list):
         # f.write("record_name, violation_type, violation_info, scenario_id, related_options")
@@ -278,5 +255,3 @@ class FileOutputManager:
     def load_default_violation_results_by_pickle(self):
         default_violation_results_list = pickle.load(open(self.default_violation_dump_data_path, 'rb'))
         return default_violation_results_list
-
-

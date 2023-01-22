@@ -9,3 +9,5 @@
 *.pyc
 
 /src/test.py
+/src/duplicate_elimination/examples/
+/data/violation_features/
