@@ -75,8 +75,8 @@ def check_emerged_violations(violation_results, default_violations_results):
     return violations_emerged_results
 
 
-
 def confirm_determinism(scenario, containers, rerun_times):
+    print("        Restart Env...")
     for container in containers:
         container.cyber_env_init()
 
@@ -88,7 +88,7 @@ def confirm_determinism(scenario, containers, rerun_times):
         scenario.confirmed_record_name_list.append(temp_record_name)
         rerun_scenario_list.append(temp_scenario)
 
-    print("Rerun...")
+    print(f"        Rerunning {scenario.record_name}...")
 
     run_scenarios_by_division(rerun_scenario_list, containers)
 
@@ -99,7 +99,8 @@ def confirm_determinism(scenario, containers, rerun_times):
         # print(f"Scenario_{temp_scenario.scenario_id}")
         objectives = measure_objectives_individually(temp_scenario)
 
-        violations_emerged_results = check_emerged_violations(objectives.violation_results, temp_scenario.original_violation_results)
+        violations_emerged_results = check_emerged_violations(objectives.violation_results,
+                                                              temp_scenario.original_violation_results)
 
         for emerged_violation in violations_emerged_results:
             if emerged_violation.main_type not in accumulated_emerged_results_count_dict.keys():
@@ -113,5 +114,5 @@ def confirm_determinism(scenario, containers, rerun_times):
 
     determined_emerged_results = [v[0] for v in accumulated_emerged_results_count_dict.values() if
                                   len(v) >= DETERMINISM_CONFIRMED_TIMES]
-
+    print("-------------------------------------------------")
     return determined_emerged_results, all_emerged_results

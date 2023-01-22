@@ -36,16 +36,13 @@ class GARunner:
         print("Initial Scenario Violation Info:")
         message_generator.get_record_info_by_approach()
 
-
-
-
+        print("\nDefault Config Rerun - Initial Scenario Violation Info:")
         if os.path.exists(file_output_manager.default_violation_dump_data_path):
             default_violation_results_list = file_output_manager.load_default_violation_results_by_pickle()
             message_generator.update_selected_records_violatioin_directly(default_violation_results_list)
         else:
             check_default_running(message_generator, config_file_obj, file_output_manager, self.containers)
 
-        print("Default Config Rerun - Initial Scenario Violation Info:")
 
 
 
@@ -125,7 +122,6 @@ class GARunner:
             file_output_manager.update_range_analysis_file(config_file_obj, range_analyzer, generation_num)
 
 
-
             message_generator.replace_records(self.scenario_rid_emergence_list)
             check_default_running(message_generator, config_file_obj, file_output_manager, self.containers)
             self.scenario_rid_emergence_list = []
@@ -139,7 +135,7 @@ class GARunner:
 
     def check_scenario_list_vio_emergence(self, scenario_list):
         for scenario in scenario_list:
-            if scenario.has_emerged_module_violations:
+            if not scenario.has_emerged_module_violations:
                 if scenario.record_id not in self.scenario_rid_emergence_list:
                     self.scenario_rid_emergence_list.append(scenario.record_id)
 

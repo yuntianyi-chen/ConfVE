@@ -4,7 +4,7 @@ import shutil
 from datetime import date
 from config import BACKUP_CONFIG_SAVE_DIR, MODULE_NAME, CURRENT_CONFIG_FILE_PATH, FITNESS_MODE, \
     AV_TESTING_APPROACH, DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR, APOLLO_RECORDS_DIR, PROJECT_ROOT, \
-    BACKUP_RECORD_SAVE_DIR, APOLLO_ROOT, MY_SCRIPTS_DIR
+    BACKUP_RECORD_SAVE_DIR, APOLLO_ROOT, MY_SCRIPTS_DIR, MAP_NAME
 
 
 class FileOutputManager:
@@ -19,7 +19,7 @@ class FileOutputManager:
         self.scenario_violation_count_dict = {}
 
     def file_init(self):
-        base_dir = f"{PROJECT_ROOT}/data/exp_results/{AV_TESTING_APPROACH}/{self.time_str}"
+        base_dir = f"{PROJECT_ROOT}/data/exp_results/{AV_TESTING_APPROACH}/{MAP_NAME}/{self.time_str}"
         if not os.path.exists(base_dir):
             os.makedirs(base_dir)
 
@@ -70,7 +70,7 @@ class FileOutputManager:
     def delete_data_core(self):
         try:
             shutil.rmtree(f"{APOLLO_ROOT}/data/core")
-            os.mkdir(f"{APOLLO_ROOT}/data/core")
+            os.makedirs(f"{APOLLO_ROOT}/data/core")
         except OSError as ose:
             print(ose)
 
@@ -78,10 +78,10 @@ class FileOutputManager:
         if os.path.exists(dir_path):
             shutil.rmtree(dir_path)
         if mk_dir:
-            os.mkdir(dir_path)
+            os.makedirs(dir_path)
 
     def save_config_file(self, gen_ind_id):
-        os.mkdir(f"{self.config_file_save_path}/{gen_ind_id}")
+        os.makedirs(f"{self.config_file_save_path}/{gen_ind_id}")
         shutil.copy(CURRENT_CONFIG_FILE_PATH, f"{self.config_file_save_path}/{gen_ind_id}/{MODULE_NAME}_config.pb.txt")
 
     def save_default_scenarios(self):
@@ -228,7 +228,7 @@ class FileOutputManager:
             # record_name_list = [f"{name_prefix}_Scenario_{str(i)}" for i in range(len(pre_record_info_list))]
             with open(self.record_mapping_file_path, "a") as f:
                 # for i in range(pre_record_info.count):
-                f.write(f"{pre_record_info.scenario_record_file_list.record_file_path} ------ {record_name}\n")
+                f.write(f"{pre_record_info.record_file_path} ------ {record_name}\n")
 
     def update_range_analysis_file(self, config_file_obj, range_analyzer, generation_num):
         option_obj_list = config_file_obj.option_obj_list

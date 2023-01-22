@@ -2,29 +2,36 @@
 Global configurations for the framework
 """
 
+
+###
+# routing request message.header.module name
+# different for different AV_TESTING_APPROACH
+###
+
 # IMPORTANT CONFIGURATION
-OBS_PERCEPTION_FREQUENCY = 10  # 10/25
-MAX_RECORD_TIME = 10  # 10
-AV_TESTING_APPROACH = "scenoRITA"  # scenoRITA/DoppelTest/AV-Fuzzer/ADFuzz/Random
-MAP_NAME = "sunnyvale_loop"  # borregas_ave/sunnyvale_loop/San Francisco
+OBS_PERCEPTION_FREQUENCY = 25  # 10/25
+MAX_RECORD_TIME = 30  # 10
+AV_TESTING_APPROACH = "DoppelTest"  # scenoRITA/DoppelTest/AV-Fuzzer/ADFuzz/Random
+MAP_NAME = "borregas_ave"  # borregas_ave/sunnyvale_loop/San_Francisco
 
 CONTAINER_NUM = 5  # 5/10
 SIMILARITY_THRESHOLD = 0.8
 
 MODULE_ORACLES = ["RoutingFailure", "PredictionFailure", "PlanningFailure", "CarNeverMoved","PlanningGeneratesGarbage","SimControlFailure"]
 
-MAX_INITIAL_SCENARIOS = 10
+MAX_INITIAL_SCENARIOS = 10   # 10
+
+
+# Rerun 5 times if occurred >= 3 times, confirmed
+DETERMINISM_RERUN_TIMES = 5  # 5
+DEFAULT_DETERMINISM_RERUN_TIMES = 10  # 10
+DETERMINISM_CONFIRMED_TIMES = 3  # 3
+
 
 # APOLLO SETTINGS
 TRAFFIC_LIGHT_FREQUENCY = 10
 TRAFFIC_LIGHT_MODE = "read"  # read/random/off
 
-
-
-# Rerun 5 times if occurred >= 3 times, confirmed
-DETERMINISM_RERUN_TIMES = 5
-DEFAULT_DETERMINISM_RERUN_TIMES = 10
-DETERMINISM_CONFIRMED_TIMES = 3
 
 # TESTING SETTINGS
 OPT_MODE = "GA"  # GA/DRL/Random
@@ -34,7 +41,7 @@ DEFAULT_CONFIG_FILE = False
 # GA SETTINGS
 GENERATION_LIMIT = 10
 INIT_POP_SIZE = 10  # 60 individuals in each generation
-SELECT_NUM_RATIO = [7, 2, 1]  # [5, 3, 2]
+SELECT_NUM_RATIO = [7, 2, 1]  # [5, 3, 2]/[7, 2, 1]
 FITNESS_MODE = "emerge"  # emerge/emerge_and_removal
 
 # DIRECTORIES

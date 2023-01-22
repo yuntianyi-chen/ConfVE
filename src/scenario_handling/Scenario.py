@@ -36,7 +36,7 @@ class Scenario:
 
     def update_routing_perception_info(self, pre_record_info):
         self.obs_perception_messages = pre_record_info.obs_perception_list
-        self.routing_request_message = pre_record_info.routing_request_list
+        self.routing_request_message = pre_record_info.routing_request
 
     def update_original_violations(self, pre_record_info):
         self.original_violation_num = pre_record_info.violation_num

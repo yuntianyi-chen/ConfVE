@@ -16,7 +16,7 @@ class InitialRecordInfo:
         self.violation_results = []
         self.violation_num = 0
 
-        self.routing_request_list = []
+        self.routing_request = None
         self.obs_perception_list = []
         self.traffic_lights_list = []
 
@@ -75,13 +75,16 @@ class InitialRecordInfo:
                     routing_message_module_name = "routing routing..."
                 elif AV_TESTING_APPROACH == "DoppelTest":
                     routing_message_module_name = "MAGGIE"
+                elif AV_TESTING_APPROACH == "AV-Fuzzer":
+                    routing_message_module_name = "dreamview"
                 else:
                     routing_message_module_name = ""
                 if message.routing_request.header.module_name == routing_message_module_name:
                     routing_request = message.routing_request
-                    self.routing_request_list.append(routing_request)
+                    self.routing_request = routing_request
             elif topic == "/apollo/perception/traffic_light":
                 traffic_lights = list(message.traffic_light)
+                # if traffic_lights:
                 traffic_instance_list = [self.traffic_instance(traffic_light) for traffic_light in traffic_lights]
                 self.traffic_lights_list.append(traffic_instance_list)
 

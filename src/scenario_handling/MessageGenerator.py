@@ -25,7 +25,8 @@ class MessageGenerator:
     def update_total_violation_results(self):
         self.violation_results_list = [pri.violation_results for pri in self.pre_record_info_list]
         self.violation_num_list = [len(vr) for vr in self.violation_results_list]
-        print(self.violation_results_list)
+        print("Records Info:")
+        # print(self.violation_results_list)
         print(self.violation_num_list)
 
     def update_all_records_violatioin_directly(self, violation_results_list):
@@ -54,13 +55,14 @@ class MessageGenerator:
 
     def replace_records(self, replaced_id_list):
         for rid in replaced_id_list:
-            print(f"Replacing Record_{rid}...")
-            for i in range(len(self.pre_record_info_list)):
-                if rid == self.pre_record_info_list[i].record_id:
-                    pre_record_info = InitialRecordInfo(True, self.record_counter,
-                                                self.scenario_record_path_list[self.record_counter])
-                    self.record_counter += 1
-                    self.pre_record_info_list[i] = pre_record_info
+            if len(self.scenario_record_path_list) < self.record_counter:
+                print(f"Replacing Record_{rid}...")
+                for i in range(len(self.pre_record_info_list)):
+                    if rid == self.pre_record_info_list[i].record_id:
+                        pre_record_info = InitialRecordInfo(True, self.record_counter,
+                                                    self.scenario_record_path_list[self.record_counter])
+                        self.record_counter += 1
+                        self.pre_record_info_list[i] = pre_record_info
         self.update_total_violation_results()
 
 

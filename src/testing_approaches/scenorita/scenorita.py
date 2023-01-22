@@ -308,7 +308,7 @@ def runScenario(deme, record_name, bridge):
 def delete_records(records_path, mk_dir):
     shutil.rmtree(records_path)
     if mk_dir:
-        os.mkdir(records_path)
+        os.makedirs(records_path)
 
 if __name__ == "__main__":
     # delete_records()
