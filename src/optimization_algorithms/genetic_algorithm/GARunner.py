@@ -17,7 +17,11 @@ class GARunner:
     def __init__(self, containers):
         MapLoader()
         self.containers = containers
+
+        self.scenario_rid_emergence_list=[]
         self.ga_runner()
+
+
 
     def ga_runner(self):
         start_time = time.time()
@@ -27,19 +31,24 @@ class GARunner:
         file_output_manager = FileOutputManager()
         file_output_manager.delete_dir(dir_path=APOLLO_RECORDS_DIR, mk_dir=True)
 
+        message_generator = MessageGenerator(scenario_record_dir_path=INITIAL_SCENARIO_RECORD_DIR)
+
         print("Initial Scenario Violation Info:")
-        initial_record_info = MessageGenerator().get_record_info_by_approach(
-            scenario_record_dir_path=INITIAL_SCENARIO_RECORD_DIR)
+        message_generator.get_record_info_by_approach()
+
+
+
 
         if os.path.exists(file_output_manager.default_violation_dump_data_path):
             default_violation_results_list = file_output_manager.load_default_violation_results_by_pickle()
+            message_generator.update_selected_records_violatioin_directly(default_violation_results_list)
         else:
-            default_violation_results_list = check_default_running(initial_record_info, config_file_obj,
-                                                                   file_output_manager, self.containers)
+            check_default_running(message_generator, config_file_obj, file_output_manager, self.containers)
 
         print("Default Config Rerun - Initial Scenario Violation Info:")
 
-        pre_record_info = initial_record_info.update(default_violation_results_list)
+
+
 
         init_individual_list = generate_individuals(config_file_obj, INIT_POP_SIZE)
 
@@ -69,13 +78,14 @@ class GARunner:
                 generated_individual.update_id(gen_ind_id)
 
                 # scenario refers to a config setting with different fixed obstacles, traffic lights(if existing), and adc routes
-                scenario_list = create_scenarios(generated_individual, config_file_obj, pre_record_info,
+                scenario_list = create_scenarios(generated_individual, config_file_obj, message_generator.pre_record_info_list,
                                                  name_prefix=gen_ind_id)
 
                 # test each config settings under several groups of obstacles and adc routes
                 run_scenarios(generated_individual, scenario_list, self.containers)
 
                 generated_individual.calculate_fitness()
+                self.check_scenario_list_vio_emergence(scenario_list)
 
                 ind_list.append(generated_individual)
 
@@ -84,6 +94,8 @@ class GARunner:
                 file_output_manager.handle_scenario_record(scenario_list)
 
                 if generated_individual.fitness > 0:
+                    file_output_manager.save_vio_features(generated_individual, scenario_list)
+
                     if generated_individual.option_tuning_tracking_list:
                         option_tuning_item = generated_individual.option_tuning_tracking_list[-1]
                     else:
@@ -93,9 +105,12 @@ class GARunner:
                     file_output_manager.save_config_file(gen_ind_id)
                     file_output_manager.save_fitness_result(generated_individual, gen_ind_id)
                     file_output_manager.save_emerged_violation_stats(generated_individual, scenario_list)
-                    file_output_manager.save_option_tuning_file(generated_individual, gen_ind_id,
-                                                                option_tuning_item,
-                                                                range_change_str)
+                    file_output_manager.save_option_tuning_file(
+                        generated_individual,
+                        gen_ind_id,
+                        option_tuning_item,
+                        range_change_str
+                    )
                     file_output_manager.save_count_dict_file()
                     # revert configuration after detecting violations
                     # generated_individual.configuration_reverting(do_reverting=CONFIGURATION_REVERTING)
@@ -109,6 +124,23 @@ class GARunner:
             # output range analysis every generation
             file_output_manager.update_range_analysis_file(config_file_obj, range_analyzer, generation_num)
 
+
+
+            message_generator.replace_records(self.scenario_rid_emergence_list)
+            check_default_running(message_generator, config_file_obj, file_output_manager, self.containers)
+            self.scenario_rid_emergence_list = []
+
+
+
+
         end_time = time.time()
         print("Time cost: " + str((end_time - start_time) / 3600) + " hours")
         file_output_manager.dump_individual_by_pickle(ind_list)
+
+    def check_scenario_list_vio_emergence(self, scenario_list):
+        for scenario in scenario_list:
+            if scenario.has_emerged_module_violations:
+                if scenario.record_id not in self.scenario_rid_emergence_list:
+                    self.scenario_rid_emergence_list.append(scenario.record_id)
+
+

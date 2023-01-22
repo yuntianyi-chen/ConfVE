@@ -19,20 +19,27 @@ class FileOutputManager:
         self.scenario_violation_count_dict = {}
 
     def file_init(self):
-        base_path = f"{PROJECT_ROOT}/data/exp_results/{AV_TESTING_APPROACH}/{self.time_str}"
-        if not os.path.exists(base_path):
-            os.makedirs(base_path)
+        base_dir = f"{PROJECT_ROOT}/data/exp_results/{AV_TESTING_APPROACH}/{self.time_str}"
+        if not os.path.exists(base_dir):
+            os.makedirs(base_dir)
 
-        self.violation_save_file_path = f"{base_path}/violation_results.txt"
-        self.ind_fitness_save_file_path = f"{base_path}/ind_fitness.txt"
-        self.option_tuning_file_path = f"{base_path}/option_tuning.txt"
-        self.range_analysis_file_path = f"{base_path}/range_analysis.txt"
-        self.record_mapping_file_path = f"{base_path}/record_mapping.txt"
-        self.count_dict_file_path = f"{base_path}/count_dict.txt"
-        self.vio_csv_path = f"{base_path}/vio_csv.csv"
+        self.violation_save_file_path = f"{base_dir}/violation_results.txt"
+        self.ind_fitness_save_file_path = f"{base_dir}/ind_fitness.txt"
+        self.option_tuning_file_path = f"{base_dir}/option_tuning.txt"
+        self.range_analysis_file_path = f"{base_dir}/range_analysis.txt"
+        self.record_mapping_file_path = f"{base_dir}/record_mapping.txt"
+        self.count_dict_file_path = f"{base_dir}/count_dict.txt"
+        self.vio_csv_path = f"{base_dir}/vio_csv.csv"
 
-        self.ind_list_pickle_dump_data_path = f"{base_path}/ind_list_pickle_pop"
-        self.default_violation_dump_data_path = f"{base_path}/default_violation_pickle"
+
+        self.vio_features_dir = f"{base_dir}/vio_features"
+        if not os.path.exists(self.vio_features_dir):
+            os.makedirs(self.vio_features_dir)
+
+
+
+        self.ind_list_pickle_dump_data_path = f"{base_dir}/ind_list_pickle_pop"
+        self.default_violation_dump_data_path = f"{base_dir}/default_violation_pickle"
 
         with open(self.violation_save_file_path, "w") as f:
             pass
@@ -47,7 +54,9 @@ class FileOutputManager:
         with open(self.count_dict_file_path, "w") as f:
             pass
         with open(self.vio_csv_path, "w") as f:
-            f.write("record_name, violation_type, violation_info, scenario_id, related_options\n")
+            f.write("record_name,violation_type,violation_info,scenario_id,related_options\n")
+
+
 
 
         self.backup_record_file_save_path = f"{BACKUP_RECORD_SAVE_DIR}/{self.time_str}"
@@ -108,15 +117,15 @@ class FileOutputManager:
         with open(self.ind_fitness_save_file_path, "a") as f:
             f.write(f"{gen_ind_id}\n")
             f.write(f"  Vio Intro: {individual.violation_intro}\n")
-            f.write(f"  Vio Remov: {individual.violation_remov}\n")
+            # f.write(f"  Vio Remov: {individual.violation_remov}\n")
             f.write(f"  Fitness(mode: {FITNESS_MODE}): {individual.fitness}\n")
         if individual.fitness > self.optimal_fitness:
             self.optimal_fitness = individual.fitness
 
     def print_violation_results(self, generated_individual):
-        print(f" Vio Results: {[len(item) for item in generated_individual.violation_results_list]}")
+        print(f" Vio Total Results: {[len(item) for item in generated_individual.violation_results_list]}")
         print(f" Vio Emerged Num: {generated_individual.violation_intro}")
-        print(f" Vio Emerged Results: {generated_individual.violations_emerged_results}")
+        print(f" Vio Emerged Results: {[(k,v.main_type) for k,v in generated_individual.violations_emerged_results]}")
 
     def save_total_violation_results(self, generated_individual, scenario_list):
         with open(self.violation_save_file_path, "a") as f:
@@ -145,8 +154,51 @@ class FileOutputManager:
             f.write(f"  Total Option Tuning:\n{self.option_tuning_str}")
             f.write(f"  Current Option Tuning: {option_tuning_item}\n")
             f.write(f"  Violation Emergence Num: {len(generated_individual.violations_emerged_results)}\n")
-            f.write(f"  Violation Emerged: {generated_individual.violations_emerged_results}\n")
+            f.write(f"  Violation Emerged: {[(k,v.main_type) for k,v in generated_individual.violations_emerged_results]}\n")
             f.write(f"{range_change_str}\n")
+
+
+
+
+
+
+
+    def save_vio_features(self, generated_individual, scenario_list):
+        for vio_emerged_tuple in generated_individual.violations_emerged_results:
+            violated_scenario_id = vio_emerged_tuple[0]
+            violation_item_obj = vio_emerged_tuple[1]
+
+            record_name = ""
+            for scenario in scenario_list:
+                if scenario.record_id == violated_scenario_id:
+                    record_name = scenario_list[violated_scenario_id].record_name
+                    break
+
+            violation_type = violation_item_obj.main_type
+            violation_features = violation_item_obj.features
+            # violation_key = violation_item_obj.key_label
+
+            self.vio_features_csv_path = f"{self.vio_features_dir}/{violation_type}_features.csv"
+            if os.path.exists(self.vio_features_csv_path):
+                with open(self.vio_features_csv_path, "a") as f:
+                    features_values_str = ",".join(map(str,violation_features.values()))
+                    f.write(f"{record_name},{violated_scenario_id},{features_values_str}\n")
+            else:
+                with open(self.vio_features_csv_path, "w") as f:
+                    features_keys_str = ",".join(violation_features.keys())
+                    f.write(f"record_name,record_id,{features_keys_str}\n")
+
+
+
+
+
+
+
+
+
+
+
+
 
     def save_emerged_violation_stats(self, generated_individual, scenario_list):
         # f.write("record_name, violation_type, violation_info, scenario_id, related_options")
@@ -154,11 +206,11 @@ class FileOutputManager:
         with open(self.vio_csv_path, "a") as f:
             for vio_emerged_tuple in generated_individual.violations_emerged_results:
                 violated_scenario_id = vio_emerged_tuple[0]
-                violation_item_tuple = vio_emerged_tuple[1]
+                violation_item_obj = vio_emerged_tuple[1]
 
                 record_name = scenario_list[violated_scenario_id].record_name
-                violation_type = violation_item_tuple[0]
-                violation_info = violation_item_tuple[1]
+                violation_type = violation_item_obj.main_type
+                violation_info = violation_item_obj.key_label
                 scenario_id = violated_scenario_id
 
                 related_options = ""
@@ -193,11 +245,13 @@ class FileOutputManager:
             f.write(f"Related Options (id: occurring time)\n")
             f.write(f"{self.related_option_count_dict}\n")
 
-    def output_initial_record2default_mapping(self, pre_record_info, name_prefix):
-        record_name_list = [f"{name_prefix}_Scenario_{str(i)}" for i in range(pre_record_info.count)]
-        with open(self.record_mapping_file_path, "a") as f:
-            for i in range(pre_record_info.count):
-                f.write(f"{pre_record_info.scenario_record_file_list[i]} ------ {record_name_list[i]}\n")
+    def output_initial_record2default_mapping(self, pre_record_info_list, name_prefix):
+        for pre_record_info in pre_record_info_list:
+            record_name = f"{name_prefix}_Scenario_{str(pre_record_info.record_id)}"
+            # record_name_list = [f"{name_prefix}_Scenario_{str(i)}" for i in range(len(pre_record_info_list))]
+            with open(self.record_mapping_file_path, "a") as f:
+                # for i in range(pre_record_info.count):
+                f.write(f"{pre_record_info.scenario_record_file_list.record_file_path} ------ {record_name}\n")
 
     def update_range_analysis_file(self, config_file_obj, range_analyzer, generation_num):
         option_obj_list = config_file_obj.option_obj_list
@@ -224,6 +278,5 @@ class FileOutputManager:
     def load_default_violation_results_by_pickle(self):
         default_violation_results_list = pickle.load(open(self.default_violation_dump_data_path, 'rb'))
         return default_violation_results_list
-
 
 

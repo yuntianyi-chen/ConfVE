@@ -70,7 +70,6 @@ class CollisionOracle(OracleInterface):
                 features['obs_heading'] = obs.theta
                 features['obs_speed'] = calculate_velocity(obs.velocity)
                 features['obs_type'] = obs.type
-                features['obs_id'] = obs.id
 
                 self.excluded_obs.add(obs_id)
                 self.violations.append(

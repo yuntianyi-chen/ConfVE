@@ -7,7 +7,7 @@ from objectives.measure_objectives import measure_violation_number, measure_viol
 from tools.script.pickle_file_handling import dump_default_violation_results_by_pickle
 
 if __name__ == '__main__':
-    TEST_MODE = "dump"
+    TEST_MODE = ""
     MapLoader()
     # record_dir = INITIAL_SCENARIO_RECORD_DIR
     record_dir = DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR

@@ -22,23 +22,28 @@ def config_file_generating(generated_individual, config_file_obj, default):
 
 
 # scenario refers to different config settings with fixed obstacles and adc routing
-def create_scenarios(generated_individual, config_file_obj, pre_record_info, name_prefix):
-    record_name_list = [f"{name_prefix}_Scenario_{str(i)}" for i in range(pre_record_info.count)]
+def create_scenarios(generated_individual, config_file_obj, pre_record_info_list, name_prefix):
+    # record_name_list = [f"{name_prefix}_Scenario_{str(rid)}" for rid in pre_record_info_list.record_id]
 
     config_file_tuned_status = config_file_generating(generated_individual, config_file_obj,
                                                       default=DEFAULT_CONFIG_FILE)
 
     scenario_list = []
-    for i in range(len(record_name_list)):
-        scenario = Scenario(record_name_list[i], i)
+
+
+    for pre_record_info in pre_record_info_list:
+        record_name = f"{name_prefix}_Scenario_{str(pre_record_info.record_id)}"
+
+        scenario = Scenario(record_name, pre_record_info.record_id)
+
         scenario.update_config_file_status(config_file_tuned_status)
         if AV_TESTING_APPROACH != "Random":
-            scenario.update_original_violations(pre_record_info.violation_num_list[i],
-                                                pre_record_info.violation_results_list[i])
-            scenario.update_routing_perception_info(pre_record_info.obs_perception_list[i],
-                                                    pre_record_info.routing_request_list[i])
+
+            scenario.update_original_violations(pre_record_info)
+            scenario.update_routing_perception_info(pre_record_info)
+
             if TRAFFIC_LIGHT_MODE == "read":
-                traffic_light_control = pre_record_info.traffic_lights_list[i]
+                traffic_light_control = pre_record_info.traffic_lights_list
             elif TRAFFIC_LIGHT_MODE == "random":
                 traffic_light_control = TCSection.get_one()
             else:

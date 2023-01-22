@@ -7,3 +7,5 @@
 /backup_code/
 .idea/
 *.pyc
+
+/src/test.py
