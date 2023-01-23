@@ -22,6 +22,9 @@ MODULE_ORACLES = ["RoutingFailure", "PredictionFailure", "PlanningFailure", "Car
 MAX_INITIAL_SCENARIOS = 10   # 10
 
 
+# t-way testing
+T_STRENGTH_VALUE = 2
+
 # Rerun 5 times if occurred >= 3 times, confirmed
 DETERMINISM_RERUN_TIMES = 5  # 5
 DEFAULT_DETERMINISM_RERUN_TIMES = 10  # 10

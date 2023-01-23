@@ -18,6 +18,9 @@ class FileOutputManager:
         self.related_option_count_dict = {}
         self.scenario_violation_count_dict = {}
 
+        self.delete_dir(dir_path=APOLLO_RECORDS_DIR, mk_dir=True)
+
+
     def file_init(self):
         base_dir = f"{PROJECT_ROOT}/data/exp_results/{AV_TESTING_APPROACH}/{MAP_NAME}/{self.time_str}"
         if not os.path.exists(base_dir):
@@ -32,8 +35,7 @@ class FileOutputManager:
         self.vio_csv_path = f"{base_dir}/vio_csv.csv"
 
         self.vio_features_dir = f"{base_dir}/violation_features"
-        if not os.path.exists(self.vio_features_dir):
-            os.makedirs(self.vio_features_dir)
+        self.delete_dir(dir_path=self.vio_features_dir, mk_dir=True)
 
         self.ind_list_pickle_dump_data_path = f"{base_dir}/ind_list_pickle_pop"
         self.default_violation_dump_data_path = f"{base_dir}/default_violation_pickle"
@@ -153,41 +155,33 @@ class FileOutputManager:
             f.write(f"{range_change_str}\n")
 
     def save_vio_features(self, generated_individual, scenario_list):
-        for vio_emerged_tuple in generated_individual.violations_emerged_results:
-            violated_scenario_id = vio_emerged_tuple[0]
-            violation_item_obj = vio_emerged_tuple[1]
-
-            record_name = ""
-            for scenario in scenario_list:
-                if scenario.record_id == violated_scenario_id:
-                    record_name = scenario_list[violated_scenario_id].record_name
-                    break
-
-            violation_type = violation_item_obj.main_type
-            violation_features = violation_item_obj.features
-            # violation_key = violation_item_obj.key_label
-
-            self.vio_features_csv_path = f"{self.vio_features_dir}/{violation_type}.csv"
-            if os.path.exists(self.vio_features_csv_path):
-                with open(self.vio_features_csv_path, "a") as f:
-                    features_values_str = ",".join(map(str, violation_features.values()))
-                    f.write(f"{record_name},{violated_scenario_id},{features_values_str}\n")
-            else:
-                with open(self.vio_features_csv_path, "w") as f:
-                    features_keys_str = ",".join(violation_features.keys())
-                    f.write(f"record_name,record_id,{features_keys_str}\n")
-
-    def save_emerged_violation_stats(self, generated_individual, scenario_list):
-        # f.write("record_name, violation_type, violation_info, scenario_id, related_options")
-
-        with open(self.vio_csv_path, "a") as f:
+        with open(self.vio_csv_path, "a") as vio_file:
             for vio_emerged_tuple in generated_individual.violations_emerged_results:
                 violated_scenario_id = vio_emerged_tuple[0]
                 violation_item_obj = vio_emerged_tuple[1]
 
-                record_name = scenario_list[violated_scenario_id].record_name
+                record_name = ""
+                for scenario in scenario_list:
+                    if scenario.record_id == violated_scenario_id:
+                        record_name = scenario.record_name
+                        break
+
                 violation_type = violation_item_obj.main_type
+                violation_features = violation_item_obj.features
                 violation_info = violation_item_obj.key_label
+
+                self.vio_features_csv_path = f"{self.vio_features_dir}/{violation_type}.csv"
+                if not os.path.exists(self.vio_features_csv_path):
+                    with open(self.vio_features_csv_path, "w") as f:
+                        features_keys_str = ",".join(violation_features.keys())
+                        f.write(f"record_name,record_id,{features_keys_str}\n")
+                with open(self.vio_features_csv_path, "a") as f:
+                    features_values_str = ",".join(map(str, violation_features.values()))
+                    f.write(f"{record_name},{violated_scenario_id},{features_values_str}\n")
+
+
+
+                ##############
                 scenario_id = violated_scenario_id
 
                 related_options = ""
@@ -209,7 +203,50 @@ class FileOutputManager:
                 else:
                     self.scenario_violation_count_dict[scenario_id] = 1
 
-                f.write(f"{record_name},{violation_type},{violation_info},{scenario_id},{related_options}\n")
+                vio_file.write(f"{record_name},{violation_type},{violation_info},{scenario_id},{related_options}\n")
+
+    # def save_emerged_violation_stats(self, generated_individual, scenario_list):
+    #     # f.write("record_name, violation_type, violation_info, scenario_id, related_options")
+    #
+    #     with open(self.vio_csv_path, "a") as f:
+    #         for vio_emerged_tuple in generated_individual.violations_emerged_results:
+    #             violated_scenario_id = vio_emerged_tuple[0]
+    #             violation_item_obj = vio_emerged_tuple[1]
+    #
+    #             # record_name = scenario_list[violated_scenario_id].record_name
+    #             record_name = ""
+    #             for scenario in scenario_list:
+    #                 if scenario.record_id == violated_scenario_id:
+    #                     record_name = scenario_list[violated_scenario_id].record_name
+    #                     break
+    #
+    #
+    #             violation_type = violation_item_obj.main_type
+    #             violation_info = violation_item_obj.key_label
+    #
+    #
+    #             scenario_id = violated_scenario_id
+    #
+    #             related_options = ""
+    #             for option_id in self.option_tuning_id_list:
+    #                 related_options += f"#{option_id}" if related_options else str(option_id)
+    #
+    #                 if option_id in self.related_option_count_dict.keys():
+    #                     self.related_option_count_dict[option_id] += 1
+    #                 else:
+    #                     self.related_option_count_dict[option_id] = 1
+    #
+    #             if violation_type in self.violation_type_count_dict.keys():
+    #                 self.violation_type_count_dict[violation_type] += 1
+    #             else:
+    #                 self.violation_type_count_dict[violation_type] = 1
+    #
+    #             if scenario_id in self.scenario_violation_count_dict.keys():
+    #                 self.scenario_violation_count_dict[scenario_id] += 1
+    #             else:
+    #                 self.scenario_violation_count_dict[scenario_id] = 1
+    #
+    #             f.write(f"{record_name},{violation_type},{violation_info},{scenario_id},{related_options}\n")
 
     def save_count_dict_file(self):
         with open(self.count_dict_file_path, "a") as f:

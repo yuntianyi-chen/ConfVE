@@ -37,7 +37,9 @@ def calculate_similarity(features, default_features):
 
 def compare_similarity(features, default_features_list):
     pd_default_features = pd.DataFrame(default_features_list)
-    pd_all_features = pd_default_features.append(features, ignore_index=True)
+    # pd_all_features = pd_default_features.append(features, ignore_index=True)
+    df_new_row = pd.DataFrame([features])
+    pd_all_features = pd.concat([pd_default_features, df_new_row])
 
     # scaler = MinMaxScaler()
     scaler = StandardScaler()

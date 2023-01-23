@@ -1,8 +1,8 @@
 import pickle
 from datetime import date
-from config import PROJECT_ROOT, AV_TESTING_APPROACH
+from config import PROJECT_ROOT, AV_TESTING_APPROACH, MAP_NAME, MODULE_ORACLES
 
-base_path = f"{PROJECT_ROOT}/data/exp_results/{AV_TESTING_APPROACH}/2023-01-20"
+base_path = f"{PROJECT_ROOT}/data/exp_results/{AV_TESTING_APPROACH}/{MAP_NAME}/2023-01-22"
 
 
 def dump_default_violation_results_by_pickle(default_violation_results_list):
@@ -28,10 +28,14 @@ if __name__ == '__main__':
 
     print(default_violation_results_list)
 
-    # new_list =[]
-    # for default_list in default_violation_results_list:
-    #     alist = [item for item in default_list if item[0]!='module']
-    #     new_list.append(alist)
-    #
-    #
-    # dump_default_violation_results_by_pickle(new_list)
+    new_list =[]
+    for default_violations in default_violation_results_list:
+        sid = default_violations[0]
+        temp_list = []
+        for item in default_violations[1]:
+            if item.main_type not in MODULE_ORACLES:
+                temp_list.append(item)
+        new_list.append((sid,temp_list))
+
+
+    dump_default_violation_results_by_pickle(new_list)

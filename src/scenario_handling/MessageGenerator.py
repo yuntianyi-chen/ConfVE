@@ -55,7 +55,7 @@ class MessageGenerator:
 
     def replace_records(self, replaced_id_list):
         for rid in replaced_id_list:
-            if len(self.scenario_record_path_list) < self.record_counter:
+            if len(self.scenario_record_path_list) > self.record_counter:
                 print(f"Replacing Record_{rid}...")
                 for i in range(len(self.pre_record_info_list)):
                     if rid == self.pre_record_info_list[i].record_id:

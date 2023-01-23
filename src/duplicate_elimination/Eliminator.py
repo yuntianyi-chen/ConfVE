@@ -47,8 +47,8 @@ class Eliminator:
 
 
 if __name__ == "__main__":
-    target_approach = "DoppelTest"
-    target_name = "sunnyvale_loop_30s"
+    target_approach = "DoppelTest"  # scenoRITA
+    target_name = "borregas_ave_30s" # borregas_ave_30s/sunnyvale_loop_10s
 
     target_dir = f"{FEATURES_CSV_DIR}/{target_approach}/{target_name}"
     csv_files_name_list = [name for name in os.listdir(target_dir) if ".csv" in name]
@@ -65,6 +65,8 @@ if __name__ == "__main__":
     for csv_file_name in csv_files_name_list:
         csv_file_path = os.path.join(target_dir, csv_file_name)
         pd_data = pd.read_csv(csv_file_path, encoding='utf-8')
+        # pd_data = pd.read_csv(csv_file_path, encoding='utf-8', float_precision='round_trip')
+        print(pd_data.iat[3,4])
         output_file_path = f"{output_dir}/clustered_{csv_file_name}"
         output_data = eliminator.cluster(pd_data, csv_file_name)
         output_data.to_csv(output_file_path, index=False)

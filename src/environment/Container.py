@@ -384,7 +384,7 @@ class Container:
         # print("Restart Dreamview...")
         self.close_subprocess()
         self.start_dreamview()
-        time.sleep(0.5)
+        time.sleep(1)
         # print("Start sim control...")
         self.dreamview.reset()
         time.sleep(0.5)

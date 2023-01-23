@@ -9,6 +9,7 @@ from datetime import date
 import networkx as nx
 from config import OBS_DIR, MAX_RECORD_TIME, MAP_NAME, APOLLO_RECORDS_DIR, PROJECT_ROOT, APOLLO_ROOT
 from modules.routing.proto.routing_pb2 import RoutingRequest
+from environment.Container import Container
 from scenario_handling.MessageGenerator import MessageGenerator
 from testing_approaches.scenorita.run_oracles import run_oracles
 from testing_approaches.scenorita.scenoRITA_config import OBS_MIN, OBS_MAX, NP, TOTAL_LANES, ETIME, CXPB, MUTPB, ADDPB, \
@@ -16,7 +17,8 @@ from testing_approaches.scenorita.scenoRITA_config import OBS_MIN, OBS_MAX, NP, 
 from deap import base, creator, tools
 from scenario_handling.create_scenarios import Scenario
 from testing_approaches.scenorita.auxiliary.feature_generator import runOracles
-from testing_approaches.scenorita.auxiliary.map_info_parser import validatePath, initialize, longerTrace, generateObsDescFile, \
+from testing_approaches.scenorita.auxiliary.map_info_parser import validatePath, initialize, longerTrace, \
+    generateObsDescFile, \
     produceTrace
 from tools.bridge.CyberBridge import Topics
 
@@ -30,6 +32,9 @@ adc_route_file = "adc_route.csv"
 ptl_dict, ltp_dict, diGraph = initialize()
 obstacle_type = ["PEDESTRIAN", "BICYCLE", "VEHICLE"]
 
+
+def get_container_name():
+    return "apollo_dev_cloudsky"
 
 
 def send_routing_request(init_x, init_y, dest_x, dest_y, bridge):
@@ -53,30 +58,12 @@ def send_routing_request(init_x, init_y, dest_x, dest_y, bridge):
 
     bridge.publish(Topics.RoutingRequest, routing_request.SerializeToString())
 
-def get_container_name():
-    return "apollo_dev_cloudsky"
-
-
-
-
-def start_recorder():
-    # time.sleep(0.5)
-    cmd = f"docker exec -d {get_container_name()} /apollo/bazel-bin/cyber/tools/cyber_recorder/cyber_recorder record -o /apollo/records/{self.record_name} -a &"
-    subprocess.Popen(cmd, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    # time.sleep(1)
-    # return recorder_subprocess
-
-def stop_recorder():
-    cmd = f"docker exec -d {get_container_name()} /apollo/scripts/my_scripts/stop_recorder.sh"
-    subprocess.run(cmd.split())
-    delete_recorder_log()
-    time.sleep(0.5)
-
 
 def delete_recorder_log():
     files = glob.glob(f'{APOLLO_ROOT}/cyber_recorder.log.INFO.*')
     for file in files:
         os.remove(file)
+
 
 def register_obstacles(obs_group_path):
     cmd = f"docker exec -d {get_container_name()} /apollo/modules/tools/perception/obstacles_perception.bash " + obs_group_path
@@ -171,18 +158,18 @@ def check_obs_type(length, width, height, speed, type_index):
     return length, width, height, speed
 
 
-def run_scenario(scenario, bridge):
+def run_scenario(scenario, ctn):
     sim_time = time.time()
     adc_route_raw = scenario.adc_route.split(',')
     init_x, init_y, dest_x, dest_y = float(adc_route_raw[0]), float(adc_route_raw[1]), float(
         adc_route_raw[2]), float(adc_route_raw[3])
 
     print("    Start recorder...")
-    recorder_subprocess = scenario.start_recorder()
+    ctn.start_recorder(scenario.record_name)
 
     p = register_obstacles(scenario.obs_group_path)
 
-    send_routing_request(init_x, init_y, dest_x, dest_y, bridge)
+    send_routing_request(init_x, init_y, dest_x, dest_y, ctn.bridge)
 
     ####################
     # register_traffic_lights(scenario.traffic_light_control, bridge)
@@ -193,7 +180,7 @@ def run_scenario(scenario, bridge):
 
     # Stop recording messages and producing perception messages
     print("    Stop recorder...")
-    scenario.stop_recorder(recorder_subprocess)
+    ctn.stop_recorder()
 
     # scenario.stop_subprocess(p)
     stop_obstacles(p)
@@ -228,7 +215,7 @@ def run_scenario(scenario, bridge):
     return output_result
 
 
-def runScenario(deme, record_name, bridge):
+def runScenario(deme, record_name, ctn):
     # to start with a fresh set of obstacles for the current scnerio
     if os.path.exists(obs_folder):
         os.system("rm -f " + obs_folder + "*")
@@ -274,14 +261,14 @@ def runScenario(deme, record_name, bridge):
 
         # if scenario has been restarted x times, restart the moodules and sim control
         if num_runs % 10 == 0 and num_runs != 0:
-            cyber_env_init()
+            ctn.cyber_env_init()
             print("attempted %s run" % num_runs)
 
         # approach_generator = ScenoRITA()
-        adc_route = MessageGenerator().adc_routing_generate()
-        scenario = Scenario(record_name, id=0)
+        adc_route = MessageGenerator("").adc_routing_generate()
+        scenario = Scenario(record_name, record_id=0)
         scenario.update_obs_adc(obs_apollo_folder, adc_route)
-        output_result = run_scenario(scenario, bridge)
+        output_result = run_scenario(scenario, ctn)
         num_runs = num_runs + 1
         # print(scenario_player_output)
         # if the adc didn't move or the adc was travelling outside the map boundaries, then re-run scenrio with new routing info
@@ -310,9 +297,18 @@ def delete_records(records_path, mk_dir):
     if mk_dir:
         os.makedirs(records_path)
 
+
 if __name__ == "__main__":
     # delete_records()
     delete_records(records_path=APOLLO_RECORDS_DIR, mk_dir=True)
+
+    ctn = Container(APOLLO_ROOT, f'apollo_dev_cloudsky')
+
+    ctn.start_instance()
+    ctn.cyber_env_init()
+    ctn.connect_bridge()
+    ctn.create_message_handler()
+    print(f'Dreamview at http://{ctn.ip}:{ctn.port}')
 
     toolbox = scenoRITA_ga_init()
 
@@ -346,8 +342,8 @@ if __name__ == "__main__":
     print("Start of evolution")
     start_time = time.time()
 
-    bridge = connect_bridge()
-    cyber_env_init()
+    bridge = ctn.connect_bridge()
+    ctn.cyber_env_init()
 
     for deme in pop:
         e2e_time = time.time()
@@ -365,7 +361,8 @@ if __name__ == "__main__":
         with open(os.path.join(dest, ga_file), 'a+') as gfile:
             gfile.write("%s,%s,%s,%s,%s,%s,%s\n"
                         % (
-                        record_name, len(deme), sum / len(deme), speeding_min, uslc_min, fastAccl_min, hardBrake_min))
+                            record_name, len(deme), sum / len(deme), speeding_min, uslc_min, fastAccl_min,
+                            hardBrake_min))
         e2e_time = time.time() - e2e_time
         misc_time = e2e_time - sim_time - orcle_time
         with open(os.path.join(dest, timer_file), 'a+') as tfile:
@@ -382,8 +379,8 @@ if __name__ == "__main__":
         print("-- Generation %i --" % g)
 
         ############
-        bridge = connect_bridge()
-        cyber_env_init()
+        bridge = ctn.connect_bridge()
+        ctn.cyber_env_init()
         #############
 
         for deme in pop:
