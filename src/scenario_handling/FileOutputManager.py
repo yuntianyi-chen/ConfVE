@@ -82,9 +82,9 @@ class FileOutputManager:
         if mk_dir:
             os.makedirs(dir_path)
 
-    def save_config_file(self, gen_ind_id):
-        os.makedirs(f"{self.config_file_save_path}/{gen_ind_id}")
-        shutil.copy(CURRENT_CONFIG_FILE_PATH, f"{self.config_file_save_path}/{gen_ind_id}/{MODULE_NAME}_config.pb.txt")
+    def save_config_file(self, ind_id):
+        os.makedirs(f"{self.config_file_save_path}/{ind_id}")
+        shutil.copy(CURRENT_CONFIG_FILE_PATH, f"{self.config_file_save_path}/{ind_id}/{MODULE_NAME}_config.pb.txt")
 
     def save_default_scenarios(self):
         self.delete_dir(dir_path=DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR, mk_dir=False)
@@ -109,9 +109,9 @@ class FileOutputManager:
         shutil.copy(f"{APOLLO_RECORDS_DIR}/{record_name}.00000",
                     f"{self.backup_record_file_save_path}/{record_name}.00000")
 
-    def save_fitness_result(self, individual, gen_ind_id):
+    def save_fitness_result(self, individual, ind_id):
         with open(self.ind_fitness_save_file_path, "a") as f:
-            f.write(f"{gen_ind_id}\n")
+            f.write(f"{ind_id}\n")
             f.write(f"  Vio Intro: {individual.violation_intro}\n")
             # f.write(f"  Vio Remov: {individual.violation_remov}\n")
             f.write(f"  Fitness(mode: {FITNESS_MODE}): {individual.fitness}\n")

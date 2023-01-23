@@ -24,6 +24,7 @@ MAX_INITIAL_SCENARIOS = 10   # 10
 
 # t-way testing
 T_STRENGTH_VALUE = 2
+TIME_THRESHOLD = 20
 
 # Rerun 5 times if occurred >= 3 times, confirmed
 DETERMINISM_RERUN_TIMES = 5  # 5

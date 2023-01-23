@@ -69,7 +69,7 @@ def mutate(individual_list, config_file_obj, range_analyzer):
         succ_tuning = False
         while (not succ_tuning):
             position = random.randint(0, len(individual_list[0].value_list) - 1)
-            tune_one_value(individual_obj, config_file_obj, range_analyzer, position)
+            succ_tuning = tune_one_value(individual_obj, config_file_obj, range_analyzer, position)
     return individual_list
 
 

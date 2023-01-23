@@ -8,7 +8,6 @@ def tune_one_value(individual_obj, config_file_obj, range_analyzer, position):
     option_type = config_file_obj.option_type_list[position]
 
     if option_type in ["float", "integer", "boolean", "e_number"]:
-        succ_tuning = True
         option_value = individual_obj.value_list[position]
         individual_obj.pre_value_list = deepcopy(individual_obj.value_list)
 
@@ -23,6 +22,9 @@ def tune_one_value(individual_obj, config_file_obj, range_analyzer, position):
             OptionTuningItem(position, option_type, config_file_obj.option_obj_list[position].option_key,
                              individual_obj.pre_value_list[position],
                              individual_obj.value_list[position], config_file_obj.option_obj_list[position]))
+        return True
+    else:
+        return False
 
 
 

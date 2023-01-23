@@ -1,4 +1,6 @@
 import os
+import time
+
 from config import INITIAL_SCENARIO_RECORD_DIR, DEFAULT_CONFIG_FILE_PATH
 from config_file_handler.parser_apollo import config_file_parser2obj
 from environment.MapLoader import MapLoader
@@ -28,6 +30,8 @@ class TestRunner:
         else:
             check_default_running(self.message_generator, self.config_file_obj, self.file_output_manager,
                                   self.containers)
+
+        self.runner_time = time.time()
 
     def check_scenario_list_vio_emergence(self, scenario_list):
         for scenario in scenario_list:
