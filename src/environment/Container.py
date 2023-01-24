@@ -9,6 +9,7 @@ from config import APOLLO_ROOT
 from environment.Dreamview import Dreamview
 from scenario_handling.MessageHandler import MessageHandler
 from tools.bridge.CyberBridge import CyberBridge, Topics
+from tools.script.toggle_sim_control import run_sim_control
 
 
 class Container:
@@ -360,6 +361,7 @@ class Container:
         # time.sleep(1)
         # print("Start sim control...")
         self.dreamview.reset()
+        # run_sim_control()
 
         # time.sleep(0.5)
         # print("Restarting modules...")
@@ -369,6 +371,7 @@ class Container:
     def restart_dreamview(self):
         self.close_subprocess()
         self.start_dreamview()
+        # run_sim_control()
         self.dreamview.reset()
 
     def restart_modules(self):
