@@ -15,9 +15,11 @@ AV_TESTING_APPROACH = "DoppelTest"  # scenoRITA/DoppelTest/AV-Fuzzer/ADFuzz/Rand
 MAP_NAME = "borregas_ave"  # borregas_ave/sunnyvale_loop/San_Francisco
 
 CONTAINER_NUM = 5  # 5/10
-SIMILARITY_THRESHOLD = 0.8
+SIMILARITY_THRESHOLD = 0.6
 
-MODULE_ORACLES = ["RoutingFailure", "PredictionFailure", "PlanningFailure", "CarNeverMoved","PlanningGeneratesGarbage","SimControlFailure"]
+MODULE_ORACLES = ["RoutingFailure", "PredictionFailure", "PlanningFailure", "CarNeverMoved","SimControlFailure"]
+
+# MODULE_ORACLES = ["RoutingFailure", "PredictionFailure", "PlanningFailure", "CarNeverMoved","SimControlFailure", "PlanningGeneratesGarbage"]
 
 MAX_INITIAL_SCENARIOS = 10   # 10
 
@@ -49,7 +51,7 @@ SELECT_NUM_RATIO = [7, 2, 1]  # [5, 3, 2]/[7, 2, 1]
 FITNESS_MODE = "emerge"  # emerge/emerge_and_removal
 
 # DIRECTORIES
-APOLLO_ROOT = '/home/cloudsky/Research/Apollo/apollo_7.0'
+APOLLO_ROOT = '/home/cloudsky/Research/Apollo/apollo_v7_deploy'   # apollo_v7_deploy/apollo_7.0
 PROJECT_ROOT = '/home/cloudsky/Research/Apollo/AV_Config_Testing'
 RECORDS_DIR = f'{PROJECT_ROOT}/data/records'
 FEATURES_CSV_DIR = f'{PROJECT_ROOT}/data/violation_features'

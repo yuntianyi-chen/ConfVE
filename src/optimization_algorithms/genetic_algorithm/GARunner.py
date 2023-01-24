@@ -47,6 +47,7 @@ class GARunner(TestRunner):
                 # scenario refers to a config setting with different fixed obstacles, traffic lights(if existing), and adc routes
                 scenario_list = create_scenarios(generated_individual, self.config_file_obj,
                                                  self.message_generator.pre_record_info_list,
+                                                 self.containers,
                                                  name_prefix=ind_id)
 
                 # test each config settings under several groups of obstacles and adc routes
@@ -62,7 +63,6 @@ class GARunner(TestRunner):
                 self.file_output_manager.handle_scenario_record(scenario_list)
 
                 if generated_individual.fitness > 0:
-
                     if generated_individual.option_tuning_tracking_list:
                         option_tuning_item = generated_individual.option_tuning_tracking_list[-1]
                     else:
@@ -95,7 +95,7 @@ class GARunner(TestRunner):
             self.file_output_manager.update_range_analysis_file(self.config_file_obj, self.range_analyzer, generation_num)
 
             self.message_generator.replace_records(self.scenario_rid_emergence_list)
-            check_default_running(self.message_generator, self.config_file_obj, self.file_output_manager, self.containers)
+            _ = check_default_running(self.message_generator, self.config_file_obj, self.file_output_manager, self.containers)
             self.scenario_rid_emergence_list = []
 
         end_time = time.time()

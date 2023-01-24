@@ -349,7 +349,7 @@ if __name__ == "__main__":
         e2e_time = time.time()
         record_name = "Generation{}_Scenario{}".format(g, scenario_counter)
         lanes, min_distance, speeding_min, uslc_min, fastAccl_min, hardBrake_min, sim_time, orcle_time, num_runs = runScenario(
-            deme, record_name, bridge)
+            deme, record_name, ctn)
         lanes.remove('')
         GLOBAL_LANE_COVERAGE.update(lanes)
         lane_coverage[scenario_counter] = lane_coverage[scenario_counter].union(lanes)
@@ -408,7 +408,7 @@ if __name__ == "__main__":
             record_name = "Generation{}_Scenario{}".format(g, scenario_counter)
 
             lanes, min_distance, speeding_min, uslc_min, fastAccl_min, hardBrake_min, sim_time, orcle_time, num_runs = runScenario(
-                offspring, record_name, bridge)
+                offspring, record_name, ctn)
             lanes.remove('')
             GLOBAL_LANE_COVERAGE.update(lanes)
             lane_coverage[scenario_counter] = lane_coverage[scenario_counter].union(lanes)

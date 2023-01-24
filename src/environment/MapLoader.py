@@ -12,7 +12,8 @@ class MapLoader:
 
         if not os.path.exists(self.map_data_path):
             self.save_map_data()
-        self.load_map_data()
+
+        self.map_instance = self.load_map_data()
 
     def save_map_data(self):
         mp = MapParser(self.hd_map_path)

@@ -7,20 +7,20 @@ from objectives.measure_objectives import measure_violation_number, measure_viol
 from tools.script.pickle_file_handling import dump_default_violation_results_by_pickle
 
 if __name__ == '__main__':
-    TEST_MODE = "multi"
+    TEST_MODE = "single"
     MapLoader()
     # record_dir = INITIAL_SCENARIO_RECORD_DIR
-    record_dir = DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR
+    # record_dir = DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR
 
-    # record_dir = f"{BACKUP_RECORD_SAVE_DIR}/2023-01-16"
+    record_dir = f"{BACKUP_RECORD_SAVE_DIR}/2023-01-22(1st)"
 
     file_list = listdir(record_dir)
     file_list.sort()
     results = []
     violations_results_list_list=[]
     if TEST_MODE == "single":
-        single_file_name = "Generation_0_Config_18_Scenario_0.00000"
-        # single_file_name = "Generation_8_Config_41_Obs_0.00000"
+        single_file_name = "Generation_1_Config_5_Scenario_8.00000"
+        # single_file_name = "Generation_0_Config_51_Scenario_0.00000"
         if single_file_name in file_list:
             result = measure_violation_number_by_path(f"{record_dir}/{single_file_name}")
             results.append(result)

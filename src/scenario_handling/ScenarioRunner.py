@@ -3,7 +3,6 @@ from config import MAX_RECORD_TIME, TRAFFIC_LIGHT_MODE
 
 
 def run_scenarios_by_division(scenario_list, containers):
-    time.sleep(3) #####################################################
 
     sub_scenario_list_list = [scenario_list[x:x + len(containers)] for x in
                               range(0, len(scenario_list), len(containers))]
@@ -13,7 +12,7 @@ def run_scenarios_by_division(scenario_list, containers):
         time.sleep(MAX_RECORD_TIME)
         for container in containers:
             stop_running(container)
-        time.sleep(2) ############################################################
+    time.sleep(1)
 
 def start_running(scenario, container):
     container.start_recorder(scenario.record_name)

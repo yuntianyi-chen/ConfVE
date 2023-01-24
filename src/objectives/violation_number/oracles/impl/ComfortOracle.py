@@ -2,12 +2,8 @@ import math
 from datetime import datetime
 from itertools import groupby
 from typing import List, Optional
-
-# from apollo.utils import calculate_velocity
 from objectives.violation_number.oracles.OracleInterface import OracleInterface
 from modules.localization.proto.localization_pb2 import LocalizationEstimate
-# import numpy as np
-
 from objectives.violation_number.oracles.Violation import Violation
 from tools.utils import calculate_velocity
 
@@ -31,6 +27,7 @@ class ComfortOracle(OracleInterface):
 
     MAX_ACCL = 4.0
     MAX_DCCL = -4.0
+    TOLERANCE = 0.025
 
     def __init__(self) -> None:
         self.prev_ = None
@@ -68,7 +65,8 @@ class ComfortOracle(OracleInterface):
 
         features = self.get_basic_info_from_localization(self.next_)
         features['accel'] = accel
-        if accel > ComfortOracle.MAX_ACCL:
+
+        if accel > ComfortOracle.MAX_ACCL * (1 + ComfortOracle.TOLERANCE):
             self.trace.append((1, t, features))
         elif accel < ComfortOracle.MAX_DCCL:
             self.trace.append((-1, t, features))

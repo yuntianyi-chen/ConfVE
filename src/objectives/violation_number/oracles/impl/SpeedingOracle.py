@@ -20,7 +20,7 @@ class SpeedingOracle(OracleInterface):
         * duration:     float
     """
 
-    TOLERANCE = 0.05
+    TOLERANCE = 0.025
 
     def __init__(self) -> None:
         self.mp = MapParser.get_instance()

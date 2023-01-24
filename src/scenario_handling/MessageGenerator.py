@@ -42,10 +42,6 @@ class MessageGenerator:
         self.total_records_count = len(self.scenario_record_path_list)
 
 
-
-
-
-
     def update_selected_records_violatioin_directly(self, violation_results_list_with_sid):
         for sid, violation_results in violation_results_list_with_sid:
             for i in range(len(self.pre_record_info_list)):

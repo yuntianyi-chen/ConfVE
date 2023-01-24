@@ -61,13 +61,13 @@ class FileOutputManager:
         self.config_file_save_path = f"{BACKUP_CONFIG_SAVE_DIR}/{self.time_str}"
         self.delete_dir(dir_path=self.config_file_save_path, mk_dir=True)
 
-        self.move_scripts()
-
-    def move_scripts(self):
-        target_scripts_dir = MY_SCRIPTS_DIR
-        if not os.path.exists(target_scripts_dir):
-            source_scripts_dir = f"{PROJECT_ROOT}/data/scripts"
-            shutil.copytree(source_scripts_dir, target_scripts_dir)
+        # self.move_scripts()
+    #
+    # def move_scripts(self):
+    #     target_scripts_dir = MY_SCRIPTS_DIR
+    #     if not os.path.exists(target_scripts_dir):
+    #         source_scripts_dir = f"{PROJECT_ROOT}/data/scripts"
+    #         shutil.copytree(source_scripts_dir, target_scripts_dir)
 
     def delete_data_core(self):
         try:
@@ -103,7 +103,9 @@ class FileOutputManager:
                         self.delete_record(comfirmed_record_name)
 
     def delete_record(self, record_name):
-        os.remove(f"{APOLLO_RECORDS_DIR}/{record_name}.00000")
+        delete_path = f"{APOLLO_RECORDS_DIR}/{record_name}.00000"
+        if os.path.exists(delete_path):
+            os.remove(delete_path)
 
     def save_record(self, record_name):
         shutil.copy(f"{APOLLO_RECORDS_DIR}/{record_name}.00000",

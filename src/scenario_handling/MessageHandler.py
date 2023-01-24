@@ -1,18 +1,26 @@
+import math
 import time
 from threading import Thread
 from modules.common.proto.header_pb2 import Header
 from modules.perception.proto.perception_obstacle_pb2 import PerceptionObstacles
 from config import OBS_PERCEPTION_FREQUENCY, TRAFFIC_LIGHT_FREQUENCY, TRAFFIC_LIGHT_MODE
 from modules.perception.proto.traffic_light_detection_pb2 import TrafficLightDetection
+
+from modules.localization.proto.localization_pb2 import LocalizationEstimate
+
+from modules.common.proto.geometry_pb2 import Point3D, PointENU
+
+from modules.localization.proto.pose_pb2 import Pose
 from tools.bridge.CyberBridge import Topics
 
 
 class MessageHandler:
 
-    def __init__(self, bridge) -> None:
+    def __init__(self, bridge, map_instance) -> None:
         self.bridge = bridge
         self.obs_is_running = False
         self.traffic_is_running = False
+        self.map_instance = map_instance
 
 
     def register_obs_perception(self):
@@ -101,4 +109,32 @@ class MessageHandler:
 
     def send_routing_request_by_channel(self, routing_request_message):
         self.bridge.publish(Topics.RoutingRequest, routing_request_message.SerializeToString())
+
+
+
+    def send_initial_localization(self):
+        # self.logger.debug('Sending initial localization')
+        # ma = MapParser.get_instance()
+        # coord, heading = self.map_instance.get_coordinate_and_heading(
+        #     self.start.lane_id, self.start.s)
+
+        coord, heading =(PointENU(x=12.3, y=12.3), math.atan2(21.3,12.3))
+        loc = LocalizationEstimate(
+            header=Header(
+                timestamp_sec=time.time(),
+                module_name="MAGGIE",
+                sequence_num=0
+            ),
+            pose=Pose(
+                position=coord,
+                heading=heading,
+                linear_velocity=Point3D(x=0, y=0, z=0)
+            )
+        )
+        for i in range(4):
+            loc.header.sequence_num = i
+            self.bridge.publish(
+                Topics.Localization, loc.SerializeToString())
+            time.sleep(0.5)
+
 

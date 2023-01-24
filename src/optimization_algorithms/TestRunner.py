@@ -1,6 +1,5 @@
 import os
 import time
-
 from config import INITIAL_SCENARIO_RECORD_DIR, DEFAULT_CONFIG_FILE_PATH
 from config_file_handler.parser_apollo import config_file_parser2obj
 from environment.MapLoader import MapLoader
@@ -12,7 +11,6 @@ from scenario_handling.run_scenarios import check_default_running
 
 class TestRunner:
     def __init__(self, containers):
-        MapLoader()
         self.containers = containers
         self.scenario_rid_emergence_list = []
 
@@ -28,8 +26,9 @@ class TestRunner:
             default_violation_results_list = self.file_output_manager.load_default_violation_results_by_pickle()
             self.message_generator.update_selected_records_violatioin_directly(default_violation_results_list)
         else:
-            check_default_running(self.message_generator, self.config_file_obj, self.file_output_manager,
+            default_violation_results_list = check_default_running(self.message_generator, self.config_file_obj, self.file_output_manager,
                                   self.containers)
+            self.file_output_manager.dump_default_violation_results_by_pickle(default_violation_results_list)
 
         self.runner_time = time.time()
 

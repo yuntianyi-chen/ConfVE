@@ -16,7 +16,7 @@ class TwayRunner(TestRunner):
     def tway_runner(self):
 
         individual_num = 0
-        while (self.runner_time < TIME_THRESHOLD * 3600):
+        while self.runner_time < TIME_THRESHOLD * 3600:
             print("-------------------------------------------------")
 
             default_individual = generate_individuals(self.config_file_obj, population_size=1)[0]
@@ -28,12 +28,11 @@ class TwayRunner(TestRunner):
 
             generated_individual.update_id(ind_id)
 
-            # scenario refers to a config setting with different fixed obstacles, traffic lights(if existing), and adc routes
             scenario_list = create_scenarios(generated_individual, self.config_file_obj,
                                              self.message_generator.pre_record_info_list,
+                                             self.containers,
                                              name_prefix=ind_id)
 
-            # test each config settings under several groups of obstacles and adc routes
             run_scenarios(generated_individual, scenario_list, self.containers)
 
             generated_individual.calculate_fitness()
@@ -68,8 +67,8 @@ class TwayRunner(TestRunner):
 
             # self.file_output_manager.update_range_analysis_file(self.config_file_obj, self.range_analyzer, generation_num)
             self.message_generator.replace_records(self.scenario_rid_emergence_list)
-            check_default_running(self.message_generator, self.config_file_obj, self.file_output_manager,
-                                  self.containers)
+            _ = check_default_running(self.message_generator, self.config_file_obj, self.file_output_manager,
+                                      self.containers)
             self.scenario_rid_emergence_list = []
 
             self.runner_time = time.time() - self.runner_time
