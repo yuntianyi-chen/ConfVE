@@ -23,13 +23,8 @@ if __name__ == '__main__':
         ctn.cyber_env_init()
         ctn.connect_bridge()
         ctn.create_message_handler(map_instance)
-        # ctn.message_handler.send_initial_localization()
-        # ctn.start_sim_control_standalone()
 
         print(f'Dreamview at http://{ctn.ip}:{ctn.port}')
 
     if OPT_MODE == "GA":
         GARunner(containers)
-
-
-

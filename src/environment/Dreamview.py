@@ -1,5 +1,5 @@
-from websocket import create_connection
 import json
+from websocket import create_connection
 
 
 class Dreamview:
@@ -28,19 +28,12 @@ class Dreamview:
             data: dict
                 data to be sent
         """
-        # ws = create_connection(self.url)
-        # ws.send(json.dumps(data))
-        # ws.close()
         self.ws.send(json.dumps(data))
 
     def start_sim_control(self):
         """
         Starts SimControl
         """
-        # self.send_data({
-        #     "type": "StartSimControl"
-        # })
-
         data = {
             'type': 'ToggleSimControl',
             'enable': True
@@ -51,10 +44,6 @@ class Dreamview:
         """
         Stops SimControl
         """
-        # self.send_data({
-        #     "type": "StopSimControl"
-        # })
-
 
         data = {
             'type': 'ToggleSimControl',
@@ -62,16 +51,9 @@ class Dreamview:
         }
         self.send_data(data)
 
-
-
     def reset(self):
         """
         Resets Dreamview
         """
-        # self.send_data({
-        #     "type": "Reset"
-        # })
         self.ws = create_connection(self.url)
         self.start_sim_control()
-
-

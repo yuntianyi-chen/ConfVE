@@ -1,5 +1,5 @@
 from copy import deepcopy
-from config import FITNESS_MODE, MODULE_ORACLES
+from config import FITNESS_MODE
 
 
 class IndividualWithFitness:
@@ -23,8 +23,6 @@ class IndividualWithFitness:
         self.code_coverage = self.accumulated_objectives[1]
         self.execution_time = self.accumulated_objectives[2]
 
-        # if FITNESS_MODE == "emerge_and_removal":
-        #     self.fitness = self.violation_intro + self.violation_remov
         if FITNESS_MODE == "emerge":
             self.fitness = self.violation_intro
         else:
@@ -54,26 +52,16 @@ class IndividualWithFitness:
         self.accumulated_objectives = [0, 0, 0]
 
         self.violation_intro = 0
-        # self.violation_remov = 0
 
         self.violation_results_list = []
 
         self.violations_emerged_results = []
         self.violations_emerged_results_list = []
 
-        # self.violations_removed_results = []
-        # self.violations_removed_results_list = []
-
         self.allow_selection = True
-
 
     def update_violation_emerged_with_sid(self, violations_emerged_results, scenario):
         violations_emerged_results_with_sid = [(scenario.record_id, v) for v in violations_emerged_results]
         self.violations_emerged_results_list.append(violations_emerged_results_with_sid)
         self.violations_emerged_results += violations_emerged_results_with_sid
         self.violation_intro += len(violations_emerged_results_with_sid)
-
-        # violations_removed_results_with_sid = [(scenario.record_id, v) for v in violations_removed_results]
-        # self.violations_removed_results_list.append(violations_removed_results_with_sid)
-        # self.violations_removed_results += violations_removed_results_with_sid
-        # self.violation_remov += len(violations_removed_results_with_sid)

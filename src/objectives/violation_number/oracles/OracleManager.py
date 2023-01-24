@@ -1,6 +1,5 @@
 from collections import defaultdict
 from typing import Dict, List
-
 from objectives.violation_number.oracles.OracleInterface import OracleInterface
 
 

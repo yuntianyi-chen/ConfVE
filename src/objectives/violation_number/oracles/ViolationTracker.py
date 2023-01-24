@@ -1,7 +1,7 @@
-from collections import defaultdict
-from typing import DefaultDict, Dict, List, Set, Tuple
-import pandas as pd
 import os
+import pandas as pd
+from collections import defaultdict
+from typing import DefaultDict, List, Set
 from config import RECORDS_DIR
 
 
@@ -37,8 +37,7 @@ class ViolationTracker:
         return False
 
     def save_to_file(self):
-        column_names = ['scenario_id', "main_type",
-                        "sub_type", "data", "record_path"]
+        column_names = ['scenario_id', "main_type", "sub_type", "data", "record_path"]
         df = pd.DataFrame(columns=column_names)
         for scenario in self.scenario_tracker:
             df.loc[len(df.index)] = [

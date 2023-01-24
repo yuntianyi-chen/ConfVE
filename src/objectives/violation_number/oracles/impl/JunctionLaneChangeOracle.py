@@ -15,6 +15,7 @@ class JunctionLaneChangeOracle(OracleInterface):
         * speed:        float
         * junction_id:  int     # index of junction_id in a sorted list
     """
+
     def __init__(self) -> None:
         super().__init__()
         self.mp = MapParser.get_instance()

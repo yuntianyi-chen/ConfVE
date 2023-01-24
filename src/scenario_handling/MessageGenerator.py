@@ -26,7 +26,6 @@ class MessageGenerator:
         self.violation_results_list = [pri.violation_results for pri in self.pre_record_info_list]
         self.violation_num_list = [len(vr) for vr in self.violation_results_list]
         print("Records Info:")
-        # print(self.violation_results_list)
         print(self.violation_num_list)
 
     def update_all_records_violatioin_directly(self, violation_results_list):
@@ -40,7 +39,6 @@ class MessageGenerator:
         self.scenario_record_path_list = [f"{self.scenario_record_dir_path}/{recordname}" for recordname in
                                           scenario_recordname_list]
         self.total_records_count = len(self.scenario_record_path_list)
-
 
     def update_selected_records_violatioin_directly(self, violation_results_list_with_sid):
         for sid, violation_results in violation_results_list_with_sid:
@@ -56,15 +54,10 @@ class MessageGenerator:
                 for i in range(len(self.pre_record_info_list)):
                     if rid == self.pre_record_info_list[i].record_id:
                         pre_record_info = InitialRecordInfo(True, self.record_counter,
-                                                    self.scenario_record_path_list[self.record_counter])
+                                                            self.scenario_record_path_list[self.record_counter])
                         self.record_counter += 1
                         self.pre_record_info_list[i] = pre_record_info
         self.update_total_violation_results()
-
-
-
-
-
 
     def update_rerun_status(self):
         for p in self.pre_record_info_list:
@@ -91,8 +84,6 @@ class MessageGenerator:
         #     pre_record_info = InitialRecordInfo(is_record_file=False)
         #     pre_record_info.update_generated_info(obs_group_path_list, adc_routing_list)
         #     pre_record_info_list.append(pre_record_info)
-
-
 
     def read_adc_routes(self):
         adc_routes_list = []

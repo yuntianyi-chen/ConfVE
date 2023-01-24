@@ -37,8 +37,6 @@ class SpeedingOracle(OracleInterface):
             if self.min_speed_limit is None or speed_limit < self.min_speed_limit:
                 self.min_speed_limit = speed_limit
         
-        # self.min_speed_limit = np.min(speed_limit)
-
         self.cached_lanes = set()
         self.trace = list()
 

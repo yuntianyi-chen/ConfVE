@@ -9,10 +9,8 @@ from config import DETERMINISM_RERUN_TIMES
 
 def run_default_scenarios(generated_individual, scenario_list, containers):
     for scenario in scenario_list:
-        # if module failure happens when default running, please rerun the program
-        # _, all_emerged_results = confirm_determinism(scenario, containers, rerun_times=DEFAULT_DETERMINISM_RERUN_TIMES)
+        # if module failure happens when default running, rerun the program
         all_emerged_results = []
-
         contain_module_violation = True
         while contain_module_violation:
             _, all_emerged_results = confirm_determinism(scenario, containers,
@@ -26,7 +24,6 @@ def run_default_scenarios(generated_individual, scenario_list, containers):
 
 
 def run_scenarios(generated_individual, scenario_list, containers):
-
     print("Normal Run...")
     run_scenarios_by_division(scenario_list, containers)
 
@@ -81,7 +78,7 @@ def check_default_running(message_generator, config_file_obj, file_output_manage
         default_individual = generate_individuals(config_file_obj, population_size=1)[0]
 
         scenario_list = create_scenarios(default_individual, config_file_obj, selected_pre_record_info_list,
-                                         containers, name_prefix)
+                                         name_prefix)
 
         run_default_scenarios(default_individual, scenario_list, containers)
         file_output_manager.save_default_scenarios()

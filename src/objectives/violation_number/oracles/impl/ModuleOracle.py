@@ -1,6 +1,4 @@
 from shapely.geometry import Point
-
-from modules.common.proto.geometry_pb2 import PointENU
 from objectives.violation_number.oracles.OracleInterface import OracleInterface
 from objectives.violation_number.oracles.Violation import Violation
 
@@ -60,8 +58,6 @@ class ModuleOracle(OracleInterface):
                 self.last_planning = message
                 if self.is_adc_planner_making_normal_decision():
                     self.has_normal_planning_decision = True
-
-        # if self.distance_traveled <= 0:
         if topic == '/apollo/localization/pose':
             self.received_localization = True
             self.last_localization = message
@@ -72,7 +68,6 @@ class ModuleOracle(OracleInterface):
             prev_point = Point(self.prev_.pose.position.x, self.prev_.pose.position.y, self.prev_.pose.position.z)
             next_point = Point(self.next_.pose.position.x, self.next_.pose.position.y, self.next_.pose.position.z)
             self.distance_traveled = prev_point.distance(next_point)
-            # self.prev_ = message
 
     def is_adc_planner_making_normal_decision(self):
         planning_main_decision = self.last_planning.decision.main_decision
@@ -87,21 +82,18 @@ class ModuleOracle(OracleInterface):
         if self.received_localization:
             feature = self.get_basic_info_from_localization(self.last_localization)
             if not self.received_routing:
-                # result.append(('module', 'Routing fails to start'))
                 vf = dict(feature)
                 vf['type'] = 400
                 result.append(Violation(
                     'RoutingFailure', vf, str(vf['type'])
                 ))
             if not self.received_prediction:
-                # result.append(('module', 'Prediction fails to start'))
                 vf = dict(feature)
                 vf['type'] = 401
                 result.append(Violation(
                     'PredictionFailure', vf, str(vf['type'])
                 ))
             if not self.received_planning:
-                # result.append(('module', 'Planning fails to start'))
                 vf = dict(feature)
                 vf['type'] = 402
                 result.append(Violation(
@@ -111,14 +103,12 @@ class ModuleOracle(OracleInterface):
             if self.received_planning and self.received_routing and self.received_prediction:
                 if self.distance_traveled == 0:
                     if self.has_normal_planning_decision:
-                        # result.append(('module', 'Running car stops indefinitely'))
                         vf = dict(feature)
                         vf['type'] = 500
                         result.append(Violation(
                             'CarNeverMoved', vf, str(vf['type'])
                         ))
                     else:
-                        # result.append(('module', 'Planning generates garbage'))
                         vf = dict(feature)
                         vf['type'] = 501
                         result.append(Violation(

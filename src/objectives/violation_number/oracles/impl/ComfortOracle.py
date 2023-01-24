@@ -37,7 +37,7 @@ class ComfortOracle(OracleInterface):
     def get_interested_topics(self):
         return ['/apollo/localization/pose']
 
-    def get_accel_value(self, message) -> float:
+    def get_accel_value(self) -> float:
         accel_x = self.next_.pose.linear_acceleration.x
         accel_y = self.next_.pose.linear_acceleration.y
         accel_z = self.next_.pose.linear_acceleration.z
@@ -52,7 +52,7 @@ class ComfortOracle(OracleInterface):
         self.next_ = message
 
         # compare velocity
-        accel_value = self.get_accel_value(message)
+        accel_value = self.get_accel_value()
 
         prev_velocity = calculate_velocity(self.prev_.pose.linear_velocity)
         next_velocity = calculate_velocity(self.next_.pose.linear_velocity)
@@ -73,7 +73,6 @@ class ComfortOracle(OracleInterface):
         else:
             self.trace.append((0, t, None))
 
-        # update prev_
         self.prev_ = message
 
     def get_result(self):

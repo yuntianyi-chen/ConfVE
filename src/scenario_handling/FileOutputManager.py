@@ -1,10 +1,11 @@
+import glob
 import os
 import pickle
 import shutil
 from datetime import date
 from config import BACKUP_CONFIG_SAVE_DIR, MODULE_NAME, CURRENT_CONFIG_FILE_PATH, FITNESS_MODE, \
     AV_TESTING_APPROACH, DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR, APOLLO_RECORDS_DIR, PROJECT_ROOT, \
-    BACKUP_RECORD_SAVE_DIR, APOLLO_ROOT, MY_SCRIPTS_DIR, MAP_NAME
+    BACKUP_RECORD_SAVE_DIR, APOLLO_ROOT, MAP_NAME
 
 
 class FileOutputManager:
@@ -17,9 +18,6 @@ class FileOutputManager:
         self.violation_type_count_dict = {}
         self.related_option_count_dict = {}
         self.scenario_violation_count_dict = {}
-
-        self.delete_dir(dir_path=APOLLO_RECORDS_DIR, mk_dir=True)
-
 
     def file_init(self):
         base_dir = f"{PROJECT_ROOT}/data/exp_results/{AV_TESTING_APPROACH}/{MAP_NAME}/{self.time_str}"
@@ -61,20 +59,31 @@ class FileOutputManager:
         self.config_file_save_path = f"{BACKUP_CONFIG_SAVE_DIR}/{self.time_str}"
         self.delete_dir(dir_path=self.config_file_save_path, mk_dir=True)
 
-        # self.move_scripts()
-    #
-    # def move_scripts(self):
-    #     target_scripts_dir = MY_SCRIPTS_DIR
-    #     if not os.path.exists(target_scripts_dir):
-    #         source_scripts_dir = f"{PROJECT_ROOT}/data/scripts"
-    #         shutil.copytree(source_scripts_dir, target_scripts_dir)
+        self.delete_dir(dir_path=APOLLO_RECORDS_DIR, mk_dir=True)
 
-    def delete_data_core(self):
+    def delete_recorder_log(self):
+        files = glob.glob(f'{APOLLO_ROOT}/cyber_recorder.log.INFO.*')
+        for file in files:
+            os.remove(file)
+
+    def delete_simcontrol_log(self):
+        files = glob.glob(f'{APOLLO_ROOT}/sim_control_main.log.INFO.*')
+        for file in files:
+            os.remove(file)
+
+    def delete_data_core_log(self):
         try:
             shutil.rmtree(f"{APOLLO_ROOT}/data/core")
             os.makedirs(f"{APOLLO_ROOT}/data/core")
+
+            shutil.rmtree(f"{APOLLO_ROOT}/data/log")
+            os.makedirs(f"{APOLLO_ROOT}/data/log")
         except OSError as ose:
             print(ose)
+
+    def change_permission(self):
+        cmd = f'sudo chmod -R a+rwx {APOLLO_ROOT}/data'
+        os.system(cmd)
 
     def delete_dir(self, dir_path, mk_dir):
         if os.path.exists(dir_path):
@@ -181,9 +190,6 @@ class FileOutputManager:
                     features_values_str = ",".join(map(str, violation_features.values()))
                     f.write(f"{record_name},{violated_scenario_id},{features_values_str}\n")
 
-
-
-                ##############
                 scenario_id = violated_scenario_id
 
                 related_options = ""
@@ -207,49 +213,6 @@ class FileOutputManager:
 
                 vio_file.write(f"{record_name},{violation_type},{violation_info},{scenario_id},{related_options}\n")
 
-    # def save_emerged_violation_stats(self, generated_individual, scenario_list):
-    #     # f.write("record_name, violation_type, violation_info, scenario_id, related_options")
-    #
-    #     with open(self.vio_csv_path, "a") as f:
-    #         for vio_emerged_tuple in generated_individual.violations_emerged_results:
-    #             violated_scenario_id = vio_emerged_tuple[0]
-    #             violation_item_obj = vio_emerged_tuple[1]
-    #
-    #             # record_name = scenario_list[violated_scenario_id].record_name
-    #             record_name = ""
-    #             for scenario in scenario_list:
-    #                 if scenario.record_id == violated_scenario_id:
-    #                     record_name = scenario_list[violated_scenario_id].record_name
-    #                     break
-    #
-    #
-    #             violation_type = violation_item_obj.main_type
-    #             violation_info = violation_item_obj.key_label
-    #
-    #
-    #             scenario_id = violated_scenario_id
-    #
-    #             related_options = ""
-    #             for option_id in self.option_tuning_id_list:
-    #                 related_options += f"#{option_id}" if related_options else str(option_id)
-    #
-    #                 if option_id in self.related_option_count_dict.keys():
-    #                     self.related_option_count_dict[option_id] += 1
-    #                 else:
-    #                     self.related_option_count_dict[option_id] = 1
-    #
-    #             if violation_type in self.violation_type_count_dict.keys():
-    #                 self.violation_type_count_dict[violation_type] += 1
-    #             else:
-    #                 self.violation_type_count_dict[violation_type] = 1
-    #
-    #             if scenario_id in self.scenario_violation_count_dict.keys():
-    #                 self.scenario_violation_count_dict[scenario_id] += 1
-    #             else:
-    #                 self.scenario_violation_count_dict[scenario_id] = 1
-    #
-    #             f.write(f"{record_name},{violation_type},{violation_info},{scenario_id},{related_options}\n")
-
     def save_count_dict_file(self):
         with open(self.count_dict_file_path, "a") as f:
             f.write(f"Violation Type Count\n")
@@ -264,9 +227,7 @@ class FileOutputManager:
     def output_initial_record2default_mapping(self, pre_record_info_list, name_prefix):
         for pre_record_info in pre_record_info_list:
             record_name = f"{name_prefix}_Scenario_{str(pre_record_info.record_id)}"
-            # record_name_list = [f"{name_prefix}_Scenario_{str(i)}" for i in range(len(pre_record_info_list))]
             with open(self.record_mapping_file_path, "a") as f:
-                # for i in range(pre_record_info.count):
                 f.write(f"{pre_record_info.record_file_path} ------ {record_name}\n")
 
     def update_range_analysis_file(self, config_file_obj, range_analyzer, generation_num):

@@ -1,14 +1,14 @@
-from collections import defaultdict
-from dataclasses import dataclass
 import socket
 from threading import Thread
+from collections import defaultdict
+from dataclasses import dataclass
 from typing import DefaultDict, List, Set
 from modules.canbus.proto.chassis_pb2 import Chassis
+from modules.planning.proto.planning_pb2 import ADCTrajectory
+from modules.routing.proto.routing_pb2 import RoutingRequest
 from modules.localization.proto.localization_pb2 import LocalizationEstimate
 from modules.perception.proto.perception_obstacle_pb2 import PerceptionObstacles
 from modules.perception.proto.traffic_light_detection_pb2 import TrafficLightDetection
-from modules.planning.proto.planning_pb2 import ADCTrajectory
-from modules.routing.proto.routing_pb2 import RoutingRequest
 
 
 def to_bytes(s: str) -> bytes:
@@ -126,7 +126,7 @@ class CyberBridge:
         shifts = [0, 8, 16, 24]
         for s in shifts:
             result += ((len(data) >> s).to_bytes(4, byteorder='big')
-                       [-1]).to_bytes(1, byteorder='big')
+            [-1]).to_bytes(1, byteorder='big')
         result += data
         return result
 
@@ -214,13 +214,13 @@ class CyberBridge:
         if not self.spinning:
             return
         offset = 1
-        topic_length = self.__get_32_le(data[offset:offset+4])
+        topic_length = self.__get_32_le(data[offset:offset + 4])
         offset += 4
-        topic = data[offset:offset+topic_length].decode('ascii')
+        topic = data[offset:offset + topic_length].decode('ascii')
         offset += topic_length
-        message_size = self.__get_32_le(data[offset:offset+4])
+        message_size = self.__get_32_le(data[offset:offset + 4])
         offset += 4
-        msg = data[offset:offset+message_size]
+        msg = data[offset:offset + message_size]
 
         for subscriber in self.subscribers[topic]:
             subscriber(msg)

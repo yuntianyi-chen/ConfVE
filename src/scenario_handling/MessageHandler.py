@@ -1,15 +1,11 @@
-import math
 import time
 from threading import Thread
 from modules.common.proto.header_pb2 import Header
 from modules.perception.proto.perception_obstacle_pb2 import PerceptionObstacles
 from config import OBS_PERCEPTION_FREQUENCY, TRAFFIC_LIGHT_FREQUENCY, TRAFFIC_LIGHT_MODE
 from modules.perception.proto.traffic_light_detection_pb2 import TrafficLightDetection
-
 from modules.localization.proto.localization_pb2 import LocalizationEstimate
-
-from modules.common.proto.geometry_pb2 import Point3D, PointENU
-
+from modules.common.proto.geometry_pb2 import Point3D
 from modules.localization.proto.pose_pb2 import Pose
 from tools.bridge.CyberBridge import Topics
 
@@ -21,7 +17,6 @@ class MessageHandler:
         self.obs_is_running = False
         self.traffic_is_running = False
         self.map_instance = map_instance
-
 
     def register_obs_perception(self):
         header_sequence_num = 0
@@ -110,8 +105,6 @@ class MessageHandler:
     def send_routing_request_by_channel(self, routing_request_message):
         self.bridge.publish(Topics.RoutingRequest, routing_request_message.SerializeToString())
 
-
-
     def send_initial_localization(self, scenario):
 
         loc = LocalizationEstimate(
@@ -131,5 +124,3 @@ class MessageHandler:
             self.bridge.publish(
                 Topics.Localization, loc.SerializeToString())
             time.sleep(0.5)
-
-

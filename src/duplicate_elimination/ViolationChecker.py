@@ -1,4 +1,3 @@
-import time
 from copy import deepcopy
 import pandas as pd
 from scipy.stats import pearsonr, spearmanr, kendalltau
@@ -8,19 +7,16 @@ from objectives.measure_objectives import measure_objectives_individually
 from scenario_handling.ScenarioRunner import run_scenarios_by_division
 
 
-
 def calculate_similarity(features, default_features):
     p_corr, _ = pearsonr(features, default_features)
     # s_corr, _ = spearmanr(features, default_features)
     # k_corr, _ = kendalltau(features, default_features)
     # dst = distance.euclidean(features, default_features)
-    # aa=np.corrcoef(features, default_features)
     return p_corr
 
 
 def compare_similarity(features, default_features_list):
     pd_default_features = pd.DataFrame(default_features_list)
-    # pd_all_features = pd_default_features.append(features, ignore_index=True)
     df_new_row = pd.DataFrame([features])
     pd_all_features = pd.concat([pd_default_features, df_new_row])
 
@@ -33,10 +29,8 @@ def compare_similarity(features, default_features_list):
     pd_features_scaled = pd_all_features_scaled[-1]
 
     check_similar = False
-    # not similar with any violation in default list
     for pd_default_features_scaled_item in pd_default_features_scaled:
         corr = calculate_similarity(pd_features_scaled, pd_default_features_scaled_item)
-        # corr_list.append(corr)
         if corr >= SIMILARITY_THRESHOLD:
             check_similar = True
             break
@@ -61,11 +55,6 @@ def check_emerged_violations(violation_results, default_violations_results):
 
 
 def confirm_determinism(scenario, containers, rerun_times):
-    # print("Restart Env...")
-    # for container in containers:
-    #     container.restart_dreamview()
-    # time.sleep(1)
-
     rerun_scenario_list = []
     for i in range(rerun_times):
         temp_scenario = deepcopy(scenario)
@@ -84,7 +73,6 @@ def confirm_determinism(scenario, containers, rerun_times):
     all_emerged_results = []
 
     for temp_scenario in rerun_scenario_list:
-        # print(f"Scenario_{temp_scenario.scenario_id}")
         objectives = measure_objectives_individually(temp_scenario)
         violations_emerged_results = check_emerged_violations(objectives.violation_results,
                                                               temp_scenario.original_violation_results)

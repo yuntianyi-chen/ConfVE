@@ -10,7 +10,3 @@ class OptionTuningItem:
 
     def __str__(self):
         return f"position: {self.position}, type:{self.option_type}, key: {self.option_key}, pre_value: {self.pre_value}, cur_value: {self.cur_value}"
-
-
-
-

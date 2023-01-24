@@ -30,7 +30,6 @@ class TwayRunner(TestRunner):
 
             scenario_list = create_scenarios(generated_individual, self.config_file_obj,
                                              self.message_generator.pre_record_info_list,
-                                             self.containers,
                                              name_prefix=ind_id)
 
             run_scenarios(generated_individual, scenario_list, self.containers)

@@ -80,9 +80,7 @@ def config_file_parser2obj(config_file_path):
 
 
 def raw_parser(config_file_path):
-    # config_txt_file = open("./configuration_files/Apollo/planning_config.pb.txt", "r")
     config_txt_file = open(config_file_path, "r")
-    # data = config_txt_file.read()
     lines = config_txt_file.readlines()
     config_txt_file.close()
     stack = list()
@@ -127,17 +125,12 @@ def raw_parser(config_file_path):
 
 # option tuple: (option_id, option_key, option_value, option_type, position, layers)
 def parser2tuple(config_file_path):
-    # config_txt_file = open("./configuration_files/Apollo/planning_config.pb.txt", "r")
     config_txt_file = open(config_file_path, "r")
-    # data = config_txt_file.read()
     lines = config_txt_file.readlines()
-    # lines = ["xxx {\n"]+lines+["}\n"]
     config_txt_file.close()
     raw_option_stack = list()
     option_count = 0
     position_id = 0
-    # sub_position_id = 0
-    # layer = 0
     position_stack = list()
     option_tuple_list = list()
     layer_stack = list()
@@ -200,7 +193,6 @@ def parser2tuple(config_file_path):
 
 
 def analyze_type(value):
-    # value_type = None
     if value == 'false' or value == 'true':
         value_type = "boolean"
     elif re.fullmatch(r"-?\d+(\.\d+)", value):
@@ -209,8 +201,10 @@ def analyze_type(value):
         value_type = "integer"
     elif re.fullmatch(r"-?\d+((\.\d+)|(\d*))e\d+(\d*)", value):
         value_type = "e_number"
-    else:
+    elif re.fullmatch(r"\".*\"", value):
         value_type = "string"
+    else:
+        value_type = "enum"
     return value_type
 
 

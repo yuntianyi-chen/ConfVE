@@ -1,5 +1,4 @@
 import os
-
 from config import TRAFFIC_LIGHT_MODE, APOLLO_RECORDS_DIR
 from tools.traffic_light_control.TrafficControlManager import TrafficControlManager
 
@@ -26,7 +25,6 @@ class Scenario:
         delete_path = f"{APOLLO_RECORDS_DIR}/{self.record_name}.00000"
         if os.path.exists(delete_path):
             os.remove(delete_path)
-
 
     def update_traffic_lights(self, traffic_light_control):
         if TRAFFIC_LIGHT_MODE == "read":
@@ -58,7 +56,3 @@ class Scenario:
         self.update_original_violations(pre_record_info)
         self.update_routing_perception_info(pre_record_info)
         self.update_coord_heading(pre_record_info)
-
-
-
-

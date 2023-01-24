@@ -1,15 +1,11 @@
-import glob
 import os
 import signal
 import time
 import docker
 import subprocess
-# from utils import get_logger
-from config import APOLLO_ROOT
 from environment.Dreamview import Dreamview
 from scenario_handling.MessageHandler import MessageHandler
 from tools.bridge.CyberBridge import CyberBridge, Topics
-from tools.script.toggle_sim_control import run_sim_control
 
 
 class Container:
@@ -49,7 +45,6 @@ class Container:
         """
         self.apollo_root = apollo_root
         self.username = username
-        # self.logger = get_logger(f"ApolloContainer[{self.container_name}]")
 
     @property
     def container_name(self) -> str:
@@ -97,9 +92,7 @@ class Container:
             restart : bool
                 forcing container to restart
         """
-        # self.logger.debug(f'Starting container')
         if not restart and self.is_running():
-            # self.logger.debug(f'Already running at {self.ip}')
             return
         cmd = f'bash {self.apollo_root}/docker/scripts/dev_start.sh -l -y'
         subprocess.run(
@@ -110,7 +103,6 @@ class Container:
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE
         )
-        # self.logger.debug(f'Started running at {self.ip}')
 
     def __dreamview_operation(self, op: str):
         """
@@ -126,7 +118,6 @@ class Container:
             'restart': ('Restarting', 'restart', f'Restarted Dreamview at http://{self.ip}:{self.port}')
         }
         s0, s1, s2 = ops[op]
-        # self.logger.debug(f'{s0} Dreamview')
         cmd = f"docker exec {self.container_name} ./scripts/bootstrap.sh {s1}"
         subprocess.run(cmd.split(), stdout=subprocess.PIPE,
                        stderr=subprocess.PIPE)
@@ -137,10 +128,6 @@ class Container:
             self.dreamview = None
         else:
             self.dreamview = Dreamview(self.ip, self.port)
-            # self.logger.debug(
-            #     f'Dreamview running at http://{self.ip}:{self.port}')
-
-        # self.logger.debug(s2)
 
     def start_dreamview(self):
         """
@@ -154,128 +141,10 @@ class Container:
         """
         self.__dreamview_operation('stop')
 
-    # def restart_dreamview(self):
-    #     """
-    #     Restart Dreamview
-    #     """
-    #     self.__dreamview_operation('restart')
-
-    # def start_bridge(self):
-    #     """
-    #     Start cyber bridge
-    #     """
-    #     if not self.__is_bridge_started():
-    #         # self.logger.debug('Starting bridge')
-    #         cmd = f"docker exec -d {self.container_name} ./scripts/bridge.sh"
-    #         subprocess.run(cmd.split())
-    #     else:
-    #         # self.logger.debug('Bridge already running')
-    #         pass
-    #
-    #     while True:
-    #         try:
-    #             self.bridge = CyberBridge(self.ip, self.bridge_port)
-    #             # self.logger.debug('Bridge connected')
-    #             break
-    #         except ConnectionRefusedError:
-    #             time.sleep(1)
-
-    # def reset_bridge_connection(self):
-    #     """
-    #     Close any existing connection to bridge and reconnect
-    #     """
-    #     # self.logger.debug('Resetting bridge connection')
-    #     if not self.__is_bridge_started():
-    #         return
-    #     if not self.bridge is None:
-    #         self.bridge.conn.close()
-    #     self.bridge = CyberBridge(self.ip, self.bridge_port)
-    #
-    # def __is_bridge_started(self) -> bool:
-    #     """
-    #     Checks if the bridge has been started already
-    #
-    #     Returns:
-    #         status: bool
-    #             True if running, False otherwise
-    #     """
-    #     try:
-    #         b = CyberBridge(self.ip, self.bridge_port)
-    #         b.conn.close()
-    #         return True
-    #     except:
-    #         return False
-
-    # def __modules_operation(self, op: str):
-    #     """
-    #     Helper function to control planning/routing/...
-    #
-    #     Parameters
-    #         op: str
-    #             Operation can be one of [start, stop, restart]
-    #     """
-    #     ops = {
-    #         'start': ('Starting', 'start', 'started'),
-    #         'stop': ('Stopping', 'stop', 'stopped'),
-    #         'restart': ('Restarting', 'restart', 'restarted')
-    #     }
-    #     s0, s1, s2 = ops[op]
-    #
-    #     # self.logger.debug(f"{s0} required modules")
-    #     cmd = f"docker exec {self.container_name} ./scripts/bootstrap_maggie.sh {s1}"
-    #     subprocess.run(
-    #         cmd.split(), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    #     # self.logger.debug(f'Modules {s2}')
-
-    # def start_modules(self):
-    #     """
-    #     Start all the necessary modules
-    #     """
-    #     self.__modules_operation('start')
-    #
-    # def stop_modules(self):
-    #     """
-    #     Stop all the necessary modules
-    #     """
-    #     self.__modules_operation('stop')
-    #
-    # def restart_modules(self):
-    #     """
-    #     Restart all the necessary modules
-    #     """
-    #     self.__modules_operation('restart')
-    #
-
-    # def start_recorder(self, record_id: str):
-    #     """
-    #     Starts cyber_recorder
-    #
-    #     Parameters:
-    #         record_id: str
-    #             The name of the record file
-    #     """
-    #     # self.logger.debug(f"Starting recorder")
-    #     cmd = f"docker exec {self.container_name} /apollo/bazel-bin/modules/custom_nodes/record_node start {self.container_name}.{record_id}"
-    #     subprocess.run(
-    #         cmd.split(),
-    #         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
-    #     )
-    #
-    # def stop_recorder(self):
-    #     """
-    #     Stops cyber_recorder
-    #     """
-    #     # self.logger.debug(f"Stopping recorder")
-    #     cmd = f"docker exec {self.container_name} /apollo/bazel-bin/modules/custom_nodes/record_node stop"
-    #     subprocess.run(
-    #         cmd.split(), stdout=subprocess.PIPE, stderr=subprocess.PIPE
-    #     )
-
     def start_sim_control_standalone(self):
         """
         Starts SimControlStandalone module
         """
-        # self.logger.debug(f"Starting sim_control_standalone")
         cmd = f"docker exec -d {self.container_name} /apollo/bazel-bin/modules/sim_control/sim_control_main"
         subprocess.run(
             cmd.split(),
@@ -286,46 +155,16 @@ class Container:
         """
         Stops SimControlStandalone module
         """
-        # self.logger.debug(f"Stopping sim_control_standalone")
         cmd = f"docker exec {self.container_name} /apollo/modules/sim_control/script.sh stop"
-        p = subprocess.run(
+        subprocess.run(
             cmd.split(),
             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
         )
-
-    # def stop_all(self):
-    #     self.bridge.stop()
-    #     if USE_SIM_CONTROL_STANDALONE:
-    #         self.stop_sim_control_standalone()
-    #     else:
-    #         self.dreamview.stop_sim_control()
-    #     self.stop_modules()
-
-    # def reset(self):
-    #     """
-    #     Resets the container
-    #     """
-    #     # self.logger.debug(f'Resetting')
-    #     if USE_SIM_CONTROL_STANDALONE:
-    #         self.stop_sim_control_standalone()
-    #     else:
-    #         self.dreamview.stop_sim_control()
-    #     self.stop_modules()
-    #     self.start_bridge()
-    #     self.reset_bridge_connection()
-    #     self.start_modules()
-    #     if USE_SIM_CONTROL_STANDALONE:
-    #         self.start_sim_control_standalone()
-    #     else:
-    #         self.dreamview.reset()
-
-    #####################################################
 
     def create_message_handler(self, map_instance):
         self.message_handler = MessageHandler(self.bridge, map_instance)
 
     def connect_bridge(self):
-        # print("Start bridge...")
         self.bridge = self.start_bridge_simply()
         self.register_bridge_publishers()
 
@@ -349,31 +188,22 @@ class Container:
         docker_container_info = docker.from_env().containers.get(self.container_name)
         return docker_container_info.attrs['NetworkSettings']['IPAddress']
 
-    #########################
-
     def cyber_env_init(self):
-        # print("Closing modules & Dreamview...")
-        # self.modules_operation(operation="stop")
-        self.kill_modules()
-        # print("Restart Dreamview...")
-        # time.sleep(1)
-        self.close_subprocess()
-        self.start_dreamview()
-        # time.sleep(1)
-        # print("Start sim control...")
-        # self.dreamview.reset()
-        # run_sim_control()
+        # print("Killing modules...")
+        # self.kill_modules()
 
-        # time.sleep(0.5)
-        # print("Restarting modules...")
+        # print("Killing Dreamview...")
+        # self.close_subprocess()
+
+        # print("Starting Dreamview...")
+        self.start_dreamview()
+
+        # print("Starting modules...")
         self.modules_operation(operation="start")
-        # time.sleep(0.5)
 
     def restart_dreamview(self):
         self.close_subprocess()
         self.start_dreamview()
-        # run_sim_control()
-        # self.dreamview.reset()
 
     def restart_modules(self):
         self.modules_operation(operation="stop")
@@ -404,8 +234,6 @@ class Container:
         cmd = f"docker exec -d {self.container_name} bash /apollo/scripts/prediction.sh {operation}"
         subprocess.run(cmd.split())
 
-    #######################################
-
     def start_recorder(self, record_name):
         cmd = f"docker exec -d {self.container_name} /apollo/bazel-bin/cyber/tools/cyber_recorder/cyber_recorder record -o /apollo/records/{record_name} -a &"
         subprocess.Popen(cmd, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
@@ -413,12 +241,6 @@ class Container:
     def stop_recorder(self):
         cmd = f"docker exec -d {self.container_name} /apollo/scripts/my_scripts/stop_recorder.sh"
         subprocess.run(cmd.split())
-        self.delete_recorder_log()
-
-    def delete_recorder_log(self):
-        files = glob.glob(f'{APOLLO_ROOT}/cyber_recorder.log.INFO.*')
-        for file in files:
-            os.remove(file)
 
     def stop_subprocess(self, p):
         try:

@@ -45,7 +45,6 @@ class RangeAnalyzer:
                 new_range = cur_range
         return new_range
 
-
     def range_init(self, option_type_list):
         range_list = list()
         for option_type in option_type_list:
@@ -56,7 +55,6 @@ class RangeAnalyzer:
                 range_list.append([])
         return range_list
 
-
     def generate_option_range(self, option_type):
         # initial range should contain default option value
         if option_type == "float":
@@ -65,10 +63,12 @@ class RangeAnalyzer:
             option_range = [-10001, 10001]
         elif option_type == "boolean":
             option_range = ["true", "false"]
-        elif option_type == "string":
-            option_range = []
         elif option_type == "e_number":
             option_range = [-101, 101]  # e.g., [1e-100, 1e100]
+        elif option_type == "string":
+            option_range = []
+        elif option_type == "enum":
+            option_range = []
         else:
             option_range = []
         return option_range

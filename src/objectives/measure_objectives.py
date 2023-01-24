@@ -75,10 +75,6 @@ def CrowdingDist(fitness=None):
     return distances
 
 
-
-
-
-
 def dominates(obj1, obj2, sign=[1, 1]):
     """Return true if each objective of *self* is not strictly worse than
             the corresponding objective of *other* and at least one objective is
@@ -170,10 +166,9 @@ def sortNondominated(fitness, k=None, first_front_only=False):
                     dominating_fits[fit_d] -= 1  # Next front -> Sn - 1
                     if dominating_fits[fit_d] == 0:  # Sn=0 -> next front
                         next_front.append(fit_d)
-                         # Count and append chromosomes with same objectives
+                        # Count and append chromosomes with same objectives
                         pareto_sorted += len(map_fit_ind[fit_d])
                         fronts[-1].extend(map_fit_ind[fit_d])
             current_front = next_front
             next_front = []
-
     return fronts

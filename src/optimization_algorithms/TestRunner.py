@@ -2,7 +2,6 @@ import os
 import time
 from config import INITIAL_SCENARIO_RECORD_DIR, DEFAULT_CONFIG_FILE_PATH
 from config_file_handler.parser_apollo import config_file_parser2obj
-from environment.MapLoader import MapLoader
 from range_analysis.RangeAnalyzer import RangeAnalyzer
 from scenario_handling.FileOutputManager import FileOutputManager
 from scenario_handling.MessageGenerator import MessageGenerator
@@ -26,10 +25,10 @@ class TestRunner:
             default_violation_results_list = self.file_output_manager.load_default_violation_results_by_pickle()
             self.message_generator.update_selected_records_violatioin_directly(default_violation_results_list)
         else:
-            default_violation_results_list = check_default_running(self.message_generator, self.config_file_obj, self.file_output_manager,
-                                  self.containers)
+            default_violation_results_list = check_default_running(self.message_generator, self.config_file_obj,
+                                                                   self.file_output_manager,
+                                                                   self.containers)
             self.file_output_manager.dump_default_violation_results_by_pickle(default_violation_results_list)
-
         self.runner_time = time.time()
 
     def check_scenario_list_vio_emergence(self, scenario_list):

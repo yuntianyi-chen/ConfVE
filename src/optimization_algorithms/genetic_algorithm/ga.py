@@ -53,9 +53,6 @@ def crossover(individual_list):
         individual_B.value_list = individual_list[randb].value_list[:position] + individual_list[randa].value_list[
                                                                                  position:]
 
-        # individual_A.reset_default()
-        # individual_B.reset_default()
-
         individual_A.option_tuning_tracking_list.append("crossover")
         individual_B.option_tuning_tracking_list.append("crossover")
 
@@ -76,7 +73,3 @@ def mutate(individual_list, config_file_obj, range_analyzer):
 def mutation(individual_list, config_file_obj, range_analyzer):
     new_individual_list = mutate(deepcopy(individual_list), config_file_obj, range_analyzer)
     return individual_list + new_individual_list
-
-
-
-

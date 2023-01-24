@@ -1,10 +1,9 @@
-from itertools import groupby
 from typing import List
 from datetime import datetime
+from itertools import groupby
 from shapely.geometry import Polygon
-
-from objectives.violation_number.oracles.Violation import Violation
 from tools.hdmap.MapParser import MapParser
+from objectives.violation_number.oracles.Violation import Violation
 from objectives.violation_number.oracles.OracleInterface import OracleInterface
 from tools.utils import generate_adc_polygon, construct_lane_boundary_linestring
 
