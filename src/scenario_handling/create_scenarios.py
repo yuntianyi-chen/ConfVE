@@ -27,10 +27,10 @@ def create_scenarios(generated_individual, config_file_obj, pre_record_info_list
     config_file_tuned_status = config_file_generating(generated_individual, config_file_obj,
                                                       default=DEFAULT_CONFIG_FILE)
 
-    print("Restart Modules...")
-    for container in containers:
-        container.restart_modules()
-    time.sleep(2)
+    # print("Restart Modules...")
+    # for container in containers:
+    #     container.restart_modules()
+    # time.sleep(2)
 
     scenario_list = []
     for pre_record_info in pre_record_info_list:
@@ -41,8 +41,7 @@ def create_scenarios(generated_individual, config_file_obj, pre_record_info_list
         scenario.update_config_file_status(config_file_tuned_status)
         if AV_TESTING_APPROACH != "Random":
 
-            scenario.update_original_violations(pre_record_info)
-            scenario.update_routing_perception_info(pre_record_info)
+            scenario.update_record_info(pre_record_info)
 
             if TRAFFIC_LIGHT_MODE == "read":
                 traffic_light_control = pre_record_info.traffic_lights_list

@@ -1,4 +1,6 @@
 from shapely.geometry import Point
+
+from modules.common.proto.geometry_pb2 import PointENU
 from objectives.violation_number.oracles.OracleInterface import OracleInterface
 from objectives.violation_number.oracles.Violation import Violation
 

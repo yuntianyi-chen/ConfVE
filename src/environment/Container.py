@@ -288,7 +288,7 @@ class Container:
         """
         # self.logger.debug(f"Stopping sim_control_standalone")
         cmd = f"docker exec {self.container_name} /apollo/modules/sim_control/script.sh stop"
-        subprocess.run(
+        p = subprocess.run(
             cmd.split(),
             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
         )
@@ -353,14 +353,15 @@ class Container:
 
     def cyber_env_init(self):
         # print("Closing modules & Dreamview...")
-        self.modules_operation(operation="stop")
+        # self.modules_operation(operation="stop")
         self.kill_modules()
         # print("Restart Dreamview...")
+        # time.sleep(1)
         self.close_subprocess()
         self.start_dreamview()
         # time.sleep(1)
         # print("Start sim control...")
-        self.dreamview.reset()
+        # self.dreamview.reset()
         # run_sim_control()
 
         # time.sleep(0.5)
@@ -372,7 +373,7 @@ class Container:
         self.close_subprocess()
         self.start_dreamview()
         # run_sim_control()
-        self.dreamview.reset()
+        # self.dreamview.reset()
 
     def restart_modules(self):
         self.modules_operation(operation="stop")

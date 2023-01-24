@@ -50,6 +50,15 @@ class Scenario:
         self.original_violation_num = pre_record_info.violation_num
         self.original_violation_results = pre_record_info.violation_results
 
+    def update_coord_heading(self, pre_record_info):
+        self.coord = pre_record_info.coord
+        self.heading = pre_record_info.heading
+
+    def update_record_info(self, pre_record_info):
+        self.update_original_violations(pre_record_info)
+        self.update_routing_perception_info(pre_record_info)
+        self.update_coord_heading(pre_record_info)
+
 
 
 

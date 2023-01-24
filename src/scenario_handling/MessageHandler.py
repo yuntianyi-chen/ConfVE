@@ -112,13 +112,8 @@ class MessageHandler:
 
 
 
-    def send_initial_localization(self):
-        # self.logger.debug('Sending initial localization')
-        # ma = MapParser.get_instance()
-        # coord, heading = self.map_instance.get_coordinate_and_heading(
-        #     self.start.lane_id, self.start.s)
+    def send_initial_localization(self, scenario):
 
-        coord, heading =(PointENU(x=12.3, y=12.3), math.atan2(21.3,12.3))
         loc = LocalizationEstimate(
             header=Header(
                 timestamp_sec=time.time(),
@@ -126,12 +121,12 @@ class MessageHandler:
                 sequence_num=0
             ),
             pose=Pose(
-                position=coord,
-                heading=heading,
+                position=scenario.coord,
+                heading=scenario.heading,
                 linear_velocity=Point3D(x=0, y=0, z=0)
             )
         )
-        for i in range(4):
+        for i in range(5):
             loc.header.sequence_num = i
             self.bridge.publish(
                 Topics.Localization, loc.SerializeToString())

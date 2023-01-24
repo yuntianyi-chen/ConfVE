@@ -61,14 +61,10 @@ def check_emerged_violations(violation_results, default_violations_results):
 
 
 def confirm_determinism(scenario, containers, rerun_times):
-    print("Restart Env...")
-    for container in containers:
-        container.restart_dreamview()
-    time.sleep(1)
-    print("Restart Modules...")
-    for container in containers:
-        container.restart_modules()
-    time.sleep(2)
+    # print("Restart Env...")
+    # for container in containers:
+    #     container.restart_dreamview()
+    # time.sleep(1)
 
     rerun_scenario_list = []
     for i in range(rerun_times):

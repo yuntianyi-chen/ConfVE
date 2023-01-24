@@ -10,16 +10,15 @@ Global configurations for the framework
 
 # IMPORTANT CONFIGURATION
 OBS_PERCEPTION_FREQUENCY = 25  # 10/25
-MAX_RECORD_TIME = 30  # 10
+MAX_RECORD_TIME = 30  # 10/30
 AV_TESTING_APPROACH = "DoppelTest"  # scenoRITA/DoppelTest/AV-Fuzzer/ADFuzz/Random
 MAP_NAME = "borregas_ave"  # borregas_ave/sunnyvale_loop/San_Francisco
 
-CONTAINER_NUM = 1  # 5/10
+CONTAINER_NUM = 5  # 5/10
 SIMILARITY_THRESHOLD = 0.6
 
-MODULE_ORACLES = ["RoutingFailure", "PredictionFailure", "PlanningFailure", "CarNeverMoved","SimControlFailure"]
-
-# MODULE_ORACLES = ["RoutingFailure", "PredictionFailure", "PlanningFailure", "CarNeverMoved","SimControlFailure", "PlanningGeneratesGarbage"]
+# MODULE_ORACLES = ["RoutingFailure", "PredictionFailure", "PlanningFailure", "CarNeverMoved","SimControlFailure"]
+MODULE_ORACLES = ["RoutingFailure", "PredictionFailure", "PlanningFailure", "CarNeverMoved","SimControlFailure", "PlanningGeneratesGarbage"]
 
 MAX_INITIAL_SCENARIOS = 10   # 10
 

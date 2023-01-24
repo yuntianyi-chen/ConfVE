@@ -2,7 +2,7 @@ from cyber_record.record import Record
 from config import AV_TESTING_APPROACH
 from objectives.violation_number.oracles import RecordAnalyzer
 from modules.perception.proto.perception_obstacle_pb2 import PerceptionObstacle
-from modules.common.proto.geometry_pb2 import Point3D
+from modules.common.proto.geometry_pb2 import Point3D, PointENU
 from modules.perception.proto.traffic_light_detection_pb2 import TrafficLight
 
 
@@ -21,6 +21,9 @@ class InitialRecordInfo:
         self.traffic_lights_list = []
 
         self.finished_rerun = False
+
+        self.coord =None
+        self.heading = None
 
         self.update_violation_by_measuring()
         self.extract_record_info()
@@ -82,6 +85,8 @@ class InitialRecordInfo:
                 if message.routing_request.header.module_name == routing_message_module_name:
                     routing_request = message.routing_request
                     self.routing_request = routing_request
+                    waypoint = list(routing_request.waypoint)[0]
+                    self.coord, self.heading = (PointENU(x=waypoint.pose.x, y=waypoint.pose.y), waypoint.heading)
             elif topic == "/apollo/perception/traffic_light":
                 traffic_lights = list(message.traffic_light)
                 # if traffic_lights:

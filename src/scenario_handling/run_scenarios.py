@@ -11,12 +11,13 @@ def run_default_scenarios(generated_individual, scenario_list, containers):
     for scenario in scenario_list:
         # if module failure happens when default running, please rerun the program
         # _, all_emerged_results = confirm_determinism(scenario, containers, rerun_times=DEFAULT_DETERMINISM_RERUN_TIMES)
-        # all_emerged_results=[]
-        # contain_module_violation = True
-        # while contain_module_violation:
-        _, all_emerged_results = confirm_determinism(scenario, containers,
+        all_emerged_results = []
+
+        contain_module_violation = True
+        while contain_module_violation:
+            _, all_emerged_results = confirm_determinism(scenario, containers,
                                                          rerun_times=DEFAULT_DETERMINISM_RERUN_TIMES)
-            # contain_module_violation = check_module_failure(all_emerged_results, oracles=MODULE_ORACLES)
+            contain_module_violation = check_module_failure(all_emerged_results, oracles=MODULE_ORACLES)
 
         print(f"Default Violations:{all_emerged_results}")
         print("-------------------------------------------------")
@@ -33,7 +34,7 @@ def run_scenarios(generated_individual, scenario_list, containers):
         objectives = measure_objectives_individually(scenario)
         violations_emerged_results = check_emerged_violations(objectives.violation_results,
                                                               scenario.original_violation_results)
-        contain_module_violation = check_module_failure(violations_emerged_results,oracles=MODULE_ORACLES)
+        contain_module_violation = check_module_failure(violations_emerged_results, oracles=MODULE_ORACLES[:-1])
 
         # if bug-revealing (module failure), confirm determinism
         # if len(violations_emerged_results) > 0 and generated_individual.allow_selection:
@@ -41,7 +42,7 @@ def run_scenarios(generated_individual, scenario_list, containers):
         if contain_module_violation and generated_individual.allow_selection:
             violations_emerged_results, _ = confirm_determinism(scenario, containers,
                                                                 rerun_times=DETERMINISM_RERUN_TIMES)
-            contain_module_violation = check_module_failure(violations_emerged_results, oracles=MODULE_ORACLES)
+            contain_module_violation = check_module_failure(violations_emerged_results, oracles=MODULE_ORACLES[:-1])
             generated_individual.update_allow_selection(contain_module_violation)
 
         scenario.update_emerged_status(violations_emerged_results, contain_module_violation)
