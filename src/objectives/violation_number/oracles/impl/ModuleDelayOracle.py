@@ -33,7 +33,7 @@ class ModuleDelayOracle(OracleInterface):
             return list()
 
         for t, m in zip(self.get_interested_topics(), self.modules):
-            self.check_module_delay(m)
+            self.check_module_delay(m, 5.0)
         return self.violations
 
     def get_interested_topics(self) -> List[str]:
@@ -44,8 +44,8 @@ class ModuleDelayOracle(OracleInterface):
             '/apollo/planning'
         ]
 
-    def check_module_delay(self, module_name: str):
-        if self.trackers[module_name] > ModuleDelayOracle.MAX_DELAY:
+    def check_module_delay(self, module_name: str, threshold: float):
+        if self.trackers[module_name] > threshold:
             if self.last_localization is None:
                 features = self.get_dummy_basic_info()
             else:
@@ -78,6 +78,6 @@ class ModuleDelayOracle(OracleInterface):
 
             if topic == t:
                 # check if exceeds max
-                self.check_module_delay(m)
+                self.check_module_delay(m, ModuleDelayOracle.MAX_DELAY)
                 # reset
                 self.trackers[m] = 0.0
