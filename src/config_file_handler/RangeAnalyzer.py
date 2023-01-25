@@ -127,7 +127,6 @@ class RangeAnalyzer:
             generated_value = self.mit_inj_tester.apply_one_operator(option_value)
         else:
             generated_value = option_value
-
         return str(generated_value)
 
 def analyze_type(value):

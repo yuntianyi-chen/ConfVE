@@ -2,7 +2,7 @@ import re
 from copy import deepcopy
 from config_file_handler.ConfigFileObj import ConfigFileObj
 from config_file_handler.OptionObj import OptionObj
-from range_analysis.RangeAnalyzer import analyze_type
+from config_file_handler.RangeAnalyzer import analyze_type
 
 
 def config_file_parser2obj(config_file_path):

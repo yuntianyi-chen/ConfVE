@@ -1,7 +1,6 @@
 import random
 from copy import deepcopy
 from config import SELECT_NUM_RATIO
-from config_file_handler.option_handling import tune_one_value
 from optimization_algorithms.genetic_algorithm.IndividualWithFitness import IndividualWithFitness
 
 

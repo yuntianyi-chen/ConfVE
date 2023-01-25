@@ -13,7 +13,7 @@ MAX_RECORD_TIME = 30  # 10/30
 AV_TESTING_APPROACH = "DoppelTest"  # scenoRITA/DoppelTest/AV-Fuzzer/ADFuzz/Random
 MAP_NAME = "borregas_ave"  # borregas_ave/sunnyvale_loop/San_Francisco
 
-CONTAINER_NUM = 10  # 5/10
+CONTAINER_NUM = 5  # 5/10
 SIMILARITY_THRESHOLD = 0.5
 
 MODULE_ORACLES = ["RoutingFailure", "PredictionFailure", "PlanningFailure", "CarNeverMoved", "SimControlFailure",
@@ -22,13 +22,13 @@ MODULE_ORACLES = ["RoutingFailure", "PredictionFailure", "PlanningFailure", "Car
 MAX_INITIAL_SCENARIOS = 10  # 10
 
 # t-way testing
-T_STRENGTH_VALUE = 2
-TIME_THRESHOLD = 20
+T_STRENGTH_VALUE = 2  # pairwise
+TIME_THRESHOLD = 20  # hours
 
 # Rerun 5 times if occurred >= 3 times, confirmed
-DETERMINISM_RERUN_TIMES = 10  # 5
+DETERMINISM_RERUN_TIMES = 5  # 5/10
 DEFAULT_DETERMINISM_RERUN_TIMES = 10  # 10
-DETERMINISM_CONFIRMED_TIMES = 5  # 3
+DETERMINISM_CONFIRMED_TIMES = 3  # 3
 
 # APOLLO SETTINGS
 TRAFFIC_LIGHT_FREQUENCY = 10
