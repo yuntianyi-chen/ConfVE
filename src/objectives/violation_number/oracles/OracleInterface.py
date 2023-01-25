@@ -19,6 +19,15 @@ class OracleInterface(ABC):
         return list()
 
     @staticmethod
+    def get_dummy_basic_info():
+        return {
+            'x': 0,
+            'y': 0,
+            'heading': 0,
+            'speed': 0
+        }
+
+    @staticmethod
     def get_basic_info_from_localization(message: LocalizationEstimate):
         speed = calculate_velocity(message.pose.linear_velocity)
         features = {
