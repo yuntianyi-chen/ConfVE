@@ -1,5 +1,5 @@
 class Objectives:
-    def __init__(self, violation_results, code_coverage, execution_time):
-        self.violation_results = violation_results
-        self.code_coverage = code_coverage
-        self.execution_time = execution_time
+    def __init__(self):
+        self.emerged_violations_count = 0
+        self.emerged_violations_type_count = 0
+        self.execution_time = 0

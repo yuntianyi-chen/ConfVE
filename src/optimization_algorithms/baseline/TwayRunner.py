@@ -21,7 +21,7 @@ class TwayRunner(TestRunner):
             print("-------------------------------------------------")
 
             default_individual = generate_individuals(self.config_file_obj, population_size=1)[0]
-            generated_individual = self.twise_tuner.tune_individual(default_individual)
+            generated_individual = self.twise_tuner.tune_individual(default_individual, self.range_analyzer)
 
             self.file_output_manager.delete_temp_files()
 
@@ -37,7 +37,7 @@ class TwayRunner(TestRunner):
 
             run_scenarios(generated_individual, scenario_list, self.containers)
 
-            generated_individual.calculate_fitness()
+            generated_individual.update_fitness()
             self.check_scenario_list_vio_emergence(scenario_list)
 
             self.file_output_manager.print_violation_results(generated_individual)

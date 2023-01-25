@@ -124,17 +124,17 @@ class FileOutputManager:
         shutil.copy(f"{APOLLO_RECORDS_DIR}/{record_name}.00000",
                     f"{self.backup_record_file_save_path}/{record_name}.00000")
 
-    def save_fitness_result(self, individual, ind_id):
+    def save_fitness_result(self, generated_individual, ind_id):
         with open(self.ind_fitness_save_file_path, "a") as f:
             f.write(f"{ind_id}\n")
-            f.write(f"  Vio Intro: {individual.violation_emerged}\n")
-            f.write(f"  Fitness(mode: {FITNESS_MODE}): {individual.fitness}\n")
-        if individual.fitness > self.optimal_fitness:
-            self.optimal_fitness = individual.fitness
+            f.write(f"  Vio Emerged Num: {len(generated_individual.violations_emerged_results)}\n")
+            f.write(f"  Fitness(mode: {FITNESS_MODE}): {generated_individual.fitness}\n")
+        if generated_individual.fitness > self.optimal_fitness:
+            self.optimal_fitness = generated_individual.fitness
 
     def print_violation_results(self, generated_individual):
         print(f" Vio Total Results: {[len(item) for item in generated_individual.violation_results_list]}")
-        print(f" Vio Emerged Num: {generated_individual.violation_emerged}")
+        print(f" Vio Emerged Num: {len(generated_individual.violations_emerged_results)}")
         print(f" Vio Emerged Results: {[(k, v.main_type) for k, v in generated_individual.violations_emerged_results]}")
 
     def save_total_violation_results(self, generated_individual, scenario_list):

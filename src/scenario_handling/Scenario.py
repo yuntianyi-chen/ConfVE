@@ -1,5 +1,6 @@
 import os
 from config import TRAFFIC_LIGHT_MODE, APOLLO_RECORDS_DIR
+from objectives.violation_number.oracles import RecordAnalyzer
 from tools.traffic_light_control.TrafficControlManager import TrafficControlManager
 
 
@@ -14,6 +15,14 @@ class Scenario:
     def update_record_name_and_path(self, new_record_name):
         self.record_name = new_record_name
         self.record_path = f"{APOLLO_RECORDS_DIR}/{self.record_name}.00000"
+
+    def measure_violations(self):
+        ra = RecordAnalyzer(self.record_path)
+        results = ra.analyze()
+        if len(results) > 0:
+            print(f"  Record Path: {self.record_path}")
+            print(f"    Violation Results: {[(violation.main_type, violation.key_label) for violation in results]}")
+        return results
 
     def update_emerged_status(self, violations_emerged_results, contain_module_violation):
         if len(violations_emerged_results) > 0:

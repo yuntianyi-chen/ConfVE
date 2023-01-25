@@ -18,22 +18,24 @@ class IndividualWithFitness:
             self.option_tuning_tracking_list.pop()
             self.reset_default()
 
-    def calculate_fitness(self):
-        self.violation_number = self.accumulated_objectives[0]
-        self.code_coverage = self.accumulated_objectives[1]
-        self.execution_time = self.accumulated_objectives[2]
+    def update_fitness(self):
+        emerged_violations_count = len(self.violations_emerged_results)
+
+        count_type_list = []
+        for emerged_vio in self.violations_emerged_results:
+            main_type = emerged_vio[1].main_type
+            if main_type not in count_type_list:
+                count_type_list.append(main_type)
+
+        emerged_violations_type_count = len(count_type_list)
 
         if FITNESS_MODE == "emerge":
-            self.fitness = self.violation_emerged
-        else:
-            self.fitness = self.violation_number * self.code_coverage * self.execution_time
+            self.fitness = emerged_violations_count
+        elif FITNESS_MODE == "multi_obj":
+            self.fitness = [emerged_violations_count, emerged_violations_type_count, self.execution_time]
 
-    def update_accumulated_objectives(self, objectives):
-        self.accumulated_objectives[0] += len(objectives.violation_results)
-        self.accumulated_objectives[1] += objectives.code_coverage
-        self.accumulated_objectives[2] += objectives.execution_time
-
-        self.violation_results_list.append(objectives.violation_results)
+    def update_exec_time(self, total_time):
+        self.execution_time = total_time
 
     def update_allow_selection(self, contain_module_violation):
         self.allow_selection = not contain_module_violation
@@ -41,27 +43,13 @@ class IndividualWithFitness:
     def update_id(self, id):
         self.id = id
 
-    def get_fitness(self):
-        return self.fitness
-
     def reset_default(self):
         self.fitness = 0
-        self.violation_number = 0
-        self.code_coverage = 0
-        self.execution_time = 0
-        self.accumulated_objectives = [0, 0, 0]
-
-        self.violation_emerged = 0
-
-        self.violation_results_list = []
-
-        self.violations_emerged_results = []
-        self.violations_emerged_results_list = []
-
         self.allow_selection = True
+        self.violation_results_list = []
+        self.violations_emerged_results = []
 
-    def update_violation_emerged_with_sid(self, violations_emerged_results, scenario):
+    def update_violation_result(self, violations_emerged_results, violation_results, scenario):
         violations_emerged_results_with_sid = [(scenario.record_id, v) for v in violations_emerged_results]
-        self.violations_emerged_results_list.append(violations_emerged_results_with_sid)
         self.violations_emerged_results += violations_emerged_results_with_sid
-        self.violation_emerged += len(violations_emerged_results_with_sid)
+        self.violation_results_list.append(violation_results)

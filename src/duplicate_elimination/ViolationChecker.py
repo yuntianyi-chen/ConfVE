@@ -3,7 +3,6 @@ import pandas as pd
 from scipy.stats import pearsonr, spearmanr, kendalltau
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from config import MODULE_ORACLES, SIMILARITY_THRESHOLD, DETERMINISM_CONFIRMED_TIMES
-from objectives.measure_objectives import measure_objectives_individually
 from scenario_handling.ScenarioRunner import run_scenarios_by_division
 
 
@@ -73,9 +72,8 @@ def confirm_determinism(scenario, containers, rerun_times):
     all_emerged_results = []
 
     for temp_scenario in rerun_scenario_list:
-        objectives = measure_objectives_individually(temp_scenario)
-        violations_emerged_results = check_emerged_violations(objectives.violation_results,
-                                                              temp_scenario.original_violation_results)
+        violation_results = scenario.measure_violations()
+        violations_emerged_results = check_emerged_violations(violation_results, temp_scenario.original_violation_results)
 
         for emerged_violation in violations_emerged_results:
             if emerged_violation.main_type not in accumulated_emerged_results_count_dict.keys():
@@ -83,7 +81,7 @@ def confirm_determinism(scenario, containers, rerun_times):
             else:
                 accumulated_emerged_results_count_dict[emerged_violation.main_type].append(emerged_violation)
 
-        for violation in objectives.violation_results:
+        for violation in violation_results:
             if violation not in all_emerged_results:
                 all_emerged_results.append(violation)
 

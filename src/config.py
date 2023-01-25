@@ -44,7 +44,7 @@ CONFIG_FILE_NAME = f"{MODULE_NAME}_config.pb.txt"
 GENERATION_LIMIT = 10
 INIT_POP_SIZE = 10  # 60 individuals in each generation
 SELECT_NUM_RATIO = [7, 2, 1]  # [5, 3, 2]/[7, 2, 1]
-FITNESS_MODE = "emerge"  # emerge/emerge_and_removal
+FITNESS_MODE = "multi_obj"  # emerge/multi_obj
 
 # DIRECTORIES
 APOLLO_ROOT = '/home/cloudsky/Research/Apollo/apollo_v7_deploy'  # apollo_v7_deploy/apollo_7.0

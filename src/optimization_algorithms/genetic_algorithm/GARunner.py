@@ -51,9 +51,9 @@ class GARunner(TestRunner):
                 # test each config settings under several groups of obstacles and adc routes
                 run_scenarios(generated_individual, scenario_list, self.containers)
 
-                generated_individual.calculate_fitness()
-                self.check_scenario_list_vio_emergence(scenario_list)
+                generated_individual.update_fitness()
 
+                self.check_scenario_list_vio_emergence(scenario_list)
                 self.file_output_manager.print_violation_results(generated_individual)
                 self.file_output_manager.save_total_violation_results(generated_individual, scenario_list)
                 self.file_output_manager.handle_scenario_record(scenario_list)
@@ -68,19 +68,21 @@ class GARunner(TestRunner):
                     self.file_output_manager.save_config_file(ind_id)
                     self.file_output_manager.save_fitness_result(generated_individual, ind_id)
                     self.file_output_manager.save_vio_features(generated_individual, scenario_list)
-                    self.file_output_manager.save_option_tuning_file(generated_individual, ind_id, option_tuning_item, range_change_str)
+                    self.file_output_manager.save_option_tuning_file(generated_individual, ind_id, option_tuning_item,
+                                                                     range_change_str)
                     self.file_output_manager.save_count_dict_file()
 
                 individual_num += 1
 
-            random.shuffle(individual_list_after_mutate)
-            # Fitness the more, the better, currently, for testing
-            individual_list_after_mutate.sort(reverse=True, key=lambda x: x.fitness)
             individual_list = select(individual_list_after_mutate, self.config_file_obj)
+
             # output range analysis every generation
-            self.file_output_manager.update_range_analysis_file(self.config_file_obj, self.range_analyzer, generation_num)
+            self.file_output_manager.update_range_analysis_file(self.config_file_obj, self.range_analyzer,
+                                                                generation_num)
+
             self.message_generator.replace_records(self.scenario_rid_emergence_list)
-            _ = check_default_running(self.message_generator, self.config_file_obj, self.file_output_manager, self.containers)
+            _ = check_default_running(self.message_generator, self.config_file_obj, self.file_output_manager,
+                                      self.containers)
             self.scenario_rid_emergence_list = []
 
         self.runner_time = time.time() - self.runner_time
