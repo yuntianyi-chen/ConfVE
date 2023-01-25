@@ -35,7 +35,7 @@ TRAFFIC_LIGHT_FREQUENCY = 10
 TRAFFIC_LIGHT_MODE = "read"  # read/random/off
 
 # TESTING SETTINGS
-OPT_MODE = "GA"  # GA/DRL/Random
+OPT_MODE = "GA"  # GA/DRL/Random/MIT/T-way
 MODULE_NAME = "planning"
 DEFAULT_CONFIG_FILE = False
 CONFIG_FILE_NAME = f"{MODULE_NAME}_config.pb.txt"

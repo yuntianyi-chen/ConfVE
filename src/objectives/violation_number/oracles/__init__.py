@@ -29,7 +29,7 @@ class RecordAnalyzer:
             SpeedingOracle(),
             TrafficSignalOracle(),
             UnsafeLaneChangeOracle(),
-            UUStopOracle(),
+            # UUStopOracle(),
             JunctionLaneChangeOracle(),
             EStopOracle(),
         ]

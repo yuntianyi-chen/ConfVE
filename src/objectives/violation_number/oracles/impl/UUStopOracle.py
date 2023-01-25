@@ -51,15 +51,15 @@ class UUStopOracle(OracleInterface):
         ]
 
     def on_new_message(self, topic: str, message, t):
+        if len(self.violations) > 0:
+            return
         if topic == '/apollo/localization/pose':
             self.last_localization = message
         else:
             self.last_planning = message
             return
-
         if self.last_localization is None or self.last_planning is None:
             return
-
         if not self.is_adc_completely_stopped():
             self.first_stop_timestamp = None
             return
@@ -68,7 +68,6 @@ class UUStopOracle(OracleInterface):
     def is_adc_completely_stopped(self) -> bool:
         adc_pose = self.last_localization.pose
         adc_velocity = calculate_velocity(adc_pose.linear_velocity)
-
         # https://github.com/ApolloAuto/apollo/blob/0789b7ea1e1356dde444452ab21b51854781e304/modules/planning/scenarios/stop_sign/unprotected/stage_pre_stop.cc#L237
         # return adc_velocity <= self.MAX_ABS_SPEED_WHEN_STOPPED
         return adc_velocity == 0
@@ -85,7 +84,7 @@ class UUStopOracle(OracleInterface):
 
         adc_total_stop_time = last_stop_timestamp - self.first_stop_timestamp
         if adc_total_stop_time > self.ADC_MAX_STOP_TIME_ON_STOP_SIGN_IN_SECOND:
-            last_stop_reason = self.last_planning.decision.main_decision.stop.reason
+            # last_stop_reason = self.last_planning.decision.main_decision.stop.reason
             # self.violated_stop_sign_stopped_times.append((adc_total_stop_time, str(last_stop_reason)))
             features = self.get_basic_info_from_localization(self.last_localization)
             features['reason_code'] = self.last_planning.decision.main_decision.stop.reason_code
