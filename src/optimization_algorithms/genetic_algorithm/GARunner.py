@@ -1,5 +1,4 @@
 import time
-import random
 from config import GENERATION_LIMIT, INIT_POP_SIZE
 from optimization_algorithms.TestRunner import TestRunner
 from scenario_handling.create_scenarios import create_scenarios
@@ -66,7 +65,7 @@ class GARunner(TestRunner):
 
                     range_change_str = self.range_analyzer.range_analyze(option_tuning_item, self.config_file_obj)
                     self.file_output_manager.save_config_file(ind_id)
-                    self.file_output_manager.save_fitness_result(generated_individual, ind_id)
+                    # self.file_output_manager.save_fitness_result(generated_individual, ind_id)
                     self.file_output_manager.save_vio_features(generated_individual, scenario_list)
                     self.file_output_manager.save_option_tuning_file(generated_individual, ind_id, option_tuning_item,
                                                                      range_change_str)

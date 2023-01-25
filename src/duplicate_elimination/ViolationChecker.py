@@ -72,7 +72,7 @@ def confirm_determinism(scenario, containers, rerun_times):
     all_emerged_results = []
 
     for temp_scenario in rerun_scenario_list:
-        violation_results = scenario.measure_violations()
+        violation_results = temp_scenario.measure_violations()
         violations_emerged_results = check_emerged_violations(violation_results, temp_scenario.original_violation_results)
 
         for emerged_violation in violations_emerged_results:

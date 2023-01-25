@@ -43,8 +43,12 @@ CONFIG_FILE_NAME = f"{MODULE_NAME}_config.pb.txt"
 # GA SETTINGS
 GENERATION_LIMIT = 10
 INIT_POP_SIZE = 10  # 60 individuals in each generation
-SELECT_NUM_RATIO = [7, 2, 1]  # [5, 3, 2]/[7, 2, 1]
 FITNESS_MODE = "multi_obj"  # emerge/multi_obj
+SELECT_MODE = "nsga2"  # nsga2/ratio
+# FOR RATIO SELECT
+SELECT_NUM_RATIO = [7, 2, 1]  # [5, 3, 2]/[7, 2, 1]
+
+
 
 # DIRECTORIES
 APOLLO_ROOT = '/home/cloudsky/Research/Apollo/apollo_v7_deploy'  # apollo_v7_deploy/apollo_7.0
@@ -62,6 +66,7 @@ MAP_DIR = f'{PROJECT_ROOT}/data/maps/{MAP_NAME}'
 MY_SCRIPTS_DIR = f"{APOLLO_ROOT}/scripts/my_scripts"
 
 # FILE PATH
+FLAGFILE_PATH = f"{APOLLO_ROOT}/modules/common/data/global_flagfile.txt"
 MANUAL_ADC_ROUTE_PATH = f"{PROJECT_ROOT}/data/analysis/{AV_TESTING_APPROACH}/adc_route.csv"
 DEFAULT_CONFIG_FILE_PATH = f"{PROJECT_ROOT}/data/config_files/{MODULE_NAME}/conf/{CONFIG_FILE_NAME}"
 CURRENT_CONFIG_FILE_PATH = f"{APOLLO_ROOT}/modules/{MODULE_NAME}/conf/{CONFIG_FILE_NAME}"

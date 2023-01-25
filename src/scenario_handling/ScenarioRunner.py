@@ -13,7 +13,6 @@ def run_scenarios_by_division(scenario_list, containers):
             container.stop_sim_control_standalone()
             container.start_sim_control_standalone()
             container.message_handler.send_initial_localization(scenario)
-
         time.sleep(0.5)
         # print("start running")
         for scenario, container in zip(sub_scenario_list, containers):
@@ -23,9 +22,11 @@ def run_scenarios_by_division(scenario_list, containers):
         for container in containers:
             stop_running(container)
             container.kill_modules()
+        # time.sleep(2)
+        # for container in containers:
+        #     container.kill_modules()
         # print("stopped")
         time.sleep(2)
-
     time.sleep(1)
 
 

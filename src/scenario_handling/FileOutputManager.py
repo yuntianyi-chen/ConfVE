@@ -12,7 +12,7 @@ class FileOutputManager:
 
     def __init__(self):
         self.time_str = str(date.today())
-        self.optimal_fitness = 0
+        # self.optimal_fitness = 0
         self.file_init()
 
         self.violation_type_count_dict = {}
@@ -25,7 +25,7 @@ class FileOutputManager:
             os.makedirs(base_dir)
 
         self.violation_save_file_path = f"{base_dir}/violation_results.txt"
-        self.ind_fitness_save_file_path = f"{base_dir}/ind_fitness.txt"
+        # self.ind_fitness_save_file_path = f"{base_dir}/ind_fitness.txt"
         self.option_tuning_file_path = f"{base_dir}/option_tuning.txt"
         self.range_analysis_file_path = f"{base_dir}/range_analysis.txt"
         self.record_mapping_file_path = f"{base_dir}/record_mapping.txt"
@@ -40,8 +40,8 @@ class FileOutputManager:
 
         with open(self.violation_save_file_path, "w") as f:
             pass
-        with open(self.ind_fitness_save_file_path, "w") as f:
-            pass
+        # with open(self.ind_fitness_save_file_path, "w") as f:
+        #     pass
         with open(self.option_tuning_file_path, "w") as f:
             pass
         with open(self.range_analysis_file_path, "w") as f:
@@ -124,13 +124,13 @@ class FileOutputManager:
         shutil.copy(f"{APOLLO_RECORDS_DIR}/{record_name}.00000",
                     f"{self.backup_record_file_save_path}/{record_name}.00000")
 
-    def save_fitness_result(self, generated_individual, ind_id):
-        with open(self.ind_fitness_save_file_path, "a") as f:
-            f.write(f"{ind_id}\n")
-            f.write(f"  Vio Emerged Num: {len(generated_individual.violations_emerged_results)}\n")
-            f.write(f"  Fitness(mode: {FITNESS_MODE}): {generated_individual.fitness}\n")
-        if generated_individual.fitness > self.optimal_fitness:
-            self.optimal_fitness = generated_individual.fitness
+    # def save_fitness_result(self, generated_individual, ind_id):
+    #     with open(self.ind_fitness_save_file_path, "a") as f:
+    #         f.write(f"{ind_id}\n")
+    #         f.write(f"  Vio Emerged Num: {len(generated_individual.violations_emerged_results)}\n")
+    #         f.write(f"  Fitness(mode: {FITNESS_MODE}): {generated_individual.fitness}\n")
+    #     if generated_individual.fitness > self.optimal_fitness:
+    #         self.optimal_fitness = generated_individual.fitness
 
     def print_violation_results(self, generated_individual):
         print(f" Vio Total Results: {[len(item) for item in generated_individual.violation_results_list]}")

@@ -1,7 +1,8 @@
 import random
 from copy import deepcopy
-from config import SELECT_NUM_RATIO
+from config import SELECT_NUM_RATIO, SELECT_MODE, INIT_POP_SIZE
 from optimization_algorithms.genetic_algorithm.IndividualWithFitness import IndividualWithFitness
+from optimization_algorithms.genetic_algorithm.nsga2 import sort_nondominated, crowding_dist
 
 
 def generate_individuals(config_file_obj, population_size):
@@ -17,13 +18,34 @@ def generate_individuals(config_file_obj, population_size):
 
 
 def select(individual_list, config_file_obj):
-    random.shuffle(individual_list)
-    individual_list.sort(reverse=True, key=lambda x: x.fitness)
+    if SELECT_MODE == "nsga2":
+        fitness_list = [individual.fitness for individual in individual_list]
+        fronts_index_list = sort_nondominated(fitness_list)
+        distances_list = crowding_dist(fitness_list)
 
-    filtered_individual_list = [item for item in individual_list if item.allow_selection]
-    # select x with the least fitness, y randomly from the remaining, z new generated
-    select_num_ratio = SELECT_NUM_RATIO
-    new_individual_list = get_unduplicated(filtered_individual_list, select_num_ratio, config_file_obj)
+        select_counter = 0
+        selected_index_list = []
+        for sub_fronts_list in fronts_index_list:
+            if select_counter + len(sub_fronts_list) < INIT_POP_SIZE:
+                selected_index_list += sub_fronts_list
+                select_counter += len(sub_fronts_list)
+            else:
+                sub_indexed_distances = [(index, distances_list[index]) for index in sub_fronts_list]
+                sub_indexed_distances.sort(reverse=True, key=lambda x: x[1])
+                sub_select_num = INIT_POP_SIZE - select_counter
+                for index, distance in sub_indexed_distances[:sub_select_num]:
+                    selected_index_list.append(index)
+                break
+
+        new_individual_list = [individual_list[index] for index in selected_index_list]
+    else:
+        random.shuffle(individual_list)
+        individual_list.sort(reverse=True, key=lambda x: x.fitness)
+
+        filtered_individual_list = [item for item in individual_list if item.allow_selection]
+        # select x with the least fitness, y randomly from the remaining, z new generated
+        select_num_ratio = SELECT_NUM_RATIO
+        new_individual_list = get_unduplicated(filtered_individual_list, select_num_ratio, config_file_obj)
     return new_individual_list
 
 

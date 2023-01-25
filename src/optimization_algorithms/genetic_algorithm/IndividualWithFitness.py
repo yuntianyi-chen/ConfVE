@@ -32,7 +32,7 @@ class IndividualWithFitness:
         if FITNESS_MODE == "emerge":
             self.fitness = emerged_violations_count
         elif FITNESS_MODE == "multi_obj":
-            self.fitness = [emerged_violations_count, emerged_violations_type_count, self.execution_time]
+            self.fitness = (emerged_violations_count, emerged_violations_type_count, self.execution_time)
 
     def update_exec_time(self, total_time):
         self.execution_time = total_time

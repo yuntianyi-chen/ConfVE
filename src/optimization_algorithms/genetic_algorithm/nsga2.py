@@ -1,10 +1,11 @@
 from collections import defaultdict
 
-def CrowdingDist(fitness=None):
+# the larger, the better
+def crowding_dist(fitness=None):
     """
 
     :param fitness: A list of fitness values
-    :return: A list of crowding distances of chrmosomes
+    :return: A list of crowding distances of chromosomes
 
     The crowding-distance computation requires sorting the population according to each objective function value
     in ascending order of magnitude. Thereafter, for each objective function, the boundary solutions (solutions with smallest and largest function values)
@@ -65,7 +66,7 @@ def dominates(obj1, obj2, sign=[1, 1]):
     return indicator
 
 
-def sortNondominated(fitness, k=None, first_front_only=False):
+def sort_nondominated(fitness, k=None, first_front_only=False):
     """Sort the first *k* *individuals* into different nondomination levels
         using the "Fast Nondominated Sorting Approach" proposed by Deb et al.,
         see [Deb2002]_. This algorithm has a time complexity of :math:`O(MN^2)`,
@@ -98,7 +99,7 @@ def sortNondominated(fitness, k=None, first_front_only=False):
     dominated_fits = defaultdict(list)  # Sp (The people you dominate)
 
     # Rank first Pareto front
-    # *fits* is a iterable list of chromosomes. Each has multiple objectives.
+    # *fits* is an iterable list of chromosomes. Each has multiple objectives.
     for i, fit_i in enumerate(fits):
         for fit_j in fits[i + 1:]:
             # Eventhougn equals or empty list, n & Sp won't be affected
