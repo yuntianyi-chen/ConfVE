@@ -48,7 +48,10 @@ class UnsafeLaneChangeOracle(OracleInterface):
                 # intersection found
                 features = self.get_basic_info_from_localization(message)
                 features['boundary_id'] = self.boundary_ids.index(bid)
-                self.__data.append((True, t, bid, features))
+                if features["speed"] > 0:
+                    self.__data.append((True, t, bid, features))
+                else:
+                    self.__data.append((False, t, '', {}))
                 return
             if distance > UnsafeLaneChangeOracle.PRUNE_DISTANCE:
                 pending_removal_boundary_ids.add(bid)
