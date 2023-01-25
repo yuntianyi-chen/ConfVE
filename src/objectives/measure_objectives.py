@@ -24,7 +24,7 @@ def measure_violation_number(scenario):
     results = ra.analyze()
     if len(results) > 0:
         print(f"  Record Path: {scenario.record_path}")
-        print(f"    Violation Results: {results}")
+        print(f"    Violation Results: {[(violation.main_type, violation.key_label) for violation in results]}")
     return results
 
 
@@ -33,7 +33,7 @@ def measure_violation_number_by_path(record_path):
     results = ra.analyze()
     if len(results) > 0:
         print(f"  Record Path: {record_path}")
-        print(f"    Violation Results: {results}")
+        print(f"    Violation Results: {[(violation.main_type, violation.key_label) for violation in results]}")
     return results
 
 

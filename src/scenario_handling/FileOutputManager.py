@@ -71,15 +71,19 @@ class FileOutputManager:
         for file in files:
             os.remove(file)
 
-    def delete_data_core_log(self):
+    def delete_data_core_and_log(self):
         try:
             shutil.rmtree(f"{APOLLO_ROOT}/data/core")
             os.makedirs(f"{APOLLO_ROOT}/data/core")
-
             shutil.rmtree(f"{APOLLO_ROOT}/data/log")
             os.makedirs(f"{APOLLO_ROOT}/data/log")
         except OSError as ose:
             print(ose)
+
+    def delete_temp_files(self):
+        self.delete_simcontrol_log()
+        self.delete_recorder_log()
+        self.delete_data_core_and_log()
 
     def change_permission(self):
         cmd = f'sudo chmod -R a+rwx {APOLLO_ROOT}/data'
@@ -123,15 +127,14 @@ class FileOutputManager:
     def save_fitness_result(self, individual, ind_id):
         with open(self.ind_fitness_save_file_path, "a") as f:
             f.write(f"{ind_id}\n")
-            f.write(f"  Vio Intro: {individual.violation_intro}\n")
-            # f.write(f"  Vio Remov: {individual.violation_remov}\n")
+            f.write(f"  Vio Intro: {individual.violation_emerged}\n")
             f.write(f"  Fitness(mode: {FITNESS_MODE}): {individual.fitness}\n")
         if individual.fitness > self.optimal_fitness:
             self.optimal_fitness = individual.fitness
 
     def print_violation_results(self, generated_individual):
         print(f" Vio Total Results: {[len(item) for item in generated_individual.violation_results_list]}")
-        print(f" Vio Emerged Num: {generated_individual.violation_intro}")
+        print(f" Vio Emerged Num: {generated_individual.violation_emerged}")
         print(f" Vio Emerged Results: {[(k, v.main_type) for k, v in generated_individual.violations_emerged_results]}")
 
     def save_total_violation_results(self, generated_individual, scenario_list):

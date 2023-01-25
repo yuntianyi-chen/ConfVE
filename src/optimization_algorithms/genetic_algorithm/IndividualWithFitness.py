@@ -24,7 +24,7 @@ class IndividualWithFitness:
         self.execution_time = self.accumulated_objectives[2]
 
         if FITNESS_MODE == "emerge":
-            self.fitness = self.violation_intro
+            self.fitness = self.violation_emerged
         else:
             self.fitness = self.violation_number * self.code_coverage * self.execution_time
 
@@ -51,7 +51,7 @@ class IndividualWithFitness:
         self.execution_time = 0
         self.accumulated_objectives = [0, 0, 0]
 
-        self.violation_intro = 0
+        self.violation_emerged = 0
 
         self.violation_results_list = []
 
@@ -64,4 +64,4 @@ class IndividualWithFitness:
         violations_emerged_results_with_sid = [(scenario.record_id, v) for v in violations_emerged_results]
         self.violations_emerged_results_list.append(violations_emerged_results_with_sid)
         self.violations_emerged_results += violations_emerged_results_with_sid
-        self.violation_intro += len(violations_emerged_results_with_sid)
+        self.violation_emerged += len(violations_emerged_results_with_sid)

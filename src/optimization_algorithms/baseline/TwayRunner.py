@@ -1,9 +1,9 @@
 import time
 from config import T_STRENGTH_VALUE, TIME_THRESHOLD
 from optimization_algorithms.TestRunner import TestRunner
+from scenario_handling.create_scenarios import create_scenarios
 from optimization_algorithms.baseline.TwiseTuner import TwiseTuner
 from optimization_algorithms.genetic_algorithm.ga import generate_individuals
-from scenario_handling.create_scenarios import create_scenarios
 from scenario_handling.run_scenarios import run_scenarios, check_default_running
 
 
@@ -14,6 +14,7 @@ class TwayRunner(TestRunner):
         self.tway_runner()
 
     def tway_runner(self):
+        # print("Start T-way")
 
         individual_num = 0
         while self.runner_time < TIME_THRESHOLD * 3600:
@@ -21,6 +22,8 @@ class TwayRunner(TestRunner):
 
             default_individual = generate_individuals(self.config_file_obj, population_size=1)[0]
             generated_individual = self.twise_tuner.tune_individual(default_individual)
+
+            self.file_output_manager.delete_temp_files()
 
             ind_id = f"Config_{individual_num}"
             print(ind_id)
@@ -42,7 +45,6 @@ class TwayRunner(TestRunner):
             self.file_output_manager.handle_scenario_record(scenario_list)
 
             if generated_individual.fitness > 0:
-
                 if generated_individual.option_tuning_tracking_list:
                     option_tuning_item = generated_individual.option_tuning_tracking_list[-1]
                 else:
@@ -51,15 +53,8 @@ class TwayRunner(TestRunner):
                 range_change_str = self.range_analyzer.range_analyze(option_tuning_item, self.config_file_obj)
                 self.file_output_manager.save_config_file(ind_id)
                 self.file_output_manager.save_fitness_result(generated_individual, ind_id)
-
                 self.file_output_manager.save_vio_features(generated_individual, scenario_list)
-
-                self.file_output_manager.save_option_tuning_file(
-                    generated_individual,
-                    ind_id,
-                    option_tuning_item,
-                    range_change_str
-                )
+                self.file_output_manager.save_option_tuning_file(generated_individual,ind_id,option_tuning_item,range_change_str)
                 self.file_output_manager.save_count_dict_file()
 
                 individual_num += 1
@@ -70,6 +65,5 @@ class TwayRunner(TestRunner):
                                       self.containers)
             self.scenario_rid_emergence_list = []
 
-            self.runner_time = time.time() - self.runner_time
-
+        self.runner_time = time.time() - self.runner_time
         print("Time cost: " + str(self.runner_time / 3600) + " hours")

@@ -1,11 +1,11 @@
 import os
-import signal
 import time
 import docker
+import signal
 import subprocess
 from environment.Dreamview import Dreamview
-from scenario_handling.MessageHandler import MessageHandler
 from tools.bridge.CyberBridge import CyberBridge, Topics
+from scenario_handling.MessageHandler import MessageHandler
 
 
 class Container:
@@ -190,10 +190,10 @@ class Container:
 
     def cyber_env_init(self):
         # print("Killing modules...")
-        # self.kill_modules()
+        self.kill_modules()
 
         # print("Killing Dreamview...")
-        # self.close_subprocess()
+        self.close_subprocess()
 
         # print("Starting Dreamview...")
         self.start_dreamview()

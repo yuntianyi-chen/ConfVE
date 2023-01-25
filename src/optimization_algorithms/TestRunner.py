@@ -1,8 +1,8 @@
 import os
 import time
 from config import INITIAL_SCENARIO_RECORD_DIR, DEFAULT_CONFIG_FILE_PATH
+from config_file_handler.RangeAnalyzer import RangeAnalyzer
 from config_file_handler.parser_apollo import config_file_parser2obj
-from range_analysis.RangeAnalyzer import RangeAnalyzer
 from scenario_handling.FileOutputManager import FileOutputManager
 from scenario_handling.MessageGenerator import MessageGenerator
 from scenario_handling.run_scenarios import check_default_running

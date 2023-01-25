@@ -63,10 +63,12 @@ def crossover(individual_list):
 
 def mutate(individual_list, config_file_obj, range_analyzer):
     for individual_obj in individual_list:
-        succ_tuning = False
-        while (not succ_tuning):
-            position = random.randint(0, len(individual_list[0].value_list) - 1)
-            succ_tuning = tune_one_value(individual_obj, config_file_obj, range_analyzer, position)
+        position = random.randint(0, len(individual_list[0].value_list) - 1)
+        range_analyzer.tune_one_value(individual_obj, config_file_obj, position)
+        # succ_tuning = False
+        # while (not succ_tuning):
+        #     position = random.randint(0, len(individual_list[0].value_list) - 1)
+        #     succ_tuning = range_analyzer.tune_one_value(individual_obj, config_file_obj, position)
     return individual_list
 
 

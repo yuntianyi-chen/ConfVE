@@ -2,6 +2,7 @@ import re
 from copy import deepcopy
 from config_file_handler.ConfigFileObj import ConfigFileObj
 from config_file_handler.OptionObj import OptionObj
+from range_analysis.RangeAnalyzer import analyze_type
 
 
 def config_file_parser2obj(config_file_path):
@@ -192,19 +193,6 @@ def parser2tuple(config_file_path):
     return raw_option_stack, option_tuple_list, option_count
 
 
-def analyze_type(value):
-    if value == 'false' or value == 'true':
-        value_type = "boolean"
-    elif re.fullmatch(r"-?\d+(\.\d+)", value):
-        value_type = "float"
-    elif re.fullmatch(r"-?\d+(\d*)", value):
-        value_type = "integer"
-    elif re.fullmatch(r"-?\d+((\.\d+)|(\d*))e\d+(\d*)", value):
-        value_type = "e_number"
-    elif re.fullmatch(r"\".*\"", value):
-        value_type = "string"
-    else:
-        value_type = "enum"
-    return value_type
+
 
 

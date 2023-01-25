@@ -14,7 +14,7 @@ AV_TESTING_APPROACH = "DoppelTest"  # scenoRITA/DoppelTest/AV-Fuzzer/ADFuzz/Rand
 MAP_NAME = "borregas_ave"  # borregas_ave/sunnyvale_loop/San_Francisco
 
 CONTAINER_NUM = 10  # 5/10
-SIMILARITY_THRESHOLD = 0.6
+SIMILARITY_THRESHOLD = 0.5
 
 MODULE_ORACLES = ["RoutingFailure", "PredictionFailure", "PlanningFailure", "CarNeverMoved", "SimControlFailure",
                   "PlanningGeneratesGarbage"]
