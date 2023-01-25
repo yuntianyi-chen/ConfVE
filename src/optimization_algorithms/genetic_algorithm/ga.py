@@ -42,10 +42,9 @@ def select(individual_list, config_file_obj):
         random.shuffle(individual_list)
         individual_list.sort(reverse=True, key=lambda x: x.fitness)
 
-        filtered_individual_list = [item for item in individual_list if item.allow_selection]
         # select x with the least fitness, y randomly from the remaining, z new generated
         select_num_ratio = SELECT_NUM_RATIO
-        new_individual_list = get_unduplicated(filtered_individual_list, select_num_ratio, config_file_obj)
+        new_individual_list = get_unduplicated(individual_list, select_num_ratio, config_file_obj)
     return new_individual_list
 
 

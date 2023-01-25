@@ -73,7 +73,8 @@ class GARunner(TestRunner):
 
                 individual_num += 1
 
-            individual_list = select(individual_list_after_mutate, self.config_file_obj)
+            filtered_individual_list = [item for item in individual_list_after_mutate if item.allow_selection]
+            individual_list = select(filtered_individual_list, self.config_file_obj)
 
             # output range analysis every generation
             self.file_output_manager.update_range_analysis_file(self.config_file_obj, self.range_analyzer,
