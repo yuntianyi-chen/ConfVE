@@ -3,6 +3,7 @@ from objectives.violation_number.oracles.OracleManager import OracleManager
 from objectives.violation_number.oracles.impl.CollisionOracle import CollisionOracle
 from objectives.violation_number.oracles.impl.ComfortOracle import ComfortOracle
 from objectives.violation_number.oracles.impl.EStopOracle import EStopOracle
+from objectives.violation_number.oracles.impl.ModuleDelayOracle import ModuleDelayOracle
 from objectives.violation_number.oracles.impl.ModuleOracle import ModuleOracle
 from objectives.violation_number.oracles.impl.SpeedingOracle import SpeedingOracle
 from objectives.violation_number.oracles.impl.StopSignOracle import StopSignOracle
@@ -28,6 +29,7 @@ class RecordAnalyzer:
             StopSignOracle(),
             SpeedingOracle(),
             TrafficSignalOracle(),
+            ModuleDelayOracle(),
             UnsafeLaneChangeOracle(),
             # UUStopOracle(),
             JunctionLaneChangeOracle(),

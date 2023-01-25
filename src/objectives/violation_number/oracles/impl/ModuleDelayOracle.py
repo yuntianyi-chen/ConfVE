@@ -1,9 +1,8 @@
-from objectives.violation_number.oracles.OracleInterface import OracleInterface
 from typing import List
-
-from objectives.violation_number.oracles.Violation import Violation
-from tools.bridge.CyberBridge import Topics
 from datetime import datetime
+from objectives.violation_number.oracles.Violation import Violation
+from objectives.violation_number.oracles.OracleInterface import OracleInterface
+
 
 class ModuleDelayOracle(OracleInterface):
     """
@@ -30,6 +29,9 @@ class ModuleDelayOracle(OracleInterface):
         self.violations = list()
 
     def get_result(self):
+        if self.last_localization is None:
+            return list()
+
         for t, m in zip(self.get_interested_topics(), self.modules):
             self.check_module_delay(m)
         return self.violations
