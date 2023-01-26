@@ -68,7 +68,6 @@ class JunctionLaneChangeOracle(OracleInterface):
                 features,
                 str(features['junction_id'])
             ))
-            self.violation = f'Lane Change at Junction {self.current_junction()}'
 
     def on_localization(self, message):
         self.last_localization = message
