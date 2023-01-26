@@ -35,3 +35,9 @@ class OracleManager:
                 filtered_result.append(violation)
 
         return filtered_result
+
+    def get_counts_wrt_oracle(self) -> dict:
+        result = dict()
+        for oracle in self.__registered_oracles:
+            result[oracle.__class__.__name__] = len(oracle.get_result())
+        return result
