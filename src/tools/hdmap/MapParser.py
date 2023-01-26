@@ -1,5 +1,7 @@
 from collections import defaultdict
 from typing import List, Set, Tuple
+
+from config import HD_MAP_PATH
 from tools.hdmap import load_hd_map
 from modules.map.proto.map_pb2 import Map
 import networkx as nx
@@ -210,12 +212,36 @@ class MapParser:
         ip = lst.interpolate(s)
 
         segments = list(map(LineString, zip(lst.coords[:-1], lst.coords[1:])))
-        segments.sort(key=lambda x: ip.distance(x))
+        segments.sort(key=lambda _x: ip.distance(_x))
         line = segments[0]
         x1, x2 = line.xy[0]
         y1, y2 = line.xy[1]
 
-        return (PointENU(x=ip.x, y=ip.y), math.atan2(y2-y1, x2-x1))
+        return PointENU(x=ip.x, y=ip.y), math.atan2(y2 - y1, x2 - x1)
+
+    HEADING_CACHE = list()
+
+    def get_heading_for_coordinate(self, x: float, y: float):
+        for _x, _y, _h in self.HEADING_CACHE:
+            if _x == x and _y == y:
+                return _h
+
+        # calculate
+        point = Point([x, y])
+        for lane_id in self.get_lanes():
+            lst = self.get_lane_central_curve(lane_id)
+            if point.distance(lst) <= 0.15:
+                segments = list((map(LineString, zip(lst.coords[:-1], lst.coords[1:]))))
+                segments.sort(key=lambda _x: point.distance(_x))
+                line = segments[0]
+                x1, x2 = line.xy[0]
+                y1, y2 = line.xy[1]
+                heading = math.atan2(y2 - y1, x2 - x1)
+                self.HEADING_CACHE.append((x, y, heading))
+                if len(self.HEADING_CACHE) > 20:
+                    self.HEADING_CACHE.pop(0)
+                return heading
+        raise Exception(f'Lane not found for coordinate ({x}, {y}).')
 
     def get_junctions(self) -> List[str]:
         return list(self.__junctions.keys())
