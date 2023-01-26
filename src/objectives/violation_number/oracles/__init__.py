@@ -29,7 +29,7 @@ class RecordAnalyzer:
             StopSignOracle(),
             SpeedingOracle(),
             TrafficSignalOracle(),
-            ModuleDelayOracle(),
+            # ModuleDelayOracle(),
             UnsafeLaneChangeOracle(),
             # UUStopOracle(),
             JunctionLaneChangeOracle(),

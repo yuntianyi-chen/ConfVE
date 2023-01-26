@@ -16,14 +16,15 @@ def run_scenarios_by_division(scenario_list, containers):
         # print("start running")
         for scenario, container in zip(sub_scenario_list, containers):
             start_running(scenario, container)
-        time.sleep(MAX_RECORD_TIME)
+        time.sleep(MAX_RECORD_TIME-3)
         # print("stop running")
         for container in containers:
             stop_running(container)
-        for container in containers:
-            stop_perception(container)
+        time.sleep(3)
         for container in containers:
             container.kill_modules()
+        for container in containers:
+            stop_perception(container)
         time.sleep(1)
     time.sleep(1)
 
