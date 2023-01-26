@@ -2,9 +2,13 @@ from typing import List, Optional, Tuple
 from objectives.violation_number.oracles.OracleInterface import OracleInterface
 from modules.localization.proto.localization_pb2 import LocalizationEstimate
 from modules.perception.proto.perception_obstacle_pb2 import PerceptionObstacles
-from shapely.geometry import Polygon
+from shapely.geometry import Polygon, LineString
 from objectives.violation_number.oracles.Violation import Violation
 from tools.utils import generate_adc_polygon, calculate_velocity
+
+
+def is_adc_responsible(front_edge: LineString, obs_polygon: Polygon) -> bool:
+    return front_edge.distance(obs_polygon) == 0.0
 
 
 class CollisionOracle(OracleInterface):
@@ -53,6 +57,15 @@ class CollisionOracle(OracleInterface):
         adc_pose = self.last_localization.pose
 
         adc_polygon_pts = generate_adc_polygon(adc_pose.position, adc_pose.heading)
+
+        # front_side = [adc_polygon_pts[0], adc_polygon_pts[3]]
+        # rear_side = [adc_polygon_pts[1], adc_polygon_pts[2]]
+        # right_side = [adc_polygon_pts[3], adc_polygon_pts[2]]
+        # left_side = [adc_polygon_pts[0], adc_polygon_pts[1]]
+
+        adc_front_line_string = LineString(
+            [[x.x, x.y] for x in (adc_polygon_pts[0], adc_polygon_pts[3])])
+
         adc_polygon = Polygon([[x.x, x.y] for x in adc_polygon_pts])
 
         for obs in self.last_perception.perception_obstacle:
@@ -62,6 +75,10 @@ class CollisionOracle(OracleInterface):
                 continue
             obs_polygon = Polygon([[x.x, x.y] for x in obs.polygon_point])
             if adc_polygon.distance(obs_polygon) == 0:
+                self.excluded_obs.add(obs_id)
+
+                if not is_adc_responsible(adc_front_line_string, obs_polygon):
+                    continue
                 # collision occurred
                 features = self.get_basic_info_from_localization(self.last_localization)
                 features['obs_id'] = obs.id
@@ -71,7 +88,6 @@ class CollisionOracle(OracleInterface):
                 features['obs_speed'] = calculate_velocity(obs.velocity)
                 features['obs_type'] = obs.type
 
-                self.excluded_obs.add(obs_id)
                 self.violations.append(
                     Violation(
                         'CollisionOracle',
