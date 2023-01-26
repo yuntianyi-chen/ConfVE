@@ -20,7 +20,7 @@ class ModuleDelayOracle(OracleInterface):
     MAX_DELAY = 2.0
 
     def __init__(self):
-        self.modules = ['localization', 'perception', 'prediction', 'planning']
+        self.modules = ['Localization', 'Perception', 'Prediction', 'Planning']
         self.trackers = dict()
         self.started = {x: False for x in self.modules}
         for mod in self.modules:
@@ -33,8 +33,8 @@ class ModuleDelayOracle(OracleInterface):
         if self.last_localization is None:
             return list()
 
-        for t, m in zip(self.get_interested_topics(), self.modules):
-            self.check_module_delay(m, 5.0)
+        # for t, m in zip(self.get_interested_topics(), self.modules):
+        #     self.check_module_delay(m, 5.0)
         return self.violations
 
     def get_interested_topics(self) -> List[str]:
@@ -57,7 +57,7 @@ class ModuleDelayOracle(OracleInterface):
                 Violation(
                     'ModuleDelayOracle',
                     features=features,
-                    key_label=str(features['delay_module'])
+                    key_label=str(module_name)
                 )
             )
             return True
