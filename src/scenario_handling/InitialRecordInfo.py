@@ -1,9 +1,9 @@
 from cyber_record.record import Record
-from config import AV_TESTING_APPROACH
 from objectives.violation_number.oracles import RecordAnalyzer
 from modules.perception.proto.perception_obstacle_pb2 import PerceptionObstacle
 from modules.common.proto.geometry_pb2 import Point3D, PointENU
 from modules.perception.proto.traffic_light_detection_pb2 import TrafficLight
+from tools.hdmap.MapParser import MapParser
 
 
 class InitialRecordInfo:
@@ -63,6 +63,8 @@ class InitialRecordInfo:
                 self.coord = PointENU(x=waypoint.pose.x, y=waypoint.pose.y)
                 if waypoint.heading:
                     self.heading = waypoint.heading
+                else:
+                    self.heading = MapParser.get_instance().get_heading_for_coordinate(waypoint.pose.x, waypoint.pose.y)
             elif topic == "/apollo/perception/traffic_light":
                 traffic_lights = list(message.traffic_light)
                 # if traffic_lights:
