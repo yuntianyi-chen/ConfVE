@@ -106,19 +106,32 @@ class MessageHandler:
         self.bridge.publish(Topics.RoutingRequest, routing_request_message.SerializeToString())
 
     def send_initial_localization(self, scenario):
-
-        loc = LocalizationEstimate(
-            header=Header(
-                timestamp_sec=time.time(),
-                module_name="MAGGIE",
-                sequence_num=0
-            ),
-            pose=Pose(
-                position=scenario.coord,
-                heading=scenario.heading,
-                linear_velocity=Point3D(x=0, y=0, z=0)
+        if scenario.heading:
+            loc = LocalizationEstimate(
+                header=Header(
+                    timestamp_sec=time.time(),
+                    module_name="MAGGIE",
+                    sequence_num=0
+                ),
+                pose=Pose(
+                    position=scenario.coord,
+                    heading=scenario.heading,
+                    linear_velocity=Point3D(x=0, y=0, z=0)
+                )
             )
-        )
+        else:
+            loc = LocalizationEstimate(
+                header=Header(
+                    timestamp_sec=time.time(),
+                    module_name="MAGGIE",
+                    sequence_num=0
+                ),
+                pose=Pose(
+                    position=scenario.coord,
+                    linear_velocity=Point3D(x=0, y=0, z=0)
+                )
+            )
+
         for i in range(5):
             loc.header.sequence_num = i
             self.bridge.publish(

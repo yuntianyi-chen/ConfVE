@@ -10,60 +10,64 @@ Global configurations for the framework
 # IMPORTANT CONFIGURATION
 OBS_PERCEPTION_FREQUENCY = 25  # 10/25
 MAX_RECORD_TIME = 30  # 10/30
-AV_TESTING_APPROACH = "DoppelTest"  # scenoRITA/DoppelTest/AV-Fuzzer/ADFuzz/Random
-MAP_NAME = "borregas_ave"  # borregas_ave/sunnyvale_loop/San_Francisco
-
+AV_TESTING_APPROACH = "DoppelTest"  # scenoRITA/DoppelTest/AV-Fuzzer/ADFuzz
+MAP_NAME = "borregas_ave"  # borregas_ave/sunnyvale_loop/San_Francisco/san_mateo
 CONTAINER_NUM = 5  # 5/10
-SIMILARITY_THRESHOLD = 0.5
-
-MODULE_ORACLES = ["RoutingFailure", "PredictionFailure", "PlanningFailure", "CarNeverMoved", "SimControlFailure",
-                  "PlanningGeneratesGarbage"]
-
-MAX_INITIAL_SCENARIOS = 10  # 10
+OPT_MODE = "GA"  # GA/DRL/Random/T-way
 
 # t-way testing
 T_STRENGTH_VALUE = 2  # pairwise
-TIME_THRESHOLD = 20  # hours
+TIME_HOUR_THRESHOLD = 10  # hours
 
-# Rerun 5 times if occurred >= 3 times, confirmed
-DETERMINISM_RERUN_TIMES = 5  # 5/10
-DEFAULT_DETERMINISM_RERUN_TIMES = 10  # 10
-DETERMINISM_CONFIRMED_TIMES = 3  # 3
+
+#############################################
+
+
+# TESTING SETTINGS
+MODULE_NAME = "planning"
+DEFAULT_CONFIG_FILE = False
+CONFIG_FILE_NAME = f"{MODULE_NAME}_config.pb.txt"
+SIMILARITY_THRESHOLD = 0.5
+MAX_INITIAL_SCENARIOS = 10  # 10
 
 # APOLLO SETTINGS
 TRAFFIC_LIGHT_FREQUENCY = 10
 TRAFFIC_LIGHT_MODE = "read"  # read/random/off
 
-# TESTING SETTINGS
-OPT_MODE = "GA"  # GA/DRL/Random/MIT/T-way
-MODULE_NAME = "planning"
-DEFAULT_CONFIG_FILE = False
-CONFIG_FILE_NAME = f"{MODULE_NAME}_config.pb.txt"
-
 # GA SETTINGS
-GENERATION_LIMIT = 10
+GENERATION_LIMIT = 50  # 10/20/50
 INIT_POP_SIZE = 10  # 60 individuals in each generation
 FITNESS_MODE = "multi_obj"  # emerge/multi_obj
 SELECT_MODE = "nsga2"  # nsga2/ratio
 # FOR RATIO SELECT
 SELECT_NUM_RATIO = [7, 2, 1]  # [5, 3, 2]/[7, 2, 1]
 
+# Rerun 5 times if occurred >= 3 times, confirmed
+DETERMINISM_RERUN_TIMES = 5  # 5/10
+DEFAULT_DETERMINISM_RERUN_TIMES = 10  # 10
+DETERMINISM_CONFIRMED_TIMES = 3  # 3
+
+MODULE_ORACLES = ["RoutingFailure", "PredictionFailure", "PlanningFailure", "CarNeverMoved", "SimControlFailure",
+                  "PlanningGeneratesGarbage"]
 
 
 # DIRECTORIES
-APOLLO_ROOT = '/home/cloudsky/Research/Apollo/apollo_v7_deploy'  # apollo_v7_deploy/apollo_7.0
-PROJECT_ROOT = '/home/cloudsky/Research/Apollo/AV_Config_Testing'
+DIR_ROOT = '/home/cloudsky/Research/Apollo'
+APOLLO_ROOT = f'{DIR_ROOT}/apollo_v7_deploy'  # apollo_v7_deploy/apollo_7.0
+PROJECT_ROOT = f'{DIR_ROOT}/AV_Config_Testing'
+
 RECORDS_DIR = f'{PROJECT_ROOT}/data/records'
 FEATURES_CSV_DIR = f'{PROJECT_ROOT}/data/violation_features'
 APOLLO_RECORDS_DIR = f'{APOLLO_ROOT}/records'
 OBS_DIR = f"{APOLLO_ROOT}/modules/tools/perception/obstacles/{MAP_NAME}/"
-BACKUP_SAVE_DIR = f"/home/cloudsky/Research/Apollo/Backup/{AV_TESTING_APPROACH}"
+BACKUP_SAVE_DIR = f'{DIR_ROOT}/Backup/{AV_TESTING_APPROACH}'
 BACKUP_CONFIG_SAVE_DIR = f"{BACKUP_SAVE_DIR}/config_files/{MAP_NAME}"
 BACKUP_RECORD_SAVE_DIR = f"{BACKUP_SAVE_DIR}/records/{MAP_NAME}"
 INITIAL_SCENARIO_RECORD_DIR = f"{BACKUP_RECORD_SAVE_DIR}/initial"
 DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR = f"{BACKUP_RECORD_SAVE_DIR}/initial_default_rerun"
 MAP_DIR = f'{PROJECT_ROOT}/data/maps/{MAP_NAME}'
 MY_SCRIPTS_DIR = f"{APOLLO_ROOT}/scripts/my_scripts"
+APOLLO_MAP_DATA_DIR = f"{APOLLO_ROOT}/modules/map/data"
 
 # FILE PATH
 FLAGFILE_PATH = f"{APOLLO_ROOT}/modules/common/data/global_flagfile.txt"
@@ -87,3 +91,5 @@ APOLLO_VEHICLE_HEIGHT = 1.48
 APOLLO_VEHICLE_back_edge_to_center = 1.043
 
 OBS_TYPE_DICT = {3: "PEDESTRIAN", 4: "BICYCLE", 5: "VEHICLE"}
+
+

@@ -16,7 +16,6 @@ def run_default_scenarios(scenario_list, containers):
             _, all_emerged_results = confirm_determinism(scenario, containers,
                                                          rerun_times=DEFAULT_DETERMINISM_RERUN_TIMES)
             contain_module_violation = check_module_failure(all_emerged_results, oracles=MODULE_ORACLES)
-
         print(f"Default Violations:{all_emerged_results}")
         print("-------------------------------------------------")
         default_violation_results_list.append((scenario.record_id, all_emerged_results))
