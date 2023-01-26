@@ -1,5 +1,6 @@
 import os
 import shutil
+import warnings
 from config import OPT_MODE, APOLLO_ROOT, CONTAINER_NUM, MY_SCRIPTS_DIR, PROJECT_ROOT, FLAGFILE_PATH, MAP_NAME, \
     DEFAULT_CONFIG_FILE_PATH, CURRENT_CONFIG_FILE_PATH, APOLLO_MAP_DATA_DIR, MAP_DIR
 from environment.Container import Container
@@ -7,6 +8,8 @@ from environment.MapLoader import MapLoader
 from optimization_algorithms.baseline.TwayRunner import TwayRunner
 from optimization_algorithms.genetic_algorithm.GARunner import GARunner
 
+
+warnings.filterwarnings('ignore')
 
 def move_default_config_file():
     if os.path.exists(CURRENT_CONFIG_FILE_PATH):

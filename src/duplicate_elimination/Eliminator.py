@@ -1,4 +1,5 @@
 import os
+import warnings
 import numpy as np
 import pandas as pd
 from kneed import KneeLocator
@@ -7,6 +8,8 @@ from sklearn.cluster import DBSCAN
 from sklearn.neighbors import NearestNeighbors
 from sklearn.preprocessing import StandardScaler
 from config import FEATURES_CSV_DIR
+
+warnings.filterwarnings('ignore')
 
 
 class Eliminator:
@@ -63,6 +66,9 @@ if __name__ == "__main__":
         csv_file_path = os.path.join(target_dir, csv_file_name)
         pd_data = pd.read_csv(csv_file_path, encoding='utf-8')
         if len(pd_data) > 5:
-            output_file_path = f"{output_dir}/clustered_{csv_file_name}"
-            output_data = eliminator.cluster(pd_data, csv_file_name)
-            output_data.to_csv(output_file_path, index=False)
+            try:
+                output_file_path = f"{output_dir}/clustered_{csv_file_name}"
+                output_data = eliminator.cluster(pd_data, csv_file_name)
+                output_data.to_csv(output_file_path, index=False)
+            except:
+                print(f"Cannot eliminate {csv_file_name}")

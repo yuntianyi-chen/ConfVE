@@ -59,10 +59,10 @@ def confirm_determinism(scenario, containers, rerun_times):
         temp_scenario = deepcopy(scenario)
         temp_record_name = f"{temp_scenario.record_name}_rerun_{i}"
         temp_scenario.update_record_name_and_path(temp_record_name)
-        if temp_record_name not in scenario.confirmed_record_name_list:
-            scenario.confirmed_record_name_list.append(temp_record_name)
+        # if temp_record_name not in scenario.confirmed_record_name_list:
+        #     scenario.confirmed_record_name_list.append(temp_record_name)
         rerun_scenario_list.append(temp_scenario)
-        temp_scenario.delete_record()
+        # temp_scenario.delete_record()
 
     print(f"------------Rerunning {scenario.record_name}-------------")
 
@@ -84,6 +84,9 @@ def confirm_determinism(scenario, containers, rerun_times):
         for violation in violation_results:
             if violation not in all_emerged_results:
                 all_emerged_results.append(violation)
+
+        temp_scenario.delete_record()
+
 
     determined_emerged_results = [v[0] for v in accumulated_emerged_results_count_dict.values() if
                                   len(v) >= DETERMINISM_CONFIRMED_TIMES]

@@ -16,7 +16,7 @@ def run_default_scenarios(scenario_list, containers):
             _, all_emerged_results = confirm_determinism(scenario, containers,
                                                          rerun_times=DEFAULT_DETERMINISM_RERUN_TIMES)
             contain_module_violation = check_module_failure(all_emerged_results, oracles=MODULE_ORACLES)
-        print(f"Default Violations:{all_emerged_results}")
+        # print(f"Default Violations:{all_emerged_results}")
         print("-------------------------------------------------")
         default_violation_results_list.append((scenario.record_id, all_emerged_results))
     return default_violation_results_list
@@ -86,7 +86,7 @@ def check_default_running(message_generator, config_file_obj, file_output_manage
 
         default_violation_results_list = run_default_scenarios(scenario_list, containers)
 
-        file_output_manager.save_default_scenarios()
+        # file_output_manager.save_default_scenarios()
         message_generator.update_rerun_status()
 
         message_generator.update_selected_records_violatioin_directly(default_violation_results_list)

@@ -68,7 +68,7 @@ class ComfortOracle(OracleInterface):
 
         if accel > ComfortOracle.MAX_ACCL * (1 + ComfortOracle.TOLERANCE):
             self.trace.append((1, t, features))
-        elif accel < ComfortOracle.MAX_DCCL:
+        elif accel < ComfortOracle.MAX_DCCL * (1 + ComfortOracle.TOLERANCE):
             self.trace.append((-1, t, features))
         else:
             self.trace.append((0, t, None))

@@ -10,7 +10,7 @@ class Scenario:
         self.has_emerged_violations = False
         self.has_emerged_module_violations = False
         self.update_record_name_and_path(record_name)
-        self.confirmed_record_name_list = []
+        # self.confirmed_record_name_list = []
 
     def update_record_name_and_path(self, new_record_name):
         self.record_name = new_record_name
