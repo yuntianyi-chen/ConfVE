@@ -2,17 +2,25 @@ from os import listdir
 from config import INITIAL_SCENARIO_RECORD_DIR, BACKUP_RECORD_SAVE_DIR, DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR, \
     PROJECT_ROOT, AV_TESTING_APPROACH
 from environment.MapLoader import MapLoader
+from objectives.violation_number.oracles import RecordAnalyzer
 from scenario_handling.Scenario import Scenario
 from tools.script.pickle_file_handling import dump_default_violation_results_by_pickle
 
+
+def measure_violations(record_path):
+    ra = RecordAnalyzer(record_path)
+    results = ra.analyze()
+    if len(results) > 0:
+        print(f"  Record Path: {record_path}")
+        print(f"    Violation Results: {[(violation.main_type, violation.key_label) for violation in results]}")
+    return results
+
 if __name__ == '__main__':
-    TEST_MODE = "single"
+    TEST_MODE = "multi"
     MapLoader()
-    # record_dir = INITIAL_SCENARIO_RECORD_DIR
+    record_dir = INITIAL_SCENARIO_RECORD_DIR
     # record_dir = DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR
-
-
-    record_dir = f"{BACKUP_RECORD_SAVE_DIR}/2023-01-22(1st)"
+    # record_dir = f"{BACKUP_RECORD_SAVE_DIR}/2023-01-22(1st)"
 
     file_list = listdir(record_dir)
     file_list.sort()
@@ -22,13 +30,15 @@ if __name__ == '__main__':
         single_file_name = "Generation_1_Config_5_Scenario_8.00000"
         # single_file_name = "Generation_0_Config_51_Scenario_0.00000"
         if single_file_name in file_list:
-            scenario = Scenario(f"{record_dir}/{single_file_name}", record_id=0)
-            result = scenario.measure_violations()
+            # scenario = Scenario(f"{record_dir}/{single_file_name}", record_id=0)
+            result = measure_violations()
             results.append(result)
     elif TEST_MODE == "multi":
         for i in file_list:
-            scenario = Scenario(f"{record_dir}/{i}", record_id=0)
-            result = scenario.measure_violations()
+            # scenario = Scenario(f"{record_dir}/{i}", record_id=0)
+            # result = scenario.measure_violations()
+            result = measure_violations(f"{record_dir}/{i}")
+
             results.append(result)
     else:
         # time_str = str(date.today())

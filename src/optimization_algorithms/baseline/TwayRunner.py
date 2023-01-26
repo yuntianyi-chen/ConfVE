@@ -1,5 +1,5 @@
 import time
-from config import T_STRENGTH_VALUE, TIME_THRESHOLD
+from config import T_STRENGTH_VALUE, TIME_HOUR_THRESHOLD
 from optimization_algorithms.TestRunner import TestRunner
 from scenario_handling.create_scenarios import create_scenarios
 from optimization_algorithms.baseline.TwiseTuner import TwiseTuner
@@ -17,7 +17,7 @@ class TwayRunner(TestRunner):
         # print("Start T-way")
 
         individual_num = 0
-        while self.runner_time < TIME_THRESHOLD * 3600:
+        while self.runner_time < TIME_HOUR_THRESHOLD * 3600:
             print("-------------------------------------------------")
 
             default_individual = generate_individuals(self.config_file_obj, population_size=1)[0]

@@ -1,5 +1,5 @@
 import time
-from config import GENERATION_LIMIT, INIT_POP_SIZE
+from config import GENERATION_LIMIT, INIT_POP_SIZE, TIME_HOUR_THRESHOLD
 from optimization_algorithms.TestRunner import TestRunner
 from scenario_handling.create_scenarios import create_scenarios
 from scenario_handling.run_scenarios import run_scenarios, check_default_running
@@ -72,6 +72,9 @@ class GARunner(TestRunner):
                     self.file_output_manager.save_count_dict_file()
 
                 individual_num += 1
+
+                if time.time() - self.runner_time >= TIME_HOUR_THRESHOLD * 3600:
+                    return
 
             filtered_individual_list = [item for item in individual_list_after_mutate if item.allow_selection]
             individual_list = select(filtered_individual_list, self.config_file_obj)

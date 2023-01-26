@@ -1,17 +1,11 @@
 import os
 import shutil
 from config import OPT_MODE, APOLLO_ROOT, CONTAINER_NUM, MY_SCRIPTS_DIR, PROJECT_ROOT, FLAGFILE_PATH, MAP_NAME, \
-    DEFAULT_CONFIG_FILE_PATH, CURRENT_CONFIG_FILE_PATH
+    DEFAULT_CONFIG_FILE_PATH, CURRENT_CONFIG_FILE_PATH, APOLLO_MAP_DATA_DIR, MAP_DIR
 from environment.Container import Container
 from environment.MapLoader import MapLoader
+from optimization_algorithms.baseline.TwayRunner import TwayRunner
 from optimization_algorithms.genetic_algorithm.GARunner import GARunner
-
-
-def move_scripts():
-    target_scripts_dir = MY_SCRIPTS_DIR
-    if not os.path.exists(target_scripts_dir):
-        source_scripts_dir = f"{PROJECT_ROOT}/data/scripts"
-        shutil.copytree(source_scripts_dir, target_scripts_dir)
 
 
 def move_default_config_file():
@@ -25,8 +19,16 @@ def change_map_file():
         f.write(f"\n--map_dir=/apollo/modules/map/data/{MAP_NAME}\n")
 
 
+def move_data(source_dir, target_dir):
+    if not os.path.exists(target_dir):
+        shutil.copytree(source_dir, target_dir)
+
+
 if __name__ == '__main__':
-    move_scripts()
+    move_data(MAP_DIR, f"{APOLLO_MAP_DATA_DIR}/{MAP_NAME}")
+    move_data(f"{PROJECT_ROOT}/data/scripts", MY_SCRIPTS_DIR)
+
+    # move_scripts()
     change_map_file()
     move_default_config_file()
 
@@ -43,3 +45,5 @@ if __name__ == '__main__':
 
     if OPT_MODE == "GA":
         GARunner(containers)
+    elif OPT_MODE == "T-way":
+        TwayRunner(containers)

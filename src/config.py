@@ -13,14 +13,14 @@ MAX_RECORD_TIME = 30  # 10/30
 AV_TESTING_APPROACH = "DoppelTest"  # scenoRITA/DoppelTest/AV-Fuzzer/ADFuzz
 MAP_NAME = "borregas_ave"  # borregas_ave/sunnyvale_loop/San_Francisco/san_mateo
 CONTAINER_NUM = 5  # 5/10
-OPT_MODE = "GA"  # GA/DRL/Random/MIT/T-way
+OPT_MODE = "GA"  # GA/DRL/Random/T-way
 
 # t-way testing
 T_STRENGTH_VALUE = 2  # pairwise
-TIME_THRESHOLD = 20  # hours
+TIME_HOUR_THRESHOLD = 10  # hours
 
 
-
+#############################################
 
 
 # TESTING SETTINGS
@@ -35,7 +35,7 @@ TRAFFIC_LIGHT_FREQUENCY = 10
 TRAFFIC_LIGHT_MODE = "read"  # read/random/off
 
 # GA SETTINGS
-GENERATION_LIMIT = 10
+GENERATION_LIMIT = 50  # 10/20/50
 INIT_POP_SIZE = 10  # 60 individuals in each generation
 FITNESS_MODE = "multi_obj"  # emerge/multi_obj
 SELECT_MODE = "nsga2"  # nsga2/ratio
@@ -67,6 +67,7 @@ INITIAL_SCENARIO_RECORD_DIR = f"{BACKUP_RECORD_SAVE_DIR}/initial"
 DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR = f"{BACKUP_RECORD_SAVE_DIR}/initial_default_rerun"
 MAP_DIR = f'{PROJECT_ROOT}/data/maps/{MAP_NAME}'
 MY_SCRIPTS_DIR = f"{APOLLO_ROOT}/scripts/my_scripts"
+APOLLO_MAP_DATA_DIR = f"{APOLLO_ROOT}/modules/map/data"
 
 # FILE PATH
 FLAGFILE_PATH = f"{APOLLO_ROOT}/modules/common/data/global_flagfile.txt"
