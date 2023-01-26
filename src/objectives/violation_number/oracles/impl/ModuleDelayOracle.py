@@ -20,7 +20,7 @@ class ModuleDelayOracle(OracleInterface):
     MAX_DELAY = 2.0
 
     def __init__(self):
-        self.modules = ['localization', 'perception', 'prediction', 'planning']
+        self.modules = ['Localization', 'Perception', 'Prediction', 'Planning']
         self.trackers = dict()
         for mod in self.modules:
             self.trackers[mod] = 0.0
@@ -56,7 +56,7 @@ class ModuleDelayOracle(OracleInterface):
                 Violation(
                     'ModuleDelayOracle',
                     features=features,
-                    key_label=str(features['delay_module'])
+                    key_label=str(module_name)
                 )
             )
 

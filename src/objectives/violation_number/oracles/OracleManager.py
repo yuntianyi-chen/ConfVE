@@ -24,4 +24,14 @@ class OracleManager:
         result = list()
         for oracle in self.__registered_oracles:
             result += oracle.get_result()
-        return result
+
+        failure_type_list = [violation.main_type for violation in result if "Failure" in violation.main_type]
+
+        filtered_result = []
+        for violation in result:
+            if violation.main_type == "ModuleDelayOracle" and violation.key_label + "Failure" in failure_type_list:
+                pass
+            else:
+                filtered_result.append(violation)
+
+        return filtered_result

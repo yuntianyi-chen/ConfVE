@@ -119,6 +119,6 @@ class ModuleOracle(OracleInterface):
                 vf = dict()
                 vf['type'] = 600
                 result.append(Violation(
-                    'SimControlFailure', vf, str(vf['type'])
+                    'LocalizationFailure', vf, str(vf['type'])
                 ))
         return result

@@ -6,7 +6,6 @@ def run_scenarios_by_division(scenario_list, containers):
     sub_scenario_list_list = [scenario_list[x:x + len(containers)] for x in
                               range(0, len(scenario_list), len(containers))]
     for sub_scenario_list in sub_scenario_list_list:
-
         # print("Restart Modules...")
         for scenario, container in zip(sub_scenario_list, containers):
             container.modules_operation(operation="start")
@@ -21,12 +20,11 @@ def run_scenarios_by_division(scenario_list, containers):
         # print("stop running")
         for container in containers:
             stop_running(container)
+        for container in containers:
+            stop_perception(container)
+        for container in containers:
             container.kill_modules()
-        # time.sleep(2)
-        # for container in containers:
-        #     container.kill_modules()
-        # print("stopped")
-        time.sleep(2)
+        time.sleep(1)
     time.sleep(1)
 
 
@@ -42,5 +40,8 @@ def start_running(scenario, container):
 
 def stop_running(container):
     container.stop_recorder()
+
+
+def stop_perception(container):
     container.message_handler.obs_stop()
     container.message_handler.traffic_lights_stop()
