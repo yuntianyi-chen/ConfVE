@@ -6,5 +6,5 @@ ADS Configuration Testing Framework
 2. Start your container with `./apollo.sh dev_start.sh`, build your apollo system using instructions in the official website
 3. Change the IMPORTANT CONFIGURATION and DIR values in `config.py` according to your environment. Place the project under `DIR_ROOT`
 4. Place initial record files under `{project}/data/records`, run `prepare.py`
-5. Execute `sudo chmod -r 777 apollo/data`
+5. Execute `sudo chmod -R 777 apollo/data`
 6. Run `python3 main.py`
