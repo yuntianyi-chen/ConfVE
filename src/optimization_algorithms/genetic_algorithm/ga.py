@@ -41,7 +41,7 @@ def select(individual_list_after_mutate, config_file_obj):
 
         new_individual_list = [individual_list[index] for index in selected_index_list]
     else:
-        random.shuffle(individual_list)
+        # random.shuffle(individual_list)
         individual_list.sort(reverse=True, key=lambda x: x.fitness)
 
         # select x with the least fitness, y randomly from the remaining, z new generated

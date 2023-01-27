@@ -77,6 +77,7 @@ class TestRunner:
                                                              range_change_str)
             self.file_output_manager.save_count_dict_file()
         self.individual_num += 1
+        print(f"--------Running for {(time.time() - self.runner_time)/3600} hours-----------")
 
 
     def record_replace_and_check(self):
