@@ -5,7 +5,7 @@ import shutil
 from datetime import date
 from config import BACKUP_CONFIG_SAVE_DIR, MODULE_NAME, CURRENT_CONFIG_FILE_PATH, FITNESS_MODE, \
     AV_TESTING_APPROACH, DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR, APOLLO_RECORDS_DIR, PROJECT_ROOT, \
-    BACKUP_RECORD_SAVE_DIR, APOLLO_ROOT, MAP_NAME
+    BACKUP_RECORD_SAVE_DIR, APOLLO_ROOT, MAP_NAME, MAX_RECORD_TIME, OPT_MODE
 
 
 class FileOutputManager:
@@ -20,7 +20,8 @@ class FileOutputManager:
         self.scenario_violation_count_dict = {}
 
     def file_init(self):
-        base_dir = f"{PROJECT_ROOT}/data/exp_results/{AV_TESTING_APPROACH}/{MAP_NAME}/{self.time_str}"
+        base_dir = f"{PROJECT_ROOT}/data/exp_results/{AV_TESTING_APPROACH}/{MAP_NAME}/{self.time_str}" + \
+            f"{AV_TESTING_APPROACH}_{MAP_NAME}_{MAX_RECORD_TIME}_{OPT_MODE}"
         if not os.path.exists(base_dir):
             os.makedirs(base_dir)
 
@@ -53,7 +54,8 @@ class FileOutputManager:
         with open(self.vio_csv_path, "w") as f:
             f.write("record_name,violation_type,violation_info,scenario_id,related_options\n")
 
-        self.backup_record_file_save_path = f"{BACKUP_RECORD_SAVE_DIR}/{self.time_str}"
+        self.backup_record_file_save_path = f"{BACKUP_RECORD_SAVE_DIR}/{self.time_str}_" + \
+            f"{AV_TESTING_APPROACH}_{MAP_NAME}_{MAX_RECORD_TIME}_{OPT_MODE}"
         self.delete_dir(dir_path=self.backup_record_file_save_path, mk_dir=True)
 
         self.config_file_save_path = f"{BACKUP_CONFIG_SAVE_DIR}/{self.time_str}"
