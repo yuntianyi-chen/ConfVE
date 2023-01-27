@@ -233,11 +233,11 @@ class FileOutputManager:
             with open(self.record_mapping_file_path, "a") as f:
                 f.write(f"{pre_record_info.record_file_path} ------ {record_name}\n")
 
-    def update_range_analysis_file(self, config_file_obj, range_analyzer, generation_num):
+    def update_range_analysis_file(self, config_file_obj, range_analyzer, num):
         option_obj_list = config_file_obj.option_obj_list
         with open(self.range_analysis_file_path, "w") as f:
             diff_count = 0
-            f.write(f"Generation: {generation_num}\n\n")
+            f.write(f"Generation: {num}\n\n")
             for i in range(len(option_obj_list)):
                 if range_analyzer.original_range_list[i] != range_analyzer.range_list[i]:
                     diff_count += 1

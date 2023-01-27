@@ -17,7 +17,9 @@ def generate_individuals(config_file_obj, population_size):
     return individual_list
 
 
-def select(individual_list, config_file_obj):
+def select(individual_list_after_mutate, config_file_obj):
+    individual_list = [item for item in individual_list_after_mutate if item.allow_selection]
+
     if SELECT_MODE == "nsga2":
         fitness_list = [individual.fitness for individual in individual_list]
         fronts_index_list = sort_nondominated(fitness_list)

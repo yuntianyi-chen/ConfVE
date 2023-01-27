@@ -1,10 +1,8 @@
 import time
-from config import T_STRENGTH_VALUE, TIME_HOUR_THRESHOLD
+from config import T_STRENGTH_VALUE, TIME_HOUR_THRESHOLD, INIT_POP_SIZE
 from optimization_algorithms.TestRunner import TestRunner
-from scenario_handling.create_scenarios import create_scenarios
 from optimization_algorithms.baseline.TwiseTuner import TwiseTuner
 from optimization_algorithms.genetic_algorithm.ga import generate_individuals
-from scenario_handling.run_scenarios import run_scenarios, check_default_running
 
 
 class TwayRunner(TestRunner):
@@ -16,54 +14,22 @@ class TwayRunner(TestRunner):
     def tway_runner(self):
         # print("Start T-way")
 
-        individual_num = 0
-        while self.runner_time < TIME_HOUR_THRESHOLD * 3600:
+        while True:
+            print("-------------------------------------------------")
+            print(f"Config_{self.individual_num}")
             print("-------------------------------------------------")
 
-            default_individual = generate_individuals(self.config_file_obj, population_size=1)[0]
-            generated_individual = self.twise_tuner.tune_individual(default_individual, self.range_analyzer)
+            for inner_loop_i in range(INIT_POP_SIZE * 6):
+                default_individual = generate_individuals(self.config_file_obj, population_size=1)[0]
+                generated_individual = self.twise_tuner.tune_individual(default_individual, self.range_analyzer)
+                ind_id = f"Config_{self.individual_num}"
 
-            self.file_output_manager.delete_temp_files()
+                self.individual_running(generated_individual, ind_id)
 
-            ind_id = f"Config_{individual_num}"
-            print(ind_id)
-            self.file_output_manager.report_tuning_situation(generated_individual, self.config_file_obj)
+                if time.time() - self.runner_time >= TIME_HOUR_THRESHOLD * 3600:
+                    return
 
-            generated_individual.update_id(ind_id)
-
-            scenario_list = create_scenarios(generated_individual, self.config_file_obj,
-                                             self.message_generator.pre_record_info_list,
-                                             name_prefix=ind_id)
-
-            run_scenarios(generated_individual, scenario_list, self.containers)
-
-            generated_individual.update_fitness()
-            self.check_scenario_list_vio_emergence(scenario_list)
-
-            self.file_output_manager.print_violation_results(generated_individual)
-            self.file_output_manager.save_total_violation_results(generated_individual, scenario_list)
-            self.file_output_manager.handle_scenario_record(scenario_list)
-
-            if generated_individual.fitness > 0:
-                if generated_individual.option_tuning_tracking_list:
-                    option_tuning_item = generated_individual.option_tuning_tracking_list[-1]
-                else:
-                    option_tuning_item = "default"
-
-                range_change_str = self.range_analyzer.range_analyze(option_tuning_item, self.config_file_obj)
-                self.file_output_manager.save_config_file(ind_id)
-                self.file_output_manager.save_fitness_result(generated_individual, ind_id)
-                self.file_output_manager.save_vio_features(generated_individual, scenario_list)
-                self.file_output_manager.save_option_tuning_file(generated_individual,ind_id,option_tuning_item,range_change_str)
-                self.file_output_manager.save_count_dict_file()
-
-                individual_num += 1
-
-            # self.file_output_manager.update_range_analysis_file(self.config_file_obj, self.range_analyzer, generation_num)
-            self.message_generator.replace_records(self.scenario_rid_emergence_list)
-            _ = check_default_running(self.message_generator, self.config_file_obj, self.file_output_manager,
-                                      self.containers)
-            self.scenario_rid_emergence_list = []
-
-        self.runner_time = time.time() - self.runner_time
-        print("Time cost: " + str(self.runner_time / 3600) + " hours")
+            # output range analysis every generation
+            self.file_output_manager.update_range_analysis_file(self.config_file_obj, self.range_analyzer,
+                                                                self.individual_num)
+            self.record_replace_and_check()
