@@ -21,7 +21,7 @@ class GARunner(TestRunner):
             print("-------------------------------------------------")
             print(f"Generation_{generation_num}")
             print("-------------------------------------------------")
-
+            self.individual_num = 0
             individual_list_after_crossover = crossover(individual_list)
             individual_list_after_mutate = mutation(individual_list_after_crossover, self.config_file_obj,
                                                     self.range_analyzer)
