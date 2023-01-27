@@ -225,12 +225,13 @@ class MapParser:
         for _x, _y, _h in self.HEADING_CACHE:
             if _x == x and _y == y:
                 return _h
-
+        min_distance = 9999999999999999
         # calculate
         point = Point([x, y])
         for lane_id in self.get_lanes():
             lst = self.get_lane_central_curve(lane_id)
-            if point.distance(lst) <= 0.15:
+            distance = point.distance(lst)
+            if distance <= 0.5:
                 segments = list((map(LineString, zip(lst.coords[:-1], lst.coords[1:]))))
                 segments.sort(key=lambda _x: point.distance(_x))
                 line = segments[0]
@@ -241,7 +242,9 @@ class MapParser:
                 if len(self.HEADING_CACHE) > 20:
                     self.HEADING_CACHE.pop(0)
                 return heading
-        raise Exception(f'Lane not found for coordinate ({x}, {y}).')
+            elif distance < min_distance:
+                min_distance = distance
+        raise Exception(f'Lane not found for coordinate ({x}, {y}). Closest lane was {min_distance} away.')
 
     def get_junctions(self) -> List[str]:
         return list(self.__junctions.keys())
