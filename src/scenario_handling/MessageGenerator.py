@@ -30,7 +30,7 @@ class MessageGenerator:
 
     def update_all_records_violatioin_directly(self, violation_results_list):
         for pre_record_info, violation_results in zip(self.pre_record_info_list, violation_results_list):
-            pre_record_info.update_violatioin_directly(violation_results)
+            pre_record_info.update_violation_directly(violation_results)
         self.update_total_violation_results()
 
     def get_record_path_list(self):
@@ -44,7 +44,7 @@ class MessageGenerator:
         for sid, violation_results in violation_results_list_with_sid:
             for i in range(len(self.pre_record_info_list)):
                 if sid == self.pre_record_info_list[i].record_id:
-                    self.pre_record_info_list[i].update_violatioin_directly(violation_results)
+                    self.pre_record_info_list[i].update_violation_directly(violation_results)
         self.update_total_violation_results()
 
     def replace_records(self, replaced_id_list):
@@ -58,6 +58,18 @@ class MessageGenerator:
                         self.record_counter += 1
                         self.pre_record_info_list[i] = pre_record_info
         self.update_total_violation_results()
+
+    def replace_record(self, rid):
+        if len(self.scenario_record_path_list) > self.record_counter:
+            print(f"Replacing Record_{rid}...")
+            for i in range(len(self.pre_record_info_list)):
+                if rid == self.pre_record_info_list[i].record_id:
+                    pre_record_info = InitialRecordInfo(True, self.record_counter,
+                                                        self.scenario_record_path_list[self.record_counter])
+                    self.record_counter += 1
+                    self.pre_record_info_list[i] = pre_record_info
+                    return pre_record_info
+        # return pre_record_info
 
     def update_rerun_status(self):
         for p in self.pre_record_info_list:

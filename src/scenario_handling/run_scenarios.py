@@ -1,12 +1,12 @@
 import time
-from scenario_handling.create_scenarios import create_scenarios
+from scenario_handling.create_scenarios import create_scenarios, create_scenario
 from scenario_handling.ScenarioRunner import run_scenarios_by_division
 from optimization_algorithms.genetic_algorithm.ga import generate_individuals
 from duplicate_elimination.ViolationChecker import check_emerged_violations, confirm_determinism
 from config import DEFAULT_DETERMINISM_RERUN_TIMES, MODULE_ORACLES, DETERMINISM_RERUN_TIMES
 
 
-def run_default_scenarios(scenario_list, containers):
+def run_default_scenarios(scenario_list, containers, message_generator):
     default_violation_results_list = []
     for scenario in scenario_list:
         # if module failure happens when default running, rerun the program
@@ -16,6 +16,11 @@ def run_default_scenarios(scenario_list, containers):
             _, all_emerged_results = confirm_determinism(scenario, containers,
                                                          rerun_times=DEFAULT_DETERMINISM_RERUN_TIMES)
             contain_module_violation = check_module_failure(all_emerged_results, oracles=MODULE_ORACLES)
+
+            if contain_module_violation:
+                pre_record_info = message_generator.replace_record(scenario.record_id)
+                scenario = create_scenario(pre_record_info, name_prefix = "default", config_file_tuned_status = True)
+
         # print(f"Default Violations:{all_emerged_results}")
         print("-------------------------------------------------")
         default_violation_results_list.append((scenario.record_id, all_emerged_results))
@@ -84,7 +89,7 @@ def check_default_running(message_generator, config_file_obj, file_output_manage
         scenario_list = create_scenarios(default_individual, config_file_obj, selected_pre_record_info_list,
                                          name_prefix)
 
-        default_violation_results_list = run_default_scenarios(scenario_list, containers)
+        default_violation_results_list = run_default_scenarios(scenario_list, containers, message_generator)
 
         # file_output_manager.save_default_scenarios()
         message_generator.update_rerun_status()

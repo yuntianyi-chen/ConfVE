@@ -85,5 +85,7 @@ class TestRunner:
         _ = check_default_running(self.message_generator, self.config_file_obj, self.file_output_manager,
                                   self.containers)
         self.scenario_rid_emergence_list = []
+        self.message_generator.update_total_violation_results()
+
 
 

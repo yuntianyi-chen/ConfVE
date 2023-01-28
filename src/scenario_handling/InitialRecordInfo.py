@@ -34,7 +34,7 @@ class InitialRecordInfo:
         self.violation_num = len(self.violation_results)
         print((f"id:{self.record_file_path}", f"Vio Count:{self.violation_num}", self.violation_results))
 
-    def update_violatioin_directly(self, violation_results):
+    def update_violation_directly(self, violation_results):
         self.violation_results = violation_results
         self.violation_num = len(violation_results)
 
