@@ -13,7 +13,7 @@ MAX_RECORD_TIME = 10  # 10/30
 AV_TESTING_APPROACH = "scenoRITA"  # scenoRITA/DoppelTest/AV-Fuzzer/ADFuzz
 MAP_NAME = "san_mateo"  # borregas_ave/sunnyvale_loop/San_Francisco/san_mateo
 CONTAINER_NUM = 5  # 5/10
-OPT_MODE = "GA"  # GA/DRL/Random/T-way
+OPT_MODE = "T-way"  # GA/DRL/Random/T-way
 
 # t-way testing
 T_STRENGTH_VALUE = 2  # pairwise

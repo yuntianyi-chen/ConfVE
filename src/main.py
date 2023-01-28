@@ -11,10 +11,10 @@ from optimization_algorithms.genetic_algorithm.GARunner import GARunner
 
 warnings.filterwarnings('ignore')
 
-def move_default_config_file():
-    if os.path.exists(CURRENT_CONFIG_FILE_PATH):
-        os.remove(CURRENT_CONFIG_FILE_PATH)
-    shutil.copy(DEFAULT_CONFIG_FILE_PATH, CURRENT_CONFIG_FILE_PATH)
+def move_file(source_dir, target_dir):
+    if os.path.exists(target_dir):
+        os.remove(target_dir)
+    shutil.copy(source_dir, target_dir)
 
 
 def change_map_file():
@@ -22,18 +22,18 @@ def change_map_file():
         f.write(f"\n--map_dir=/apollo/modules/map/data/{MAP_NAME}\n")
 
 
-def move_data(source_dir, target_dir):
+def move_dir(source_dir, target_dir):
     if not os.path.exists(target_dir):
         shutil.copytree(source_dir, target_dir)
 
 
 if __name__ == '__main__':
-    move_data(MAP_DIR, f"{APOLLO_MAP_DATA_DIR}/{MAP_NAME}")
-    move_data(f"{PROJECT_ROOT}/data/scripts", MY_SCRIPTS_DIR)
+    move_dir(MAP_DIR, f"{APOLLO_MAP_DATA_DIR}/{MAP_NAME}")
+    move_dir(f"{PROJECT_ROOT}/data/scripts", MY_SCRIPTS_DIR)
 
     # move_scripts()
     change_map_file()
-    move_default_config_file()
+    move_file(DEFAULT_CONFIG_FILE_PATH, CURRENT_CONFIG_FILE_PATH)
 
     containers = [Container(APOLLO_ROOT, f'ROUTE_{x}') for x in range(CONTAINER_NUM)]
     map_instance = MapLoader().map_instance

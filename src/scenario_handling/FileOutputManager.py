@@ -3,9 +3,8 @@ import os
 import pickle
 import shutil
 from datetime import date
-from config import BACKUP_CONFIG_SAVE_DIR, MODULE_NAME, CURRENT_CONFIG_FILE_PATH, FITNESS_MODE, \
-    AV_TESTING_APPROACH, DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR, APOLLO_RECORDS_DIR, PROJECT_ROOT, \
-    BACKUP_RECORD_SAVE_DIR, APOLLO_ROOT, MAP_NAME
+from config import BACKUP_CONFIG_SAVE_DIR, MODULE_NAME, CURRENT_CONFIG_FILE_PATH, \
+    DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR, APOLLO_RECORDS_DIR, BACKUP_RECORD_SAVE_DIR, APOLLO_ROOT, EXP_BASE_DIR
 
 
 class FileOutputManager:
@@ -20,7 +19,7 @@ class FileOutputManager:
         self.scenario_violation_count_dict = {}
 
     def file_init(self):
-        base_dir = f"{PROJECT_ROOT}/data/exp_results/{AV_TESTING_APPROACH}/{MAP_NAME}/{self.time_str}"
+        base_dir = f"{EXP_BASE_DIR}/{self.time_str}"
         if not os.path.exists(base_dir):
             os.makedirs(base_dir)
 
