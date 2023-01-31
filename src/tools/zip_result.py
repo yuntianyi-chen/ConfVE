@@ -10,6 +10,6 @@ if __name__ == '__main__':
         subprocess.call(f'zip -r -j  {exp_out} {EXP_BASE_DIR}'.split())
 
         for dest_file, src_dir in zip([exp_out, records_out], [EXP_BASE_DIR, BACKUP_RECORD_SAVE_DIR]):
-            subprocess.call(f'zip -r -j {dest_file} {src_dir}'.split())
+            subprocess.call(f'zip -r {dest_file} {src_dir}'.split())
     else:
         print('Did you run the experiment?')
