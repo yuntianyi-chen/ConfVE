@@ -7,9 +7,15 @@ if __name__ == '__main__':
     if os.path.exists(EXP_BASE_DIR) and os.path.exists(BACKUP_RECORD_SAVE_DIR):
         exp_out     = f"{DIR_ROOT}/{AV_TESTING_APPROACH}_{MAP_NAME}_{MAX_RECORD_TIME}_{OPT_MODE}_exp_results.zip"
         records_out = f"{DIR_ROOT}/{AV_TESTING_APPROACH}_{MAP_NAME}_{MAX_RECORD_TIME}_{OPT_MODE}_records.zip"
-        subprocess.call(f'zip -r -j  {exp_out} {EXP_BASE_DIR}'.split())
+        
+        cmds = [
+            f'cd {EXP_BASE_DIR} && zip -r {exp_out} ./*',
+            f'cd {BACKUP_RECORD_SAVE_DIR} && zip -r {records_out} ./*'
+        ]
 
-        for dest_file, src_dir in zip([exp_out, records_out], [EXP_BASE_DIR, BACKUP_RECORD_SAVE_DIR]):
-            subprocess.call(f'zip -r -j {dest_file} {src_dir}'.split())
+        for cmd in cmds:
+            subprocess.call(cmd, shell=True)
+
+
     else:
         print('Did you run the experiment?')
