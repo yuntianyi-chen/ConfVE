@@ -6,7 +6,18 @@ from tools.hdmap.MapParser import MapParser
 from objectives.violation_number.oracles.Violation import Violation
 from objectives.violation_number.oracles.OracleInterface import OracleInterface
 from tools.utils import generate_adc_polygon, construct_lane_boundary_linestring
-
+from functools import wraps
+import time
+def timeit(func):
+    @wraps(func)
+    def timeit_wrapper(*args, **kwargs):
+        start = time.perf_counter()
+        result = func(*args, **kwargs)
+        end = time.perf_counter()
+        total = end - start
+        # print(func.__name__, total)
+        return result
+    return timeit_wrapper
 
 class UnsafeLaneChangeOracle(OracleInterface):
     """
@@ -28,6 +39,7 @@ class UnsafeLaneChangeOracle(OracleInterface):
         self.get_boundaries()
         self.boundary_ids = sorted(self.boundaries.keys())
         self.__data = list()  # [ (intersects?, timestamp, boundary_id, feature) ]
+        self.cached_data = dict()
 
         self.searchable_boundary_ids = set(self.boundary_ids)
 
@@ -37,12 +49,25 @@ class UnsafeLaneChangeOracle(OracleInterface):
             lboundary, rboundary = construct_lane_boundary_linestring(lane)
             self.boundaries[f"{lane_id}_L"] = lboundary
             self.boundaries[f"{lane_id}_R"] = rboundary
-    
+    @timeit
     def on_new_message(self, topic: str, message, t):
+        if message.header.sequence_num % 15 != 0:
+            return
+        position = message.pose.position
+        if (position.x, position.y) in self.cached_data:
+            bid = self.cached_data[(position.x, position.y)]
+            features = self.get_basic_info_from_localization(message)
+            if bid == '':
+                self.__data.append((False, t, '', {}))
+            elif features['speed'] > 0:
+                features['boundary_id'] = self.boundary_ids.index(bid)
+                self.__data.append((True, t, bid, features))
+            return
+
         ego_pts = generate_adc_polygon(message.pose.position, message.pose.heading)
         ego_polygon = Polygon([[x.x, x.y] for x in ego_pts])
         pending_removal_boundary_ids = set()
-        for bid in self.searchable_boundary_ids:
+        for index, bid in enumerate(self.searchable_boundary_ids):
             distance = ego_polygon.distance(self.boundaries[bid])
             if distance == 0:
                 # intersection found
@@ -50,16 +75,16 @@ class UnsafeLaneChangeOracle(OracleInterface):
                 features['boundary_id'] = self.boundary_ids.index(bid)
                 if features["speed"] > 0:
                     self.__data.append((True, t, bid, features))
+                    self.cached_data[(position.x, position.y)] = bid
                 else:
                     self.__data.append((False, t, '', {}))
                 return
             if distance > UnsafeLaneChangeOracle.PRUNE_DISTANCE:
                 pending_removal_boundary_ids.add(bid)
-        
         self.searchable_boundary_ids = self.searchable_boundary_ids - pending_removal_boundary_ids
-
         # no intersection
         self.__data.append((False, t, '', {}))
+        self.cached_data[(position.x, position.y)] = ''
         
     def get_interested_topics(self) -> List[str]:
         return ["/apollo/localization/pose"]
