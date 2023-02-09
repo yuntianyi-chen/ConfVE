@@ -165,9 +165,14 @@ if __name__ == "__main__":
     for map_name in map_list:
         temp1_df = df_unique_GA_final[[name for name in df_unique_GA_final.columns if map_name in name]].sum(axis=1)
         temp2_df = df_unique_pairwise_final[[name for name in df_unique_pairwise_final.columns if map_name in name]].sum(axis=1)
-
         df_map_ga_pairwise = pd.concat([df_map_ga_pairwise, temp1_df, temp2_df], axis=1)
 
+    df_ads_ga_pairwise = pd.DataFrame()
+    for approach_name in approach_list:
+        temp1_df = df_unique_GA_final[[name for name in df_unique_GA_final.columns if approach_name in name]].sum(axis=1)
+        temp2_df = df_unique_pairwise_final[
+            [name for name in df_unique_pairwise_final.columns if approach_name in name]].sum(axis=1)
+        df_ads_ga_pairwise = pd.concat([df_ads_ga_pairwise, temp1_df, temp2_df], axis=1)
 
     with open(f"{FEATURES_CSV_DIR}/latex.txt", "w") as f:
 
@@ -223,14 +228,28 @@ if __name__ == "__main__":
         f.write("\n\n\n\n")
 
 
-
-
-
-
-
-
         f.write("by map ga_pairwise\n")
         for index, row in df_map_ga_pairwise.iterrows():
+            f.write("\\textbf{"+output_oracle_list[index]+"}")
+            write_str = ""
+            pair = []
+            for a_num in row:
+                pair.append(a_num)
+                if len(pair) == 2:
+                    if pair[0] > pair[1]:
+                        pair[0] = "\\textbf{"+str(pair[0])+"}"
+                    elif pair[0] < pair[1]:
+                        pair[1] = "\\textbf{"+str(pair[1])+"}"
+                    write_str += f" & {pair[0]} & {pair[1]}"
+                    pair =[]
+            f.write(f"{write_str}\\\\ \n")
+        f.write("\n\n\n\n")
+
+
+
+
+        f.write("by ads ga_pairwise\n")
+        for index, row in df_ads_ga_pairwise.iterrows():
             f.write("\\textbf{"+output_oracle_list[index]+"}")
             write_str = ""
             pair = []
