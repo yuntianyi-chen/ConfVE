@@ -1,39 +1,15 @@
-import os
-import shutil
 import warnings
-from config import OPT_MODE, APOLLO_ROOT, CONTAINER_NUM, MY_SCRIPTS_DIR, PROJECT_ROOT, FLAGFILE_PATH, MAP_NAME, \
-    DEFAULT_CONFIG_FILE_PATH, CURRENT_CONFIG_FILE_PATH, APOLLO_MAP_DATA_DIR, MAP_DIR
+from config import OPT_MODE, APOLLO_ROOT, CONTAINER_NUM
 from environment.Container import Container
+from environment.InitRunner import InitRunner
 from environment.MapLoader import MapLoader
 from optimization_algorithms.baseline.TwayRunner import TwayRunner
 from optimization_algorithms.genetic_algorithm.GARunner import GARunner
 
-
 warnings.filterwarnings('ignore')
 
-def move_file(source_dir, target_dir):
-    if os.path.exists(target_dir):
-        os.remove(target_dir)
-    shutil.copy(source_dir, target_dir)
-
-
-def change_map_file():
-    with open(FLAGFILE_PATH, "a") as f:
-        f.write(f"\n--map_dir=/apollo/modules/map/data/{MAP_NAME}\n")
-
-
-def move_dir(source_dir, target_dir):
-    if not os.path.exists(target_dir):
-        shutil.copytree(source_dir, target_dir)
-
-
 if __name__ == '__main__':
-    move_dir(MAP_DIR, f"{APOLLO_MAP_DATA_DIR}/{MAP_NAME}")
-    move_dir(f"{PROJECT_ROOT}/data/scripts", MY_SCRIPTS_DIR)
-
-    # move_scripts()
-    change_map_file()
-    move_file(DEFAULT_CONFIG_FILE_PATH, CURRENT_CONFIG_FILE_PATH)
+    InitRunner()
 
     containers = [Container(APOLLO_ROOT, f'ROUTE_{x}') for x in range(CONTAINER_NUM)]
     map_instance = MapLoader().map_instance

@@ -1,26 +1,19 @@
-import random
-import csv
 from os import listdir
-from pandas import read_csv
-from tools.hdmap import map_tools
 from scenario_handling.InitialRecordInfo import InitialRecordInfo
-from testing_approaches.scenorita.auxiliary.map_info_parser import initialize, validatePath
-from config import MAP_NAME, AV_TESTING_APPROACH, MANUAL_ADC_ROUTE_PATH, MAX_INITIAL_SCENARIOS
+from config import AV_TESTING_APPROACH, MAX_INITIAL_SCENARIOS, INITIAL_SCENARIO_RECORD_DIR
 
 
 class MessageGenerator:
-    def __init__(self, scenario_record_dir_path):
-        self.scenario_record_dir_path = scenario_record_dir_path
+    def __init__(self):
+        self.scenario_record_dir_path = INITIAL_SCENARIO_RECORD_DIR
         self.scenario_record_path_list = []
         self.total_records_count = 0
-        self.get_record_path_list()
-
         self.pre_record_info_list = []
-
         self.violation_results_list = []
         self.violation_num_list = []
-
         self.record_counter = 0
+
+        self.get_record_path_list()
 
     def update_total_violation_results(self):
         self.violation_results_list = [pri.violation_results for pri in self.pre_record_info_list]
@@ -78,10 +71,11 @@ class MessageGenerator:
     def get_not_rerun_record(self):
         return [p for p in self.pre_record_info_list if not p.finished_rerun]
 
-    def get_record_info_by_approach(self):
+    def get_record_info(self):
         if AV_TESTING_APPROACH != "Random":
             for i in range(MAX_INITIAL_SCENARIOS):
-                pre_record_info = InitialRecordInfo(True, self.record_counter,
+                pre_record_info = InitialRecordInfo(True,
+                                                    self.record_counter,
                                                     self.scenario_record_path_list[self.record_counter])
                 self.record_counter += 1
                 self.pre_record_info_list.append(pre_record_info)
@@ -93,45 +87,7 @@ class MessageGenerator:
         #     adc_routing_list = [self.adc_routing_generate() for i in range(OBS_GROUP_COUNT)]
         #     # adc_routing_list = [self.read_adc_routes() for i in range(OBS_GROUP_COUNT)]
         #     # adc_routing_list = ["586980.86,4140959.45,587283.52,4140882.30" for i in obs_group_path_list]
-        #     pre_record_info = InitialRecordInfo(is_record_file=False)
-        #     pre_record_info.update_generated_info(obs_group_path_list, adc_routing_list)
-        #     pre_record_info_list.append(pre_record_info)
+        #     pre_record_info = InitialRecordInfo(is_record_file=False, record_id="", record_file_path="")
+        #     self.pre_record_info_list.append(pre_record_info)
 
-    def read_adc_routes(self):
-        adc_routes_list = []
-        with open(MANUAL_ADC_ROUTE_PATH, mode='r') as csv_file:
-            csv_reader = csv.DictReader(csv_file)
-            for row in csv_reader:
-                adc_routes_list.append(f'{row["x_start"]},{row["y_start"]},{row["x_end"]},{row["y_end"]}')
-        return adc_routes_list
-
-    def read_obstacles(self):
-        obs_apollo_folder = f"{MAP_NAME}/obs_in_group/"
-        adc_route_csv = read_csv(MANUAL_ADC_ROUTE_PATH)
-        recordname_list = adc_route_csv['RecordName'].tolist()
-        obs_group_path_list = []
-        for obs_group_folder_name in recordname_list:
-            obs_group_path_list.append(obs_apollo_folder + obs_group_folder_name)
-        return obs_group_path_list
-
-    def obs_routing_generate(self):
-        return
-
-    def adc_routing_generate(self):
-        # this function costs calculating resources
-        ptl_dict, ltp_dict, diGraph = initialize()
-
-        valid_path = False
-        while not valid_path:
-            p_index1 = random.randint(0, len(ptl_dict.keys()) - 1)
-            p_index2 = random.randint(0, len(ptl_dict.keys()) - 1)
-            start_point = tuple(map(float, list(ptl_dict.keys())[p_index1].split('-')))
-            if not map_tools.all_points_not_in_junctions(start_point):
-                p1 = list(ptl_dict.keys())[p_index1]
-                p2 = list(ptl_dict.keys())[p_index2]
-                continue
-            valid_path = validatePath(p_index1, p_index2, ptl_dict, ltp_dict, diGraph)
-        p1 = list(ptl_dict.keys())[p_index1]
-        p2 = list(ptl_dict.keys())[p_index2]
-        adc_routing = p1.replace('-', ',') + "," + p2.replace('-', ',')
-        return adc_routing
+        # pre_record_info.update_generated_info(obs_group_path_list, adc_routing_list)

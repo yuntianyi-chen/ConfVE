@@ -3,7 +3,8 @@ from scenario_handling.create_scenarios import create_scenarios, create_scenario
 from scenario_handling.ScenarioRunner import run_scenarios_by_division
 from optimization_algorithms.genetic_algorithm.ga import generate_individuals
 from duplicate_elimination.ViolationChecker import check_emerged_violations, confirm_determinism
-from config import DEFAULT_DETERMINISM_RERUN_TIMES, MODULE_ORACLES, DETERMINISM_RERUN_TIMES
+from config import DEFAULT_DETERMINISM_RERUN_TIMES, MODULE_ORACLES, DETERMINISM_RERUN_TIMES, \
+    ENABLE_STRICT_DETERMINISM_CHECKING
 
 
 def run_default_scenarios(scenario_list, containers, message_generator):
@@ -13,13 +14,15 @@ def run_default_scenarios(scenario_list, containers, message_generator):
         all_emerged_results = []
         contain_module_violation = True
         while contain_module_violation:
-            _, all_emerged_results = confirm_determinism(scenario, containers,
+            _, all_emerged_results = confirm_determinism(scenario,
+                                                         containers,
+                                                         first_violations_emerged_results=[],
                                                          rerun_times=DEFAULT_DETERMINISM_RERUN_TIMES)
             contain_module_violation = check_module_failure(all_emerged_results, oracles=MODULE_ORACLES)
 
             if contain_module_violation:
                 pre_record_info = message_generator.replace_record(scenario.record_id)
-                scenario = create_scenario(pre_record_info, name_prefix = "default", config_file_tuned_status = True)
+                scenario = create_scenario(pre_record_info, name_prefix="default", config_file_tuned_status=True)
 
         # print(f"Default Violations:{all_emerged_results}")
         print("-------------------------------------------------")
@@ -34,18 +37,26 @@ def run_scenarios(generated_individual, scenario_list, containers):
 
     for scenario in scenario_list:
         violation_results = scenario.measure_violations()
-        violations_emerged_results = check_emerged_violations(violation_results, scenario.original_violation_results)
-        contain_module_violation = check_module_failure(violations_emerged_results, oracles=MODULE_ORACLES[:-1])
-
-        # if bug-revealing (module failure), confirm determinism
-        # if len(violations_emerged_results) > 0 and generated_individual.allow_selection:
-        # once found module failure, don't need to check determinism of other scenarios
+        violations_emerged_results = check_emerged_violations(violation_results,
+                                                                    scenario.original_violation_results)
+        # contain_module_violation = check_module_failure(violations_emerged_results, oracles=MODULE_ORACLES[:-1])
+        contain_module_violation = check_module_failure(violations_emerged_results, oracles=MODULE_ORACLES)
 
         determinism_start_time = time.time()
-        if contain_module_violation and generated_individual.allow_selection:
-            violations_emerged_results, _ = confirm_determinism(scenario, containers, rerun_times=DETERMINISM_RERUN_TIMES)
-            contain_module_violation = check_module_failure(violations_emerged_results, oracles=MODULE_ORACLES[:-1])
-            generated_individual.update_allow_selection(contain_module_violation)
+
+        # if bug-revealing (e.g., module failure), confirm determinism
+        # once found module failure, don't need to check determinism of other scenarios
+        if generated_individual.allow_selection:
+            if ENABLE_STRICT_DETERMINISM_CHECKING and len(violations_emerged_results) > 0 or contain_module_violation:
+                violations_emerged_results, _ = confirm_determinism(scenario,
+                                                                    containers,
+                                                                    first_violations_emerged_results=violations_emerged_results,
+                                                                    rerun_times=DETERMINISM_RERUN_TIMES)
+
+                # contain_module_violation = check_module_failure(violations_emerged_results, oracles=MODULE_ORACLES[:-1])
+                contain_module_violation = check_module_failure(violations_emerged_results, oracles=MODULE_ORACLES)
+
+        generated_individual.update_allow_selection(contain_module_violation)
         determinism_time = time.time() - determinism_start_time
         start_time = start_time + determinism_time
 
@@ -83,17 +94,16 @@ def check_default_running(message_generator, config_file_obj, file_output_manage
         name_prefix = "default"
 
         file_output_manager.output_initial_record2default_mapping(message_generator.pre_record_info_list, name_prefix)
-
         default_individual = generate_individuals(config_file_obj, population_size=1)[0]
 
-        scenario_list = create_scenarios(default_individual, config_file_obj, selected_pre_record_info_list,
+        scenario_list = create_scenarios(default_individual,
+                                         config_file_obj,
+                                         selected_pre_record_info_list,
                                          name_prefix)
 
         default_violation_results_list = run_default_scenarios(scenario_list, containers, message_generator)
-
         # file_output_manager.save_default_scenarios()
         message_generator.update_rerun_status()
-
         message_generator.update_selected_records_violatioin_directly(default_violation_results_list)
 
     return default_violation_results_list

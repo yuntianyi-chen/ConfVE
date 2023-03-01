@@ -3,11 +3,12 @@ import warnings
 import numpy as np
 import pandas as pd
 from kneed import KneeLocator
-# from matplotlib import pyplot as plt
 from sklearn.cluster import DBSCAN
 from sklearn.neighbors import NearestNeighbors
 from sklearn.preprocessing import StandardScaler
 from config import FEATURES_CSV_DIR, MODULE_ORACLES
+
+# from matplotlib import pyplot as plt
 
 warnings.filterwarnings('ignore')
 
@@ -63,12 +64,12 @@ if __name__ == "__main__":
                         "DoppelTest_sunnyvale_loop_30_T-way",
                         "ADFuzz_borregas_ave_30_GA", "ADFuzz_borregas_ave_30_T-way",
                         "AV-Fuzzer_San_Francisco_30_GA", "AV-Fuzzer_San_Francisco_30_T-way"]
-    approach_list=["scenoRITA", "DoppelTest","ADFuzz", "AV-Fuzzer"]
+    approach_list = ["scenoRITA", "DoppelTest", "ADFuzz", "AV-Fuzzer"]
     oracle_list = ["CollisionOracle.csv", "AccelOracle.csv", "DecelOracle.csv", "SpeedingOracle.csv",
                    "UnsafeLaneChangeOracle.csv",
                    "ModuleDelayOracle.csv", "PlanningFailure.csv", "PlanningGeneratesGarbage.csv",
                    "JunctionLaneChangeOracle.csv", "StopSignOracle.csv", "TrafficSignalOracle.csv", "EStopOracle.csv"]
-    map_list=["borregas_ave", "san_mateo","sunnyvale_loop", "San_Francisco"]
+    map_list = ["borregas_ave", "san_mateo", "sunnyvale_loop", "San_Francisco"]
 
     output_oracle_list = ["Collision", "Fast Acceleration", "Hard Braking", "Speeding", "Unsafe Lane Change",
                           "Module Delay", "Module Malfunction", "Module Illness", "Lane-change in Junction",
@@ -95,7 +96,7 @@ if __name__ == "__main__":
         eliminator = Eliminator()
 
         oracle_unique_list = []
-        oracle_all_list= []
+        oracle_all_list = []
         # oracle_elim_dict = {}
 
         for oracle in oracle_list:
@@ -147,29 +148,31 @@ if __name__ == "__main__":
     df_unique_GA_final = df_unique_final[[name for name in df_unique_final.columns if "GA" in name]]
     df_unique_pairwise_final = df_unique_final[[name for name in df_unique_final.columns if "T-way" in name]]
 
-
     df_elim = pd.DataFrame()
     for approach_name in approach_list:
-        df_elim[f"{approach_name}_All"] = df_all_GA_final[[name for name in df_all_GA_final.columns if approach_name in name]].sum(axis=1)
-        df_elim[f"{approach_name}_Unique"] = df_unique_GA_final[[name for name in df_unique_GA_final.columns if approach_name in name]].sum(axis=1)
-        df_elim[f"{approach_name}_Elim."] = ((1 - df_elim[f"{approach_name}_Unique"]/df_elim[f"{approach_name}_All"])*100).round(2)
-
+        df_elim[f"{approach_name}_All"] = df_all_GA_final[
+            [name for name in df_all_GA_final.columns if approach_name in name]].sum(axis=1)
+        df_elim[f"{approach_name}_Unique"] = df_unique_GA_final[
+            [name for name in df_unique_GA_final.columns if approach_name in name]].sum(axis=1)
+        df_elim[f"{approach_name}_Elim."] = (
+                    (1 - df_elim[f"{approach_name}_Unique"] / df_elim[f"{approach_name}_All"]) * 100).round(2)
 
     dr_ga_map = pd.DataFrame()
     for approach_name in approach_list:
         temp_df = df_unique_GA_final[[name for name in df_unique_GA_final.columns if approach_name in name]]
         dr_ga_map = pd.concat([dr_ga_map, temp_df], axis=1)
 
-
     df_map_ga_pairwise = pd.DataFrame()
     for map_name in map_list:
         temp1_df = df_unique_GA_final[[name for name in df_unique_GA_final.columns if map_name in name]].sum(axis=1)
-        temp2_df = df_unique_pairwise_final[[name for name in df_unique_pairwise_final.columns if map_name in name]].sum(axis=1)
+        temp2_df = df_unique_pairwise_final[
+            [name for name in df_unique_pairwise_final.columns if map_name in name]].sum(axis=1)
         df_map_ga_pairwise = pd.concat([df_map_ga_pairwise, temp1_df, temp2_df], axis=1)
 
     df_ads_ga_pairwise = pd.DataFrame()
     for approach_name in approach_list:
-        temp1_df = df_unique_GA_final[[name for name in df_unique_GA_final.columns if approach_name in name]].sum(axis=1)
+        temp1_df = df_unique_GA_final[[name for name in df_unique_GA_final.columns if approach_name in name]].sum(
+            axis=1)
         temp2_df = df_unique_pairwise_final[
             [name for name in df_unique_pairwise_final.columns if approach_name in name]].sum(axis=1)
         df_ads_ga_pairwise = pd.concat([df_ads_ga_pairwise, temp1_df, temp2_df], axis=1)
@@ -177,91 +180,78 @@ if __name__ == "__main__":
     with open(f"{FEATURES_CSV_DIR}/latex.txt", "w") as f:
 
         f.write("all ads/GA_pairwise\n")
-
         for index, row in df_unique_final.iterrows():
-            f.write("\\textbf{"+output_oracle_list[index]+"}")
-
+            f.write("\\textbf{" + output_oracle_list[index] + "}")
             write_str = ""
             pair = []
             for a_num in row:
                 pair.append(a_num)
                 if len(pair) == 2:
                     if pair[0] > pair[1]:
-                        pair[0] = "\\textbf{"+str(pair[0])+"}"
+                        pair[0] = "\\textbf{" + str(pair[0]) + "}"
                     elif pair[0] < pair[1]:
-                        pair[1] = "\\textbf{"+str(pair[1])+"}"
+                        pair[1] = "\\textbf{" + str(pair[1]) + "}"
                     write_str += f" & {pair[0]} & {pair[1]}"
-                    pair =[]
+                    pair = []
             f.write(f"{write_str}\\\\ \n")
         f.write("\n\n\n\n")
 
-
         f.write("elim by ads\n")
         for idx in df_elim.index:
-            f.write("\\textbf{"+output_oracle_list[idx]+"} ")
-
+            f.write("\\textbf{" + output_oracle_list[idx] + "} ")
             write_str = ""
             for col in df_elim.columns:
                 value = str(df_elim.loc[idx, col])
                 if "Elim." in col:
                     if value != "nan":
-                        write_item = format(df_elim.loc[idx, col],".2f")+"\%"
+                        write_item = format(df_elim.loc[idx, col], ".2f") + "\%"
                     else:
                         write_item = "/"
                 else:
                     write_item = value
                 write_str += f"& {write_item} "
-
             f.write(f"{write_str}\\\\ \n")
         f.write("\n\n\n\n")
 
-
-
         f.write("by ga map\n")
         for index, row in dr_ga_map.iterrows():
-            f.write("\\textbf{"+output_oracle_list[index]+"}")
-
+            f.write("\\textbf{" + output_oracle_list[index] + "}")
             write_str = ""
             for a_num in row:
                 write_str += f" & {a_num}"
             f.write(f"{write_str}\\\\ \n")
         f.write("\n\n\n\n")
 
-
         f.write("by map ga_pairwise\n")
         for index, row in df_map_ga_pairwise.iterrows():
-            f.write("\\textbf{"+output_oracle_list[index]+"}")
+            f.write("\\textbf{" + output_oracle_list[index] + "}")
             write_str = ""
             pair = []
             for a_num in row:
                 pair.append(a_num)
                 if len(pair) == 2:
                     if pair[0] > pair[1]:
-                        pair[0] = "\\textbf{"+str(pair[0])+"}"
+                        pair[0] = "\\textbf{" + str(pair[0]) + "}"
                     elif pair[0] < pair[1]:
-                        pair[1] = "\\textbf{"+str(pair[1])+"}"
+                        pair[1] = "\\textbf{" + str(pair[1]) + "}"
                     write_str += f" & {pair[0]} & {pair[1]}"
-                    pair =[]
+                    pair = []
             f.write(f"{write_str}\\\\ \n")
         f.write("\n\n\n\n")
-
-
-
 
         f.write("by ads ga_pairwise\n")
         for index, row in df_ads_ga_pairwise.iterrows():
-            f.write("\\textbf{"+output_oracle_list[index]+"}")
+            f.write("\\textbf{" + output_oracle_list[index] + "}")
             write_str = ""
             pair = []
             for a_num in row:
                 pair.append(a_num)
                 if len(pair) == 2:
                     if pair[0] > pair[1]:
-                        pair[0] = "\\textbf{"+str(pair[0])+"}"
+                        pair[0] = "\\textbf{" + str(pair[0]) + "}"
                     elif pair[0] < pair[1]:
-                        pair[1] = "\\textbf{"+str(pair[1])+"}"
+                        pair[1] = "\\textbf{" + str(pair[1]) + "}"
                     write_str += f" & {pair[0]} & {pair[1]}"
-                    pair =[]
+                    pair = []
             f.write(f"{write_str}\\\\ \n")
         f.write("\n\n\n\n")
-

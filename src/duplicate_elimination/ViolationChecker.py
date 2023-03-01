@@ -53,7 +53,7 @@ def check_emerged_violations(violation_results, default_violations_results):
     return violations_emerged_results
 
 
-def confirm_determinism(scenario, containers, rerun_times):
+def confirm_determinism(scenario, containers, first_violations_emerged_results, rerun_times):
     rerun_scenario_list = []
     for i in range(rerun_times):
         temp_scenario = deepcopy(scenario)
@@ -75,7 +75,7 @@ def confirm_determinism(scenario, containers, rerun_times):
         violation_results = temp_scenario.measure_violations()
         violations_emerged_results = check_emerged_violations(violation_results, temp_scenario.original_violation_results)
 
-        for emerged_violation in violations_emerged_results:
+        for emerged_violation in first_violations_emerged_results+violations_emerged_results:
             if emerged_violation.main_type not in accumulated_emerged_results_count_dict.keys():
                 accumulated_emerged_results_count_dict[emerged_violation.main_type] = [emerged_violation]
             else:
@@ -87,8 +87,10 @@ def confirm_determinism(scenario, containers, rerun_times):
 
         temp_scenario.delete_record()
 
-
+    ########################
     determined_emerged_results = [v[0] for v in accumulated_emerged_results_count_dict.values() if
                                   len(v) >= DETERMINISM_CONFIRMED_TIMES]
+    ########################
+
     print("-------------------------------------------------")
     return determined_emerged_results, all_emerged_results

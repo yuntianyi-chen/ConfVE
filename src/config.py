@@ -1,22 +1,20 @@
+from pathlib import Path
+
 """
 Global configurations for the framework
 """
-from pathlib import Path
-
-
 
 #######################
 ## Customized Config ##
 #######################
 
-OBS_PERCEPTION_FREQUENCY = 25  # scenoRITA/AV-Fuzzer/ADFuzz-10  /  DoppelTest-25
-MAX_RECORD_TIME = 10  # 10/30
+OBS_PERCEPTION_FREQUENCY = 10  # scenoRITA/AV-Fuzzer/ADFuzz-10  /  DoppelTest-25
+MAX_RECORD_TIME = 30  # 10/30
 AV_TESTING_APPROACH = "DoppelTest"  # scenoRITA/DoppelTest/AV-Fuzzer/ADFuzz
 MAP_NAME = "san_mateo"  # borregas_ave/sunnyvale_loop/San_Francisco/san_mateo
 CONTAINER_NUM = 1  # 5/10
-OPT_MODE = "T-way"  # GA/DRL/Random/T-way
+OPT_MODE = "GA"  # GA/DRL/Random/T-way
 TIME_HOUR_THRESHOLD = 10  # hours
-
 
 
 
@@ -29,13 +27,13 @@ T_STRENGTH_VALUE = 2  # pairwise
 
 # TESTING SETTINGS
 MODULE_NAME = "planning"
-DEFAULT_CONFIG_FILE = False
 CONFIG_FILE_NAME = f"{MODULE_NAME}_config.pb.txt"
 SIMILARITY_THRESHOLD = 0.5
 MAX_INITIAL_SCENARIOS = 10  # 10
 
 # APOLLO SETTINGS
 TRAFFIC_LIGHT_FREQUENCY = 10
+DEFAULT_CONFIG_FILE = True
 TRAFFIC_LIGHT_MODE = "read"  # read/random/off
 
 # GA SETTINGS
@@ -49,8 +47,9 @@ SELECT_NUM_RATIO = [7, 2, 1]  # [5, 3, 2]/[7, 2, 1]
 
 # Rerun 5 times if occurred >= 3 times, confirmed
 DETERMINISM_RERUN_TIMES = 5  # 5/10
-DEFAULT_DETERMINISM_RERUN_TIMES = 10  # 10
-DETERMINISM_CONFIRMED_TIMES = 3  # 3
+DEFAULT_DETERMINISM_RERUN_TIMES = 1  # 10
+DETERMINISM_CONFIRMED_TIMES = 4  # >3/(1+5) or >= 4/(1+5)
+ENABLE_STRICT_DETERMINISM_CHECKING = True
 
 MODULE_ORACLES = ["RoutingFailure",
                   "PredictionFailure",
@@ -104,5 +103,3 @@ APOLLO_VEHICLE_HEIGHT = 1.48
 APOLLO_VEHICLE_back_edge_to_center = 1.043
 
 # OBS_TYPE_DICT = {3: "PEDESTRIAN", 4: "BICYCLE", 5: "VEHICLE"}
-
-

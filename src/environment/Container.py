@@ -1,7 +1,5 @@
-import os
 import time
 import docker
-import signal
 import subprocess
 from environment.Dreamview import Dreamview
 from tools.bridge.CyberBridge import CyberBridge, Topics
@@ -201,15 +199,6 @@ class Container:
         # print("Starting modules...")
         self.modules_operation(operation="start")
 
-    def restart_dreamview(self):
-        self.close_subprocess()
-        self.start_dreamview()
-
-    def restart_modules(self):
-        self.modules_operation(operation="stop")
-        self.kill_modules()
-        self.modules_operation(operation="start")
-
     def close_subprocess(self):
         cmd = f"docker exec -d {self.container_name} /apollo/scripts/my_scripts/close_subprocess.sh"
         subprocess.run(cmd.split())
@@ -217,14 +206,6 @@ class Container:
     def kill_modules(self):
         cmd = f"docker exec -d {self.container_name} bash /apollo/scripts/my_scripts/kill_modules.sh"
         subprocess.run(cmd.split())
-
-    def dreamview_operation(self, operation):
-        cmd = f"docker exec -d {self.container_name} bash /apollo/scripts/bootstrap.sh {operation}"
-        subprocess.run(cmd.split())
-        if operation == "start" or "restart":
-            time.sleep(5)
-        else:
-            time.sleep(1)
 
     def modules_operation(self, operation):
         cmd = f"docker exec -d {self.container_name} bash /apollo/scripts/routing.sh {operation}"
@@ -242,9 +223,26 @@ class Container:
         cmd = f"docker exec -d {self.container_name} /apollo/scripts/my_scripts/stop_recorder.sh"
         subprocess.run(cmd.split())
 
-    def stop_subprocess(self, p):
-        try:
-            os.kill(p.pid, signal.SIGINT)
-            p.kill()
-        except OSError:
-            print("stopped")
+    # def stop_subprocess(self, p):
+    #     try:
+    #         os.kill(p.pid, signal.SIGINT)
+    #         p.kill()
+    #     except OSError:
+    #         print("stopped")
+
+    # def restart_dreamview(self):
+    #     self.close_subprocess()
+    #     self.start_dreamview()
+
+    # def restart_modules(self):
+    #     self.modules_operation(operation="stop")
+    #     self.kill_modules()
+    #     self.modules_operation(operation="start")
+
+    # def dreamview_operation(self, operation):
+    #     cmd = f"docker exec -d {self.container_name} bash /apollo/scripts/bootstrap.sh {operation}"
+    #     subprocess.run(cmd.split())
+    #     if operation == "start" or "restart":
+    #         time.sleep(5)
+    #     else:
+    #         time.sleep(1)

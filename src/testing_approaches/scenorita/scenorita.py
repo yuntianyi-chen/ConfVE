@@ -10,6 +10,8 @@ import networkx as nx
 from config import OBS_DIR, MAX_RECORD_TIME, MAP_NAME, APOLLO_RECORDS_DIR, PROJECT_ROOT, APOLLO_ROOT
 from modules.routing.proto.routing_pb2 import RoutingRequest
 from environment.Container import Container
+from environment.MapLoader import MapLoader
+from modules.common.proto.geometry_pb2 import PointENU
 from scenario_handling.MessageGenerator import MessageGenerator
 from testing_approaches.scenorita.run_oracles import run_oracles
 from testing_approaches.scenorita.scenoRITA_config import OBS_MIN, OBS_MAX, NP, TOTAL_LANES, ETIME, CXPB, MUTPB, ADDPB, \
@@ -21,6 +23,7 @@ from testing_approaches.scenorita.auxiliary.map_info_parser import validatePath,
     generateObsDescFile, \
     produceTrace
 from tools.bridge.CyberBridge import Topics
+from tools.hdmap.MapParser import MapParser
 
 obs_folder = OBS_DIR + "scenorita/"
 dest = PROJECT_ROOT + "/data/analysis"
@@ -164,6 +167,14 @@ def run_scenario(scenario, ctn):
     init_x, init_y, dest_x, dest_y = float(adc_route_raw[0]), float(adc_route_raw[1]), float(
         adc_route_raw[2]), float(adc_route_raw[3])
 
+    scenario.heading = MapParser.get_instance().get_heading_for_coordinate(init_x, init_y)
+    scenario.coord = PointENU(x=init_x, y=init_y)
+
+    ctn.modules_operation(operation="start")
+    ctn.stop_sim_control_standalone()
+    ctn.start_sim_control_standalone()
+    ctn.message_handler.send_initial_localization(scenario)
+
     print("    Start recorder...")
     ctn.start_recorder(scenario.record_name)
 
@@ -265,7 +276,7 @@ def runScenario(deme, record_name, ctn):
             print("attempted %s run" % num_runs)
 
         # approach_generator = ScenoRITA()
-        adc_route = MessageGenerator("").adc_routing_generate()
+        adc_route = MessageGenerator().adc_routing_generate()
         scenario = Scenario(record_name, record_id=0)
         scenario.update_obs_adc(obs_apollo_folder, adc_route)
         output_result = run_scenario(scenario, ctn)
@@ -301,14 +312,17 @@ def delete_records(records_path, mk_dir):
 if __name__ == "__main__":
     # delete_records()
     delete_records(records_path=APOLLO_RECORDS_DIR, mk_dir=True)
+    map_instance = MapLoader().map_instance
 
-    ctn = Container(APOLLO_ROOT, f'apollo_dev_cloudsky')
+    ctn = Container(APOLLO_ROOT, f'cloudsky')
 
     ctn.start_instance()
     ctn.cyber_env_init()
     ctn.connect_bridge()
-    ctn.create_message_handler()
+    ctn.create_message_handler(map_instance)
     print(f'Dreamview at http://{ctn.ip}:{ctn.port}')
+
+    ctn.dreamview.reset()
 
     toolbox = scenoRITA_ga_init()
 
