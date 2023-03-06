@@ -159,6 +159,27 @@ class Container:
             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
         )
 
+    def start_sim_control_standalone_v7(self, pose_x, pose_y, heading):
+        """
+        Starts SimControlStandalone module
+        """
+        cmd = f"docker exec -d {self.container_name} /apollo/bazel-bin/modules/sim_control_standalone/sim_control_standalone_main {pose_x} {pose_y} {heading}"
+        subprocess.run(
+            cmd.split(),
+            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
+        )
+
+    def stop_sim_control_standalone_v7(self):
+        """
+        Stops SimControlStandalone module
+        """
+        cmd = f"docker exec {self.container_name} /apollo/modules/sim_control_standalone/script.sh stop"
+        subprocess.run(
+            cmd.split(),
+            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
+        )
+
+
     def create_message_handler(self, map_instance):
         self.message_handler = MessageHandler(self.bridge, map_instance)
 

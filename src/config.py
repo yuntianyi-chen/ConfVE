@@ -9,7 +9,7 @@ Global configurations for the framework
 #######################
 
 OBS_PERCEPTION_FREQUENCY = 10  # scenoRITA/AV-Fuzzer/ADFuzz-10  /  DoppelTest-25
-MAX_RECORD_TIME = 30  # 10/30
+MAX_RECORD_TIME = 10  # 10/30
 AV_TESTING_APPROACH = "DoppelTest"  # scenoRITA/DoppelTest/AV-Fuzzer/ADFuzz
 MAP_NAME = "san_mateo"  # borregas_ave/sunnyvale_loop/San_Francisco/san_mateo
 CONTAINER_NUM = 1  # 5/10

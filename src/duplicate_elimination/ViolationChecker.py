@@ -85,7 +85,7 @@ def confirm_determinism(scenario, containers, first_violations_emerged_results, 
             if violation not in all_emerged_results:
                 all_emerged_results.append(violation)
 
-        temp_scenario.delete_record()
+        # temp_scenario.delete_record()
 
     ########################
     determined_emerged_results = [v[0] for v in accumulated_emerged_results_count_dict.values() if

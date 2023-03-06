@@ -107,10 +107,12 @@ class FileOutputManager:
             if scenario.has_emerged_violations:
                 self.save_record(scenario.record_name)
                 self.delete_record(scenario.record_name)
+
                 # for comfirmed_record_name in scenario.confirmed_record_name_list:
                 #     self.save_record(comfirmed_record_name)
             else:
                 self.delete_record(scenario.record_name)
+
                 # if len(scenario.confirmed_record_name_list) > 0:
                 #     for comfirmed_record_name in scenario.confirmed_record_name_list:
                 #         self.delete_record(comfirmed_record_name)

@@ -26,14 +26,14 @@ class RecordAnalyzer:
             CollisionOracle(),
             ModuleOracle(),
             ComfortOracle(),
-            StopSignOracle(),
+            # StopSignOracle(),
             SpeedingOracle(),
-            TrafficSignalOracle(),
+            # TrafficSignalOracle(),
             ModuleDelayOracle(),
             UnsafeLaneChangeOracle(),
             # UUStopOracle(),
             JunctionLaneChangeOracle(),
-            EStopOracle(),
+            # EStopOracle(),
         ]
         for o in oracles:
             self.oracle_manager.register_oracle(o)
