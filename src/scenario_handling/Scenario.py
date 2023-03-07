@@ -65,3 +65,5 @@ class Scenario:
         self.update_original_violations(pre_record_info)
         self.update_routing_perception_info(pre_record_info)
         self.update_coord_heading(pre_record_info)
+        self.initial_scenario_record_path = pre_record_info.record_file_path
+        self.initial_scenario_record_name = pre_record_info.record_name

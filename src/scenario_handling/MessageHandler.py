@@ -132,7 +132,7 @@ class MessageHandler:
                 )
             )
 
-        for i in range(10):
+        for i in range(5):
             loc.header.sequence_num = i
             self.bridge.publish(
                 Topics.Localization, loc.SerializeToString())

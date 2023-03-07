@@ -7,6 +7,7 @@ class MessageGenerator:
     def __init__(self):
         self.scenario_record_dir_path = INITIAL_SCENARIO_RECORD_DIR
         self.scenario_record_path_list = []
+        self.scenario_recordname_list = []
         self.total_records_count = 0
         self.pre_record_info_list = []
         self.violation_results_list = []
@@ -29,6 +30,7 @@ class MessageGenerator:
     def get_record_path_list(self):
         scenario_recordname_list = listdir(self.scenario_record_dir_path)
         scenario_recordname_list.sort()
+        self.scenario_recordname_list = scenario_recordname_list
         self.scenario_record_path_list = [f"{self.scenario_record_dir_path}/{recordname}" for recordname in
                                           scenario_recordname_list]
         self.total_records_count = len(self.scenario_record_path_list)
@@ -47,6 +49,7 @@ class MessageGenerator:
                 for i in range(len(self.pre_record_info_list)):
                     if rid == self.pre_record_info_list[i].record_id:
                         pre_record_info = InitialRecordInfo(True, self.record_counter,
+                                                            self.scenario_recordname_list[self.record_counter],
                                                             self.scenario_record_path_list[self.record_counter])
                         self.record_counter += 1
                         self.pre_record_info_list[i] = pre_record_info
@@ -58,6 +61,7 @@ class MessageGenerator:
             for i in range(len(self.pre_record_info_list)):
                 if rid == self.pre_record_info_list[i].record_id:
                     pre_record_info = InitialRecordInfo(True, self.record_counter,
+                                                        self.scenario_recordname_list[self.record_counter],
                                                         self.scenario_record_path_list[self.record_counter])
                     self.record_counter += 1
                     self.pre_record_info_list[i] = pre_record_info
@@ -74,8 +78,8 @@ class MessageGenerator:
     def get_record_info(self):
         if AV_TESTING_APPROACH != "Random":
             for i in range(MAX_INITIAL_SCENARIOS):
-                pre_record_info = InitialRecordInfo(True,
-                                                    self.record_counter,
+                pre_record_info = InitialRecordInfo(True, self.record_counter,
+                                                    self.scenario_recordname_list[self.record_counter],
                                                     self.scenario_record_path_list[self.record_counter])
                 self.record_counter += 1
                 self.pre_record_info_list.append(pre_record_info)

@@ -8,8 +8,9 @@ from tools.hdmap.MapParser import MapParser
 
 class InitialRecordInfo:
 
-    def __init__(self, is_record_file, record_id, record_file_path):
+    def __init__(self, is_record_file, record_id, record_name, record_file_path):
         self.is_record_file = is_record_file
+        self.record_name = record_name
         self.record_id = record_id
         self.record_file_path = record_file_path
 

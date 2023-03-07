@@ -1,4 +1,6 @@
 import time
+
+from scenario_handling.ScenarioReplayer import replay_scenarios_by_division, replay_scenarios_in_threading
 from scenario_handling.create_scenarios import create_scenarios, create_scenario
 from scenario_handling.ScenarioRunner import run_scenarios_by_division
 from optimization_algorithms.genetic_algorithm.ga import generate_individuals
@@ -33,7 +35,9 @@ def run_default_scenarios(scenario_list, containers, message_generator):
 def run_scenarios(generated_individual, scenario_list, containers):
     print("Normal Run...")
     start_time = time.time()
-    run_scenarios_by_division(scenario_list, containers)
+    # run_scenarios_by_division(scenario_list, containers)
+    # replay_scenarios_by_division(scenario_list, containers)
+    replay_scenarios_in_threading(scenario_list, containers)
 
     for scenario in scenario_list:
         violation_results = scenario.measure_violations()

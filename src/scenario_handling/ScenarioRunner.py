@@ -38,7 +38,6 @@ def start_running(scenario, container):
     container.start_recorder(scenario.record_name)
     time.sleep(1)
 
-
     container.message_handler.send_routing_request_by_channel(scenario.routing_request_message)
     container.message_handler.register_obstacles_by_channel(scenario.obs_perception_messages)
     if TRAFFIC_LIGHT_MODE == "read":
