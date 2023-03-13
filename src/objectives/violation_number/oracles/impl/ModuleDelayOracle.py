@@ -17,7 +17,7 @@ class ModuleDelayOracle(OracleInterface):
         delay_duration: float
     """
 
-    MAX_DELAY = 5.0
+    MAX_DELAY = 2.0
 
     def __init__(self):
         self.modules = ['Localization', 'Perception', 'Prediction', 'Planning']

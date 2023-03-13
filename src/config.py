@@ -9,13 +9,15 @@ Global configurations for the framework
 #######################
 
 OBS_PERCEPTION_FREQUENCY = 10  # scenoRITA/AV-Fuzzer/ADFuzz-10  /  DoppelTest-25
-MAX_RECORD_TIME = 10  # 10/30
+MAX_RECORD_TIME = 30  # 10/30
 AV_TESTING_APPROACH = "scenoRITA"  # scenoRITA/DoppelTest/AV-Fuzzer/ADFuzz
-MAP_NAME = "san_mateo"  # borregas_ave/sunnyvale_loop/San_Francisco/san_mateo
+MAP_NAME = "sunnyvale_loop"  # borregas_ave/sunnyvale_loop/San_Francisco/san_mateo
 CONTAINER_NUM = 5  # 5/10
 OPT_MODE = "GA"  # GA/DRL/Random/T-way
 TIME_HOUR_THRESHOLD = 10  # hours
 
+CX_P = 0.2
+MT_P = 0.8
 
 
 ####################
@@ -47,7 +49,7 @@ SELECT_NUM_RATIO = [7, 2, 1]  # [5, 3, 2]/[7, 2, 1]
 
 # Rerun 5 times if occurred >= 3 times, confirmed
 DETERMINISM_RERUN_TIMES = 5  # 5/10
-DEFAULT_DETERMINISM_RERUN_TIMES = 30  # 10/30
+DEFAULT_DETERMINISM_RERUN_TIMES = 10  # 10/30
 DETERMINISM_CONFIRMED_TIMES = 4  # >3/(1+5) or >= 4/(1+5)
 ENABLE_STRICT_DETERMINISM_CHECKING = True
 

@@ -30,6 +30,7 @@ if __name__ == '__main__':
 
     # pre_record_info = InitialRecordInfo(True, 0, scenario.record_name, scenario.record_path)
     pre_record_info = InitialRecordInfo(True, 0, scenario.record_name, f"{INITIAL_SCENARIO_RECORD_DIR}/{scenario.record_name}.00000")
+    pre_record_info.update_violation_by_measuring()
 
     scenario.update_record_info(pre_record_info)
     traffic_light_control = pre_record_info.traffic_lights_list

@@ -5,10 +5,10 @@ import pandas as pd
 from kneed import KneeLocator
 from sklearn.cluster import DBSCAN
 from sklearn.neighbors import NearestNeighbors
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
 from config import FEATURES_CSV_DIR, MODULE_ORACLES
 
-# from matplotlib import pyplot as plt
+from matplotlib import pyplot as plt
 
 warnings.filterwarnings('ignore')
 
@@ -16,38 +16,42 @@ warnings.filterwarnings('ignore')
 class Eliminator:
 
     def __init__(self):
-        self.scaler = StandardScaler()
+        # self.scaler = StandardScaler()
+        self.scaler = MinMaxScaler()
 
-    def cluster(self, pd_data, csv_file_name):
-        pd_features = pd_data.iloc[:, 1:]
-        # scaler = MinMaxScaler()
+    def cluster(self, pd_data):
+        pd_features = pd_data.iloc[:, :]
+        # pd_features = pd_data.iloc[:, 1:]
         pd_features_scaled = self.scaler.fit_transform(pd_features)
         neigh = NearestNeighbors(n_neighbors=2)
         nbrs = neigh.fit(pd_features_scaled)
         distances, indices = nbrs.kneighbors(pd_features_scaled)
         distances = np.sort(distances, axis=0)
         distances = distances[:, 1]
-        # plt.plot(distances)
-        # plt.show()
+
+        plt.plot(distances)
+        plt.show()
+
         i = np.arange(len(distances))
         knee = KneeLocator(i, distances, S=1, curve='convex', direction='increasing', interp_method='polynomial')
         # plt.show()
+        # elbow = KneeLocator(i, distances, S=1, curve='concave', direction='increasing', interp_method='polynomial')
+
         if knee.knee:
             epsilon = distances[knee.knee]
         else:
-            epsilon = distances[round(len(distances) / 2) - 1]
+            epsilon = distances[round(len(distances) / 2)]
         # Cluster the features based on eps
-        db_clusters = DBSCAN(eps=epsilon, min_samples=1, metric='cityblock').fit_predict(pd_features_scaled)
+        db_clusters = DBSCAN(eps=epsilon, min_samples=1, metric='euclidean').fit_predict(pd_features_scaled)
         num_clusters = len(set(db_clusters))
 
         all_vio = len(pd_features_scaled)
         unique_vio = num_clusters
         elim_ratio = 100 * (1 - float(num_clusters) / len(pd_features_scaled))
-        message = csv_file_name + ',  {:,},  {:,},  {:.2f}%'
-        print(message.format(all_vio, unique_vio, elim_ratio))
+        # message = csv_file_name + ',  {:,},  {:,},  {:.2f}%'
+        # print(message.format(all_vio, unique_vio, elim_ratio))
 
-        pd_data.insert(0, "clusters", db_clusters, True)
-        return pd_data, all_vio, unique_vio, elim_ratio
+        return db_clusters, all_vio, unique_vio, elim_ratio
 
 
 if __name__ == "__main__":
@@ -125,8 +129,11 @@ if __name__ == "__main__":
                     # output_data.to_csv(output_file_path, index=False)
                     try:
                         output_file_path = f"{output_dir}/clustered_{oracle}"
-                        output_data, all_vio, unique_vio, elim_ratio = eliminator.cluster(pd_data, oracle_type)
-                        output_data.to_csv(output_file_path, index=False)
+                        db_clusters, all_vio, unique_vio, elim_ratio = eliminator.cluster(pd_data)
+                        pd_data.insert(0, "clusters", db_clusters, True)
+                        message = oracle_type + ',  {:,},  {:,},  {:.2f}%'
+                        print(message.format(all_vio, unique_vio, elim_ratio))
+                        pd_data.to_csv(output_file_path, index=False)
                     except:
                         print(f"Cannot eliminate {oracle_type}")
 

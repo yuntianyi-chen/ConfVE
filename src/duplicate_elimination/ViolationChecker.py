@@ -1,17 +1,25 @@
 from copy import deepcopy
 import pandas as pd
+from scipy import spatial
+from scipy.spatial import distance
 from scipy.stats import pearsonr, spearmanr, kendalltau
+from sklearn.metrics import jaccard_score
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from config import MODULE_ORACLES, SIMILARITY_THRESHOLD, DETERMINISM_CONFIRMED_TIMES
+from duplicate_elimination.Eliminator import Eliminator
 from scenario_handling.ScenarioReplayer import replay_scenarios_by_division, replay_scenarios_in_threading
 from scenario_handling.ScenarioRunner import run_scenarios_by_division
-
+from sklearn.metrics.pairwise import cosine_similarity
 
 def calculate_similarity(features, default_features):
     p_corr, _ = pearsonr(features, default_features)
     # s_corr, _ = spearmanr(features, default_features)
     # k_corr, _ = kendalltau(features, default_features)
-    # dst = distance.euclidean(features, default_features)
+    #
+    # euc_dst = distance.euclidean(features, default_features)
+    # man_dst = distance.cityblock(features, default_features)
+    # cosine_sim = cosine_similarity(features.reshape(1,-1), default_features.reshape(1,-1))
+    # jac_score = jaccard_score(features, default_features)
     return p_corr
 
 
@@ -20,24 +28,36 @@ def compare_similarity(features, default_features_list):
     df_new_row = pd.DataFrame([features])
     pd_all_features = pd.concat([pd_default_features, df_new_row])
 
+    eliminator = Eliminator()
+    db_clusters, all_vio, unique_vio, elim_ratio = eliminator.cluster(pd_all_features)
+    pd_all_features.insert(0, "clusters", db_clusters, True)
+
+    cluster_id = db_clusters[-1]
+    if cluster_id not in db_clusters[:-1]:
+        check_similar = False
+    else:
+        check_similar = True
+
+    # # scaler = StandardScaler()
     # scaler = MinMaxScaler()
-    scaler = StandardScaler()
-
-    pd_all_features_scaled = scaler.fit_transform(pd_all_features)
-
-    pd_default_features_scaled = pd_all_features_scaled[:-1]
-    pd_features_scaled = pd_all_features_scaled[-1]
-
-    check_similar = False
-    sim_list =[]
-    for pd_default_features_scaled_item in pd_default_features_scaled:
-        corr = calculate_similarity(pd_features_scaled, pd_default_features_scaled_item)
-        if corr >= SIMILARITY_THRESHOLD:
-            check_similar = True
-            break
-        else:
-            sim_list.append(corr)
-    return check_similar, sim_list
+    # pd_all_features_scaled = scaler.fit_transform(pd_all_features)
+    # # pd_all_features_scaled = pd_all_features.to_numpy()
+    #
+    # pd_default_features_scaled = pd_all_features_scaled[:-1]
+    # pd_features_scaled = pd_all_features_scaled[-1]
+    #
+    #
+    # check_similar = False
+    # sim_list = []
+    # for pd_default_features_scaled_item in pd_default_features_scaled:
+    #     corr = calculate_similarity(pd_features_scaled, pd_default_features_scaled_item)
+    #     if corr >= SIMILARITY_THRESHOLD:
+    #         check_similar = True
+    #         sim_list.append(corr)
+    #         # break
+    #     else:
+    #         sim_list.append(corr)
+    return check_similar
 
 
 def check_emerged_violations(violation_results, default_violations_results):
@@ -51,10 +71,11 @@ def check_emerged_violations(violation_results, default_violations_results):
             if not default_features_list:
                 violations_emerged_results.append(violation)
             else:
-                check_similar, sim_list = compare_similarity(violation.features, default_features_list)
+                check_similar = compare_similarity(violation.features, default_features_list)
+                # check_similar, sim_list = compare_similarity(violation.features, default_features_list)
+                # print(f"    Similarity List: {sim_list}")
                 if not check_similar:
                     violations_emerged_results.append(violation)
-                    print(f"Similarity List: {sim_list}")
     return violations_emerged_results
 
 
