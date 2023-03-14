@@ -1,6 +1,6 @@
 import random
 from copy import deepcopy
-from config import SELECT_NUM_RATIO, SELECT_MODE, INIT_POP_SIZE
+from config import SELECT_NUM_RATIO, SELECT_MODE, INIT_POP_SIZE, POP_SIZE
 from optimization_algorithms.genetic_algorithm.IndividualWithFitness import IndividualWithFitness
 from optimization_algorithms.genetic_algorithm.nsga2 import sort_nondominated, crowding_dist
 
@@ -28,13 +28,13 @@ def select(individual_list_after_mutate, config_file_obj):
         select_counter = 0
         selected_index_list = []
         for sub_fronts_list in fronts_index_list:
-            if select_counter + len(sub_fronts_list) < INIT_POP_SIZE:
+            if select_counter + len(sub_fronts_list) < POP_SIZE:
                 selected_index_list += sub_fronts_list
                 select_counter += len(sub_fronts_list)
             else:
                 sub_indexed_distances = [(index, distances_list[index]) for index in sub_fronts_list]
                 sub_indexed_distances.sort(reverse=True, key=lambda x: x[1])
-                sub_select_num = INIT_POP_SIZE - select_counter
+                sub_select_num = POP_SIZE - select_counter
                 for index, distance in sub_indexed_distances[:sub_select_num]:
                     selected_index_list.append(index)
                 break

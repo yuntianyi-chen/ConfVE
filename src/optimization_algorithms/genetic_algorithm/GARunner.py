@@ -12,11 +12,18 @@ class GARunner(TestRunner):
     def ga_runner(self):
         # print("Start GA")
 
-        individual_list = generate_individuals(self.config_file_obj, INIT_POP_SIZE)
+        init_individual_list = generate_individuals(self.config_file_obj, INIT_POP_SIZE)
 
         # initial mutation
-        # individual_list = mutate(individual_list, self.config_file_obj, self.range_analyzer)
+        init_individual_list = mutate(init_individual_list, self.config_file_obj, self.range_analyzer)
+        self.individual_num = 0
+        for init_individual in init_individual_list:
+            ind_id = f"Init_Config_{self.individual_num}"
+            self.individual_running(init_individual, ind_id)
 
+        individual_list = select(init_individual_list, self.config_file_obj)
+
+        # individual_list=init_individual_list
         for generation_num in range(GENERATION_LIMIT):
             print("-------------------------------------------------")
             print(f"Generation_{generation_num}")

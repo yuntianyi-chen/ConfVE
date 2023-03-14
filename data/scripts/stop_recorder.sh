@@ -20,5 +20,5 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 
 # source "/apollo/scripts/apollo_base.sh"
 python3 /apollo/scripts/record_bag.py --stop --stop_signal SIGINT
-#ps -ef | grep -E 'cyber_recorder' | grep -v 'grep' | awk '{print $2}' | xargs kill -9
+ps -ef | grep -E 'cyber_recorder play' | grep -v 'grep' | awk '{print $2}' | xargs kill -9
 

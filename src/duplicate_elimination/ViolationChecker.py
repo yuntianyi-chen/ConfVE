@@ -11,6 +11,7 @@ from scenario_handling.ScenarioReplayer import replay_scenarios_by_division, rep
 from scenario_handling.ScenarioRunner import run_scenarios_by_division
 from sklearn.metrics.pairwise import cosine_similarity
 
+
 def calculate_similarity(features, default_features):
     p_corr, _ = pearsonr(features, default_features)
     # s_corr, _ = spearmanr(features, default_features)

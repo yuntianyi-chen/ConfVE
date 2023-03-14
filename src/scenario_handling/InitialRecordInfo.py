@@ -26,6 +26,7 @@ class InitialRecordInfo:
         self.coord = None
         self.heading = None
 
+        # self.update_violation_by_measuring()
         self.extract_record_info()
 
     def update_violation_by_measuring(self):

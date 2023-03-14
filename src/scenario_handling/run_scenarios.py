@@ -55,6 +55,7 @@ def run_scenarios_without_determinism_checking(generated_individual, scenario_li
     total_time = time.time() - start_time
     generated_individual.update_exec_time(total_time)
 
+
 def run_scenarios(generated_individual, scenario_list, containers):
     print("Normal Run...")
     start_time = time.time()

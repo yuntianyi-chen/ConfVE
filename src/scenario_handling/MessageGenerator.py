@@ -55,7 +55,7 @@ class MessageGenerator:
                         pre_record_info = InitialRecordInfo(True, self.record_counter,
                                                             self.scenario_recordname_list[self.record_counter],
                                                             self.scenario_record_path_list[self.record_counter])
-                        pre_record_info.update_violation_by_measuring()
+                        # pre_record_info.update_violation_by_measuring()
 
                         self.record_counter += 1
                         self.pre_record_info_list[i] = pre_record_info
@@ -69,7 +69,7 @@ class MessageGenerator:
                     pre_record_info = InitialRecordInfo(True, self.record_counter,
                                                         self.scenario_recordname_list[self.record_counter],
                                                         self.scenario_record_path_list[self.record_counter])
-                    pre_record_info.update_violation_by_measuring()
+                    # pre_record_info.update_violation_by_measuring()
                     self.record_counter += 1
                     self.pre_record_info_list[i] = pre_record_info
                     return pre_record_info
@@ -110,7 +110,7 @@ class MessageGenerator:
                 pre_record_info = InitialRecordInfo(True, record_id,
                                                     self.scenario_recordname_list[record_id],
                                                     self.scenario_record_path_list[record_id])
-                pre_record_info.update_violation_by_measuring()
+                # pre_record_info.update_violation_by_measuring()
 
                 self.pre_record_info_list.append(pre_record_info)
             self.update_total_violation_results()

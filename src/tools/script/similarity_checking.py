@@ -38,7 +38,7 @@ def real_test():
                 default_violations_results = default_result[1]
 
         feature_list=["x","y","heading","speed","speed_limit","duration"]
-        value_list = [586266.096110053,4141283.590686367,1.285071800006732,12.34,11.11111111111111,0.491821]
+        value_list = [586266.096110053,4141283.590686367,1.285071800006732,13.34,11.11111111111111,0.491821]
         violation_results = dict(zip(feature_list, value_list))
 
         default_features_list = [d.features for d in default_violations_results if

@@ -179,9 +179,9 @@ class Container:
             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
         )
 
-
     def create_message_handler(self, map_instance):
-        self.message_handler = MessageHandler(self.bridge, map_instance)
+        self.message_handler = MessageHandler(map_instance)
+        self.message_handler.update_bridge(self.bridge)
 
     def connect_bridge(self):
         self.bridge = self.start_bridge_simply()
@@ -194,7 +194,7 @@ class Container:
         while True:
             try:
                 docker_container_ip = self.get_docker_container_ip()
-                bridge = CyberBridge(docker_container_ip, 9090)
+                bridge = CyberBridge(docker_container_ip, self.bridge_port)
                 return bridge
             except ConnectionRefusedError:
                 time.sleep(1)

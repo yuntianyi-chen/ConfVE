@@ -12,11 +12,13 @@ from tools.bridge.CyberBridge import Topics
 
 class MessageHandler:
 
-    def __init__(self, bridge, map_instance) -> None:
-        self.bridge = bridge
+    def __init__(self, map_instance) -> None:
         self.obs_is_running = False
         self.traffic_is_running = False
         self.map_instance = map_instance
+
+    def update_bridge(self, bridge):
+        self.bridge = bridge
 
     def register_obs_perception(self):
         header_sequence_num = 0

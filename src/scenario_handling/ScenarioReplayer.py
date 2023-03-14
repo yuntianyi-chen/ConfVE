@@ -5,6 +5,7 @@ from config import MAX_RECORD_TIME, REPLAY_SCENARIO_RECORD_DIR
 
 
 def replay_scenario(scenario, container):
+
     container.modules_operation(operation="start")
     container.stop_sim_control_standalone()
     container.start_sim_control_standalone()
@@ -18,7 +19,9 @@ def replay_scenario(scenario, container):
     container.stop_recorder()
     time.sleep(2)
     container.kill_modules()
-
+    # time.sleep(2)
+    container.connect_bridge()
+    container.message_handler.update_bridge(container.bridge)
 
 def replay_scenarios_in_threading(scenario_list, containers):
     sub_scenario_list_list = [scenario_list[x:x + len(containers)] for x in

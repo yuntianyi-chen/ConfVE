@@ -40,16 +40,17 @@ TRAFFIC_LIGHT_MODE = "read"  # read/random/off
 
 # GA SETTINGS
 GENERATION_LIMIT = 50  # 10/20/50
-INIT_POP_SIZE = 10  # 60 individuals in each generation
+INIT_POP_SIZE = 60  # 60 individuals in each generation
+POP_SIZE = 10  # 60 individuals in each generation
 FITNESS_MODE = "multi_obj"  # emerge/multi_obj
 SELECT_MODE = "nsga2"  # nsga2/ratio
 
 # FOR RATIO SELECT
-SELECT_NUM_RATIO = [7, 2, 1]  # [5, 3, 2]/[7, 2, 1]
+SELECT_NUM_RATIO = [8, 1, 1]  # [5, 3, 2]/[7, 2, 1]
 
 # Rerun 5 times if occurred >= 3 times, confirmed
 DETERMINISM_RERUN_TIMES = 5  # 5/10
-DEFAULT_DETERMINISM_RERUN_TIMES = 10  # 10/30
+DEFAULT_DETERMINISM_RERUN_TIMES = 30  # 10/30
 DETERMINISM_CONFIRMED_TIMES = 4  # >3/(1+5) or >= 4/(1+5)
 ENABLE_STRICT_DETERMINISM_CHECKING = True
 

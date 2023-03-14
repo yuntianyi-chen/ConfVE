@@ -1,5 +1,5 @@
 import time
-from config import T_STRENGTH_VALUE, TIME_HOUR_THRESHOLD, INIT_POP_SIZE
+from config import T_STRENGTH_VALUE, TIME_HOUR_THRESHOLD, INIT_POP_SIZE, POP_SIZE
 from optimization_algorithms.TestRunner import TestRunner
 from optimization_algorithms.baseline.TwiseTuner import TwiseTuner
 from optimization_algorithms.genetic_algorithm.ga import generate_individuals
@@ -19,7 +19,7 @@ class TwayRunner(TestRunner):
             print(f"Config_{self.individual_num}")
             print("-------------------------------------------------")
 
-            for inner_loop_i in range(INIT_POP_SIZE * 6):
+            for inner_loop_i in range(POP_SIZE):
                 default_individual = generate_individuals(self.config_file_obj, population_size=1)[0]
                 generated_individual = self.twise_tuner.tune_individual(default_individual, self.range_analyzer)
                 ind_id = f"Config_{self.individual_num}"

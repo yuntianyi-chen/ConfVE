@@ -26,21 +26,21 @@ class Eliminator:
         neigh = NearestNeighbors(n_neighbors=2)
         nbrs = neigh.fit(pd_features_scaled)
         distances, indices = nbrs.kneighbors(pd_features_scaled)
-        distances = np.sort(distances, axis=0)
-        distances = distances[:, 1]
+        sorted_distances = np.sort(distances, axis=0)
+        sorted_distances = sorted_distances[:, 1]
 
-        plt.plot(distances)
-        plt.show()
+        # plt.plot(distances)
+        # plt.show()
 
-        i = np.arange(len(distances))
-        knee = KneeLocator(i, distances, S=1, curve='convex', direction='increasing', interp_method='polynomial')
+        i = np.arange(len(sorted_distances))
+        knee = KneeLocator(i, sorted_distances, S=1, curve='convex', direction='increasing', interp_method='polynomial')
         # plt.show()
         # elbow = KneeLocator(i, distances, S=1, curve='concave', direction='increasing', interp_method='polynomial')
 
         if knee.knee:
-            epsilon = distances[knee.knee]
+            epsilon = sorted_distances[knee.knee]
         else:
-            epsilon = distances[round(len(distances) / 2)]
+            epsilon = sorted_distances[round(len(sorted_distances) / 2)]
         # Cluster the features based on eps
         db_clusters = DBSCAN(eps=epsilon, min_samples=1, metric='euclidean').fit_predict(pd_features_scaled)
         num_clusters = len(set(db_clusters))

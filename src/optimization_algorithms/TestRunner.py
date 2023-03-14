@@ -23,7 +23,7 @@ class TestRunner:
 
         self.range_analyzer = RangeAnalyzer(self.config_file_obj)
 
-        print("Initial Scenario Violation Info:")
+        # print("Initial Scenario Violation Info:")
 
         if os.path.exists(self.file_output_manager.default_violation_dump_data_path):
             default_violation_results_list_with_sid = self.file_output_manager.load_default_violation_results_by_pickle()
