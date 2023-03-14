@@ -316,6 +316,9 @@ if __name__ == "__main__":
     delete_records(records_path=APOLLO_RECORDS_DIR, mk_dir=True)
     map_instance = MapLoader().map_instance
 
+    with open(FLAGFILE_PATH, "a") as f:
+        f.write(f"\n--map_dir=/apollo/modules/map/data/{MAP_NAME}\n")
+
     ctn = Container(APOLLO_ROOT, f'cloudsky')
 
     ctn.start_instance()
