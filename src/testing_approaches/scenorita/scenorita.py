@@ -1,3 +1,5 @@
+# PYTHONPATH=src python src/testing_approaches/scenorita/scenorita.py
+
 import glob
 import shutil
 import random
@@ -7,7 +9,7 @@ import time
 import json
 from datetime import date
 import networkx as nx
-from config import OBS_DIR, MAX_RECORD_TIME, MAP_NAME, APOLLO_RECORDS_DIR, PROJECT_ROOT, APOLLO_ROOT
+from config import OBS_DIR, MAX_RECORD_TIME, MAP_NAME, APOLLO_RECORDS_DIR, PROJECT_ROOT, APOLLO_ROOT, FLAGFILE_PATH
 from modules.routing.proto.routing_pb2 import RoutingRequest
 from environment.Container import Container
 from environment.MapLoader import MapLoader
@@ -32,7 +34,7 @@ ga_file = "ga_output.csv"
 timer_file = "execution_time.csv"
 adc_route_file = "adc_route.csv"
 
-ptl_dict, ltp_dict, diGraph = initialize()
+ptl_dict, ltp_dict, diGraph, obs_diGraph = initialize()
 obstacle_type = ["PEDESTRIAN", "BICYCLE", "VEHICLE"]
 
 

@@ -20,9 +20,11 @@ def parseLanes(lanes):
     return ptl, ltp
 
 
-def connectLanes(edges):
+def connectLanes(edges, forward_only=False):
     DG = nx.DiGraph()
     for edge in edges:
+        if forward_only and edge["direction_type"] != 'FORWARD':
+            continue
         DG.add_edge(edge["from_lane_id"], edge["to_lane_id"], weight=edge["cost"])
     return DG
 
@@ -31,7 +33,8 @@ def initialize():
     data = json.load(open(f'{PROJECT_ROOT}/data/maps/{MAP_NAME}/routing_map.json', 'r'))
     ptl_dict, ltp_dict = parseLanes(data["nodes"])
     diGraph = connectLanes(data["edges"])
-    return ptl_dict, ltp_dict, diGraph
+    obs_diGraph = connectLanes(data["edges"], forward_only=True)
+    return ptl_dict, ltp_dict, diGraph, obs_diGraph
 
 
 def validatePath(i1, i2, ptl_dict, ltp_dict, diGraph):
