@@ -9,7 +9,8 @@ import time
 import json
 from datetime import date
 import networkx as nx
-from config import OBS_DIR, MAX_RECORD_TIME, MAP_NAME, APOLLO_RECORDS_DIR, PROJECT_ROOT, APOLLO_ROOT, FLAGFILE_PATH
+from config import OBS_DIR, MAX_RECORD_TIME, MAP_NAME, APOLLO_RECORDS_DIR, PROJECT_ROOT, APOLLO_ROOT, FLAGFILE_PATH, DIR_ROOT
+from environment.InitRunner import InitRunner
 from modules.routing.proto.routing_pb2 import RoutingRequest
 from environment.Container import Container
 from environment.MapLoader import MapLoader
@@ -163,7 +164,7 @@ def check_obs_type(length, width, height, speed, type_index):
     return length, width, height, speed
 
 
-def run_scenario(scenario, ctn):
+def run_scenario(scenario: Scenario, ctn: Container):
     sim_time = time.time()
     adc_route_raw = scenario.adc_route.split(',')
     init_x, init_y, dest_x, dest_y = float(adc_route_raw[0]), float(adc_route_raw[1]), float(
@@ -173,9 +174,11 @@ def run_scenario(scenario, ctn):
     scenario.coord = PointENU(x=init_x, y=init_y)
 
     ctn.modules_operation(operation="start")
-    ctn.stop_sim_control_standalone()
-    ctn.start_sim_control_standalone()
-    ctn.message_handler.send_initial_localization(scenario)
+    # ctn.stop_sim_control_standalone()
+    # ctn.start_sim_control_standalone()
+    # ctn.message_handler.send_initial_localization(scenario)
+    ctn.stop_sim_control_standalone_v7()
+    ctn.start_sim_control_standalone_v7(scenario.coord.x, scenario.coord.y, scenario.heading)
 
     print("    Start recorder...")
     ctn.start_recorder(scenario.record_name)
@@ -228,7 +231,7 @@ def run_scenario(scenario, ctn):
     return output_result
 
 
-def runScenario(deme, record_name, ctn):
+def runScenario(deme, record_name, ctn: Container):
     # to start with a fresh set of obstacles for the current scnerio
     if os.path.exists(obs_folder):
         os.system("rm -f " + obs_folder + "*")
@@ -316,10 +319,9 @@ if __name__ == "__main__":
     delete_records(records_path=APOLLO_RECORDS_DIR, mk_dir=True)
     map_instance = MapLoader().map_instance
 
-    with open(FLAGFILE_PATH, "a") as f:
-        f.write(f"\n--map_dir=/apollo/modules/map/data/{MAP_NAME}\n")
+    InitRunner()
 
-    ctn = Container(APOLLO_ROOT, f'cloudsky')
+    ctn: Container = Container(APOLLO_ROOT, f'cloudsky')
 
     ctn.start_instance()
     ctn.cyber_env_init()
@@ -462,9 +464,9 @@ if __name__ == "__main__":
     print("*** Total Num. of Lanes Covered:%s out of %s ***\n" % (len(GLOBAL_LANE_COVERAGE), TOTAL_LANES))
 
     obs_folder = OBS_DIR + "scenorita"
-    temp_obs_dir = f"/home/cloudsky/Research/Apollo/Backup/scenoRITA/temp_obstacles"
-    backup_obs_dir = f"/home/cloudsky/Research/Apollo/Backup/scenoRITA/obstacles/{date.today()}"
+    temp_obs_dir = f"{DIR_ROOT}/Backup/scenoRITA/temp_obstacles"
+    backup_obs_dir = f"{DIR_ROOT}/Backup/scenoRITA/obstacles/{date.today()}"
     shutil.copytree(temp_obs_dir, backup_obs_dir)
     shutil.rmtree(temp_obs_dir)
-    backup_record_dir = f"/home/cloudsky/Research/Apollo/Backup/scenoRITA/records/{date.today()}"
+    backup_record_dir = f"{DIR_ROOT}/Backup/scenoRITA/records/{date.today()}"
     shutil.copytree(APOLLO_RECORDS_DIR, backup_record_dir)
