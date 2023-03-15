@@ -27,7 +27,7 @@ def obs_routing_generate():
 
 def adc_routing_generate():
     # this function costs calculating resources
-    ptl_dict, ltp_dict, diGraph = initialize()
+    ptl_dict, ltp_dict, diGraph, obs_diGraph = initialize()
 
     valid_path = False
     while not valid_path:

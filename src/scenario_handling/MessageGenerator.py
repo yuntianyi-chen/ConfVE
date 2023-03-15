@@ -14,7 +14,7 @@ class MessageGenerator:
         self.violation_num_list = []
         self.record_counter = 0
 
-        self.get_record_path_list()
+        # self.get_record_path_list()
 
     # def update_all_records_violatioin_directly(self, violation_results_list):
     #     for pre_record_info, violation_results in zip(self.pre_record_info_list, violation_results_list):

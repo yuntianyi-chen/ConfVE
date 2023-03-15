@@ -1,4 +1,4 @@
-# PYTHONPATH=src python src/testing_approaches/scenorita/scenorita.py
+# PYTHONPATH=src python3.8 src/testing_approaches/scenorita/scenorita.py
 
 import glob
 import shutil
@@ -21,6 +21,7 @@ from testing_approaches.scenorita.scenoRITA_config import OBS_MIN, OBS_MAX, NP, 
     DELPB
 from deap import base, creator, tools
 from scenario_handling.create_scenarios import Scenario
+from testing_approaches.scenorita.random_generation import adc_routing_generate
 from testing_approaches.scenorita.auxiliary.feature_generator import runOracles
 from testing_approaches.scenorita.auxiliary.map_info_parser import validatePath, initialize, longerTrace, \
     generateObsDescFile, \
@@ -28,7 +29,7 @@ from testing_approaches.scenorita.auxiliary.map_info_parser import validatePath,
 from tools.bridge.CyberBridge import Topics
 from tools.hdmap.MapParser import MapParser
 
-obs_folder = OBS_DIR + "scenorita/"
+obs_folder = OBS_DIR + "/scenorita/"
 dest = PROJECT_ROOT + "/data/analysis"
 features_file = "mut_features.csv"
 ga_file = "ga_output.csv"
@@ -174,11 +175,11 @@ def run_scenario(scenario: Scenario, ctn: Container):
     scenario.coord = PointENU(x=init_x, y=init_y)
 
     ctn.modules_operation(operation="start")
-    # ctn.stop_sim_control_standalone()
-    # ctn.start_sim_control_standalone()
-    # ctn.message_handler.send_initial_localization(scenario)
-    ctn.stop_sim_control_standalone_v7()
-    ctn.start_sim_control_standalone_v7(scenario.coord.x, scenario.coord.y, scenario.heading)
+    ctn.stop_sim_control_standalone()
+    ctn.start_sim_control_standalone()
+    ctn.message_handler.send_initial_localization(scenario)
+    # ctn.stop_sim_control_standalone_v7()
+    # ctn.start_sim_control_standalone_v7(scenario.coord.x, scenario.coord.y, scenario.heading)
 
     print("    Start recorder...")
     ctn.start_recorder(scenario.record_name)
@@ -273,7 +274,7 @@ def runScenario(deme, record_name, ctn: Container):
     failed = True
     num_runs = 0
     while failed:
-        print("---------------------------------------------------")
+        print(f"---------------------------------- trial {num_runs}")
 
         # if scenario has been restarted x times, restart the moodules and sim control
         if num_runs % 10 == 0 and num_runs != 0:
@@ -281,7 +282,7 @@ def runScenario(deme, record_name, ctn: Container):
             print("attempted %s run" % num_runs)
 
         # approach_generator = ScenoRITA()
-        adc_route = MessageGenerator().adc_routing_generate()
+        adc_route = adc_routing_generate()
         scenario = Scenario(record_name, record_id=0)
         scenario.update_obs_adc(obs_apollo_folder, adc_route)
         output_result = run_scenario(scenario, ctn)
@@ -309,7 +310,8 @@ def runScenario(deme, record_name, ctn: Container):
 
 
 def delete_records(records_path, mk_dir):
-    shutil.rmtree(records_path)
+    if os.path.exists(records_path):
+        shutil.rmtree(records_path)
     if mk_dir:
         os.makedirs(records_path)
 
@@ -346,6 +348,8 @@ if __name__ == "__main__":
              "speeding_x,speeding_y,speeding_value,speeding_duration,speeding_heading,lanes_speed_limit,uslc_x,uslc_y,uslc_duration,uslc_heading," \
              "fastAccl_x,fastAccl_y,fastAccl_value,fastAccl_duration,fastAccl_heading,hardBrake_x,hardBrake_y,hardBrake_value,hardBrake_duration,hardBrake_heading," \
              "c_counter,speeding_counter,uslc_counter,fastAccl_counter,hardBrake_counter,totalV\n"
+    if not os.path.exists(dest):
+        os.makedirs(dest)
     with open(os.path.join(dest, features_file), 'w') as ffile:
         ffile.write(labels)
     labels = "RecordName,ObsNum,AVG_OBS2ADC_Distance,Speed_Below_Limit,ADC2LaneBound_Distance,FastAccl,HardBrake\n"

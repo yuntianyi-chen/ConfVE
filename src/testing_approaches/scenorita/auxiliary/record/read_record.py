@@ -46,6 +46,7 @@ def read_by_channel(record_name, record_dir, channels=DEFAULT_CHANNELS, verbose=
     # open the file to read
     # freader = record.RecordReader(record_dir + record_name)
     # print(record_dir + record_name)
+    time.sleep(2)
     record = Record(record_dir + record_name)
     time.sleep(1)
 

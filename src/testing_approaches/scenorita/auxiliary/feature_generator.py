@@ -138,18 +138,19 @@ def runOracles(scenario_player_output, record_name, scenario, adc_route):
 
     # if there's no violations, delete record file to save space
     if total_vio == 0:
-        del_cmd = f"rm {APOLLO_RECORDS_DIR}/{record_name}.00000"
-        os.system(del_cmd)
+        # del_cmd = f"rm {APOLLO_RECORDS_DIR}/{record_name}.00000"
+        # os.system(del_cmd)
+        pass
     else:
         with open(os.path.join(dest, report_name), 'a+') as file:
             file.write(result)
 
         # save the obstacle files
-        obs_folder = OBS_DIR + "scenorita"
-        destination_dir = f"/home/cloudsky/Research/Apollo/Backup/scenoRITA/temp_obstacles/{record_name}"
-        shutil.copytree(obs_folder, destination_dir)
+        # obs_folder = OBS_DIR + "scenorita"
+        # destination_dir = f"/home/cloudsky/Research/Apollo/Backup/scenoRITA/temp_obstacles/{record_name}"
+        # shutil.copytree(obs_folder, destination_dir)
 
-        with open(os.path.join(dest, adc_route_file), 'a+') as rfile:
-            rfile.write(f"{record_name},{adc_route}\n")
+        # with open(os.path.join(dest, adc_route_file), 'a+') as rfile:
+        #     rfile.write(f"{record_name},{adc_route}\n")
 
     return lanes, min_distance, speeding_min, uslc_min, fastAccl_min, hardBrake_min
