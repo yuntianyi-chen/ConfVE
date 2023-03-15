@@ -1,3 +1,5 @@
+# PYTHONPATH=src python data/scripts/scenario_ranker.py
+
 import os
 import shutil
 import string
@@ -7,10 +9,11 @@ from loguru import logger
 from nanoid import generate
 from objectives.violation_number.oracles import RecordAnalyzer
 from tools.hdmap.MapParser import MapParser
+from config import PROJECT_ROOT
 
-SRC_RECORDS_ROOT = '/home/yuqi/Desktop/data'
-DST_RECORD_ROOT = '/home/yuqi/ResearchWorkspace/AV_Config_Testing/data/ranked_records'
-MAPS_ROOT = '/home/yuqi/ResearchWorkspace/AV_Config_Testing/data/maps'
+SRC_RECORDS_ROOT = '/Users/yuqihuai/Downloads/experiments'
+DST_RECORD_ROOT = f'{PROJECT_ROOT}/data/ranked_records'
+MAPS_ROOT = f'{PROJECT_ROOT}/data/maps'
 
 
 def generate_file_id(size=12):

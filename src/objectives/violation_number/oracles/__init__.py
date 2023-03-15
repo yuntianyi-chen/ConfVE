@@ -24,16 +24,16 @@ class RecordAnalyzer:
     def register_oracles(self):
         oracles = [
             CollisionOracle(),
-            ModuleOracle(),
-            ComfortOracle(),
-            StopSignOracle(),
-            SpeedingOracle(),
-            TrafficSignalOracle(),
-            ModuleDelayOracle(),
             UnsafeLaneChangeOracle(),
-            # UUStopOracle(),
+            SpeedingOracle(),
+            ComfortOracle(),
+            ModuleOracle(),
+            ModuleDelayOracle(),
             JunctionLaneChangeOracle(),
-            EStopOracle(),
+            # StopSignOracle(),
+            # TrafficSignalOracle(),
+            # UUStopOracle(),
+            # EStopOracle(),
         ]
         for o in oracles:
             self.oracle_manager.register_oracle(o)
