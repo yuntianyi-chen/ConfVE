@@ -1,7 +1,8 @@
 import time
 from config import GENERATION_LIMIT, INIT_POP_SIZE, TIME_HOUR_THRESHOLD
 from optimization_algorithms.TestRunner import TestRunner
-from optimization_algorithms.genetic_algorithm.ga import crossover, select, mutation, generate_individuals, mutate
+from optimization_algorithms.genetic_algorithm.ga import crossover, select, mutation, generate_individuals, mutate, \
+    init_mutation, ga_operation
 
 
 class GARunner(TestRunner):
@@ -11,11 +12,10 @@ class GARunner(TestRunner):
 
     def ga_runner(self):
         # print("Start GA")
-
         init_individual_list = generate_individuals(self.config_file_obj, INIT_POP_SIZE)
 
         # initial mutation
-        init_individual_list = mutate(init_individual_list, self.config_file_obj, self.range_analyzer)
+        init_individual_list = init_mutation(init_individual_list, self.config_file_obj, self.range_analyzer)
         self.individual_num = 0
         for init_individual in init_individual_list:
             ind_id = f"Init_Config_{self.individual_num}"
@@ -29,20 +29,21 @@ class GARunner(TestRunner):
             print(f"Generation_{generation_num}")
             print("-------------------------------------------------")
             self.individual_num = 0
-            individual_list_after_crossover = crossover(individual_list)
-            individual_list_after_mutate = mutation(individual_list_after_crossover, self.config_file_obj,
-                                                    self.range_analyzer)
+            # offspring_list_of_crossover = crossover(individual_list)
+            # offspring_list_of_mutation = mutation(individual_list, self.config_file_obj,
+            #                                         self.range_analyzer)
+            offspring_list = ga_operation(individual_list, self.config_file_obj, self.range_analyzer)
+            for generated_individual in offspring_list:
+                if not generated_individual.fitness:
+                    # generated_individual.reset_default()
+                    ind_id = f"Generation_{str(generation_num)}_Config_{self.individual_num}"
 
-            for generated_individual in individual_list_after_mutate:
-                generated_individual.reset_default()
-                ind_id = f"Generation_{str(generation_num)}_Config_{self.individual_num}"
+                    self.individual_running(generated_individual, ind_id)
 
-                self.individual_running(generated_individual, ind_id)
+                    if time.time() - self.runner_time >= TIME_HOUR_THRESHOLD * 3600:
+                        return
 
-                if time.time() - self.runner_time >= TIME_HOUR_THRESHOLD * 3600:
-                    return
-
-            individual_list = select(individual_list_after_mutate, self.config_file_obj)
+            individual_list = select(individual_list+offspring_list, self.config_file_obj)
 
             # output range analysis every generation
             self.file_output_manager.update_range_analysis_file(self.config_file_obj, self.range_analyzer,

@@ -6,7 +6,7 @@ from kneed import KneeLocator
 from sklearn.cluster import DBSCAN
 from sklearn.neighbors import NearestNeighbors
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
-from config import FEATURES_CSV_DIR, MODULE_ORACLES
+from config import FEATURES_CSV_DIR, MODULE_ORACLES, IS_CUSTOMIZED_EPSILON, EPSILON_THRESHOLD
 
 from matplotlib import pyplot as plt
 
@@ -37,21 +37,46 @@ class Eliminator:
         # plt.show()
         # elbow = KneeLocator(i, distances, S=1, curve='concave', direction='increasing', interp_method='polynomial')
 
-        if knee.knee:
-            epsilon = sorted_distances[knee.knee]
+        if IS_CUSTOMIZED_EPSILON:
+            epsilon = EPSILON_THRESHOLD
+            if knee.knee:
+                original_epsilon = sorted_distances[knee.knee]
+            else:
+                original_epsilon = sorted_distances[round(len(sorted_distances) / 2)]
         else:
-            epsilon = sorted_distances[round(len(sorted_distances) / 2)]
-        # Cluster the features based on eps
-        db_clusters = DBSCAN(eps=epsilon, min_samples=1, metric='euclidean').fit_predict(pd_features_scaled)
-        num_clusters = len(set(db_clusters))
+            if knee.knee:
+                epsilon = sorted_distances[knee.knee]
+            else:
+                epsilon = sorted_distances[round(len(sorted_distances) / 2)]
 
+            if knee.knee:
+                original_epsilon = sorted_distances[knee.knee]
+            else:
+                original_epsilon = sorted_distances[round(len(sorted_distances) / 2)]
+
+        if epsilon != 0:
+            # Cluster the features based on eps
+            db_clusters = DBSCAN(eps=epsilon, min_samples=1, metric='euclidean').fit_predict(pd_features_scaled)
+        else:
+            db_clusters = [0 for i in range(len(pd_data))]
+        # print(db_clusters)
+        num_clusters = len(set(db_clusters))
         all_vio = len(pd_features_scaled)
         unique_vio = num_clusters
         elim_ratio = 100 * (1 - float(num_clusters) / len(pd_features_scaled))
         # message = csv_file_name + ',  {:,},  {:,},  {:.2f}%'
         # print(message.format(all_vio, unique_vio, elim_ratio))
 
+        # self.analyze_vio(db_clusters, original_epsilon, distances)
         return db_clusters, all_vio, unique_vio, elim_ratio
+
+    def analyze_vio(self, db_clusters, epsilon, distances):
+        cluster_id = db_clusters[-1]
+        if cluster_id not in db_clusters[:-1]:
+            check_similar = False
+        else:
+            check_similar = True
+        print(f"epsilon: {epsilon} vs. distance: {distances[-1][-1]} -> Emerged: {not check_similar}")
 
 
 if __name__ == "__main__":
@@ -162,7 +187,7 @@ if __name__ == "__main__":
         df_elim[f"{approach_name}_Unique"] = df_unique_GA_final[
             [name for name in df_unique_GA_final.columns if approach_name in name]].sum(axis=1)
         df_elim[f"{approach_name}_Elim."] = (
-                    (1 - df_elim[f"{approach_name}_Unique"] / df_elim[f"{approach_name}_All"]) * 100).round(2)
+                (1 - df_elim[f"{approach_name}_Unique"] / df_elim[f"{approach_name}_All"]) * 100).round(2)
 
     dr_ga_map = pd.DataFrame()
     for approach_name in approach_list:

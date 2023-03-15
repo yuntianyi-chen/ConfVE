@@ -44,7 +44,7 @@ class IndividualWithFitness:
         self.id = id
 
     def reset_default(self):
-        self.fitness = 0
+        self.fitness = None
         self.allow_selection = True
         self.violation_results_list = []
         self.violations_emerged_results = []

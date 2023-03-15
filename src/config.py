@@ -11,13 +11,12 @@ Global configurations for the framework
 OBS_PERCEPTION_FREQUENCY = 10  # scenoRITA/AV-Fuzzer/ADFuzz-10  /  DoppelTest-25
 MAX_RECORD_TIME = 30  # 10/30
 AV_TESTING_APPROACH = "scenoRITA"  # scenoRITA/DoppelTest/AV-Fuzzer/ADFuzz
-MAP_NAME = "sunnyvale_loop"  # borregas_ave/sunnyvale_loop/San_Francisco/san_mateo
+MAP_NAME = "borregas_ave"  # borregas_ave/sunnyvale_loop/San_Francisco/san_mateo
 CONTAINER_NUM = 5  # 5/10
 OPT_MODE = "GA"  # GA/DRL/Random/T-way
 TIME_HOUR_THRESHOLD = 10  # hours
 
-CX_P = 0.2
-MT_P = 0.8
+
 
 
 ####################
@@ -40,13 +39,18 @@ TRAFFIC_LIGHT_MODE = "read"  # read/random/off
 
 # GA SETTINGS
 GENERATION_LIMIT = 50  # 10/20/50
-INIT_POP_SIZE = 60  # 60 individuals in each generation
-POP_SIZE = 10  # 60 individuals in each generation
+INIT_POP_SIZE = 40  # 60 individuals in each generation
+POP_SIZE = 20
+OFFSPRING_SIZE = 20
+CX_P = 0.2
+MUT_P = 0.8
 FITNESS_MODE = "multi_obj"  # emerge/multi_obj
 SELECT_MODE = "nsga2"  # nsga2/ratio
+IS_CUSTOMIZED_EPSILON = True
+EPSILON_THRESHOLD = 1
 
 # FOR RATIO SELECT
-SELECT_NUM_RATIO = [8, 1, 1]  # [5, 3, 2]/[7, 2, 1]
+SELECT_NUM_RATIO = [7, 2, 1]  # [5, 3, 2]/[7, 2, 1]
 
 # Rerun 5 times if occurred >= 3 times, confirmed
 DETERMINISM_RERUN_TIMES = 5  # 5/10
