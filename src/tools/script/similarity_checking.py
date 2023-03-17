@@ -1,6 +1,5 @@
 import os
 import pandas as pd
-
 from duplicate_elimination.ViolationChecker import compare_similarity, check_emerged_violations
 from environment.MapLoader import MapLoader
 from scenario_handling.FileOutputManager import FileOutputManager
@@ -49,8 +48,6 @@ def real_test():
         # message_generator.get_record_info_by_record_id(record_id_list)
         #
         # message_generator.update_selected_records_violatioin_directly(default_violation_results_list_with_sid)
-
-
     return
 
 

@@ -1,5 +1,7 @@
 import subprocess
-from config import APOLLO_ROOT, REPLAY_SCENARIO_RECORD_DIR, INITIAL_SCENARIO_RECORD_DIR
+import time
+
+from config import APOLLO_ROOT, REPLAY_SCENARIO_RECORD_DIR, INITIAL_SCENARIO_RECORD_DIR, MAX_RECORD_TIME
 from environment.Container import Container
 from environment.MapLoader import MapLoader
 from scenario_handling.InitialRecordInfo import InitialRecordInfo
@@ -7,7 +9,7 @@ from scenario_handling.Scenario import Scenario
 
 
 def start_replay(ctn, scenario):
-    cmd = f"docker exec -d {ctn.container_name} /apollo/bazel-bin/cyber/tools/cyber_recorder/cyber_recorder play -f {REPLAY_SCENARIO_RECORD_DIR}/{scenario.record_name}.00000 -c /apollo/routing_response /apollo/perception/obstacles /apollo/perception/traffic_light"
+    cmd = f"docker exec -d {ctn.container_name} /apollo/bazel-bin/cyber/tools/cyber_recorder/cyber_recorder play -f /apollo/initial/{scenario.record_name}.00000 -c /apollo/routing_response /apollo/perception/obstacles /apollo/perception/traffic_light"
     subprocess.Popen(cmd, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 
@@ -26,9 +28,12 @@ if __name__ == '__main__':
 
     print(f'Dreamview at http://{ctn.ip}:{ctn.port}')
 
-    scenario = Scenario(record_name="00000000", record_id="none")
+    # scenario = Scenario(record_name="Init_Config_12_Scenario_5", record_id="none")
+    scenario = Scenario(record_name="00000005", record_id="none")
 
     # pre_record_info = InitialRecordInfo(True, 0, scenario.record_name, scenario.record_path)
+    # dir_path = "/home/cloudsky/Research/Apollo/Backup/useful_cases"
+
     pre_record_info = InitialRecordInfo(True, 0, scenario.record_name, f"{INITIAL_SCENARIO_RECORD_DIR}/{scenario.record_name}.00000")
     # pre_record_info.update_violation_by_measuring()
 
@@ -37,9 +42,17 @@ if __name__ == '__main__':
     scenario.update_traffic_lights(traffic_light_control)
 
     ctn.modules_operation(operation="start")
-    ctn.stop_sim_control_standalone_v7()
-    ctn.start_sim_control_standalone_v7(scenario.coord.x, scenario.coord.y, scenario.heading)
-    # ctn.message_handler.send_initial_localization(scenario)
+    # ctn.stop_sim_control_standalone_v7()
+    # ctn.start_sim_control_standalone_v7(scenario.coord.x, scenario.coord.y, scenario.heading)
+    ctn.stop_sim_control_standalone()
+    ctn.start_sim_control_standalone()
+    ctn.message_handler.send_initial_localization(scenario)
 
+    ctn.start_recorder(scenario.record_name)
     start_replay(ctn, scenario)
 
+    time.sleep(MAX_RECORD_TIME)
+
+    ctn.stop_recorder()
+    time.sleep(2)
+    ctn.kill_modules()
