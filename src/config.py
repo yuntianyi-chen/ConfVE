@@ -13,7 +13,7 @@ MAX_RECORD_TIME = 30  # 10/30
 AV_TESTING_APPROACH = "AV-Fuzzer"  # scenoRITA/DoppelTest/AV-Fuzzer/ADFuzz
 MAP_NAME = "San_Francisco"  # borregas_ave/sunnyvale_loop/San_Francisco/san_mateo
 CONTAINER_NUM = 5  # 5/10
-OPT_MODE = "T-way"  # GA/DRL/Random/T-way
+OPT_MODE = "GA"  # GA/DRL/Random/T-way
 TIME_HOUR_THRESHOLD = 10  # hours
 
 
@@ -38,7 +38,7 @@ DEFAULT_CONFIG_FILE = False
 TRAFFIC_LIGHT_MODE = "read"  # read/random/off
 
 # GA SETTINGS
-GENERATION_LIMIT = 50  # 10/20/50
+GENERATION_LIMIT = 100  # 10/20/50
 INIT_POP_SIZE = 40  # 60 individuals in each generation
 POP_SIZE = 20
 OFFSPRING_SIZE = 20
@@ -54,7 +54,7 @@ SELECT_NUM_RATIO = [7, 2, 1]  # [5, 3, 2]/[7, 2, 1]
 
 # Rerun 5 times if occurred >= 3 times, confirmed
 DETERMINISM_RERUN_TIMES = 5  # 5/10
-DEFAULT_DETERMINISM_RERUN_TIMES = 30  # 10/30
+DEFAULT_DETERMINISM_RERUN_TIMES = 10  # 10/30
 DETERMINISM_CONFIRMED_TIMES = 4  # >3/(1+5) or >= 4/(1+5)
 ENABLE_STRICT_DETERMINISM_CHECKING = True
 
