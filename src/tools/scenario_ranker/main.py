@@ -72,7 +72,7 @@ def analyze_record(map_name: str, record_file: Path) -> Dict:
             continue
         else:
             coordinates.append(new_coordinate)
-    if len(coordinates) == 0:
+    if len(coordinates) < 2:
         sinuosity = 0
     else:
         ego_trajectory = LineString(coordinates)
@@ -82,7 +82,8 @@ def analyze_record(map_name: str, record_file: Path) -> Dict:
         sinuosity = ego_trajectory.length / shortest_path.length
     feature_sinuosity = {"sinuosity": sinuosity}
 
-    result = feature_violation | feature_decision | feature_sinuosity
+    # result = feature_violation | feature_decision | feature_sinuosity
+    result = dict(**feature_violation, **feature_decision, **feature_sinuosity)
     result["filename"] = str(record_file)
     return result
 
