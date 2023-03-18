@@ -1,7 +1,7 @@
 import os
 import shutil
 from config import MY_SCRIPTS_DIR, PROJECT_ROOT, FLAGFILE_PATH, MAP_NAME, \
-    DEFAULT_CONFIG_FILE_PATH, CURRENT_CONFIG_FILE_PATH, APOLLO_MAP_DATA_DIR, MAP_DIR
+    DEFAULT_CONFIG_FILE_PATH, CURRENT_CONFIG_FILE_PATH, APOLLO_MAP_DATA_DIR, MAP_DIR, APOLLO_ROOT
 
 
 class InitRunner:
@@ -11,6 +11,7 @@ class InitRunner:
         self.move_dir(f"{PROJECT_ROOT}/data/scripts", MY_SCRIPTS_DIR)
         self.change_map_file()
         self.move_file(DEFAULT_CONFIG_FILE_PATH, CURRENT_CONFIG_FILE_PATH)
+        self.move_file(f"{PROJECT_ROOT}/data/scripts/apollo_multi_container/dev_start.sh", f"{APOLLO_ROOT}/docker/scripts/dev_start.sh")
 
     def move_file(self, source_dir, target_dir):
         if os.path.exists(target_dir):
