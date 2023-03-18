@@ -8,10 +8,10 @@ Global configurations for the framework
 ## Customized Config ##
 #######################
 
-OBS_PERCEPTION_FREQUENCY = 10  # scenoRITA/AV-Fuzzer/ADFuzz-10  /  DoppelTest-25
+OBS_PERCEPTION_FREQUENCY = 10
 MAX_RECORD_TIME = 30  # 10/30
-AV_TESTING_APPROACH = "AV-Fuzzer"  # scenoRITA/DoppelTest/AV-Fuzzer/ADFuzz
-MAP_NAME = "San_Francisco"  # borregas_ave/sunnyvale_loop/San_Francisco/san_mateo
+AV_TESTING_APPROACH = "ADFuzz"  # scenoRITA/DoppelTest/AVFuzzer/ADFuzz
+MAP_NAME = "borregas_ave"  # borregas_ave/sunnyvale_loop/San_Francisco/san_mateo
 CONTAINER_NUM = 5  # 5/10
 OPT_MODE = "GA"  # GA/DRL/Random/T-way
 TIME_HOUR_THRESHOLD = 10  # hours
@@ -62,7 +62,8 @@ MODULE_ORACLES = ["RoutingFailure",
                   "SimControlFailure",
                   "PlanningGeneratesGarbage"]
 
-INITIAL_EXP_NAME = f"{AV_TESTING_APPROACH}_{MAP_NAME}_{MAX_RECORD_TIME}"
+# INITIAL_EXP_NAME = f"{AV_TESTING_APPROACH}_{MAP_NAME}_{MAX_RECORD_TIME}"
+INITIAL_EXP_NAME = f"{AV_TESTING_APPROACH}_{MAP_NAME}"
 
 # DIRECTORIES
 DIR_ROOT = str(Path(__file__).parent.parent.parent)
