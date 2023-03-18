@@ -16,9 +16,6 @@ CONTAINER_NUM = 5  # 5/10
 OPT_MODE = "GA"  # GA/DRL/Random/T-way
 TIME_HOUR_THRESHOLD = 10  # hours
 
-
-
-
 ####################
 ## Default Config ##
 ####################
@@ -31,6 +28,8 @@ MODULE_NAME = "planning"
 CONFIG_FILE_NAME = f"{MODULE_NAME}_config.pb.txt"
 SIMILARITY_THRESHOLD = 0.5
 MAX_INITIAL_SCENARIOS = 10  # 10
+IS_CUSTOMIZED_EPSILON = False
+EPSILON_THRESHOLD = 1
 
 # APOLLO SETTINGS
 TRAFFIC_LIGHT_FREQUENCY = 10
@@ -39,15 +38,13 @@ TRAFFIC_LIGHT_MODE = "read"  # read/random/off
 
 # GA SETTINGS
 GENERATION_LIMIT = 100  # 10/20/50
-INIT_POP_SIZE = 40  # 60 individuals in each generation
 POP_SIZE = 20
 OFFSPRING_SIZE = 20
+# INIT_POP_SIZE = POP_SIZE + OFFSPRING_SIZE
 CX_P = 0.2
 MUT_P = 0.8
 FITNESS_MODE = "multi_obj"  # emerge/multi_obj
 SELECT_MODE = "nsga2"  # nsga2/ratio
-IS_CUSTOMIZED_EPSILON = True
-EPSILON_THRESHOLD = 1
 
 # FOR RATIO SELECT
 SELECT_NUM_RATIO = [7, 2, 1]  # [5, 3, 2]/[7, 2, 1]

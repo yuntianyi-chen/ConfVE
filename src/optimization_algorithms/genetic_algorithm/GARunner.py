@@ -1,8 +1,7 @@
 import time
-from config import GENERATION_LIMIT, INIT_POP_SIZE, TIME_HOUR_THRESHOLD
+from config import GENERATION_LIMIT, TIME_HOUR_THRESHOLD, POP_SIZE, OFFSPRING_SIZE
 from optimization_algorithms.TestRunner import TestRunner
-from optimization_algorithms.genetic_algorithm.ga import crossover, select, mutation, generate_individuals, mutate, \
-    init_mutation, ga_operation
+from optimization_algorithms.genetic_algorithm.ga import select, generate_individuals, init_mutation, ga_operation
 
 
 class GARunner(TestRunner):
@@ -12,7 +11,7 @@ class GARunner(TestRunner):
 
     def ga_runner(self):
         # print("Start GA")
-        init_individual_list = generate_individuals(self.config_file_obj, INIT_POP_SIZE)
+        init_individual_list = generate_individuals(self.config_file_obj, POP_SIZE + OFFSPRING_SIZE)
 
         # initial mutation
         init_individual_list = init_mutation(init_individual_list, self.config_file_obj, self.range_analyzer)

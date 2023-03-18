@@ -1,6 +1,6 @@
 import random
 from copy import deepcopy
-from config import SELECT_NUM_RATIO, SELECT_MODE, INIT_POP_SIZE, POP_SIZE, OFFSPRING_SIZE, CX_P, MUT_P
+from config import SELECT_NUM_RATIO, SELECT_MODE, POP_SIZE, OFFSPRING_SIZE, CX_P, MUT_P
 from optimization_algorithms.genetic_algorithm.IndividualWithFitness import IndividualWithFitness
 from optimization_algorithms.genetic_algorithm.nsga2 import sort_nondominated, crowding_dist
 

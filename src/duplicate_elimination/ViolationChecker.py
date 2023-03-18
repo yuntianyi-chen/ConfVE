@@ -1,15 +1,15 @@
 from copy import deepcopy
 import pandas as pd
-from scipy import spatial
-from scipy.spatial import distance
+# from scipy import spatial
+# from scipy.spatial import distance
 from scipy.stats import pearsonr, spearmanr, kendalltau
-from sklearn.metrics import jaccard_score
-from sklearn.preprocessing import MinMaxScaler, StandardScaler
+# from sklearn.metrics import jaccard_score
+# from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from config import MODULE_ORACLES, SIMILARITY_THRESHOLD, DETERMINISM_CONFIRMED_TIMES
 from duplicate_elimination.Eliminator import Eliminator
 from scenario_handling.ScenarioReplayer import replay_scenarios_by_division, replay_scenarios_in_threading
-from scenario_handling.ScenarioRunner import run_scenarios_by_division
-from sklearn.metrics.pairwise import cosine_similarity
+# from scenario_handling.ScenarioRunner import run_scenarios_by_division
+# from sklearn.metrics.pairwise import cosine_similarity
 
 
 def calculate_similarity(features, default_features):

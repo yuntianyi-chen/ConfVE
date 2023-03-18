@@ -1,11 +1,13 @@
 import math
+from typing import Tuple, Set, List
 
 from cyber_record.record import Record
 from matplotlib import pyplot as plt
+from shapely.geometry import LineString
 
 from environment.MapLoader import MapLoader
 from objectives.violation_number.oracles import RecordAnalyzer
-from tools.utils import calculate_velocity
+from tools.utils import calculate_velocity, extract_main_decision
 
 
 def get_accel_value(message) -> float:
@@ -15,17 +17,19 @@ def get_accel_value(message) -> float:
 
     accel_value = math.sqrt(accel_x ** 2 + accel_y ** 2 + accel_z ** 2)
     return accel_value
+
+
 def meansure_violation(record_file_path):
     # ra = RecordAnalyzer(record_file_path)
     # violation_results = ra.analyze()
-    accel_list=[]
+    accel_list = []
     velocity_list = []
     prev_ = None
     next_ = None
 
     record = Record(record_file_path)
     for topic, message, t in record.read_messages():
-        if topic=='/apollo/localization/pose':
+        if topic == '/apollo/localization/pose':
             if prev_ is None and next_ is None:
                 prev_ = message
                 continue
@@ -46,16 +50,13 @@ def meansure_violation(record_file_path):
             velocity_list.append(prev_velocity)
             prev_ = message
 
-
     return accel_list, velocity_list
     # accel_list = [acc for acc in accel_list if not math.isnan(acc)]
     # plt.plot(accel_list)
     # plt.plot(velocity_list)
 
 
-
-if __name__ == "__main__":
-    map_instance = MapLoader().map_instance
+def analyze_acc_speed():
     dir_path = "/home/cloudsky/Research/Apollo/Backup/useful_cases"
     record_file_path = f"{dir_path}/default_Scenario_5_rerun_6.00000"
     # record_file_path = f"{dir_path}/00000005.00000"
@@ -69,8 +70,19 @@ if __name__ == "__main__":
     ax.plot(velocity_list, label='Velocity')
 
     ax.plot(de_accel_list[380:], ':', label='Default Acceleration')
-    ax.plot(de_velocity_list[380:],':', label='Default Velocity')
+    ax.plot(de_velocity_list[380:], ':', label='Default Velocity')
 
     legend = ax.legend(shadow=True)
 
     plt.show()
+
+
+def analyze_messages():
+    dir_path = "/home/cloudsky/Research/Apollo/Backup/useful_cases"
+    record_file_path = f"{dir_path}/default_Scenario_5_rerun_6.00000"
+
+
+if __name__ == "__main__":
+    map_instance = MapLoader().map_instance
+    # analyze_acc_speed()
+    analyze_messages()

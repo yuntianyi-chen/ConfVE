@@ -39,20 +39,20 @@ class Eliminator:
 
         if IS_CUSTOMIZED_EPSILON:
             epsilon = EPSILON_THRESHOLD
-            if knee.knee:
-                original_epsilon = sorted_distances[knee.knee]
-            else:
-                original_epsilon = sorted_distances[round(len(sorted_distances) / 2)]
+            # if knee.knee:
+            #     original_epsilon = sorted_distances[knee.knee]
+            # else:
+            #     original_epsilon = sorted_distances[round(len(sorted_distances) / 2)]
         else:
             if knee.knee:
                 epsilon = sorted_distances[knee.knee]
             else:
                 epsilon = sorted_distances[round(len(sorted_distances) / 2)]
 
-            if knee.knee:
-                original_epsilon = sorted_distances[knee.knee]
-            else:
-                original_epsilon = sorted_distances[round(len(sorted_distances) / 2)]
+            # if knee.knee:
+            #     original_epsilon = sorted_distances[knee.knee]
+            # else:
+            #     original_epsilon = sorted_distances[round(len(sorted_distances) / 2)]
 
         if epsilon != 0:
             # Cluster the features based on eps
@@ -67,7 +67,7 @@ class Eliminator:
         # message = csv_file_name + ',  {:,},  {:,},  {:.2f}%'
         # print(message.format(all_vio, unique_vio, elim_ratio))
 
-        # self.analyze_vio(db_clusters, original_epsilon, distances)
+        # self.analyze_vio(db_clusters, epsilon, distances)
         return db_clusters, all_vio, unique_vio, elim_ratio
 
     def analyze_vio(self, db_clusters, epsilon, distances):

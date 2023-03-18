@@ -1,6 +1,6 @@
 import os
 import time
-from config import DEFAULT_CONFIG_FILE_PATH, MAX_INITIAL_SCENARIOS
+from config import DEFAULT_CONFIG_FILE_PATH, MAX_INITIAL_SCENARIOS, OPT_MODE
 from config_file_handler.ApolloParser import ApolloParser
 from range_analysis.RangeAnalyzer import RangeAnalyzer
 from scenario_handling.FileOutputManager import FileOutputManager
@@ -57,10 +57,10 @@ class TestRunner:
         # run_scenarios(generated_individual, scenario_list, self.containers)
         run_scenarios_without_determinism_checking(generated_individual, scenario_list, self.containers)
 
-        generated_individual.update_fitness()
+        generated_individual.generate_fitness()
 
         self.check_scenario_list_vio_emergence(scenario_list)
-        self.file_output_manager.print_violation_results(generated_individual)
+        self.file_output_manager.print_fitness_results(generated_individual)
         self.file_output_manager.save_total_violation_results(generated_individual, scenario_list)
         self.file_output_manager.handle_scenario_record(scenario_list)
 
@@ -70,14 +70,17 @@ class TestRunner:
             else:
                 option_tuning_item = "default"
 
-            range_change_str = self.range_analyzer.range_analyze(option_tuning_item, self.config_file_obj)
+            if OPT_MODE == "GA":
+                range_change_str = self.range_analyzer.range_analyze(option_tuning_item, self.config_file_obj)
+                self.file_output_manager.save_option_tuning_file(generated_individual,
+                                                                 ind_id,
+                                                                 option_tuning_item,
+                                                                 range_change_str)
+
             self.file_output_manager.save_config_file(ind_id)
             # self.file_output_manager.save_fitness_result(generated_individual, ind_id)
             self.file_output_manager.save_vio_features(generated_individual, scenario_list)
-            self.file_output_manager.save_option_tuning_file(generated_individual,
-                                                             ind_id,
-                                                             option_tuning_item,
-                                                             range_change_str)
+
             self.file_output_manager.save_count_dict_file()
         self.individual_num += 1
         print(f"--------Running for {(time.time() - self.runner_time) / 3600} hours-----------")

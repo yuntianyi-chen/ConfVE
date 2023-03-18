@@ -1,5 +1,5 @@
 import time
-from config import T_STRENGTH_VALUE, TIME_HOUR_THRESHOLD, INIT_POP_SIZE, POP_SIZE
+from config import T_STRENGTH_VALUE, TIME_HOUR_THRESHOLD, POP_SIZE
 from optimization_algorithms.TestRunner import TestRunner
 from optimization_algorithms.baseline.TwiseTuner import TwiseTuner
 from optimization_algorithms.genetic_algorithm.ga import generate_individuals

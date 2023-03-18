@@ -134,7 +134,8 @@ class FileOutputManager:
     #     if generated_individual.fitness > self.optimal_fitness:
     #         self.optimal_fitness = generated_individual.fitness
 
-    def print_violation_results(self, generated_individual):
+    def print_fitness_results(self, generated_individual):
+        print(f" Fitness: {generated_individual.fitness}")
         print(f" Vio Total Results: {[len(item) for item in generated_individual.violation_results_list]}")
         print(f" Vio Emerged Num: {len(generated_individual.violations_emerged_results)}")
         print(f" Vio Emerged Results: {[(k, v.main_type) for k, v in generated_individual.violations_emerged_results]}")

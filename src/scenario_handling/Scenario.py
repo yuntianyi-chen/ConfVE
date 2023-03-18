@@ -1,7 +1,14 @@
 import os
+from pathlib import Path
+from typing import List, Tuple, Dict, Set
+
+from cyber_record.record import Record
+from shapely.geometry import LineString
+
 from config import TRAFFIC_LIGHT_MODE, APOLLO_RECORDS_DIR
 from objectives.violation_number.oracles import RecordAnalyzer
 from tools.traffic_light_control.TrafficControlManager import TrafficControlManager
+from tools.utils import extract_main_decision
 
 
 class Scenario:
@@ -23,6 +30,42 @@ class Scenario:
             print(f"  Record Path: {self.record_path}")
             print(f"    Violation Results: {[(violation.main_type, violation.key_label) for violation in results]}")
         return results
+
+    def analyze_decision_and_sinuosity(self):
+        # MapLoader(map_name).load_map_data()
+        # ra = RecordAnalyzer(record_file)
+        # ra.analyze()
+        # feature_violation = ra.oracle_manager.get_counts_wrt_oracle()
+        record = Record(self.record_path)
+        decisions: Set[Tuple] = set()
+        for _, msg, _ in record.read_messages("/apollo/planning"):
+            decisions = decisions | extract_main_decision(msg)
+
+        decision_count = len(decisions)
+        # feature_decision = {"decisions": len(decisions)}
+
+        coordinates: List[Tuple[float, float]] = list()
+        for _, msg, t in record.read_messages("/apollo/localization/pose"):
+            new_coordinate = (msg.pose.position.x, msg.pose.position.y)
+            if len(coordinates) > 0 and coordinates[-1] == new_coordinate:
+                continue
+            else:
+                coordinates.append(new_coordinate)
+        if len(coordinates) < 2:
+            sinuosity = 0
+        else:
+            ego_trajectory = LineString(coordinates)
+            start_point = ego_trajectory.interpolate(0, normalized=True)
+            end_point = ego_trajectory.interpolate(1, normalized=True)
+            shortest_path = LineString([start_point, end_point])
+            sinuosity = ego_trajectory.length / shortest_path.length
+        # feature_sinuosity = {"sinuosity": sinuosity}
+
+        # result = feature_violation | feature_decision | feature_sinuosity
+        # result = dict(**feature_violation, **feature_decision, **feature_sinuosity)
+        # result["filename"] = str(record_file)
+        # return result
+        return decision_count, sinuosity
 
     def update_emerged_status(self, violations_emerged_results, contain_module_violation):
         if len(violations_emerged_results) > 0:
