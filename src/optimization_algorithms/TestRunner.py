@@ -86,11 +86,6 @@ class TestRunner:
         print(f"--------Running for {(time.time() - self.runner_time) / 3600} hours-----------")
 
     def record_replace_and_check(self):
-        for ctn in self.containers:
-            ctn.cyber_env_init()
-            ctn.connect_bridge()
-            ctn.message_handler.update_bridge(ctn.bridge)
-
         self.message_generator.replace_records(self.scenario_rid_emergence_list)
         _ = check_default_running(self.message_generator,
                                   self.config_file_obj,

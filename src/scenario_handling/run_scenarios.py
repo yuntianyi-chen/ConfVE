@@ -21,6 +21,11 @@ def run_default_scenarios(scenario_list, containers, message_generator):
             contain_module_violation = check_module_failure(all_emerged_results, oracles=MODULE_ORACLES)
 
             if contain_module_violation:
+                for ctn in containers:
+                    ctn.cyber_env_init()
+                    ctn.connect_bridge()
+                    ctn.message_handler.update_bridge(ctn.bridge)
+
                 pre_record_info = message_generator.replace_record(scenario.record_id)
                 scenario = create_scenario(pre_record_info, name_prefix="default", config_file_tuned_status=True)
 
