@@ -30,7 +30,8 @@ def compare_similarity(features, default_features_list):
     pd_all_features = pd.concat([pd_default_features, df_new_row])
 
     eliminator = Eliminator()
-    db_clusters, all_vio, unique_vio, elim_ratio = eliminator.cluster(pd_all_features)
+    pd_features = pd_all_features.iloc[:, :]
+    db_clusters, all_vio, unique_vio, elim_ratio = eliminator.cluster(pd_features)
     pd_all_features.insert(0, "clusters", db_clusters, True)
 
     cluster_id = db_clusters[-1]

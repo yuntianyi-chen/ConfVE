@@ -19,8 +19,8 @@ class Eliminator:
         # self.scaler = StandardScaler()
         self.scaler = MinMaxScaler()
 
-    def cluster(self, pd_data):
-        pd_features = pd_data.iloc[:, :]
+    def cluster(self, pd_features):
+        # pd_features = pd_data.iloc[:, :]
         # pd_features = pd_data.iloc[:, 1:]
         pd_features_scaled = self.scaler.fit_transform(pd_features)
         neigh = NearestNeighbors(n_neighbors=2)
@@ -83,22 +83,31 @@ if __name__ == "__main__":
     target_approach = "all"  # GA/T-way
     # target_name = "scenoRITA_san_mateo_10_T-way"  # borregas_ave_30s/sunnyvale_loop_10s/scenoRITA_san_mateo_10_GA
 
-    target_name_list = ["scenoRITA_borregas_ave_GA", "scenoRITA_borregas_ave_T-way", "scenoRITA_san_mateo_GA",
-                        "scenoRITA_san_mateo_T-way", "scenoRITA_sunnyvale_loop_GA",
-                        "scenoRITA_sunnyvale_loop_T-way",
+    # target_name_list = ["scenoRITA_borregas_ave_GA", "scenoRITA_borregas_ave_T-way", "scenoRITA_san_mateo_GA",
+    #                     "scenoRITA_san_mateo_T-way", "scenoRITA_sunnyvale_loop_GA",
+    #                     "scenoRITA_sunnyvale_loop_T-way",
+    #                     "DoppelTest_borregas_ave_GA", "DoppelTest_borregas_ave_T-way",
+    #                     "DoppelTest_san_mateo_GA",
+    #                     "DoppelTest_san_mateo_T-way",
+    #                     "DoppelTest_sunnyvale_loop_GA",
+    #                     "DoppelTest_sunnyvale_loop_T-way",
+    #                     "ADFuzz_borregas_ave_GA", "ADFuzz_borregas_ave_T-way",
+    #                     "AVFuzzer_San_Francisco_GA", "AVFuzzer_San_Francisco_T-way"]
+    target_name_list = [
                         "DoppelTest_borregas_ave_GA", "DoppelTest_borregas_ave_T-way",
                         "DoppelTest_san_mateo_GA",
                         "DoppelTest_san_mateo_T-way",
-                        "DoppelTest_sunnyvale_loop_GA",
-                        "DoppelTest_sunnyvale_loop_T-way",
-                        "ADFuzz_borregas_ave_GA", "ADFuzz_borregas_ave_T-way",
-                        "AV-Fuzzer_San_Francisco_GA", "AV-Fuzzer_San_Francisco_T-way"]
-    approach_list = ["scenoRITA", "DoppelTest", "ADFuzz", "AV-Fuzzer"]
+                        "AVFuzzer_San_Francisco_GA", "AVFuzzer_San_Francisco_T-way"]
+
+    approach_list = ["scenoRITA", "DoppelTest", "ADFuzz", "AVFuzzer"]
+    # approach_list = [ "DoppelTest", "AVFuzzer"]
+
     oracle_list = ["CollisionOracle.csv", "AccelOracle.csv", "DecelOracle.csv", "SpeedingOracle.csv",
                    "UnsafeLaneChangeOracle.csv",
                    "ModuleDelayOracle.csv", "PlanningFailure.csv", "PlanningGeneratesGarbage.csv",
                    "JunctionLaneChangeOracle.csv", "StopSignOracle.csv", "TrafficSignalOracle.csv", "EStopOracle.csv"]
     map_list = ["borregas_ave", "san_mateo", "sunnyvale_loop", "San_Francisco"]
+    # map_list = ["borregas_ave", "san_mateo", "San_Francisco"]
 
     output_oracle_list = ["Collision", "Fast Acceleration", "Hard Braking", "Speeding", "Unsafe Lane Change",
                           "Module Delay", "Module Malfunction", "Module Illness", "Lane-change in Junction",
@@ -154,12 +163,15 @@ if __name__ == "__main__":
                     # output_data.to_csv(output_file_path, index=False)
                     try:
                         output_file_path = f"{output_dir}/clustered_{oracle}"
-                        db_clusters, all_vio, unique_vio, elim_ratio = eliminator.cluster(pd_data)
+                        pd_features = pd_data.iloc[:, 1:]
+                        db_clusters, all_vio, unique_vio, elim_ratio = eliminator.cluster(pd_features)
                         pd_data.insert(0, "clusters", db_clusters, True)
                         message = oracle_type + ',  {:,},  {:,},  {:.2f}%'
                         print(message.format(all_vio, unique_vio, elim_ratio))
                         pd_data.to_csv(output_file_path, index=False)
                     except:
+                        unique_vio =len(pd_data)
+                        all_vio=unique_vio
                         print(f"Cannot eliminate {oracle_type}")
 
                 oracle_unique_list.append(unique_vio)
