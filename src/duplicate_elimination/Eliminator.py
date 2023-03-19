@@ -83,16 +83,16 @@ if __name__ == "__main__":
     target_approach = "all"  # GA/T-way
     # target_name = "scenoRITA_san_mateo_10_T-way"  # borregas_ave_30s/sunnyvale_loop_10s/scenoRITA_san_mateo_10_GA
 
-    target_name_list = ["scenoRITA_borregas_ave_30_GA", "scenoRITA_borregas_ave_30_T-way", "scenoRITA_san_mateo_30_GA",
-                        "scenoRITA_san_mateo_30_T-way", "scenoRITA_sunnyvale_loop_30_GA",
-                        "scenoRITA_sunnyvale_loop_30_T-way",
-                        "DoppelTest_borregas_ave_30_GA", "DoppelTest_borregas_ave_30_T-way",
-                        "DoppelTest_san_mateo_30_GA",
-                        "DoppelTest_san_mateo_30_T-way",
-                        "DoppelTest_sunnyvale_loop_30_GA",
-                        "DoppelTest_sunnyvale_loop_30_T-way",
-                        "ADFuzz_borregas_ave_30_GA", "ADFuzz_borregas_ave_30_T-way",
-                        "AV-Fuzzer_San_Francisco_30_GA", "AV-Fuzzer_San_Francisco_30_T-way"]
+    target_name_list = ["scenoRITA_borregas_ave_GA", "scenoRITA_borregas_ave_T-way", "scenoRITA_san_mateo_GA",
+                        "scenoRITA_san_mateo_T-way", "scenoRITA_sunnyvale_loop_GA",
+                        "scenoRITA_sunnyvale_loop_T-way",
+                        "DoppelTest_borregas_ave_GA", "DoppelTest_borregas_ave_T-way",
+                        "DoppelTest_san_mateo_GA",
+                        "DoppelTest_san_mateo_T-way",
+                        "DoppelTest_sunnyvale_loop_GA",
+                        "DoppelTest_sunnyvale_loop_T-way",
+                        "ADFuzz_borregas_ave_GA", "ADFuzz_borregas_ave_T-way",
+                        "AV-Fuzzer_San_Francisco_GA", "AV-Fuzzer_San_Francisco_T-way"]
     approach_list = ["scenoRITA", "DoppelTest", "ADFuzz", "AV-Fuzzer"]
     oracle_list = ["CollisionOracle.csv", "AccelOracle.csv", "DecelOracle.csv", "SpeedingOracle.csv",
                    "UnsafeLaneChangeOracle.csv",
