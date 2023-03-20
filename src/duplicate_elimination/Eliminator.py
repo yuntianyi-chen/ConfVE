@@ -58,7 +58,7 @@ class Eliminator:
             # Cluster the features based on eps
             db_clusters = DBSCAN(eps=epsilon, min_samples=1, metric='euclidean').fit_predict(pd_features_scaled)
         else:
-            db_clusters = [0 for i in range(len(pd_data))]
+            db_clusters = [0 for i in range(len(pd_features))]
         # print(db_clusters)
         num_clusters = len(set(db_clusters))
         all_vio = len(pd_features_scaled)
