@@ -10,10 +10,10 @@ Global configurations for the framework
 
 OBS_PERCEPTION_FREQUENCY = 10
 MAX_RECORD_TIME = 30  # 10/30
-AV_TESTING_APPROACH = "scenoRITA"  # scenoRITA/DoppelTest/AVFuzzer/ADFuzz
+AV_TESTING_APPROACH = "DoppelTest"  # scenoRITA/DoppelTest/AVFuzzer/ADFuzz
 MAP_NAME = "sunnyvale_loop"  # borregas_ave/sunnyvale_loop/San_Francisco/san_mateo
 CONTAINER_NUM = 5  # 5/10
-OPT_MODE = "T-way"  # GA/DRL/Random/T-way
+OPT_MODE = "GA"  # GA/DRL/Random/T-way
 TIME_HOUR_THRESHOLD = 10  # hours
 
 ####################
@@ -64,6 +64,7 @@ MODULE_ORACLES = ["RoutingFailure",
 
 # INITIAL_EXP_NAME = f"{AV_TESTING_APPROACH}_{MAP_NAME}_{MAX_RECORD_TIME}"
 INITIAL_EXP_NAME = f"{AV_TESTING_APPROACH}_{MAP_NAME}"
+EXP_NAME_OPT_MODE = f"{INITIAL_EXP_NAME}_{OPT_MODE}"
 
 # DIRECTORIES
 DIR_ROOT = str(Path(__file__).parent.parent.parent)
@@ -74,7 +75,7 @@ RECORDS_DIR = f'{PROJECT_ROOT}/data/records'
 FEATURES_CSV_DIR = f'{PROJECT_ROOT}/data/violation_features'
 APOLLO_RECORDS_DIR = f'{APOLLO_ROOT}/records'
 OBS_DIR = f"{APOLLO_ROOT}/modules/tools/perception/obstacles/{MAP_NAME}"
-EXP_GROUP_NAMING_TREE = f"{AV_TESTING_APPROACH}/{INITIAL_EXP_NAME}_{OPT_MODE}"
+EXP_GROUP_NAMING_TREE = f"{AV_TESTING_APPROACH}/{EXP_NAME_OPT_MODE}"
 EXP_BASE_DIR = f"{PROJECT_ROOT}/data/exp_results/{EXP_GROUP_NAMING_TREE}"
 
 # INITIAL_SCENARIO_RECORD_DIR = f"{DIR_ROOT}/Backup/initial/{INITIAL_EXP_NAME}"
