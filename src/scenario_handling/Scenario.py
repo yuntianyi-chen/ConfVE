@@ -58,7 +58,10 @@ class Scenario:
             start_point = ego_trajectory.interpolate(0, normalized=True)
             end_point = ego_trajectory.interpolate(1, normalized=True)
             shortest_path = LineString([start_point, end_point])
-            sinuosity = ego_trajectory.length / shortest_path.length
+            if shortest_path.length == 0:
+                sinuosity = 0
+            else:
+                sinuosity = ego_trajectory.length / shortest_path.length
         # feature_sinuosity = {"sinuosity": sinuosity}
 
         # result = feature_violation | feature_decision | feature_sinuosity
