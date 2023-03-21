@@ -122,8 +122,8 @@ def scenoRITA_ga_init():
 def check_trajectory(p_index1, p_index2):
     valid_path = False
     while not valid_path:
-        valid_path = validatePath(p_index1, p_index2, ptl_dict, ltp_dict, diGraph) and longerTrace(
-            list(ptl_dict.keys())[p_index1], list(ptl_dict.keys())[p_index2], ptl_dict, ltp_dict, diGraph)
+        valid_path = validatePath(p_index1, p_index2, ptl_dict, ltp_dict, obs_diGraph) and longerTrace(
+            list(ptl_dict.keys())[p_index1], list(ptl_dict.keys())[p_index2], ptl_dict, ltp_dict, obs_diGraph)
         if not valid_path:
             p_index1 = random.randint(0, len(ptl_dict.keys()) - 1)
             p_index2 = random.randint(0, len(ptl_dict.keys()) - 1)
@@ -254,7 +254,7 @@ def runScenario(deme, record_name, ctn: Container):
         lane1 = ptl_dict[p1]
         lane2 = ptl_dict[p2]
         # find the path between two lanes
-        path = nx.shortest_path(diGraph, source=lane1, target=lane2)
+        path = nx.shortest_path(obs_diGraph, source=lane1, target=lane2)
         # verify that obstacle type and size is realistic
         ind[4], ind[5], ind[6], ind[7] = check_obs_type(ind[4], ind[5], ind[6], ind[7], ind[8])
         # ensure there are no two obstacles with similar id
