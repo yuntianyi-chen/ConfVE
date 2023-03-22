@@ -51,11 +51,11 @@ if __name__ == '__main__':
     scenario.update_traffic_lights(traffic_light_control)
 
     ctn.modules_operation(operation="start")
-    # ctn.stop_sim_control_standalone_v7()
-    # ctn.start_sim_control_standalone_v7(scenario.coord.x, scenario.coord.y, scenario.heading)
-    ctn.stop_sim_control_standalone()
-    ctn.start_sim_control_standalone()
-    ctn.message_handler.send_initial_localization(scenario)
+    ctn.stop_sim_control_standalone_v7()
+    ctn.start_sim_control_standalone_v7(scenario.coord.x, scenario.coord.y, scenario.heading)
+    # ctn.stop_sim_control_standalone()
+    # ctn.start_sim_control_standalone()
+    # ctn.message_handler.send_initial_localization(scenario)
 
     ctn.start_recorder(scenario.record_name)
     start_replay(ctn, scenario)

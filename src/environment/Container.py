@@ -163,7 +163,7 @@ class Container:
         """
         Starts SimControlStandalone module
         """
-        cmd = f"docker exec -d {self.container_name} /apollo/bazel-bin/modules/sim_control_standalone/sim_control_standalone_main {pose_x} {pose_y} {heading}"
+        cmd = f"docker exec -d {self.container_name} /apollo/bazel-bin/modules/sim_control_standalone/main {pose_x} {pose_y} {heading}"
         subprocess.run(
             cmd.split(),
             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
@@ -173,7 +173,8 @@ class Container:
         """
         Stops SimControlStandalone module
         """
-        cmd = f"docker exec {self.container_name} /apollo/modules/sim_control_standalone/script.sh stop"
+        cmd = f"docker exec -d {self.container_name} pkill -f 'sim_control_standalone'"
+        # cmd = f"docker exec {self.container_name} /apollo/modules/sim_control_standalone/script.sh stop"
         subprocess.run(
             cmd.split(),
             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL

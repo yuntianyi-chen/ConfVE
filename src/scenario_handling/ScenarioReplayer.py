@@ -45,11 +45,11 @@ def replay_scenarios_by_division(scenario_list, containers):
         # print("Restart Modules...")
         for scenario, container in zip(sub_scenario_list, containers):
             container.modules_operation(operation="start")
-            # container.stop_sim_control_standalone_v7()
-            # container.start_sim_control_standalone_v7(scenario.coord.x, scenario.coord.y, scenario.heading)
-            container.stop_sim_control_standalone()
-            container.start_sim_control_standalone()
-            container.message_handler.send_initial_localization(scenario)
+            container.stop_sim_control_standalone_v7()
+            container.start_sim_control_standalone_v7(scenario.coord.x, scenario.coord.y, scenario.heading)
+            # container.stop_sim_control_standalone()
+            # container.start_sim_control_standalone()
+            # container.message_handler.send_initial_localization(scenario)
         # time.sleep(3)
         # print("start running")
 
