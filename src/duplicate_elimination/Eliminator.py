@@ -37,22 +37,13 @@ class Eliminator:
         # plt.show()
         # elbow = KneeLocator(i, distances, S=1, curve='concave', direction='increasing', interp_method='polynomial')
 
-        if IS_CUSTOMIZED_EPSILON:
-            epsilon = EPSILON_THRESHOLD
-            # if knee.knee:
-            #     original_epsilon = sorted_distances[knee.knee]
-            # else:
-            #     original_epsilon = sorted_distances[round(len(sorted_distances) / 2)]
+        if knee.knee:
+            epsilon = sorted_distances[knee.knee]
         else:
-            if knee.knee:
-                epsilon = sorted_distances[knee.knee]
-            else:
-                epsilon = sorted_distances[round(len(sorted_distances) / 2)]
+            epsilon = sorted_distances[round(len(sorted_distances) / 2)]
 
-            # if knee.knee:
-            #     original_epsilon = sorted_distances[knee.knee]
-            # else:
-            #     original_epsilon = sorted_distances[round(len(sorted_distances) / 2)]
+        if IS_CUSTOMIZED_EPSILON and epsilon < EPSILON_THRESHOLD:
+            epsilon = EPSILON_THRESHOLD
 
         if epsilon != 0:
             # Cluster the features based on eps

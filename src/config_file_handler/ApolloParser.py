@@ -13,7 +13,7 @@ class ApolloParser:
             value_type = "float"
         elif re.fullmatch(r"-?\d+(\d*)", value):
             value_type = "integer"
-        elif re.fullmatch(r"-?\d+((\.\d+)|(\d*))e\d+(\d*)", value):
+        elif re.fullmatch(r"-?\d+((\.\d+)|(\d*))e-?\d+(\d*)", value):
             value_type = "e_number"
         elif re.fullmatch(r"\".*\"", value):
             value_type = "string"
