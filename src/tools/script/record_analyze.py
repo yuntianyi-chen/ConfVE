@@ -19,7 +19,7 @@ def get_accel_value(message) -> float:
     return accel_value
 
 
-def meansure_violation(record_file_path):
+def measure_violation(record_file_path):
     # ra = RecordAnalyzer(record_file_path)
     # violation_results = ra.analyze()
     accel_list = []
@@ -62,8 +62,8 @@ def analyze_acc_speed():
     # record_file_path = f"{dir_path}/00000005.00000"
 
     default_record_path = f"{dir_path}/Init_Config_6_Scenario_5.00000"
-    accel_list, velocity_list = meansure_violation(record_file_path)
-    de_accel_list, de_velocity_list = meansure_violation(default_record_path)
+    accel_list, velocity_list = measure_violation(record_file_path)
+    de_accel_list, de_velocity_list = measure_violation(default_record_path)
 
     fig, ax = plt.subplots()
     ax.plot(accel_list, label='Acceleration')

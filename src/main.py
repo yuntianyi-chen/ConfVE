@@ -3,8 +3,10 @@ from config import OPT_MODE, APOLLO_ROOT, CONTAINER_NUM
 from environment.Container import Container
 from environment.InitRunner import InitRunner
 from environment.MapLoader import MapLoader
+from optimization_algorithms.baseline.OneEnabledRunner import OneEnabledRunner
 from optimization_algorithms.baseline.TwayRunner import TwayRunner
 from optimization_algorithms.genetic_algorithm.GARunner import GARunner
+from range_analysis.PreAnalyzeRunner import PreAnalyzeRunner
 
 warnings.filterwarnings('ignore')
 
@@ -26,3 +28,7 @@ if __name__ == '__main__':
         GARunner(containers)
     elif OPT_MODE == "T-way":
         TwayRunner(containers)
+    elif OPT_MODE == "OneEnabled":
+        OneEnabledRunner(containers)
+    elif OPT_MODE == "PreAnalyze":
+        PreAnalyzeRunner(containers)

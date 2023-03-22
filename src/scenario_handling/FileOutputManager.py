@@ -4,7 +4,8 @@ import pickle
 import shutil
 from datetime import date
 from config import BACKUP_CONFIG_SAVE_DIR, MODULE_NAME, CURRENT_CONFIG_FILE_PATH, \
-    DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR, APOLLO_RECORDS_DIR, BACKUP_RECORD_SAVE_DIR, APOLLO_ROOT, EXP_BASE_DIR
+    DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR, APOLLO_RECORDS_DIR, BACKUP_RECORD_SAVE_DIR, APOLLO_ROOT, EXP_BASE_DIR, \
+    OPT_MODE
 
 
 class FileOutputManager:
@@ -36,6 +37,7 @@ class FileOutputManager:
 
         self.ind_list_pickle_dump_data_path = f"{base_dir}/ind_list_pickle_pop"
         self.default_violation_dump_data_path = f"{base_dir}/default_violation_pickle"
+        self.range_analyzer_dump_path = f"{base_dir}/range_analyzer_pickle"
 
         with open(self.violation_save_file_path, "w") as f:
             pass
@@ -104,18 +106,11 @@ class FileOutputManager:
 
     def handle_scenario_record(self, scenario_list):
         for scenario in scenario_list:
-            if scenario.has_emerged_violations:
+            if scenario.has_emerged_violations and OPT_MODE != "PreAnalyze":
                 self.save_record(scenario.record_name)
                 self.delete_record(scenario.record_name)
-
-                # for comfirmed_record_name in scenario.confirmed_record_name_list:
-                #     self.save_record(comfirmed_record_name)
             else:
                 self.delete_record(scenario.record_name)
-
-                # if len(scenario.confirmed_record_name_list) > 0:
-                #     for comfirmed_record_name in scenario.confirmed_record_name_list:
-                #         self.delete_record(comfirmed_record_name)
 
     def delete_record(self, record_name):
         delete_path = f"{APOLLO_RECORDS_DIR}/{record_name}.00000"
@@ -155,7 +150,7 @@ class FileOutputManager:
         for i in range(len(config_file_obj.default_option_value_list)):
             if generated_individual.value_list[i] != config_file_obj.default_option_value_list[i]:
                 option_obj = config_file_obj.option_obj_list[i]
-                option_tuning_str += f"    {option_obj.option_id}, {option_obj.option_key}, {config_file_obj.default_option_value_list[i]}->{generated_individual.value_list[i]}\n"
+                option_tuning_str += f"    {option_obj.option_id}, {option_obj.option_key}, {option_obj.option_type}, {config_file_obj.default_option_value_list[i]}->{generated_individual.value_list[i]}\n"
 
                 self.option_tuning_id_list.append(option_obj.option_id)
         print(option_tuning_str)
@@ -240,14 +235,14 @@ class FileOutputManager:
         option_obj_list = config_file_obj.option_obj_list
         with open(self.range_analysis_file_path, "w") as f:
             diff_count = 0
-            f.write(f"Generation: {num}\n\n")
+            f.write(f"Generation: {num}\n--------------------------\n")
             for i in range(len(option_obj_list)):
                 if range_analyzer.original_range_list[i] != range_analyzer.range_list[i]:
                     diff_count += 1
-                f.write(
-                    f"Option (default): {option_obj_list[i].option_id}, {option_obj_list[i].option_type}, {option_obj_list[i].option_key}, {option_obj_list[i].option_value}\n")
-                f.write(f"  Range: {range_analyzer.range_list[i]}\n")
-            f.write(f"  Num of changed ranges: {diff_count}\n")
+                    f.write(
+                        f"Option (default): {option_obj_list[i].option_id}, {option_obj_list[i].option_type}, {option_obj_list[i].option_key}, {option_obj_list[i].option_value}, ")
+                    f.write(f"{range_analyzer.range_list[i]}\n\n")
+            f.write(f"----------------------\nNum of changed ranges: {diff_count}\n")
 
     def dump_individual_by_pickle(self, ind_list):
         ind_list.sort(reverse=True, key=lambda x: x.fitness)
@@ -261,3 +256,7 @@ class FileOutputManager:
     def load_default_violation_results_by_pickle(self):
         default_violation_results_list = pickle.load(open(self.default_violation_dump_data_path, 'rb'))
         return default_violation_results_list
+
+    def dump_range_analyzer(self, range_analyzer):
+        with open(self.range_analyzer_dump_path, 'wb') as f:
+            pickle.dump(range_analyzer, f, protocol=4)

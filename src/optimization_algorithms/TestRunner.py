@@ -1,13 +1,13 @@
 import os
 import time
 from config import DEFAULT_CONFIG_FILE_PATH, MAX_INITIAL_SCENARIOS, OPT_MODE
+from config_file_handler.OptionTuningItem import OptionTuningItem
 from config_file_handler.ApolloParser import ApolloParser
 from range_analysis.RangeAnalyzer import RangeAnalyzer
 from scenario_handling.FileOutputManager import FileOutputManager
 from scenario_handling.MessageGenerator import MessageGenerator
 from scenario_handling.create_scenarios import create_scenarios
-from scenario_handling.run_scenarios import check_default_running, run_scenarios, \
-    run_scenarios_without_determinism_checking
+from scenario_handling.run_scenarios import check_default_running, run_scenarios_without_determinism_checking
 
 
 class TestRunner:
@@ -70,17 +70,21 @@ class TestRunner:
             else:
                 option_tuning_item = "default"
 
-            if OPT_MODE == "GA":
+            if OPT_MODE in ["GA", "OneEnabled", "PreAnalyze"] and \
+                    not generated_individual.allow_selection and \
+                    isinstance(option_tuning_item, OptionTuningItem) and \
+                    option_tuning_item.option_type in ["float", "integer", "e_number"]:
                 range_change_str = self.range_analyzer.range_analyze(option_tuning_item, self.config_file_obj)
-                self.file_output_manager.save_option_tuning_file(generated_individual,
-                                                                 ind_id,
-                                                                 option_tuning_item,
-                                                                 range_change_str)
+            else:
+                range_change_str = "  Range Change: default\n"
 
+            self.file_output_manager.save_option_tuning_file(generated_individual,
+                                                             ind_id,
+                                                             option_tuning_item,
+                                                             range_change_str)
             self.file_output_manager.save_config_file(ind_id)
             # self.file_output_manager.save_fitness_result(generated_individual, ind_id)
             self.file_output_manager.save_vio_features(generated_individual, scenario_list)
-
             self.file_output_manager.save_count_dict_file()
         self.individual_num += 1
         print(f"--------Running for {(time.time() - self.runner_time) / 3600} hours-----------")

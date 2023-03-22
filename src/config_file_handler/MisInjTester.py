@@ -14,8 +14,8 @@ class MisInjTester:
                                        self.cut_out,
                                        self.repeat]
         self.number_operator_func_list = [self.generate_new_number]
-        if OPT_MODE in ["Random", "MIT", "T-way"]:
-            self.number_operator_func_list.append(self.change_digit_type)
+        # if OPT_MODE in ["Random", "MIT", "T-way"]:
+        #     self.number_operator_func_list.append(self.change_digit_type)
 
     def apply_one_operator(self, option_type, option_value, option_range):
         if option_type in ["float", "integer"]:

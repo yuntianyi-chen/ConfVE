@@ -1,10 +1,10 @@
 import time
-from scenario_handling.ScenarioReplayer import replay_scenarios_by_division, replay_scenarios_in_threading
+from scenario_handling.ScenarioReplayer import replay_scenarios_in_threading
 from scenario_handling.create_scenarios import create_scenarios, create_scenario
 # from scenario_handling.ScenarioRunner import run_scenarios_by_division
 from optimization_algorithms.genetic_algorithm.ga import generate_individuals
 from duplicate_elimination.ViolationChecker import check_emerged_violations, confirm_determinism
-from config import DEFAULT_DETERMINISM_RERUN_TIMES, MODULE_ORACLES, DETERMINISM_RERUN_TIMES
+from config import DEFAULT_DETERMINISM_RERUN_TIMES, MODULE_ORACLES
 
 
 def run_default_scenarios(scenario_list, containers, message_generator):
@@ -60,56 +60,56 @@ def run_scenarios_without_determinism_checking(generated_individual, scenario_li
     generated_individual.update_exec_time(total_time)
 
 
-def run_scenarios(generated_individual, scenario_list, containers):
-    print("Normal Run...")
-    start_time = time.time()
-    # run_scenarios_by_division(scenario_list, containers)
-    # replay_scenarios_by_division(scenario_list, containers)
-    replay_scenarios_in_threading(scenario_list, containers)
-
-    for scenario in scenario_list:
-        violation_results = scenario.measure_violations()
-        violations_emerged_results = check_emerged_violations(violation_results,
-                                                                    scenario.original_violation_results)
-        contain_module_violation = check_module_failure(violations_emerged_results, oracles=MODULE_ORACLES)
-
-        determinism_start_time = time.time()
-
-        # if bug-revealing (e.g., module failure), confirm determinism
-        # once found module failure, don't need to check determinism of other scenarios
-        if generated_individual.allow_selection:
-            # if ENABLE_STRICT_DETERMINISM_CHECKING and len(violations_emerged_results) > 0 or contain_module_violation:
-            if len(violations_emerged_results) > 0:
-
-                violations_emerged_results, _ = confirm_determinism(scenario,
-                                                                    containers,
-                                                                    first_violations_emerged_results=violations_emerged_results,
-                                                                    rerun_times=DETERMINISM_RERUN_TIMES)
-
-                contain_module_violation = check_module_failure(violations_emerged_results, oracles=MODULE_ORACLES)
-                generated_individual.update_allow_selection(contain_module_violation)
-        else:
-            if not contain_module_violation and len(violations_emerged_results) > 0:
-                violations_emerged_results, _ = confirm_determinism(scenario,
-                                                                    containers,
-                                                                    first_violations_emerged_results=violations_emerged_results,
-                                                                    rerun_times=DETERMINISM_RERUN_TIMES)
-
-                contain_module_violation = check_module_failure(violations_emerged_results, oracles=MODULE_ORACLES)
-                # generated_individual.update_allow_selection(contain_module_violation)
-
-        # contain_module_violation = check_module_failure(violations_emerged_results, oracles=MODULE_ORACLES)
-        # generated_individual.update_allow_selection(contain_module_violation)
-        scenario.update_emerged_status(violations_emerged_results, contain_module_violation)
-
-        determinism_time = time.time() - determinism_start_time
-        start_time = start_time + determinism_time
-
-        # generated_individual.update_violation_result(violations_emerged_results, violation_results, scenario)
-        generated_individual.update_fitnesses(violations_emerged_results, violation_results, scenario)
-
-    total_time = time.time() - start_time
-    generated_individual.update_exec_time(total_time)
+# def run_scenarios(generated_individual, scenario_list, containers):
+#     print("Normal Run...")
+#     start_time = time.time()
+#     # run_scenarios_by_division(scenario_list, containers)
+#     # replay_scenarios_by_division(scenario_list, containers)
+#     replay_scenarios_in_threading(scenario_list, containers)
+#
+#     for scenario in scenario_list:
+#         violation_results = scenario.measure_violations()
+#         violations_emerged_results = check_emerged_violations(violation_results,
+#                                                                     scenario.original_violation_results)
+#         contain_module_violation = check_module_failure(violations_emerged_results, oracles=MODULE_ORACLES)
+#
+#         determinism_start_time = time.time()
+#
+#         # if bug-revealing (e.g., module failure), confirm determinism
+#         # once found module failure, don't need to check determinism of other scenarios
+#         if generated_individual.allow_selection:
+#             # if ENABLE_STRICT_DETERMINISM_CHECKING and len(violations_emerged_results) > 0 or contain_module_violation:
+#             if len(violations_emerged_results) > 0:
+#
+#                 violations_emerged_results, _ = confirm_determinism(scenario,
+#                                                                     containers,
+#                                                                     first_violations_emerged_results=violations_emerged_results,
+#                                                                     rerun_times=DETERMINISM_RERUN_TIMES)
+#
+#                 contain_module_violation = check_module_failure(violations_emerged_results, oracles=MODULE_ORACLES)
+#                 generated_individual.update_allow_selection(contain_module_violation)
+#         else:
+#             if not contain_module_violation and len(violations_emerged_results) > 0:
+#                 violations_emerged_results, _ = confirm_determinism(scenario,
+#                                                                     containers,
+#                                                                     first_violations_emerged_results=violations_emerged_results,
+#                                                                     rerun_times=DETERMINISM_RERUN_TIMES)
+#
+#                 contain_module_violation = check_module_failure(violations_emerged_results, oracles=MODULE_ORACLES)
+#                 # generated_individual.update_allow_selection(contain_module_violation)
+#
+#         # contain_module_violation = check_module_failure(violations_emerged_results, oracles=MODULE_ORACLES)
+#         # generated_individual.update_allow_selection(contain_module_violation)
+#         scenario.update_emerged_status(violations_emerged_results, contain_module_violation)
+#
+#         determinism_time = time.time() - determinism_start_time
+#         start_time = start_time + determinism_time
+#
+#         # generated_individual.update_violation_result(violations_emerged_results, violation_results, scenario)
+#         generated_individual.update_fitnesses(violations_emerged_results, violation_results, scenario)
+#
+#     total_time = time.time() - start_time
+#     generated_individual.update_exec_time(total_time)
 
 
 

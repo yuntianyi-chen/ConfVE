@@ -18,9 +18,6 @@ class IndividualWithFitness:
             self.option_tuning_tracking_list.pop()
             self.reset_default()
 
-
-
-
     def update_exec_time(self, total_time):
         self.execution_time = total_time
 
@@ -37,7 +34,6 @@ class IndividualWithFitness:
         self.violations_emerged_results = []
         self.decision_list = []
         self.sinuosity_list = []
-
 
     # def update_violation_result(self, violations_emerged_results, violation_results, scenario):
     #     violations_emerged_results_with_sid = [(scenario.record_id, v) for v in violations_emerged_results]
@@ -65,11 +61,11 @@ class IndividualWithFitness:
         emerged_violations_type_count = len(count_type_list)
 
         total_decision_count = sum(self.decision_list)
-        avg_sinuosity = sum(self.sinuosity_list)/len(self.sinuosity_list)
+        avg_sinuosity = sum(self.sinuosity_list) / len(self.sinuosity_list)
 
         if FITNESS_MODE == "emerge":
             self.fitness = emerged_violations_count
         elif FITNESS_MODE == "multi_obj":
             # self.fitness = (emerged_violations_count, emerged_violations_type_count, 1/self.execution_time)
-            self.fitness = (emerged_violations_count, emerged_violations_type_count, total_decision_count, avg_sinuosity)
-
+            self.fitness = (
+            emerged_violations_count, emerged_violations_type_count, total_decision_count, avg_sinuosity)

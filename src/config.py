@@ -10,10 +10,10 @@ Global configurations for the framework
 
 OBS_PERCEPTION_FREQUENCY = 10
 MAX_RECORD_TIME = 30  # 10/30
-AV_TESTING_APPROACH = "DoppelTest"  # scenoRITA/DoppelTest/AVFuzzer/ADFuzz
+AV_TESTING_APPROACH = "scenoRITA"  # scenoRITA/DoppelTest/AVFuzzer/ADFuzz
 MAP_NAME = "sunnyvale_loop"  # borregas_ave/sunnyvale_loop/San_Francisco/san_mateo
 CONTAINER_NUM = 5  # 5/10
-OPT_MODE = "GA"  # GA/DRL/Random/T-way
+OPT_MODE = "T-way"  # GA/DRL/Random/T-way/OneEnabled/PreAnalyze
 TIME_HOUR_THRESHOLD = 10  # hours
 
 ####################
@@ -22,6 +22,8 @@ TIME_HOUR_THRESHOLD = 10  # hours
 
 # t-way testing
 T_STRENGTH_VALUE = 2  # pairwise
+
+ONEENABLED_NUM_TYPE_TEST_TIMES = 10
 
 # TESTING SETTINGS
 MODULE_NAME = "planning"

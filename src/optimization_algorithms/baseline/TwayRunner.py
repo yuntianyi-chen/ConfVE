@@ -15,10 +15,6 @@ class TwayRunner(TestRunner):
         # print("Start T-way")
 
         while True:
-            print("-------------------------------------------------")
-            print(f"Config_{self.individual_num}")
-            print("-------------------------------------------------")
-
             for inner_loop_i in range(POP_SIZE):
                 default_individual = generate_individuals(self.config_file_obj, population_size=1)[0]
                 generated_individual = self.twise_tuner.tune_individual(default_individual, self.range_analyzer)

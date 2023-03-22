@@ -81,46 +81,45 @@ class Eliminator:
 
 if __name__ == "__main__":
     target_approach = "all"  # GA/T-way
-    # target_name = "scenoRITA_san_mateo_10_T-way"  # borregas_ave_30s/sunnyvale_loop_10s/scenoRITA_san_mateo_10_GA
 
-    # target_name_list = ["scenoRITA_borregas_ave_GA", "scenoRITA_borregas_ave_T-way", "scenoRITA_san_mateo_GA",
-    #                     "scenoRITA_san_mateo_T-way", "scenoRITA_sunnyvale_loop_GA",
-    #                     "scenoRITA_sunnyvale_loop_T-way",
+    # target_name_list = ["scenoRITA_borregas_ave_GA", "scenoRITA_borregas_ave_T-way",
+    #                     "scenoRITA_san_mateo_GA", "scenoRITA_san_mateo_T-way",
+    #                     "scenoRITA_sunnyvale_loop_GA", "scenoRITA_sunnyvale_loop_T-way",
     #                     "DoppelTest_borregas_ave_GA", "DoppelTest_borregas_ave_T-way",
-    #                     "DoppelTest_san_mateo_GA",
-    #                     "DoppelTest_san_mateo_T-way",
-    #                     "DoppelTest_sunnyvale_loop_GA",
-    #                     "DoppelTest_sunnyvale_loop_T-way",
+    #                     "DoppelTest_san_mateo_GA", "DoppelTest_san_mateo_T-way",
+    #                     "DoppelTest_sunnyvale_loop_GA", "DoppelTest_sunnyvale_loop_T-way",
     #                     "ADFuzz_borregas_ave_GA", "ADFuzz_borregas_ave_T-way",
     #                     "AVFuzzer_San_Francisco_GA", "AVFuzzer_San_Francisco_T-way"]
+
     target_name_list = [
+                        "scenoRITA_san_mateo_GA", "scenoRITA_san_mateo_T-way",
+                        "scenoRITA_sunnyvale_loop_GA", "scenoRITA_sunnyvale_loop_T-way",
                         "DoppelTest_borregas_ave_GA", "DoppelTest_borregas_ave_T-way",
-                        "DoppelTest_san_mateo_GA",
-                        "DoppelTest_san_mateo_T-way",
+                        "DoppelTest_san_mateo_GA", "DoppelTest_san_mateo_T-way",
+                        "DoppelTest_sunnyvale_loop_GA", "DoppelTest_sunnyvale_loop_T-way",
+                        "ADFuzz_borregas_ave_GA", "ADFuzz_borregas_ave_T-way",
                         "AVFuzzer_San_Francisco_GA", "AVFuzzer_San_Francisco_T-way"]
 
     approach_list = ["scenoRITA", "DoppelTest", "ADFuzz", "AVFuzzer"]
-    # approach_list = [ "DoppelTest", "AVFuzzer"]
 
     oracle_list = ["CollisionOracle.csv", "AccelOracle.csv", "DecelOracle.csv", "SpeedingOracle.csv",
                    "UnsafeLaneChangeOracle.csv",
                    "ModuleDelayOracle.csv", "PlanningFailure.csv", "PlanningGeneratesGarbage.csv",
                    "JunctionLaneChangeOracle.csv", "StopSignOracle.csv", "TrafficSignalOracle.csv", "EStopOracle.csv"]
+
     map_list = ["borregas_ave", "san_mateo", "sunnyvale_loop", "San_Francisco"]
-    # map_list = ["borregas_ave", "san_mateo", "San_Francisco"]
 
     output_oracle_list = ["Collision", "Fast Acceleration", "Hard Braking", "Speeding", "Unsafe Lane Change",
                           "Module Delay", "Module Malfunction", "Module Illness", "Lane-change in Junction",
                           "Stop Sign Violation", "Traffic Signal violation", "Estop", "Total"]
 
-    # target_name_list = os.listdir(f"{FEATURES_CSV_DIR}/{target_approach}")
-    # target_name_list.sort()
     df_unique_dict = {}
     df_all_dict = {}
 
     for target_name in target_name_list:
         print("-----------------------------------")
         print(target_name)
+
 
         target_dir = f"{FEATURES_CSV_DIR}/{target_approach}/{target_name}/violation_features"
         csv_files_name_list = [name for name in os.listdir(target_dir) if ".csv" in name]
