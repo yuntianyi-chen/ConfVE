@@ -10,7 +10,8 @@ from range_analysis.PreAnalyzeRunner import PreAnalyzeRunner
 
 warnings.filterwarnings('ignore')
 
-if __name__ == '__main__':
+
+def confve_main():
     InitRunner()
 
     containers = [Container(APOLLO_ROOT, f'ROUTE_{x}') for x in range(CONTAINER_NUM)]
@@ -32,3 +33,7 @@ if __name__ == '__main__':
         OneEnabledRunner(containers)
     elif OPT_MODE == "PreAnalyze":
         PreAnalyzeRunner(containers)
+
+
+if __name__ == '__main__':
+    confve_main()
