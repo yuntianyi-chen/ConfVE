@@ -30,10 +30,10 @@ class RecordAnalyzer:
             ModuleOracle(),
             ModuleDelayOracle(),
             JunctionLaneChangeOracle(),
-            # StopSignOracle(),
-            # TrafficSignalOracle(),
+            StopSignOracle(),
+            EStopOracle(),
+            TrafficSignalOracle(),
             # UUStopOracle(),
-            # EStopOracle(),
         ]
         for o in oracles:
             self.oracle_manager.register_oracle(o)

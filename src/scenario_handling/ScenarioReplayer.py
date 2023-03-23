@@ -5,11 +5,12 @@ from config import MAX_RECORD_TIME, REPLAY_SCENARIO_RECORD_DIR
 
 
 def replay_scenario(scenario, container):
-
     container.modules_operation(operation="start")
-    container.stop_sim_control_standalone()
-    container.start_sim_control_standalone()
-    container.message_handler.send_initial_localization(scenario)
+    # container.stop_sim_control_standalone()
+    # container.start_sim_control_standalone()
+    # container.message_handler.send_initial_localization(scenario)
+    container.stop_sim_control_standalone_v7()
+    container.start_sim_control_standalone_v7(scenario.coord.x, scenario.coord.y, scenario.heading)
 
     container.start_recorder(scenario.record_name)
     start_replay(scenario, container)
