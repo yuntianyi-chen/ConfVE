@@ -3,7 +3,8 @@ import shutil
 import subprocess
 from config import BACKUP_CONFIG_SAVE_DIR, BACKUP_RECORD_SAVE_DIR, DIR_ROOT, EXP_BASE_DIR, EXP_NAME_OPT_MODE
 
-if __name__ == "__main__":
+
+def zip_result():
     if (
             os.path.exists(EXP_BASE_DIR)
             and os.path.exists(BACKUP_RECORD_SAVE_DIR)
@@ -41,3 +42,7 @@ if __name__ == "__main__":
 
     else:
         print("Did you run the experiment?")
+
+
+if __name__ == "__main__":
+    zip_result()
