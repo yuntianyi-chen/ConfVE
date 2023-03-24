@@ -10,7 +10,7 @@ Global configurations for the framework
 
 OBS_PERCEPTION_FREQUENCY = 10
 MAX_RECORD_TIME = 30  # 10/30
-AV_TESTING_APPROACH = "scenoRITA"  # scenoRITA/DoppelTest/AVFuzzer/ADFuzz
+AV_TESTING_APPROACH = "DoppelTest"  # scenoRITA/DoppelTest/AVFuzzer/ADFuzz
 MAP_NAME = "sunnyvale_loop"  # borregas_ave/sunnyvale_loop/San_Francisco/san_mateo
 CONTAINER_NUM = 5  # 5/10
 OPT_MODE = "T-way"  # GA/DRL/Random/T-way/OneEnabled/PreAnalyze
@@ -62,7 +62,8 @@ MODULE_ORACLES = ["RoutingFailure",
                   "PlanningFailure",
                   "CarNeverMoved",
                   "SimControlFailure",
-                  "PlanningGeneratesGarbage"]
+                  "PlanningGeneratesGarbage",
+                  "ModuleDelayOracle"]
 
 # INITIAL_EXP_NAME = f"{AV_TESTING_APPROACH}_{MAP_NAME}_{MAX_RECORD_TIME}"
 INITIAL_EXP_NAME = f"{AV_TESTING_APPROACH}_{MAP_NAME}"

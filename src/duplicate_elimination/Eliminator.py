@@ -73,16 +73,7 @@ class Eliminator:
 if __name__ == "__main__":
     target_approach = "all"  # GA/T-way
 
-    # target_name_list = ["scenoRITA_borregas_ave_GA", "scenoRITA_borregas_ave_T-way",
-    #                     "scenoRITA_san_mateo_GA", "scenoRITA_san_mateo_T-way",
-    #                     "scenoRITA_sunnyvale_loop_GA", "scenoRITA_sunnyvale_loop_T-way",
-    #                     "DoppelTest_borregas_ave_GA", "DoppelTest_borregas_ave_T-way",
-    #                     "DoppelTest_san_mateo_GA", "DoppelTest_san_mateo_T-way",
-    #                     "DoppelTest_sunnyvale_loop_GA", "DoppelTest_sunnyvale_loop_T-way",
-    #                     "ADFuzz_borregas_ave_GA", "ADFuzz_borregas_ave_T-way",
-    #                     "AVFuzzer_San_Francisco_GA", "AVFuzzer_San_Francisco_T-way"]
-
-    target_name_list = [
+    target_name_list = ["scenoRITA_borregas_ave_GA", "scenoRITA_borregas_ave_T-way",
                         "scenoRITA_san_mateo_GA", "scenoRITA_san_mateo_T-way",
                         "scenoRITA_sunnyvale_loop_GA", "scenoRITA_sunnyvale_loop_T-way",
                         "DoppelTest_borregas_ave_GA", "DoppelTest_borregas_ave_T-way",
@@ -110,7 +101,6 @@ if __name__ == "__main__":
     for target_name in target_name_list:
         print("-----------------------------------")
         print(target_name)
-
 
         target_dir = f"{FEATURES_CSV_DIR}/{target_approach}/{target_name}/violation_features"
         csv_files_name_list = [name for name in os.listdir(target_dir) if ".csv" in name]
@@ -160,8 +150,8 @@ if __name__ == "__main__":
                         print(message.format(all_vio, unique_vio, elim_ratio))
                         pd_data.to_csv(output_file_path, index=False)
                     except:
-                        unique_vio =len(pd_data)
-                        all_vio=unique_vio
+                        unique_vio = len(pd_data)
+                        all_vio = unique_vio
                         print(f"Cannot eliminate {oracle_type}")
 
                 oracle_unique_list.append(unique_vio)

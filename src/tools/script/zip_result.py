@@ -30,11 +30,11 @@ def zip_result():
             shutil.move(f"{exp_target_dir_path}/{exp_file}", f"{exp_files_path}/{exp_file}")
         os.rmdir(exp_target_dir_path)
 
-        records_out = f"{DIR_ROOT}/{EXP_NAME_OPT_MODE}_records.zip"
         config_out = f"{DIR_ROOT}/{EXP_NAME_OPT_MODE}_config.zip"
+        records_out = f"{DIR_ROOT}/{EXP_NAME_OPT_MODE}_records.zip"
         cmds = [
-            f"cd {BACKUP_RECORD_SAVE_DIR} && zip -r {records_out} ./*",
             f"cd {BACKUP_CONFIG_SAVE_DIR} && zip -r {config_out} ./*",
+            f"cd {BACKUP_RECORD_SAVE_DIR} && zip -r {records_out} ./*",
         ]
 
         for cmd in cmds:
