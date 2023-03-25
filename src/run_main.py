@@ -2,10 +2,7 @@ import os
 import shutil
 import subprocess
 import warnings
-
 from config import PROJECT_ROOT
-from main import confve_main
-from tools.script.zip_result import zip_result
 
 warnings.filterwarnings('ignore')
 

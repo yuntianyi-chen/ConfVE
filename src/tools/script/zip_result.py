@@ -10,7 +10,8 @@ def zip_result():
             and os.path.exists(BACKUP_RECORD_SAVE_DIR)
             and os.path.exists(BACKUP_CONFIG_SAVE_DIR)
     ):
-        date = os.listdir(EXP_BASE_DIR)[-1]
+
+        date = sorted(os.listdir(EXP_BASE_DIR))[-1]
         exp_files_path = f"{EXP_BASE_DIR}/{date}"
 
         exp_target_dir_path = f"{exp_files_path}/{EXP_NAME_OPT_MODE}"
