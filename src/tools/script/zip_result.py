@@ -10,12 +10,15 @@ def zip_result():
             and os.path.exists(BACKUP_RECORD_SAVE_DIR)
             and os.path.exists(BACKUP_CONFIG_SAVE_DIR)
     ):
-        exp_files_path = f"{EXP_BASE_DIR}/{os.listdir(EXP_BASE_DIR)[-1]}"
+        date = os.listdir(EXP_BASE_DIR)[-1]
+        exp_files_path = f"{EXP_BASE_DIR}/{date}"
 
         exp_target_dir_path = f"{exp_files_path}/{EXP_NAME_OPT_MODE}"
         if not os.path.exists(exp_target_dir_path):
             os.mkdir(exp_target_dir_path)
 
+        if not os.path.exists(f"{exp_files_path}/{date}"):
+            os.mkdir(f"{exp_files_path}/{date}")
         for exp_file in os.listdir(exp_files_path):
             if exp_file != EXP_NAME_OPT_MODE:
                 shutil.move(f"{exp_files_path}/{exp_file}", f"{exp_target_dir_path}/{exp_file}")
@@ -33,8 +36,8 @@ def zip_result():
         config_out = f"{DIR_ROOT}/{EXP_NAME_OPT_MODE}_config.zip"
         records_out = f"{DIR_ROOT}/{EXP_NAME_OPT_MODE}_records.zip"
         cmds = [
-            f"cd {BACKUP_CONFIG_SAVE_DIR} && zip -r {config_out} ./*",
-            f"cd {BACKUP_RECORD_SAVE_DIR} && zip -r {records_out} ./*",
+            f"cd {BACKUP_CONFIG_SAVE_DIR} && zip -r {config_out} ./{date}",
+            f"cd {BACKUP_RECORD_SAVE_DIR} && zip -r {records_out} ./{date}",
         ]
 
         for cmd in cmds:
