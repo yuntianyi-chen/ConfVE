@@ -223,11 +223,11 @@ class Container:
 
     def close_subprocess(self):
         cmd = f"docker exec {self.container_name} /apollo/scripts/my_scripts/close_subprocess.sh"
-        subprocess.run(cmd.split())
+        subprocess.run(cmd.split(), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
     def kill_modules(self):
         cmd = f"docker exec {self.container_name} bash /apollo/scripts/my_scripts/kill_modules.sh"
-        subprocess.run(cmd.split())
+        subprocess.run(cmd.split(), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
     def modules_operation(self, operation):
         cmd = f"docker exec -d {self.container_name} bash /apollo/scripts/routing.sh {operation}"
