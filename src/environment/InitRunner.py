@@ -24,6 +24,8 @@ class InitRunner:
             f.write(f"\n--map_dir=/apollo/modules/map/data/{MAP_NAME}\n")
 
     def move_scripts(self):
+        if not os.path.exists(f"{MY_SCRIPTS_DIR}"):
+            os.mkdir(f"{MY_SCRIPTS_DIR}")
         for file_name in os.listdir(f"{PROJECT_ROOT}/data/scripts"):
             if ".sh" in file_name:
                 self.move_file(f"{PROJECT_ROOT}/data/scripts/{file_name}", f"{MY_SCRIPTS_DIR}/{file_name}")
