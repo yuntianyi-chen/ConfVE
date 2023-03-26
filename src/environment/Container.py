@@ -173,7 +173,7 @@ class Container:
         """
         Stops SimControlStandalone module
         """
-        cmd = f"docker exec -d {self.container_name} pkill -f 'sim_control_standalone'"
+        cmd = f"docker exec {self.container_name} pkill -f 'sim_control_standalone'"
         # cmd = f"docker exec {self.container_name} /apollo/modules/sim_control_standalone/script.sh stop"
         subprocess.run(
             cmd.split(),
@@ -222,11 +222,11 @@ class Container:
         self.modules_operation(operation="start")
 
     def close_subprocess(self):
-        cmd = f"docker exec -d {self.container_name} /apollo/scripts/my_scripts/close_subprocess.sh"
+        cmd = f"docker exec {self.container_name} /apollo/scripts/my_scripts/close_subprocess.sh"
         subprocess.run(cmd.split())
 
     def kill_modules(self):
-        cmd = f"docker exec -d {self.container_name} bash /apollo/scripts/my_scripts/kill_modules.sh"
+        cmd = f"docker exec {self.container_name} bash /apollo/scripts/my_scripts/kill_modules.sh"
         subprocess.run(cmd.split())
 
     def modules_operation(self, operation):
@@ -242,7 +242,7 @@ class Container:
         subprocess.Popen(cmd, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
     def stop_recorder(self):
-        cmd = f"docker exec -d {self.container_name} /apollo/scripts/my_scripts/stop_recorder.sh"
+        cmd = f"docker exec {self.container_name} /apollo/scripts/my_scripts/stop_recorder.sh"
         subprocess.run(cmd.split())
 
     # def stop_subprocess(self, p):
