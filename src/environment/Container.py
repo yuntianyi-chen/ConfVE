@@ -223,11 +223,11 @@ class Container:
 
     def close_subprocess(self):
         cmd = f"docker exec {self.container_name} /apollo/scripts/my_scripts/close_subprocess.sh"
-        subprocess.run(cmd.split())
+        subprocess.run(cmd.split(), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
     def kill_modules(self):
         cmd = f"docker exec {self.container_name} bash /apollo/scripts/my_scripts/kill_modules.sh"
-        subprocess.run(cmd.split())
+        subprocess.run(cmd.split(), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
     def modules_operation(self, operation):
         cmd = f"docker exec -d {self.container_name} bash /apollo/scripts/routing.sh {operation}"
@@ -239,11 +239,11 @@ class Container:
 
     def start_recorder(self, record_name):
         cmd = f"docker exec -d {self.container_name} /apollo/bazel-bin/cyber/tools/cyber_recorder/cyber_recorder record -o /apollo/records/{record_name} -a &"
-        subprocess.Popen(cmd, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        subprocess.Popen(cmd.split(), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
     def stop_recorder(self):
         cmd = f"docker exec {self.container_name} /apollo/scripts/my_scripts/stop_recorder.sh"
-        subprocess.run(cmd.split())
+        subprocess.run(cmd.split(), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
     # def stop_subprocess(self, p):
     #     try:
