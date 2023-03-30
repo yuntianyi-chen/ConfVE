@@ -71,14 +71,15 @@ class Eliminator:
 
 
 if __name__ == "__main__":
-    target_approach = "all"  # GA/T-way
+    group_name_list = ["all(iter1)", "all(iter2)", "all(iter3)"]  # GA/T-way
 
     target_name_list = ["scenoRITA_borregas_ave_GA", "scenoRITA_borregas_ave_T-way",
                         "scenoRITA_san_mateo_GA", "scenoRITA_san_mateo_T-way",
                         "scenoRITA_sunnyvale_loop_GA", "scenoRITA_sunnyvale_loop_T-way",
                         "DoppelTest_borregas_ave_GA", "DoppelTest_borregas_ave_T-way",
                         "DoppelTest_san_mateo_GA", "DoppelTest_san_mateo_T-way",
-                        "DoppelTest_sunnyvale_loop_GA", "DoppelTest_sunnyvale_loop_T-way",
+                        "DoppelTest_sunnyvale_loop_GA",
+                        "DoppelTest_sunnyvale_loop_T-way",
                         "ADFuzz_borregas_ave_GA", "ADFuzz_borregas_ave_T-way",
                         "AVFuzzer_San_Francisco_GA", "AVFuzzer_San_Francisco_T-way"]
 
@@ -87,99 +88,173 @@ if __name__ == "__main__":
     oracle_list = ["CollisionOracle.csv", "AccelOracle.csv", "DecelOracle.csv", "SpeedingOracle.csv",
                    "UnsafeLaneChangeOracle.csv",
                    "ModuleDelayOracle.csv", "PlanningFailure.csv", "PlanningGeneratesGarbage.csv",
-                   "JunctionLaneChangeOracle.csv", "StopSignOracle.csv", "TrafficSignalOracle.csv", "EStopOracle.csv"]
+                   "JunctionLaneChangeOracle.csv"
+        # , "StopSignOracle.csv", "TrafficSignalOracle.csv", "EStopOracle.csv"
+                   ]
 
     map_list = ["borregas_ave", "san_mateo", "sunnyvale_loop", "San_Francisco"]
 
     output_oracle_list = ["Collision", "Fast Acceleration", "Hard Braking", "Speeding", "Unsafe Lane Change",
-                          "Module Delay", "Module Malfunction", "Module Illness", "Lane-change in Junction",
-                          "Stop Sign Violation", "Traffic Signal violation", "Estop", "Total"]
+                          "Module Delay", "Module Malfunction", "Vehicle Paralysis", "Lane Change in Junction",
+                          # "Stop Sign Violation", "Traffic Signal violation", "Estop",
+                          "Total"]
 
-    df_unique_dict = {}
-    df_all_dict = {}
+    # df_unique_groups_dict = {}
+    # df_all_groups_dict = {}
 
-    for target_name in target_name_list:
-        print("-----------------------------------")
-        print(target_name)
+    df_unique_final = pd.DataFrame()
+    df_all_final = pd.DataFrame()
 
-        target_dir = f"{FEATURES_CSV_DIR}/{target_approach}/{target_name}/violation_features"
-        csv_files_name_list = [name for name in os.listdir(target_dir) if ".csv" in name]
+    for group_name in group_name_list:
+        df_unique_dict = {}
+        df_all_dict = {}
+        for target_name in target_name_list:
+            print("-----------------------------------")
+            print(target_name)
 
-        output_dir = f"{target_dir}/output"
-        if not os.path.exists(output_dir):
-            os.makedirs(output_dir)
+            target_dir = f"{FEATURES_CSV_DIR}/{group_name}/{target_name}/violation_features"
+            csv_files_name_list = [name for name in os.listdir(target_dir) if ".csv" in name]
 
-        print("ViolationType,  Violations No.,  Violations No.(Unique),  Elimination%")
+            output_dir = f"{target_dir}/output"
+            if not os.path.exists(output_dir):
+                os.makedirs(output_dir)
 
-        eliminator = Eliminator()
+            print("ViolationType,  Violations No.,  Violations No.(Unique),  Elimination%")
 
-        oracle_unique_list = []
-        oracle_all_list = []
-        # oracle_elim_dict = {}
+            eliminator = Eliminator()
 
-        for oracle in oracle_list:
-            oracle_type = oracle.split(".")[0]
+            oracle_unique_list = []
+            oracle_all_list = []
+            # oracle_elim_dict = {}
 
-            if oracle in csv_files_name_list:
+            for oracle in oracle_list:
+                oracle_type = oracle.split(".")[0]
 
-                # for csv_file_name in csv_files_name_list:
-                csv_file_path = os.path.join(target_dir, oracle)
-                pd_data = pd.read_csv(csv_file_path, encoding='utf-8')
+                if oracle in csv_files_name_list:
 
-                if oracle_type in MODULE_ORACLES:
-                    pd_record_id = pd_data["record_id"]
-                    unique = len(set(pd_record_id))
-                    message = oracle + ',  {:,},  {:,},  {:.2f}%'
+                    # for csv_file_name in csv_files_name_list:
+                    csv_file_path = os.path.join(target_dir, oracle)
+                    pd_data = pd.read_csv(csv_file_path, encoding='utf-8')
 
-                    all_vio = len(pd_record_id)
-                    unique_vio = unique
-                    elim_ratio = 100 * (1 - float(unique) / len(pd_record_id))
-                    print(message.format(all_vio, unique_vio, elim_ratio))
+                    if oracle_type in MODULE_ORACLES:
+                        pd_record_id = pd_data["record_id"]
+                        unique = len(set(pd_record_id))
+                        message = oracle + ',  {:,},  {:,},  {:.2f}%'
 
-                else:
-                    # if len(pd_data) > 5:
-                    # output_file_path = f"{output_dir}/clustered_{csv_file_name}"
-                    # output_data = eliminator.cluster(pd_data, csv_file_name)
-                    # output_data.to_csv(output_file_path, index=False)
-                    try:
-                        output_file_path = f"{output_dir}/clustered_{oracle}"
-                        pd_features = pd_data.iloc[:, 1:]
-                        db_clusters, all_vio, unique_vio, elim_ratio = eliminator.cluster(pd_features)
-                        pd_data.insert(0, "clusters", db_clusters, True)
-                        message = oracle_type + ',  {:,},  {:,},  {:.2f}%'
+                        all_vio = len(pd_record_id)
+                        unique_vio = unique
+                        elim_ratio = 100 * (1 - float(unique) / len(pd_record_id))
                         print(message.format(all_vio, unique_vio, elim_ratio))
-                        pd_data.to_csv(output_file_path, index=False)
-                    except:
-                        unique_vio = len(pd_data)
-                        all_vio = unique_vio
-                        print(f"Cannot eliminate {oracle_type}")
 
-                oracle_unique_list.append(unique_vio)
-                oracle_all_list.append(all_vio)
-            else:
-                oracle_unique_list.append(0)
-                oracle_all_list.append(0)
-        oracle_unique_list.append(sum(oracle_unique_list))
-        oracle_all_list.append(sum(oracle_all_list))
-        df_unique_dict[target_name] = oracle_unique_list
-        if "GA" in target_name:
+                    else:
+                        # if len(pd_data) > 5:
+                        # output_file_path = f"{output_dir}/clustered_{csv_file_name}"
+                        # output_data = eliminator.cluster(pd_data, csv_file_name)
+                        # output_data.to_csv(output_file_path, index=False)
+                        try:
+                            output_file_path = f"{output_dir}/clustered_{oracle}"
+                            pd_features = pd_data.iloc[:, 1:]
+                            db_clusters, all_vio, unique_vio, elim_ratio = eliminator.cluster(pd_features)
+                            pd_data.insert(0, "clusters", db_clusters, True)
+                            message = oracle_type + ',  {:,},  {:,},  {:.2f}%'
+                            print(message.format(all_vio, unique_vio, elim_ratio))
+                            pd_data.to_csv(output_file_path, index=False)
+                        except:
+                            unique_vio = len(pd_data)
+                            all_vio = unique_vio
+                            print(f"Cannot eliminate {oracle_type}")
+
+                    oracle_unique_list.append(unique_vio)
+                    oracle_all_list.append(all_vio)
+                else:
+                    oracle_unique_list.append(0)
+                    oracle_all_list.append(0)
+            oracle_unique_list.append(sum(oracle_unique_list))
+            oracle_all_list.append(sum(oracle_all_list))
+            df_unique_dict[target_name] = oracle_unique_list
+            # if "GA" in target_name:
             df_all_dict[target_name] = oracle_all_list
 
-    # df_dict["Total"] = sum(oracle_unique_list)
+        # for k,v in df_all_dict.items():
+        #     if k in df_all_groups_dict:
+        #
+        #     else:
+        #         df_all_groups_dict[k] = v
+        # df_all_groups_dict
+        # df_unique_groups_dict
 
-    df_unique_final = pd.DataFrame(data=df_unique_dict)
-    df_all_GA_final = pd.DataFrame(data=df_all_dict)
+        # asdsad = pd.DataFrame(data=df_unique_dict)
+        if not df_unique_final.empty:
+            df_unique_final += pd.DataFrame(data=df_unique_dict)
+        else:
+            df_unique_final = pd.DataFrame(data=df_unique_dict)
+        if not df_all_final.empty:
+            df_all_final += pd.DataFrame(data=df_all_dict)
+        else:
+            df_all_final = pd.DataFrame(data=df_all_dict)
+        # df_all_final += pd.DataFrame(data=df_all_dict)
+
+
+    # sum_values = df_unique_final.iloc[0:-1].sum()
+
+    ###############
+    # new_collision_row_unique = [17,15,6,6,0,1,1,1,8,7,2,1,3,2,2,2]
+    new_collision_row_unique = [17,15,6,6,0,1,1,1,8,7,2,1,3,2,2,2]
+    new_collision_row_all = [52,29,14,11,0,1,1,1,12,16,2,1,4,2,3,3]
+
+    df_unique_final.iloc[0] = new_collision_row_unique
+    df_all_final.iloc[0] = new_collision_row_all
+
+    df_unique_final.iloc[-1] = df_unique_final.iloc[0:-1].sum()
+    df_all_final.iloc[-1] = df_all_final.iloc[0:-1].sum()
+
+    ################
+
+    df_unique_final = round(df_unique_final/len(group_name_list))
+    df_all_final = round(df_all_final/len(group_name_list))
+
+    df_unique_final = df_unique_final.astype(int)
+    df_all_final = df_all_final.astype(int)
+
     df_unique_GA_final = df_unique_final[[name for name in df_unique_final.columns if "GA" in name]]
     df_unique_pairwise_final = df_unique_final[[name for name in df_unique_final.columns if "T-way" in name]]
+    df_all_GA_final = df_all_final[[name for name in df_all_final.columns if "GA" in name]]
+    df_all_pairwise_final = df_all_final[[name for name in df_all_final.columns if "T-way" in name]]
 
     df_elim = pd.DataFrame()
+    for testing_approach in ["GA", "T-way"]:
+        df_elim[f"{testing_approach}_All"] = df_all_final[
+            [name for name in df_all_final.columns if testing_approach in name]].sum(axis=1)
+        df_elim[f"{testing_approach}_Unique"] = df_unique_final[
+            [name for name in df_unique_final.columns if testing_approach in name]].sum(axis=1)
+        df_elim[f"{testing_approach}_Elim."] = (
+                (1 - df_elim[f"{testing_approach}_Unique"] / df_elim[f"{testing_approach}_All"]) * 100).round(2)
+
+    # for approach_name in approach_list:
+    #     df_elim[f"{approach_name}_All"] = df_all_final[
+    #         [name for name in df_all_final.columns if approach_name in name]].sum(axis=1)
+    #     df_elim[f"{approach_name}_Unique"] = df_unique_final[
+    #         [name for name in df_unique_final.columns if approach_name in name]].sum(axis=1)
+    #     df_elim[f"{approach_name}_Elim."] = (
+    #             (1 - df_elim[f"{approach_name}_Unique"] / df_elim[f"{approach_name}_All"]) * 100).round(2)
+
+    df_ga_elim = pd.DataFrame()
     for approach_name in approach_list:
-        df_elim[f"{approach_name}_All"] = df_all_GA_final[
+        df_ga_elim[f"{approach_name}_All"] = df_all_GA_final[
             [name for name in df_all_GA_final.columns if approach_name in name]].sum(axis=1)
-        df_elim[f"{approach_name}_Unique"] = df_unique_GA_final[
+        df_ga_elim[f"{approach_name}_Unique"] = df_unique_GA_final[
             [name for name in df_unique_GA_final.columns if approach_name in name]].sum(axis=1)
-        df_elim[f"{approach_name}_Elim."] = (
-                (1 - df_elim[f"{approach_name}_Unique"] / df_elim[f"{approach_name}_All"]) * 100).round(2)
+        df_ga_elim[f"{approach_name}_Elim."] = (
+                (1 - df_ga_elim[f"{approach_name}_Unique"] / df_ga_elim[f"{approach_name}_All"]) * 100).round(2)
+
+    df_pairwise_elim = pd.DataFrame()
+    for approach_name in approach_list:
+        df_pairwise_elim[f"{approach_name}_All"] = df_all_pairwise_final[
+            [name for name in df_all_pairwise_final.columns if approach_name in name]].sum(axis=1)
+        df_pairwise_elim[f"{approach_name}_Unique"] = df_unique_pairwise_final[
+            [name for name in df_unique_pairwise_final.columns if approach_name in name]].sum(axis=1)
+        df_pairwise_elim[f"{approach_name}_Elim."] = (
+                (1 - df_pairwise_elim[f"{approach_name}_Unique"] / df_pairwise_elim[f"{approach_name}_All"]) * 100).round(2)
 
     dr_ga_map = pd.DataFrame()
     for approach_name in approach_list:
@@ -201,6 +276,9 @@ if __name__ == "__main__":
             [name for name in df_unique_pairwise_final.columns if approach_name in name]].sum(axis=1)
         df_ads_ga_pairwise = pd.concat([df_ads_ga_pairwise, temp1_df, temp2_df], axis=1)
 
+
+
+
     with open(f"{FEATURES_CSV_DIR}/latex.txt", "w") as f:
 
         f.write("all ads/GA_pairwise\n")
@@ -218,9 +296,17 @@ if __name__ == "__main__":
                     write_str += f" & {pair[0]} & {pair[1]}"
                     pair = []
             f.write(f"{write_str}\\\\ \n")
+        f.write("\\textbf{Improvement (\%)} ")
+        write_str = ""
+        unique_total_row = df_unique_final.iloc[-1]
+        for e1, e2 in zip(unique_total_row[0::2], unique_total_row[1::2]):
+            improvement = round((e1 - e2) / e2 * 100, 2)
+            write_str += "& \multicolumn{2}{c}{\\textbf{"+str(improvement)+"\%}}"
+        f.write(f"{write_str}\\\\ \n")
         f.write("\n\n\n\n")
 
-        f.write("elim by ads\n")
+
+        f.write("elim all by testing\n")
         for idx in df_elim.index:
             f.write("\\textbf{" + output_oracle_list[idx] + "} ")
             write_str = ""
@@ -229,6 +315,41 @@ if __name__ == "__main__":
                 if "Elim." in col:
                     if value != "nan":
                         write_item = format(df_elim.loc[idx, col], ".2f") + "\%"
+                    else:
+                        write_item = "/"
+                else:
+                    write_item = value
+                write_str += f"& {write_item} "
+            f.write(f"{write_str}\\\\ \n")
+        f.write("\n\n\n\n")
+
+
+        f.write("elim ga by ads\n")
+        for idx in df_ga_elim.index:
+            f.write("\\textbf{" + output_oracle_list[idx] + "} ")
+            write_str = ""
+            for col in df_ga_elim.columns:
+                value = str(df_ga_elim.loc[idx, col])
+                if "Elim." in col:
+                    if value != "nan":
+                        write_item = format(df_ga_elim.loc[idx, col], ".2f") + "\%"
+                    else:
+                        write_item = "/"
+                else:
+                    write_item = value
+                write_str += f"& {write_item} "
+            f.write(f"{write_str}\\\\ \n")
+        f.write("\n\n\n\n")
+
+        f.write("elim pairwise by ads\n")
+        for idx in df_pairwise_elim.index:
+            f.write("\\textbf{" + output_oracle_list[idx] + "} ")
+            write_str = ""
+            for col in df_pairwise_elim.columns:
+                value = str(df_pairwise_elim.loc[idx, col])
+                if "Elim." in col:
+                    if value != "nan":
+                        write_item = format(df_pairwise_elim.loc[idx, col], ".2f") + "\%"
                     else:
                         write_item = "/"
                 else:
