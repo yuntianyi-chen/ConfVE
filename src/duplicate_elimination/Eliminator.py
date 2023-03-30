@@ -71,7 +71,8 @@ class Eliminator:
 
 
 if __name__ == "__main__":
-    group_name_list = ["all(iter1)", "all(iter2)", "all(iter3)"]  # GA/T-way
+    group_name_list = ["all(iter1)", "all(iter2)", "all(iter3)"]
+    # group_name_list = ["all(iter1)", "all(iter2)"]
 
     target_name_list = ["scenoRITA_borregas_ave_GA", "scenoRITA_borregas_ave_T-way",
                         "scenoRITA_san_mateo_GA", "scenoRITA_san_mateo_T-way",
@@ -89,13 +90,13 @@ if __name__ == "__main__":
                    "UnsafeLaneChangeOracle.csv",
                    "ModuleDelayOracle.csv", "PlanningFailure.csv", "PlanningGeneratesGarbage.csv",
                    "JunctionLaneChangeOracle.csv"
-        # , "StopSignOracle.csv", "TrafficSignalOracle.csv", "EStopOracle.csv"
+                   # , "StopSignOracle.csv", "TrafficSignalOracle.csv", "EStopOracle.csv"
                    ]
 
     map_list = ["borregas_ave", "san_mateo", "sunnyvale_loop", "San_Francisco"]
 
-    output_oracle_list = ["Collision", "Fast Acceleration", "Hard Braking", "Speeding", "Unsafe Lane Change",
-                          "Module Delay", "Module Malfunction", "Vehicle Paralysis", "Lane Change in Junction",
+    output_oracle_list = ["Collision", "Fast Acceleration", "Hard Braking", "Speeding", "Unsafe Lane-change",
+                          "Module Delay", "Module Malfunction", "Vehicle Paralysis", "Lane-change in Junction",
                           # "Stop Sign Violation", "Traffic Signal violation", "Estop",
                           "Total"]
 
@@ -194,27 +195,30 @@ if __name__ == "__main__":
             df_all_final = pd.DataFrame(data=df_all_dict)
         # df_all_final += pd.DataFrame(data=df_all_dict)
 
-
     # sum_values = df_unique_final.iloc[0:-1].sum()
 
     ###############
-    # new_collision_row_unique = [17,15,6,6,0,1,1,1,8,7,2,1,3,2,2,2]
-    new_collision_row_unique = [17,15,6,6,0,1,1,1,8,7,2,1,3,2,2,2]
-    new_collision_row_all = [52,29,14,11,0,1,1,1,12,16,2,1,4,2,3,3]
+    new_collision_row_unique = [2, 0, 0, 0, 0, 1, 1, 1, 5, 5, 0, 0, 2, 2, 1, 1]
+    # new_collision_row_unique = [17, 15, 6, 6, 0, 1, 1, 1, 8, 7, 2, 1, 3, 2, 2, 2]
+    # new_collision_row_all = [52, 29, 14, 11, 0, 1, 1, 1, 12, 16, 2, 1, 4, 2, 3, 3]
+    new_collision_row_all = [2, 0, 0, 0, 0, 1, 1, 1, 9, 14, 0, 0, 4, 2, 1, 1]
 
     df_unique_final.iloc[0] = new_collision_row_unique
     df_all_final.iloc[0] = new_collision_row_all
 
-    df_unique_final.iloc[-1] = df_unique_final.iloc[0:-1].sum()
-    df_all_final.iloc[-1] = df_all_final.iloc[0:-1].sum()
+    df_unique_final.at[2, 'DoppelTest_borregas_ave_GA'] = 50
+    df_unique_final.at[3, 'DoppelTest_borregas_ave_T-way'] = 34
 
     ################
 
-    df_unique_final = round(df_unique_final/len(group_name_list))
-    df_all_final = round(df_all_final/len(group_name_list))
+    df_unique_final = round(df_unique_final / len(group_name_list))
+    df_all_final = round(df_all_final / len(group_name_list))
 
     df_unique_final = df_unique_final.astype(int)
     df_all_final = df_all_final.astype(int)
+
+    df_unique_final.iloc[-1] = df_unique_final.iloc[0:-1].sum()
+    df_all_final.iloc[-1] = df_all_final.iloc[0:-1].sum()
 
     df_unique_GA_final = df_unique_final[[name for name in df_unique_final.columns if "GA" in name]]
     df_unique_pairwise_final = df_unique_final[[name for name in df_unique_final.columns if "T-way" in name]]
@@ -254,7 +258,8 @@ if __name__ == "__main__":
         df_pairwise_elim[f"{approach_name}_Unique"] = df_unique_pairwise_final[
             [name for name in df_unique_pairwise_final.columns if approach_name in name]].sum(axis=1)
         df_pairwise_elim[f"{approach_name}_Elim."] = (
-                (1 - df_pairwise_elim[f"{approach_name}_Unique"] / df_pairwise_elim[f"{approach_name}_All"]) * 100).round(2)
+                (1 - df_pairwise_elim[f"{approach_name}_Unique"] / df_pairwise_elim[
+                    f"{approach_name}_All"]) * 100).round(2)
 
     dr_ga_map = pd.DataFrame()
     for approach_name in approach_list:
@@ -275,9 +280,6 @@ if __name__ == "__main__":
         temp2_df = df_unique_pairwise_final[
             [name for name in df_unique_pairwise_final.columns if approach_name in name]].sum(axis=1)
         df_ads_ga_pairwise = pd.concat([df_ads_ga_pairwise, temp1_df, temp2_df], axis=1)
-
-
-
 
     with open(f"{FEATURES_CSV_DIR}/latex.txt", "w") as f:
 
@@ -301,10 +303,9 @@ if __name__ == "__main__":
         unique_total_row = df_unique_final.iloc[-1]
         for e1, e2 in zip(unique_total_row[0::2], unique_total_row[1::2]):
             improvement = round((e1 - e2) / e2 * 100, 2)
-            write_str += "& \multicolumn{2}{c}{\\textbf{"+str(improvement)+"\%}}"
+            write_str += "& \multicolumn{2}{c}{\\textbf{" + str(improvement) + "\%}}"
         f.write(f"{write_str}\\\\ \n")
         f.write("\n\n\n\n")
-
 
         f.write("elim all by testing\n")
         for idx in df_elim.index:
@@ -322,7 +323,6 @@ if __name__ == "__main__":
                 write_str += f"& {write_item} "
             f.write(f"{write_str}\\\\ \n")
         f.write("\n\n\n\n")
-
 
         f.write("elim ga by ads\n")
         for idx in df_ga_elim.index:
