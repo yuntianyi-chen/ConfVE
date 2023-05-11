@@ -84,5 +84,5 @@ def analyze_messages():
 
 if __name__ == "__main__":
     map_instance = MapLoader().map_instance
-    # analyze_acc_speed()
-    analyze_messages()
+    analyze_acc_speed()
+    # analyze_messages()

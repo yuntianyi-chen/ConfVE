@@ -62,15 +62,21 @@ class FileOutputManager:
 
         self.delete_dir(dir_path=APOLLO_RECORDS_DIR, mk_dir=True)
 
-    def delete_recorder_log(self):
-        files = glob.glob(f'{APOLLO_ROOT}/cyber_recorder.log.INFO.*')
+
+    def delete_temp_log(self):
+        files = glob.glob(f'{APOLLO_ROOT}/*.log.INFO.*')
         for file in files:
             os.remove(file)
 
-    def delete_simcontrol_log(self):
-        files = glob.glob(f'{APOLLO_ROOT}/sim_control_main.log.INFO.*')
-        for file in files:
-            os.remove(file)
+    # def delete_recorder_log(self):
+    #     files = glob.glob(f'{APOLLO_ROOT}/cyber_recorder.log.INFO.*')
+    #     for file in files:
+    #         os.remove(file)
+    #
+    # def delete_simcontrol_log(self):
+    #     files = glob.glob(f'{APOLLO_ROOT}/sim_control_main.log.INFO.*')
+    #     for file in files:
+    #         os.remove(file)
 
     def delete_data_core_and_log(self):
         try:
@@ -82,8 +88,9 @@ class FileOutputManager:
             print(ose)
 
     def delete_temp_files(self):
-        self.delete_simcontrol_log()
-        self.delete_recorder_log()
+        # self.delete_simcontrol_log()
+        # self.delete_recorder_log()
+        self.delete_temp_log()
         self.delete_data_core_and_log()
 
     def change_permission(self):
