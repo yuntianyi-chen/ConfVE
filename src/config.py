@@ -16,6 +16,8 @@ CONTAINER_NUM = 5  # 5/10
 OPT_MODE = "GA"  # GA/DRL/Random/T-way/OneEnabled/PreAnalyze
 TIME_HOUR_THRESHOLD = 10  # hours
 
+DO_RANGE_ANALYSIS = True
+
 ####################
 ## Default Config ##
 ####################
@@ -72,7 +74,7 @@ EXP_NAME_OPT_MODE = f"{INITIAL_EXP_NAME}_{OPT_MODE}"
 # DIRECTORIES
 DIR_ROOT = str(Path(__file__).parent.parent.parent)
 PROJECT_ROOT = str(Path(__file__).parent.parent)
-APOLLO_ROOT = f'{DIR_ROOT}/apollo_v7_deploy'  # apollo_v7_deploy/apollo_7.0/AV_Config_Testing
+APOLLO_ROOT = f'{DIR_ROOT}/apollo-baidu'  # apollo_v7_deploy/apollo_7.0/AV_Config_Testing/apollo-baidu
 
 RECORDS_DIR = f'{PROJECT_ROOT}/data/records'
 FEATURES_CSV_DIR = f'{PROJECT_ROOT}/data/violation_features'

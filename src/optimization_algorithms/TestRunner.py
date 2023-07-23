@@ -1,6 +1,6 @@
 import os
 import time
-from config import DEFAULT_CONFIG_FILE_PATH, MAX_INITIAL_SCENARIOS, OPT_MODE
+from config import DEFAULT_CONFIG_FILE_PATH, MAX_INITIAL_SCENARIOS, OPT_MODE, DO_RANGE_ANALYSIS
 from config_file_handler.OptionTuningItem import OptionTuningItem
 from config_file_handler.ApolloParser import ApolloParser
 from range_analysis.RangeAnalyzer import RangeAnalyzer
@@ -70,7 +70,7 @@ class TestRunner:
             else:
                 option_tuning_item = "default"
 
-            if OPT_MODE in ["GA", "OneEnabled", "PreAnalyze"] and \
+            if DO_RANGE_ANALYSIS and OPT_MODE in ["GA", "OneEnabled", "PreAnalyze"] and \
                     not generated_individual.allow_selection and \
                     isinstance(option_tuning_item, OptionTuningItem) and \
                     option_tuning_item.option_type in ["float", "integer", "e_number"]:
