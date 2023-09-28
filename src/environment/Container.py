@@ -53,7 +53,10 @@ class Container:
             name: str
                 name of the container
         """
-        return f"apollo_dev_{self.username}"
+        if self.username == '':
+            return 'apollo_dev'
+        else:
+            return f"apollo_dev_{self.username}"
 
     def is_running(self) -> bool:
         """
@@ -194,10 +197,13 @@ class Container:
 
         while True:
             try:
+                # print("Connecting to bridge...")
                 docker_container_ip = self.get_docker_container_ip()
                 bridge = CyberBridge(docker_container_ip, self.bridge_port)
+                # print("Connected to bridge!")
                 return bridge
             except ConnectionRefusedError:
+                # print("Waiting for bridge...")
                 time.sleep(1)
 
     def register_bridge_publishers(self):

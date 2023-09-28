@@ -57,7 +57,7 @@ def measure_violation(record_file_path):
 
 
 def analyze_acc_speed():
-    dir_path = "/home/cloudsky/Research/Apollo/Backup/useful_cases"
+    dir_path = "/home/Research/Apollo/ConfVE/useful_cases"
     record_file_path = f"{dir_path}/default_Scenario_5_rerun_6.00000"
     # record_file_path = f"{dir_path}/00000005.00000"
 
@@ -78,11 +78,13 @@ def analyze_acc_speed():
 
 
 def analyze_messages():
-    dir_path = "/home/cloudsky/Research/Apollo/Backup/useful_cases"
-    record_file_path = f"{dir_path}/default_Scenario_5_rerun_6.00000"
-
+    dir_path = "/home/cloudsky/Research/Apollo/ConfVE/apollo-baidu/initial/DoppelTest_borregas_ave"
+    record_file_path = f"{dir_path}/00000005.00000"
+    ra = RecordAnalyzer(record_file_path)
+    violation_results = ra.analyze()
+    print(violation_results)
 
 if __name__ == "__main__":
     map_instance = MapLoader().map_instance
-    analyze_acc_speed()
-    # analyze_messages()
+    # analyze_acc_speed()
+    analyze_messages()

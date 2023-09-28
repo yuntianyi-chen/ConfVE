@@ -25,7 +25,7 @@ directory = f'{APOLLO_ROOT}/modules/planning'
 
 def find_variable_in_files(directory, variable, output_file):
     # Regex pattern to find the variable
-    pattern = re.compile(r'.*{}.*'.format(variable))
+    pattern = re.compile(r'\b{}_?\b.*=.*'.format(variable))
 
     # Walk through the directory
     for root, dirs, files in os.walk(directory):
@@ -49,11 +49,13 @@ if __name__ == '__main__':
     with open(output_file, 'w') as out:
         out.write("")
 
+    count=0
     analyzed_option_key_list = []
-    for option_key, option_type in zip(config_file_obj.option_key_list, config_file_obj.option_type_list):
+    for option_key, option_value, option_type in zip(config_file_obj.option_key_list, config_file_obj.default_option_value_list,config_file_obj.option_type_list):
         if option_type in ['integer', 'float', 'e_number'] and option_key not in analyzed_option_key_list:
             with open(output_file, 'a') as out:
-                out.write(f'\n{option_key}\n')
+                count+=1
+                out.write(f'\n{count} {option_key} {option_value}\n')
             find_variable_in_files(directory, option_key, output_file)
             analyzed_option_key_list.append(option_key)
 
