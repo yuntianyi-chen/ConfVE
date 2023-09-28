@@ -2,13 +2,9 @@ from cyber_record.record import Record
 from objectives.violation_number.oracles.OracleManager import OracleManager
 from objectives.violation_number.oracles.impl.CollisionOracle import CollisionOracle
 from objectives.violation_number.oracles.impl.ComfortOracle import ComfortOracle
-from objectives.violation_number.oracles.impl.EStopOracle import EStopOracle
 from objectives.violation_number.oracles.impl.ModuleDelayOracle import ModuleDelayOracle
 from objectives.violation_number.oracles.impl.ModuleOracle import ModuleOracle
 from objectives.violation_number.oracles.impl.SpeedingOracle import SpeedingOracle
-from objectives.violation_number.oracles.impl.StopSignOracle import StopSignOracle
-from objectives.violation_number.oracles.impl.TrafficSignalOracle import TrafficSignalOracle
-from objectives.violation_number.oracles.impl.UUStopOracle import UUStopOracle
 from objectives.violation_number.oracles.impl.UnsafeLaneChangeOracle import UnsafeLaneChangeOracle
 from objectives.violation_number.oracles.impl.JunctionLaneChangeOracle import JunctionLaneChangeOracle
 
@@ -29,11 +25,7 @@ class RecordAnalyzer:
             ComfortOracle(),
             ModuleOracle(),
             ModuleDelayOracle(),
-            JunctionLaneChangeOracle(),
-            StopSignOracle(),
-            EStopOracle(),
-            TrafficSignalOracle(),
-            # UUStopOracle(),
+            JunctionLaneChangeOracle()
         ]
         for o in oracles:
             self.oracle_manager.register_oracle(o)

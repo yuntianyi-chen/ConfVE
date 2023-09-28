@@ -26,7 +26,6 @@ class InitialRecordInfo:
         self.coord = None
         self.heading = None
 
-        # self.update_violation_by_measuring()
         self.extract_record_info()
 
     def update_violation_by_measuring(self):
@@ -49,17 +48,6 @@ class InitialRecordInfo:
                 self.obs_perception_list.append(obs_instance_list)
             elif topic == "/apollo/routing_response":
                 if not self.routing_request:
-                    # if AV_TESTING_APPROACH == "scenoRITA":
-                    #     # routing_message_module_name = "routing routing..."
-                    #     routing_message_module_name = "routing routing..."
-                    # elif AV_TESTING_APPROACH == "DoppelTest":
-                    #     routing_message_module_name = "MAGGIE"
-                    # elif AV_TESTING_APPROACH == "AV-Fuzzer":
-                    #     routing_message_module_name = "dreamview"
-                    # else:
-                    #     routing_message_module_name = ""
-                    # if message.routing_request.header.module_name == routing_message_module_name:
-                    # routing_request = message.routing_request
                     self.routing_request = message.routing_request
                     waypoint = list(self.routing_request.waypoint)[0]
                     self.coord = PointENU(x=waypoint.pose.x, y=waypoint.pose.y)

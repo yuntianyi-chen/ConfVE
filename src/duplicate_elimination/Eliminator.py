@@ -7,7 +7,6 @@ from sklearn.cluster import DBSCAN
 from sklearn.neighbors import NearestNeighbors
 from sklearn.preprocessing import MinMaxScaler
 from config import FEATURES_CSV_DIR, MODULE_ORACLES, IS_CUSTOMIZED_EPSILON, EPSILON_THRESHOLD
-from matplotlib import pyplot as plt
 
 from duplicate_elimination.LatexGenerator import LatexGenerator
 
@@ -27,13 +26,8 @@ class Eliminator:
         sorted_distances = np.sort(distances, axis=0)
         sorted_distances = sorted_distances[:, 1]
 
-        # plt.plot(distances)
-        # plt.show()
-
         i = np.arange(len(sorted_distances))
         knee = KneeLocator(i, sorted_distances, S=1, curve='convex', direction='increasing', interp_method='polynomial')
-        # plt.show()
-        # elbow = KneeLocator(i, distances, S=1, curve='concave', direction='increasing', interp_method='polynomial')
 
         if knee.knee:
             epsilon = sorted_distances[knee.knee]
@@ -48,12 +42,10 @@ class Eliminator:
             db_clusters = DBSCAN(eps=epsilon, min_samples=1, metric='euclidean').fit_predict(pd_features_scaled)
         else:
             db_clusters = [0 for i in range(len(pd_features))]
-        # print(db_clusters)
         num_clusters = len(set(db_clusters))
         all_vio = len(pd_features_scaled)
         unique_vio = num_clusters
         elim_ratio = 100 * (1 - float(num_clusters) / len(pd_features_scaled))
-        # self.analyze_vio(db_clusters, epsilon, distances)
         return db_clusters, all_vio, unique_vio, elim_ratio
 
     def analyze_vio(self, db_clusters, epsilon, distances):
@@ -84,14 +76,12 @@ if __name__ == "__main__":
                    "UnsafeLaneChangeOracle.csv",
                    "ModuleDelayOracle.csv", "PlanningFailure.csv", "PlanningGeneratesGarbage.csv",
                    "JunctionLaneChangeOracle.csv"
-                   # , "StopSignOracle.csv", "TrafficSignalOracle.csv", "EStopOracle.csv"
                    ]
 
     map_list = ["borregas_ave", "san_mateo", "sunnyvale_loop", "San_Francisco"]
 
     output_oracle_list = ["Collision", "Fast Acceleration", "Hard Braking", "Speeding", "Unsafe Lane-change",
                           "Module Delay", "Module Malfunction", "Vehicle Paralysis", "Lane-change in Junction",
-                          # "Stop Sign Violation", "Traffic Signal violation", "Estop",
                           "Total"]
 
     df_unique_final = pd.DataFrame()
@@ -167,20 +157,6 @@ if __name__ == "__main__":
         else:
             df_all_final = pd.DataFrame(data=df_all_dict)
 
-    ###############
-    # new_collision_row_unique = [2, 0, 0, 0, 0, 1, 1, 1, 5, 5, 0, 0, 2, 2, 1, 1]
-    # # new_collision_row_unique = [17, 15, 6, 6, 0, 1, 1, 1, 8, 7, 2, 1, 3, 2, 2, 2]
-    # # new_collision_row_all = [52, 29, 14, 11, 0, 1, 1, 1, 12, 16, 2, 1, 4, 2, 3, 3]
-    # new_collision_row_all = [2, 0, 0, 0, 0, 1, 1, 1, 9, 14, 0, 0, 4, 2, 1, 1]
-    #
-    # df_unique_final.iloc[0] = new_collision_row_unique
-    # df_all_final.iloc[0] = new_collision_row_all
-    #
-    # df_unique_final.at[2, 'DoppelTest_borregas_ave_GA'] = 50
-    # df_unique_final.at[3, 'DoppelTest_borregas_ave_T-way'] = 34
-
-    ################
-
     df_unique_final = round(df_unique_final / len(group_name_list))
     df_all_final = round(df_all_final / len(group_name_list))
 
@@ -189,8 +165,6 @@ if __name__ == "__main__":
 
     df_unique_final.iloc[-1] = df_unique_final.iloc[0:-1].sum()
     df_all_final.iloc[-1] = df_all_final.iloc[0:-1].sum()
-
-    ################
 
     latex_generator = LatexGenerator(df_unique_final, df_all_final, approach_list, map_list, output_oracle_list)
     latex_generator.start_write()

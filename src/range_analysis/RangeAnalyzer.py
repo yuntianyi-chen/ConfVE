@@ -8,7 +8,6 @@ class RangeAnalyzer:
     def __init__(self, config_file_obj):
         self.range_list = self.range_init(config_file_obj.option_type_list)
         self.original_range_list = deepcopy(self.range_list)
-        # self.mit_inj_tester = MisInjTester()
 
     def generate_option_range(self, option_type):
         # initial range should contain default option value
@@ -69,9 +68,6 @@ class RangeAnalyzer:
         return range_list
 
     def range_analyze(self, option_tuning_item, config_file_obj):
-        # if isinstance(option_tuning_item, OptionTuningItem) and option_tuning_item.option_type in ["float",
-        #                                                                                            "integer",
-        #                                                                                            "e_number"]:
         cur_range = self.range_list[option_tuning_item.position]
         new_range = self.generate_new_range(cur_range, option_tuning_item, config_file_obj)
         self.range_list[option_tuning_item.position] = new_range

@@ -6,9 +6,7 @@ from config import MY_SCRIPTS_DIR, PROJECT_ROOT, FLAGFILE_PATH, MAP_NAME, \
 
 class InitRunner:
     def __init__(self):
-        # move_scripts()
         self.move_dir(MAP_DIR, f"{APOLLO_MAP_DATA_DIR}/{MAP_NAME}")
-        # self.move_dir(f"{PROJECT_ROOT}/data/scripts", MY_SCRIPTS_DIR)
         self.move_scripts()
         self.change_map_file()
         self.move_file(DEFAULT_CONFIG_FILE_PATH, CURRENT_CONFIG_FILE_PATH)

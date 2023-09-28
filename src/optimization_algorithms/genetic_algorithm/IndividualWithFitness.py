@@ -35,17 +35,11 @@ class IndividualWithFitness:
         self.decision_list = []
         self.sinuosity_list = []
 
-    # def update_violation_result(self, violations_emerged_results, violation_results, scenario):
-    #     violations_emerged_results_with_sid = [(scenario.record_id, v) for v in violations_emerged_results]
-    #     self.violations_emerged_results += violations_emerged_results_with_sid
-    #     self.violation_results_list.append(violation_results)
     def update_fitnesses(self, violations_emerged_results, violation_results, scenario):
         violations_emerged_results_with_sid = [(scenario.record_id, v) for v in violations_emerged_results]
         self.violations_emerged_results += violations_emerged_results_with_sid
         self.violation_results_list.append(violation_results)
-
         decision, sinuosity = scenario.analyze_decision_and_sinuosity()
-
         self.decision_list.append(decision)
         self.sinuosity_list.append(sinuosity)
 
@@ -66,6 +60,5 @@ class IndividualWithFitness:
         if FITNESS_MODE == "emerge":
             self.fitness = emerged_violations_count
         elif FITNESS_MODE == "multi_obj":
-            # self.fitness = (emerged_violations_count, emerged_violations_type_count, 1/self.execution_time)
             self.fitness = (
             emerged_violations_count, emerged_violations_type_count, total_decision_count, avg_sinuosity)

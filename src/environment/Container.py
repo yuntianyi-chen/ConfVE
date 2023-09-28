@@ -162,27 +162,6 @@ class Container:
             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
         )
 
-    def start_sim_control_standalone_v7(self, pose_x, pose_y, heading):
-        """
-        Starts SimControlStandalone module
-        """
-        cmd = f"docker exec -d {self.container_name} /apollo/bazel-bin/modules/sim_control_standalone/main {pose_x} {pose_y} {heading}"
-        subprocess.run(
-            cmd.split(),
-            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
-        )
-
-    def stop_sim_control_standalone_v7(self):
-        """
-        Stops SimControlStandalone module
-        """
-        cmd = f"docker exec {self.container_name} pkill -f 'sim_control_standalone'"
-        # cmd = f"docker exec {self.container_name} /apollo/modules/sim_control_standalone/script.sh stop"
-        subprocess.run(
-            cmd.split(),
-            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
-        )
-
     def create_message_handler(self, map_instance):
         self.message_handler = MessageHandler(map_instance)
         self.message_handler.update_bridge(self.bridge)
@@ -250,27 +229,3 @@ class Container:
     def stop_recorder(self):
         cmd = f"docker exec {self.container_name} /apollo/scripts/my_scripts/stop_recorder.sh"
         subprocess.run(cmd.split(), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-
-    # def stop_subprocess(self, p):
-    #     try:
-    #         os.kill(p.pid, signal.SIGINT)
-    #         p.kill()
-    #     except OSError:
-    #         print("stopped")
-
-    # def restart_dreamview(self):
-    #     self.close_subprocess()
-    #     self.start_dreamview()
-
-    # def restart_modules(self):
-    #     self.modules_operation(operation="stop")
-    #     self.kill_modules()
-    #     self.modules_operation(operation="start")
-
-    # def dreamview_operation(self, operation):
-    #     cmd = f"docker exec -d {self.container_name} bash /apollo/scripts/bootstrap.sh {operation}"
-    #     subprocess.run(cmd.split())
-    #     if operation == "start" or "restart":
-    #         time.sleep(5)
-    #     else:
-    #         time.sleep(1)

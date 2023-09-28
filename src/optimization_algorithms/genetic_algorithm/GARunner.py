@@ -28,23 +28,14 @@ class GARunner(TestRunner):
             print(f"Generation_{generation_num}")
             print("-------------------------------------------------")
             self.individual_num = 0
-            # offspring_list_of_crossover = crossover(individual_list)
-            # offspring_list_of_mutation = mutation(individual_list, self.config_file_obj,
-            #                                         self.range_analyzer)
             offspring_list = ga_operation(individual_list, self.config_file_obj, self.range_analyzer)
             for generated_individual in offspring_list:
                 if not generated_individual.fitness:
-                    # generated_individual.reset_default()
                     ind_id = f"Generation_{str(generation_num)}_Config_{self.individual_num}"
-
                     self.individual_running(generated_individual, ind_id)
-
                     if time.time() - self.runner_time >= TIME_HOUR_THRESHOLD * 3600:
                         return
-
             individual_list = select(individual_list+offspring_list, self.config_file_obj)
-
-            # output range analysis every generation
             self.file_output_manager.update_range_analysis_file(self.config_file_obj, self.range_analyzer,
                                                                 generation_num)
             self.record_replace_and_check()

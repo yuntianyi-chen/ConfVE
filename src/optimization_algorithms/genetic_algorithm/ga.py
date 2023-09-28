@@ -41,14 +41,8 @@ def select(individual_list, config_file_obj):
 
         optimal_individual_list = [individual_list[index] for index in selected_index_list]
         new_individual_list = optimal_individual_list
-        # new_default_ind_count = 1
-        # default_individual_list = generate_individuals(config_file_obj, new_default_ind_count)
-        # new_individual_list = optimal_individual_list[0:POP_SIZE-new_default_ind_count] + default_individual_list
     else:
-        # random.shuffle(individual_list)
         individual_list.sort(reverse=True, key=lambda x: x.fitness)
-
-        # select x with the least fitness, y randomly from the remaining, z new generated
         select_num_ratio = SELECT_NUM_RATIO
         new_individual_list = get_unduplicated(individual_list, select_num_ratio, config_file_obj)
     return new_individual_list
@@ -63,9 +57,7 @@ def get_unduplicated(individual_list, select_num_ratio, config_file_obj):
 
 
 def crossover(individual_list):
-    # new_individual_list = list()
     individual_list_size = len(individual_list)
-    # for i in range(individual_list_size):
     randa = random.randint(0, individual_list_size - 1)
     randb = random.randint(0, individual_list_size - 1)
     while randb == randa:
@@ -84,10 +76,6 @@ def crossover(individual_list):
 
     individual_A.option_tuning_tracking_list.append("crossover")
     individual_B.option_tuning_tracking_list.append("crossover")
-
-        # new_individual_list.append(individual_A)
-        # new_individual_list.append(individual_B)
-    # return individual_list + new_individual_list
     return individual_A, individual_B
 
 
@@ -106,7 +94,6 @@ def init_mutation(individual_list, config_file_obj, range_analyzer):
 def mutation(individual_list, config_file_obj, range_analyzer):
     individual = random.choice(individual_list)
     new_individual = mutate(deepcopy(individual), config_file_obj, range_analyzer)
-    # return individual_list + new_individual_list
     return new_individual
 
 def ga_operation(individual_list, config_file_obj, range_analyzer):
@@ -115,19 +102,14 @@ def ga_operation(individual_list, config_file_obj, range_analyzer):
         op_choice = random.random()
         if op_choice < CX_P:            # Apply crossover
             individual_A, individual_B = crossover(individual_list)
-            # del ind1.fitness.values
             individual_A.reset_default()
             offspring.append(individual_A)
         elif op_choice < CX_P + MUT_P:  # Apply mutation
             individual = random.choice(individual_list)
             new_individual = mutate(deepcopy(individual), config_file_obj, range_analyzer)
-            # del ind.fitness.values
             new_individual.reset_default()
             offspring.append(new_individual)
         else:                           # Apply reproduction
             offspring.append(random.choice(individual_list))
-
-    # generated_individual.reset_default()
-
     return offspring
 

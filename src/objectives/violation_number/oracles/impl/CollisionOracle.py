@@ -58,11 +58,6 @@ class CollisionOracle(OracleInterface):
 
         adc_polygon_pts = generate_adc_polygon(adc_pose.position, adc_pose.heading)
 
-        # front_side = [adc_polygon_pts[0], adc_polygon_pts[3]]
-        # rear_side = [adc_polygon_pts[1], adc_polygon_pts[2]]
-        # right_side = [adc_polygon_pts[3], adc_polygon_pts[2]]
-        # left_side = [adc_polygon_pts[0], adc_polygon_pts[1]]
-
         adc_front_line_string = LineString(
             [[x.x, x.y] for x in (adc_polygon_pts[0], adc_polygon_pts[3])])
 
@@ -99,8 +94,6 @@ class CollisionOracle(OracleInterface):
     def is_adc_completely_stopped(self) -> bool:
         adc_pose = self.last_localization.pose
         adc_velocity = calculate_velocity(adc_pose.linear_velocity)
-        # https://github.com/ApolloAuto/apollo/blob/0789b7ea1e1356dde444452ab21b51854781e304/modules/planning/scenarios/stop_sign/unprotected/stage_pre_stop.cc#L237
-        # return adc_velocity <= self.MAX_ABS_SPEED_WHEN_STOPPED
         return adc_velocity == 0
 
     def get_result(self):

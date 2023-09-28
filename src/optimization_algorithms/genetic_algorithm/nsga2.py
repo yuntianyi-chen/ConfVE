@@ -16,9 +16,7 @@ def crowding_dist(fitness=None):
     # initialize list: [0.0, 0.0, 0.0, ...]
     distances = [0.0] * len(fitness)
     crowd = [(f_value, i) for i, f_value in enumerate(fitness)]  # create keys for fitness values
-
     n_obj = len(fitness[0])
-
     for i in range(n_obj):  # calculate for each objective
         crowd.sort(key=lambda element: element[0][i])
         # After sorting,  boundary solutions are assigned Inf
@@ -35,7 +33,6 @@ def crowding_dist(fitness=None):
         for prev, cur, next in zip(crowd[:-2], crowd[1:-1], crowd[2:]):
             distances[cur[1]] += (next[0][i] - prev[0][
                 i]) / norm  # sum up the distance of ith individual along each of the objectives
-
     return distances
 
 

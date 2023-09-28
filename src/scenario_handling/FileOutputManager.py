@@ -12,9 +12,7 @@ class FileOutputManager:
 
     def __init__(self):
         self.time_str = str(date.today())
-        # self.optimal_fitness = 0
         self.file_init()
-
         self.violation_type_count_dict = {}
         self.related_option_count_dict = {}
         self.scenario_violation_count_dict = {}
@@ -41,8 +39,6 @@ class FileOutputManager:
 
         with open(self.violation_save_file_path, "w") as f:
             pass
-        # with open(self.ind_fitness_save_file_path, "w") as f:
-        #     pass
         with open(self.option_tuning_file_path, "w") as f:
             pass
         with open(self.range_analysis_file_path, "w") as f:
@@ -62,21 +58,10 @@ class FileOutputManager:
 
         self.delete_dir(dir_path=APOLLO_RECORDS_DIR, mk_dir=True)
 
-
     def delete_temp_log(self):
         files = glob.glob(f'{APOLLO_ROOT}/*.log.INFO.*')
         for file in files:
             os.remove(file)
-
-    # def delete_recorder_log(self):
-    #     files = glob.glob(f'{APOLLO_ROOT}/cyber_recorder.log.INFO.*')
-    #     for file in files:
-    #         os.remove(file)
-    #
-    # def delete_simcontrol_log(self):
-    #     files = glob.glob(f'{APOLLO_ROOT}/sim_control_main.log.INFO.*')
-    #     for file in files:
-    #         os.remove(file)
 
     def delete_data_core_and_log(self):
         try:
@@ -88,8 +73,6 @@ class FileOutputManager:
             print(ose)
 
     def delete_temp_files(self):
-        # self.delete_simcontrol_log()
-        # self.delete_recorder_log()
         self.delete_temp_log()
         self.delete_data_core_and_log()
 
@@ -128,13 +111,6 @@ class FileOutputManager:
         shutil.copy(f"{APOLLO_RECORDS_DIR}/{record_name}.00000",
                     f"{self.backup_record_file_save_path}/{record_name}.00000")
 
-    # def save_fitness_result(self, generated_individual, ind_id):
-    #     with open(self.ind_fitness_save_file_path, "a") as f:
-    #         f.write(f"{ind_id}\n")
-    #         f.write(f"  Vio Emerged Num: {len(generated_individual.violations_emerged_results)}\n")
-    #         f.write(f"  Fitness(mode: {FITNESS_MODE}): {generated_individual.fitness}\n")
-    #     if generated_individual.fitness > self.optimal_fitness:
-    #         self.optimal_fitness = generated_individual.fitness
 
     def print_fitness_results(self, generated_individual):
         print(f" Fitness: {generated_individual.fitness}")

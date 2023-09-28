@@ -14,16 +14,11 @@ class TestRunner:
     def __init__(self, containers):
         self.individual_num = 0
         self.scenario_rid_emergence_list = []
-
         self.message_generator = MessageGenerator()
-
         self.config_file_obj = ApolloParser.config_file_parser2obj(DEFAULT_CONFIG_FILE_PATH)
         self.file_output_manager = FileOutputManager()
         self.containers = containers
-
         self.range_analyzer = RangeAnalyzer(self.config_file_obj)
-
-        # print("Initial Scenario Violation Info:")
 
         if os.path.exists(self.file_output_manager.default_violation_dump_data_path):
             default_violation_results_list_with_sid = self.file_output_manager.load_default_violation_results_by_pickle()
@@ -54,11 +49,8 @@ class TestRunner:
                                          self.message_generator.pre_record_info_list,
                                          name_prefix=ind_id)
 
-        # run_scenarios(generated_individual, scenario_list, self.containers)
         run_scenarios_without_determinism_checking(generated_individual, scenario_list, self.containers)
-
         generated_individual.generate_fitness()
-
         self.check_scenario_list_vio_emergence(scenario_list)
         self.file_output_manager.print_fitness_results(generated_individual)
         self.file_output_manager.save_total_violation_results(generated_individual, scenario_list)
@@ -83,7 +75,6 @@ class TestRunner:
                                                              option_tuning_item,
                                                              range_change_str)
             self.file_output_manager.save_config_file(ind_id)
-            # self.file_output_manager.save_fitness_result(generated_individual, ind_id)
             self.file_output_manager.save_vio_features(generated_individual, scenario_list)
             self.file_output_manager.save_count_dict_file()
         self.individual_num += 1

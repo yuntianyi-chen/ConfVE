@@ -60,8 +60,8 @@ class ApolloParser:
                     option_obj = OptionObj(option_id, option_key, option_value, ApolloParser.analyze_type(option_value),
                                            deepcopy(position_stack), deepcopy(layer_stack))
                     option_processed_tuple = (option_id,) + (
-                    option_key, option_value, ApolloParser.analyze_type(option_value),
-                    deepcopy(position_stack), deepcopy(layer_stack))
+                        option_key, option_value, ApolloParser.analyze_type(option_value),
+                        deepcopy(position_stack), deepcopy(layer_stack))
                     raw_option_stack.append(option_processed_tuple)
                     option_tuple_list.append(option_processed_tuple)
                     option_obj_list.append(option_obj)
@@ -84,14 +84,6 @@ class ApolloParser:
                                 raw_option_stack.append((item, item_list))
                                 position_id = position_stack.pop() + 1
                                 break
-                    # else:
-                    #     # '# xxx'
-                    #     pattern4 = re.compile(r"^\s*#.*\n$")
-                    #     match4 = pattern4.match(line)
-                    #     if match4:
-                    #         print("P4 #")
-                    #     else:
-                    #         print("P5")
 
         config_file_obj = ConfigFileObj(raw_option_stack, option_tuple_list, option_obj_list, option_count)
 
@@ -178,7 +170,7 @@ class ApolloParser:
                     option_id = option_count - 1
                     position_stack.append(position_id)
                     option_processed_tuple = (option_id,) + item + (
-                        ApolloParser.analyze_type(item[1]), deepcopy(position_stack), deepcopy(layer_stack))
+                    ApolloParser.analyze_type(item[1]), deepcopy(position_stack), deepcopy(layer_stack))
                     raw_option_stack.append(option_processed_tuple)
                     option_tuple_list.append(option_processed_tuple)
                     position_stack.pop()
@@ -200,12 +192,5 @@ class ApolloParser:
                                 raw_option_stack.append((item, item_list))
                                 position_id = position_stack.pop() + 1
                                 break
-                    # else:
-                    #     # '# xxx'
-                    #     pattern4 = re.compile(r"^\s*#.*\n$")
-                    #     match4 = pattern4.match(line)
-                    #     if match4:
-                    #         print("P4 #")
-                    #     else:
-                    #         print("P5")
+
         return raw_option_stack, option_tuple_list, option_count

@@ -26,8 +26,6 @@ def create_scenarios(generated_individual, config_file_obj, pre_record_info_list
     config_file_tuned_status = config_file_generating(generated_individual,
                                                       config_file_obj,
                                                       default=DEFAULT_CONFIG_FILE)
-    # config_file_tuned_status = True
-
     scenario_list = []
     for pre_record_info in pre_record_info_list:
         scenario = create_scenario(pre_record_info, name_prefix, config_file_tuned_status)

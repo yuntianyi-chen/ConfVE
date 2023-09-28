@@ -1,10 +1,7 @@
 import os
-from pathlib import Path
-from typing import List, Tuple, Dict, Set
-
+from typing import List, Tuple, Set
 from cyber_record.record import Record
 from shapely.geometry import LineString
-
 from config import TRAFFIC_LIGHT_MODE, APOLLO_RECORDS_DIR
 from objectives.violation_number.oracles import RecordAnalyzer
 from tools.traffic_light_control.TrafficControlManager import TrafficControlManager
@@ -17,7 +14,6 @@ class Scenario:
         self.has_emerged_violations = False
         self.has_emerged_module_violations = False
         self.update_record_name_and_path(record_name)
-        # self.confirmed_record_name_list = []
 
     def update_record_name_and_path(self, new_record_name):
         self.record_name = new_record_name
@@ -32,18 +28,11 @@ class Scenario:
         return results
 
     def analyze_decision_and_sinuosity(self):
-        # MapLoader(map_name).load_map_data()
-        # ra = RecordAnalyzer(record_file)
-        # ra.analyze()
-        # feature_violation = ra.oracle_manager.get_counts_wrt_oracle()
         record = Record(self.record_path)
         decisions: Set[Tuple] = set()
         for _, msg, _ in record.read_messages("/apollo/planning"):
             decisions = decisions | extract_main_decision(msg)
-
         decision_count = len(decisions)
-        # feature_decision = {"decisions": len(decisions)}
-
         coordinates: List[Tuple[float, float]] = list()
         for _, msg, t in record.read_messages("/apollo/localization/pose"):
             new_coordinate = (msg.pose.position.x, msg.pose.position.y)
@@ -62,12 +51,6 @@ class Scenario:
                 sinuosity = 0
             else:
                 sinuosity = ego_trajectory.length / shortest_path.length
-        # feature_sinuosity = {"sinuosity": sinuosity}
-
-        # result = feature_violation | feature_decision | feature_sinuosity
-        # result = dict(**feature_violation, **feature_decision, **feature_sinuosity)
-        # result["filename"] = str(record_file)
-        # return result
         return decision_count, sinuosity
 
     def update_emerged_status(self, violations_emerged_results, contain_module_violation):

@@ -1,6 +1,5 @@
 import random
 import string
-from config import OPT_MODE
 
 
 class MisInjTester:
@@ -14,8 +13,6 @@ class MisInjTester:
                                        self.cut_out,
                                        self.repeat]
         self.number_operator_func_list = [self.generate_new_number]
-        # if OPT_MODE in ["Random", "MIT", "T-way"]:
-        #     self.number_operator_func_list.append(self.change_digit_type)
 
     def apply_one_operator(self, option_type, option_value, option_range):
         if option_type in ["float", "integer"]:
@@ -117,6 +114,3 @@ class MisInjTester:
         else:
             generated_value = random.randint(option_range[0], option_range[1])
         return generated_value
-
-    # def beyond_range(self, value):
-    #     return generated_value
