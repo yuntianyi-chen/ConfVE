@@ -15,7 +15,6 @@ MAP_NAME = "borregas_ave"  # borregas_ave/sunnyvale_loop/San_Francisco/san_mateo
 CONTAINER_NUM = 5  # 5/10
 OPT_MODE = "ConfVD"  # GA/T-way/ConfVD
 TIME_HOUR_THRESHOLD = 10  # hours
-MUTATION_STRATEGY = "ConfVD"  # ConfVE/ConfVD
 
 DO_RANGE_ANALYSIS = True
 

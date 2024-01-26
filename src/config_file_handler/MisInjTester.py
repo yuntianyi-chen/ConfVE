@@ -1,7 +1,7 @@
 import random
 import string
 
-from config import MUTATION_STRATEGY
+from config import OPT_MODE
 
 
 class MisInjTester:
@@ -112,7 +112,7 @@ class MisInjTester:
         return generated_value
 
     def generate_new_number(self, option_type, option_value, option_range):
-        if MUTATION_STRATEGY == "ConfVD":
+        if OPT_MODE == "ConfVD":
             # Enable beyond range
             engative_or_positive = random.choice([-1, 1])
             if engative_or_positive == -1:
