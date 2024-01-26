@@ -4,6 +4,7 @@ from environment.Container import Container
 from environment.InitRunner import InitRunner
 from environment.MapLoader import MapLoader
 from optimization_algorithms.baseline.TwayRunner import TwayRunner
+from optimization_algorithms.baseline.ConfVDRunner import ConfVDRunner
 from optimization_algorithms.genetic_algorithm.GARunner import GARunner
 
 warnings.filterwarnings('ignore')
@@ -27,7 +28,8 @@ def confve_main():
         GARunner(containers)
     elif OPT_MODE == "T-way":
         TwayRunner(containers)
-
+    elif OPT_MODE == "ConfVD":
+        ConfVDRunner(containers)
 
 if __name__ == '__main__':
     confve_main()

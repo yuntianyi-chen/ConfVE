@@ -1,6 +1,8 @@
 import random
 import string
 
+from config import MUTATION_STRATEGY
+
 
 class MisInjTester:
     def __init__(self):
@@ -12,7 +14,9 @@ class MisInjTester:
                                        self.disorder,
                                        self.cut_out,
                                        self.repeat]
-        self.number_operator_func_list = [self.generate_new_number]
+        self.number_operator_func_list = [self.generate_new_number
+            # , self.change_digit_type
+                                          ]
 
     def apply_one_operator(self, option_type, option_value, option_range):
         if option_type in ["float", "integer"]:
@@ -108,6 +112,17 @@ class MisInjTester:
         return generated_value
 
     def generate_new_number(self, option_type, option_value, option_range):
+        if MUTATION_STRATEGY == "ConfVD":
+            # Enable beyond range
+            engative_or_positive = random.choice([-1, 1])
+            if engative_or_positive == -1:
+                temp = option_range[0]
+                option_range[0] = option_range[0] * 100
+                option_range[1] = temp
+            else:
+                temp = option_range[1]
+                option_range[1] = option_range[1] * 100
+                option_range[0] = temp
         if option_type == "float":
             round_bit = len(option_value.split(".")[1])
             generated_value = round(random.uniform(option_range[0], option_range[1]), round_bit)

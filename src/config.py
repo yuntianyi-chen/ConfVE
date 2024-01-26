@@ -13,8 +13,9 @@ MAX_RECORD_TIME = 30  # 10/30
 AV_TESTING_APPROACH = "DoppelTest"  # scenoRITA/DoppelTest/AVFuzzer/ADFuzz
 MAP_NAME = "borregas_ave"  # borregas_ave/sunnyvale_loop/San_Francisco/san_mateo
 CONTAINER_NUM = 5  # 5/10
-OPT_MODE = "GA"  # GA/T-way
+OPT_MODE = "ConfVD"  # GA/T-way/ConfVD
 TIME_HOUR_THRESHOLD = 10  # hours
+MUTATION_STRATEGY = "ConfVD"  # ConfVE/ConfVD
 
 DO_RANGE_ANALYSIS = True
 
@@ -23,9 +24,7 @@ DO_RANGE_ANALYSIS = True
 ####################
 
 # t-way testing
-T_STRENGTH_VALUE = 2  # pairwise
-
-ONEENABLED_NUM_TYPE_TEST_TIMES = 10
+T_STRENGTH_VALUE = 2  # 2: pairwise
 
 # TESTING SETTINGS
 MODULE_NAME = "planning"
