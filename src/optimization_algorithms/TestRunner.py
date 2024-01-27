@@ -62,16 +62,13 @@ class TestRunner:
             else:
                 option_tuning_item = "default"
 
-            if OPT_MODE == "ConfVD":
-                range_change_str = "  Range Change: default\n"
+            if DO_RANGE_ANALYSIS and OPT_MODE in ["GA", "OneEnabled", "PreAnalyze"] and \
+                    not generated_individual.allow_selection and \
+                    isinstance(option_tuning_item, OptionTuningItem) and \
+                    option_tuning_item.option_type in ["float", "integer", "e_number"]:
+                range_change_str = self.range_analyzer.range_analyze(option_tuning_item, self.config_file_obj)
             else:
-                if DO_RANGE_ANALYSIS and OPT_MODE in ["GA", "OneEnabled", "PreAnalyze"] and \
-                        not generated_individual.allow_selection and \
-                        isinstance(option_tuning_item, OptionTuningItem) and \
-                        option_tuning_item.option_type in ["float", "integer", "e_number"]:
-                    range_change_str = self.range_analyzer.range_analyze(option_tuning_item, self.config_file_obj)
-                else:
-                    range_change_str = "  Range Change: default\n"
+                range_change_str = "  Range Change: default\n"
 
             self.file_output_manager.save_option_tuning_file(generated_individual,
                                                              ind_id,

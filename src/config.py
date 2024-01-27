@@ -10,13 +10,12 @@ Global configurations for the framework
 
 OBS_PERCEPTION_FREQUENCY = 10
 MAX_RECORD_TIME = 30  # 10/30
+CONTAINER_NUM = 5  # 5/10
+TIME_HOUR_THRESHOLD = 10  # hours
 AV_TESTING_APPROACH = "DoppelTest"  # scenoRITA/DoppelTest/AVFuzzer/ADFuzz
 MAP_NAME = "borregas_ave"  # borregas_ave/sunnyvale_loop/San_Francisco/san_mateo
-CONTAINER_NUM = 5  # 5/10
 OPT_MODE = "ConfVD"  # GA/T-way/ConfVD
-TIME_HOUR_THRESHOLD = 10  # hours
-
-DO_RANGE_ANALYSIS = True
+DO_RANGE_ANALYSIS = False
 
 ####################
 ## Default Config ##
