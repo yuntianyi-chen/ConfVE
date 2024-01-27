@@ -117,11 +117,11 @@ class MisInjTester:
             engative_or_positive = random.choice([-1, 1])
             if engative_or_positive == -1:
                 temp = option_range[0]
-                option_range[0] = option_range[0] * 100
+                option_range[0] = option_range[0] * 1000
                 option_range[1] = temp
             else:
                 temp = option_range[1]
-                option_range[1] = option_range[1] * 100
+                option_range[1] = option_range[1] * 1000
                 option_range[0] = temp
         if option_type == "float":
             round_bit = len(option_value.split(".")[1])
