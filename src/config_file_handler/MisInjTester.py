@@ -116,13 +116,11 @@ class MisInjTester:
             # Enable beyond range
             engative_or_positive = random.choice([-1, 1])
             if engative_or_positive == -1:
-                temp = option_range[0]
-                option_range[0] = option_range[0] * 1000
-                option_range[1] = temp
+                option_range[0] = -1000000
+                option_range[1] = -10001
             else:
-                temp = option_range[1]
-                option_range[1] = option_range[1] * 1000
-                option_range[0] = temp
+                option_range[0] = 10001
+                option_range[1] = 1000000
         if option_type == "float":
             round_bit = len(option_value.split(".")[1])
             generated_value = round(random.uniform(option_range[0], option_range[1]), round_bit)
