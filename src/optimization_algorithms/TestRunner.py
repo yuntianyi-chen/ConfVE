@@ -1,8 +1,10 @@
 import os
 import time
-from config import DEFAULT_CONFIG_FILE_PATH, MAX_INITIAL_SCENARIOS, OPT_MODE, DO_RANGE_ANALYSIS
-from config_file_handler.OptionTuningItem import OptionTuningItem
-from config_file_handler.ApolloParser import ApolloParser
+from config import DEFAULT_CONFIG_FILE_PATH, MAX_INITIAL_SCENARIOS, OPT_MODE, DO_RANGE_ANALYSIS, ADS_SELECT, \
+    AUTOWARE_DEFAULT_CONFIG_DIR_PATH
+from configurator.OptionTuningItem import OptionTuningItem
+from configurator.apollo.ApolloParser import ApolloParser
+from configurator.autoware.AutowareParser import AutowareParser
 from range_analysis.RangeAnalyzer import RangeAnalyzer
 from scenario_handling.FileOutputManager import FileOutputManager
 from scenario_handling.MessageGenerator import MessageGenerator
@@ -15,7 +17,12 @@ class TestRunner:
         self.individual_num = 0
         self.scenario_rid_emergence_list = []
         self.message_generator = MessageGenerator()
-        self.config_file_obj = ApolloParser.config_file_parser2obj(DEFAULT_CONFIG_FILE_PATH)
+
+        if ADS_SELECT == "Apollo":
+            self.config_file_obj = ApolloParser.config_file_parser2obj(DEFAULT_CONFIG_FILE_PATH)
+        elif ADS_SELECT == "Autoware":
+            self.config_file_obj = AutowareParser.config_file_parser2obj(AUTOWARE_DEFAULT_CONFIG_DIR_PATH)
+
         self.file_output_manager = FileOutputManager()
         self.containers = containers
         self.range_analyzer = RangeAnalyzer(self.config_file_obj)

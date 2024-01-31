@@ -1,7 +1,8 @@
 import re
 from copy import deepcopy
-from config_file_handler.ConfigFileObj import ConfigFileObj
-from config_file_handler.OptionObj import OptionObj
+from config import DEFAULT_CONFIG_FILE_PATH
+from configurator.ConfigFileObj import ConfigFileObj
+from configurator.OptionObj import OptionObj
 
 
 class ApolloParser:
@@ -85,8 +86,9 @@ class ApolloParser:
                                 position_id = position_stack.pop() + 1
                                 break
 
-        config_file_obj = ConfigFileObj(raw_option_stack, option_tuple_list, option_obj_list, option_count)
-
+        config_file_obj = ConfigFileObj(option_obj_list, option_count)
+        # config_file_obj.update_option_tuple_list(option_tuple_list)
+        # config_file_obj.update_raw_option_stack(raw_option_stack)
         return config_file_obj
 
     @staticmethod
@@ -169,8 +171,7 @@ class ApolloParser:
                     option_count += 1
                     option_id = option_count - 1
                     position_stack.append(position_id)
-                    option_processed_tuple = (option_id,) + item + (
-                    ApolloParser.analyze_type(item[1]), deepcopy(position_stack), deepcopy(layer_stack))
+                    option_processed_tuple = (option_id,) + item + (ApolloParser.analyze_type(item[1]), deepcopy(position_stack), deepcopy(layer_stack))
                     raw_option_stack.append(option_processed_tuple)
                     option_tuple_list.append(option_processed_tuple)
                     position_stack.pop()
@@ -181,7 +182,6 @@ class ApolloParser:
                     match3 = pattern3.match(line)
                     if match3:
                         item_list = []
-
                         while True:
                             item = raw_option_stack.pop()
                             if type(item) is tuple:
@@ -192,5 +192,8 @@ class ApolloParser:
                                 raw_option_stack.append((item, item_list))
                                 position_id = position_stack.pop() + 1
                                 break
-
         return raw_option_stack, option_tuple_list, option_count
+
+if __name__ == '__main__':
+    config_file_obj = ApolloParser.config_file_parser2obj(DEFAULT_CONFIG_FILE_PATH)
+    print()

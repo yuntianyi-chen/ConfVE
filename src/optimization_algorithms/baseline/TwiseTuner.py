@@ -40,8 +40,8 @@ class TwiseTuner:
         #         range_analyzer.tune_one_value(individual, self.config_file_obj, position)
         #     return individual
 
-        for position in position_tuple:
-            range_analyzer.tune_one_value(individual, self.config_file_obj, position)
+        for tuned_id in position_tuple:
+            range_analyzer.tune_one_value(individual, self.config_file_obj, tuned_id)
         return individual
 
     def generate_pair_list(self):

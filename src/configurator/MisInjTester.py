@@ -1,6 +1,5 @@
 import random
 import string
-
 from config import OPT_MODE
 
 

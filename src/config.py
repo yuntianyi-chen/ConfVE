@@ -17,6 +17,8 @@ MAP_NAME = "borregas_ave"  # borregas_ave/sunnyvale_loop/San_Francisco/san_mateo
 OPT_MODE = "ConfVD"  # GA/T-way/ConfVD
 DO_RANGE_ANALYSIS = False
 
+ADS_SELECT = "Apollo"  # Apollo/Autoware
+
 ####################
 ## Default Config ##
 ####################
@@ -69,33 +71,57 @@ EXP_NAME_OPT_MODE = f"{INITIAL_EXP_NAME}_{OPT_MODE}"
 # DIRECTORIES
 DIR_ROOT = str(Path(__file__).parent.parent.parent)
 PROJECT_ROOT = str(Path(__file__).parent.parent)
-APOLLO_ROOT = f'{DIR_ROOT}/apollo-baidu'
 
-RECORDS_DIR = f'{PROJECT_ROOT}/data/records'
-FEATURES_CSV_DIR = f'{PROJECT_ROOT}/data/violation_features'
-APOLLO_RECORDS_DIR = f'{APOLLO_ROOT}/records'
-OBS_DIR = f"{APOLLO_ROOT}/modules/tools/perception/obstacles/{MAP_NAME}"
-EXP_GROUP_NAMING_TREE = f"{AV_TESTING_APPROACH}/{EXP_NAME_OPT_MODE}"
-EXP_BASE_DIR = f"{PROJECT_ROOT}/data/exp_results/{EXP_GROUP_NAMING_TREE}"
+if ADS_SELECT == "Apollo":
+    APOLLO_ROOT = f'{DIR_ROOT}/apollo-baidu'
 
-INITIAL_SCENARIO_RECORD_DIR = f"{APOLLO_ROOT}/initial/{INITIAL_EXP_NAME}"
-REPLAY_SCENARIO_RECORD_DIR = f"/apollo/initial/{INITIAL_EXP_NAME}"
+    FEATURES_CSV_DIR = f'{PROJECT_ROOT}/data/violation_features'
+    APOLLO_RECORDS_DIR = f'{APOLLO_ROOT}/records'
 
-BACKUP_SAVE_DIR = f'{DIR_ROOT}/Backup/{EXP_GROUP_NAMING_TREE}'
-BACKUP_CONFIG_SAVE_DIR = f"{BACKUP_SAVE_DIR}/config_files"
-BACKUP_RECORD_SAVE_DIR = f"{BACKUP_SAVE_DIR}/records"
-DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR = f"{BACKUP_RECORD_SAVE_DIR}/initial_default_rerun"
-MAP_DIR = f'{PROJECT_ROOT}/data/maps/{MAP_NAME}'
-MY_SCRIPTS_DIR = f"{APOLLO_ROOT}/scripts/my_scripts"
-APOLLO_MAP_DATA_DIR = f"{APOLLO_ROOT}/modules/map/data"
+    EXP_GROUP_NAMING_TREE = f"{AV_TESTING_APPROACH}/{EXP_NAME_OPT_MODE}"
+    EXP_BASE_DIR = f"{PROJECT_ROOT}/data/exp_results/{EXP_GROUP_NAMING_TREE}"
 
-# FILE PATH
-FLAGFILE_PATH = f"{APOLLO_ROOT}/modules/common/data/global_flagfile.txt"
-MANUAL_ADC_ROUTE_PATH = f"{PROJECT_ROOT}/data/analysis/{AV_TESTING_APPROACH}/adc_route.csv"
-DEFAULT_CONFIG_FILE_PATH = f"{PROJECT_ROOT}/data/config_files/{MODULE_NAME}/conf/{CONFIG_FILE_NAME}"
-CURRENT_CONFIG_FILE_PATH = f"{APOLLO_ROOT}/modules/{MODULE_NAME}/conf/{CONFIG_FILE_NAME}"
-HD_MAP_PATH = f'{MAP_DIR}/base_map.bin'
-MAP_DATA_PATH = f'{MAP_DIR}/map_pickle_data'
+    INITIAL_SCENARIO_RECORD_DIR = f"{APOLLO_ROOT}/initial/{INITIAL_EXP_NAME}"
+    REPLAY_SCENARIO_RECORD_DIR = f"/apollo/initial/{INITIAL_EXP_NAME}"
+
+    BACKUP_SAVE_DIR = f'{DIR_ROOT}/Backup/{EXP_GROUP_NAMING_TREE}'
+    BACKUP_CONFIG_SAVE_DIR = f"{BACKUP_SAVE_DIR}/config_files"
+    BACKUP_RECORD_SAVE_DIR = f"{BACKUP_SAVE_DIR}/records"
+    DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR = f"{BACKUP_RECORD_SAVE_DIR}/initial_default_rerun"
+    MAP_DIR = f'{PROJECT_ROOT}/data/maps/{MAP_NAME}'
+    MY_SCRIPTS_DIR = f"{APOLLO_ROOT}/scripts/my_scripts"
+    APOLLO_MAP_DATA_DIR = f"{APOLLO_ROOT}/modules/map/data"
+
+    # FILE PATH
+    FLAGFILE_PATH = f"{APOLLO_ROOT}/modules/common/data/global_flagfile.txt"
+    DEFAULT_CONFIG_FILE_PATH = f"{PROJECT_ROOT}/data/config_files/apollo/{MODULE_NAME}/conf/{CONFIG_FILE_NAME}"
+    CURRENT_CONFIG_FILE_PATH = f"{APOLLO_ROOT}/modules/{MODULE_NAME}/conf/{CONFIG_FILE_NAME}"
+    HD_MAP_PATH = f'{MAP_DIR}/base_map.bin'
+    MAP_DATA_PATH = f'{MAP_DIR}/map_pickle_data'
+else:
+    AUTOWARE_ROOT = f'{DIR_ROOT}/autoware'
+
+    # RECORDS_DIR = f'{PROJECT_ROOT}/data/records'
+    # FEATURES_CSV_DIR = f'{PROJECT_ROOT}/data/violation_features'
+    # AUTOWARE_RECORDS_DIR = f'{AUTOWARE_ROOT}/records'
+    # EXP_GROUP_NAMING_TREE = f"{AV_TESTING_APPROACH}/{EXP_NAME_OPT_MODE}"
+    # EXP_BASE_DIR = f"{PROJECT_ROOT}/data/exp_results/{EXP_GROUP_NAMING_TREE}"
+    #
+    # INITIAL_SCENARIO_RECORD_DIR = f"{AUTOWARE_ROOT}/initial/{INITIAL_EXP_NAME}"
+    # REPLAY_SCENARIO_RECORD_DIR = f"/autoware/initial/{INITIAL_EXP_NAME}"
+    #
+    # BACKUP_SAVE_DIR = f'{DIR_ROOT}/Backup/{EXP_GROUP_NAMING_TREE}'
+    # BACKUP_CONFIG_SAVE_DIR = f"{BACKUP_SAVE_DIR}/config_files"
+    # BACKUP_RECORD_SAVE_DIR = f"{BACKUP_SAVE_DIR}/records"
+    # DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR = f"{BACKUP_RECORD_SAVE_DIR}/initial_default_rerun"
+    # MAP_DIR = f'{PROJECT_ROOT}/data/maps/{MAP_NAME}'
+    # MY_SCRIPTS_DIR = f"{AUTOWARE_ROOT}/scripts/my_scripts"
+    # AUTOWARE_MAP_DATA_DIR = f"{AUTOWARE_ROOT}/modules/map/data"
+
+    # FILE PATH
+    # FLAGFILE_PATH = f"{AUTOWARE_ROOT}/modules/common/data/global_flagfile.txt"
+    AUTOWARE_DEFAULT_CONFIG_DIR_PATH = f"{PROJECT_ROOT}/data/config_files/autoware/{MODULE_NAME}"
+    AUTOWARE_CURRENT_CONFIG_DIR_PATH = f"{AUTOWARE_ROOT}/src/launcher/autoware_launch/autoware_launch/config/{MODULE_NAME}"
 
 # DOPPELTEST CONFIGS
 FORCE_INVALID_TRAFFIC_CONTROL = False

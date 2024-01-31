@@ -1,7 +1,7 @@
 import math
 from copy import deepcopy
-from config_file_handler.OptionTuningItem import OptionTuningItem
-from config_file_handler.MisInjTester import MisInjTester
+from configurator.OptionTuningItem import OptionTuningItem
+from configurator.MisInjTester import MisInjTester
 
 
 class RangeAnalyzer:
@@ -74,33 +74,33 @@ class RangeAnalyzer:
         range_change_str = f"  Range Change: {option_tuning_item.position}, {option_tuning_item.option_key}, {cur_range}->{new_range}\n"
         return range_change_str
 
-    def tune_one_value(self, individual_obj, config_file_obj, position):
-        option_type = config_file_obj.option_type_list[position]
-        option_value = individual_obj.value_list[position]
+    def tune_one_value(self, individual_obj, config_file_obj, tuned_id):
+        option_type = config_file_obj.option_type_list[tuned_id]
+        option_value = individual_obj.value_list[tuned_id]
         individual_obj.pre_value_list = deepcopy(individual_obj.value_list)
 
         mit_inj_tester = MisInjTester()
-        generated_value = mit_inj_tester.apply_one_operator(option_type, option_value, self.range_list[position])
+        generated_value = mit_inj_tester.apply_one_operator(option_type, option_value, self.range_list[tuned_id])
 
-        individual_obj.value_list[position] = generated_value
+        individual_obj.value_list[tuned_id] = generated_value
         individual_obj.option_tuning_tracking_list.append(
-            OptionTuningItem(position,
+            OptionTuningItem(tuned_id,
                              option_type,
-                             config_file_obj.option_obj_list[position].option_key,
-                             individual_obj.pre_value_list[position],
-                             individual_obj.value_list[position],
-                             config_file_obj.option_obj_list[position])
+                             config_file_obj.option_obj_list[tuned_id].option_key,
+                             individual_obj.pre_value_list[tuned_id],
+                             individual_obj.value_list[tuned_id],
+                             config_file_obj.option_obj_list[tuned_id])
         )
 
-    def tune_one_value_with_generated(self, individual_obj, config_file_obj, position, option_type, generated_value):
-        individual_obj.pre_value_list = deepcopy(individual_obj.value_list)
-
-        individual_obj.value_list[position] = generated_value
-        individual_obj.option_tuning_tracking_list.append(
-            OptionTuningItem(position,
-                             option_type,
-                             config_file_obj.option_obj_list[position].option_key,
-                             individual_obj.pre_value_list[position],
-                             individual_obj.value_list[position],
-                             config_file_obj.option_obj_list[position])
-        )
+    # def tune_one_value_with_generated(self, individual_obj, config_file_obj, position, option_type, generated_value):
+    #     individual_obj.pre_value_list = deepcopy(individual_obj.value_list)
+    #
+    #     individual_obj.value_list[position] = generated_value
+    #     individual_obj.option_tuning_tracking_list.append(
+    #         OptionTuningItem(position,
+    #                          option_type,
+    #                          config_file_obj.option_obj_list[position].option_key,
+    #                          individual_obj.pre_value_list[position],
+    #                          individual_obj.value_list[position],
+    #                          config_file_obj.option_obj_list[position])
+    #     )

@@ -80,8 +80,8 @@ def crossover(individual_list):
 
 
 def mutate(individual, config_file_obj, range_analyzer):
-    position = random.randint(0, len(individual.value_list) - 1)
-    range_analyzer.tune_one_value(individual, config_file_obj, position)
+    tuned_id = random.randint(0, len(individual.value_list) - 1)
+    range_analyzer.tune_one_value(individual, config_file_obj, tuned_id)
     return individual
 
 def init_mutation(individual_list, config_file_obj, range_analyzer):
