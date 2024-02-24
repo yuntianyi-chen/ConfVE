@@ -75,11 +75,10 @@ class MessageGenerator:
         return [p for p in self.pre_record_info_list if not p.finished_rerun]
 
     def get_record_info_by_record_id(self, record_id_list):
-        if AV_TESTING_APPROACH != "Random":
-            for record_id in record_id_list:
-                pre_record_info = InitialRecordInfo(True, record_id,
-                                                    self.scenario_recordname_list[record_id],
-                                                    self.scenario_record_path_list[record_id])
-                self.pre_record_info_list.append(pre_record_info)
-            self.update_total_violation_results()
-            self.record_counter = max(record_id_list)+1
+        for record_id in record_id_list:
+            pre_record_info = InitialRecordInfo(True, record_id,
+                                                self.scenario_recordname_list[record_id],
+                                                self.scenario_record_path_list[record_id])
+            self.pre_record_info_list.append(pre_record_info)
+        self.update_total_violation_results()
+        self.record_counter = max(record_id_list)+1

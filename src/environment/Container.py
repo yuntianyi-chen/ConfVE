@@ -162,8 +162,8 @@ class Container:
             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
         )
 
-    def create_message_handler(self, map_instance):
-        self.message_handler = MessageHandler(map_instance)
+    def create_message_handler(self):
+        self.message_handler = MessageHandler()
         self.message_handler.update_bridge(self.bridge)
 
     def connect_bridge(self):

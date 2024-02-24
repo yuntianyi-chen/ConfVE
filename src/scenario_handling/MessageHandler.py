@@ -12,10 +12,10 @@ from tools.bridge.CyberBridge import Topics
 
 class MessageHandler:
 
-    def __init__(self, map_instance) -> None:
+    def __init__(self) -> None:
         self.obs_is_running = False
         self.traffic_is_running = False
-        self.map_instance = map_instance
+        # self.map_instance = map_instance
 
     def update_bridge(self, bridge):
         self.bridge = bridge

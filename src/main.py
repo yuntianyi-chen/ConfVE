@@ -1,5 +1,5 @@
 import warnings
-from config import OPT_MODE, APOLLO_ROOT, CONTAINER_NUM
+from config import OPT_MODE, ADS_ROOT, CONTAINER_NUM
 from environment.Container import Container
 from environment.InitRunner import InitRunner
 from environment.MapLoader import MapLoader
@@ -13,14 +13,14 @@ warnings.filterwarnings('ignore')
 def confve_main():
     InitRunner()
 
-    containers = [Container(APOLLO_ROOT, f'ROUTE_{x}') for x in range(CONTAINER_NUM)]
-    map_instance = MapLoader().map_instance
+    containers = [Container(ADS_ROOT, f'ROUTE_{x}') for x in range(CONTAINER_NUM)]
+    # map_instance = MapLoader().map_instance
 
     for ctn in containers:
         ctn.start_instance()
         ctn.cyber_env_init()
         ctn.connect_bridge()
-        ctn.create_message_handler(map_instance)
+        ctn.create_message_handler()
 
         print(f'Dreamview at http://{ctn.ip}:{ctn.port}')
 

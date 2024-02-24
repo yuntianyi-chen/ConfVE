@@ -3,9 +3,9 @@ import os
 import pickle
 import shutil
 from datetime import date
-from config import BACKUP_CONFIG_SAVE_DIR, MODULE_NAME, CURRENT_CONFIG_FILE_PATH, \
-    DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR, APOLLO_RECORDS_DIR, BACKUP_RECORD_SAVE_DIR, APOLLO_ROOT, EXP_BASE_DIR, \
-    OPT_MODE
+from config import BACKUP_CONFIG_SAVE_DIR, MODULE_NAME, CURRENT_CONFIG_FILE_PATH, OPT_MODE,\
+    DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR, ADS_RECORDS_DIR, BACKUP_RECORD_SAVE_DIR, ADS_ROOT, EXP_BASE_DIR
+
 
 
 class FileOutputManager:
@@ -52,23 +52,21 @@ class FileOutputManager:
 
         self.backup_record_file_save_path = f"{BACKUP_RECORD_SAVE_DIR}/{self.time_str}"
         self.delete_dir(dir_path=self.backup_record_file_save_path, mk_dir=True)
-
         self.config_file_save_path = f"{BACKUP_CONFIG_SAVE_DIR}/{self.time_str}"
         self.delete_dir(dir_path=self.config_file_save_path, mk_dir=True)
-
-        self.delete_dir(dir_path=APOLLO_RECORDS_DIR, mk_dir=True)
+        self.delete_dir(dir_path=ADS_RECORDS_DIR, mk_dir=True)
 
     def delete_temp_log(self):
-        files = glob.glob(f'{APOLLO_ROOT}/*.log.INFO.*')
+        files = glob.glob(f'{ADS_ROOT}/*.log.INFO.*')
         for file in files:
             os.remove(file)
 
     def delete_data_core_and_log(self):
         try:
-            shutil.rmtree(f"{APOLLO_ROOT}/data/core")
-            os.makedirs(f"{APOLLO_ROOT}/data/core")
-            shutil.rmtree(f"{APOLLO_ROOT}/data/log")
-            os.makedirs(f"{APOLLO_ROOT}/data/log")
+            shutil.rmtree(f"{ADS_ROOT}/data/core")
+            os.makedirs(f"{ADS_ROOT}/data/core")
+            shutil.rmtree(f"{ADS_ROOT}/data/log")
+            os.makedirs(f"{ADS_ROOT}/data/log")
         except OSError as ose:
             print(ose)
 
@@ -77,7 +75,7 @@ class FileOutputManager:
         self.delete_data_core_and_log()
 
     def change_permission(self):
-        cmd = f'sudo chmod -R a+rwx {APOLLO_ROOT}/data'
+        cmd = f'sudo chmod -R a+rwx {ADS_ROOT}/data'
         os.system(cmd)
 
     def delete_dir(self, dir_path, mk_dir):
@@ -92,7 +90,7 @@ class FileOutputManager:
 
     def save_default_scenarios(self):
         self.delete_dir(dir_path=DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR, mk_dir=False)
-        shutil.copytree(APOLLO_RECORDS_DIR, DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR)
+        shutil.copytree(ADS_RECORDS_DIR, DEFAULT_RERUN_INITIAL_SCENARIO_RECORD_DIR)
 
     def handle_scenario_record(self, scenario_list):
         for scenario in scenario_list:
@@ -103,12 +101,12 @@ class FileOutputManager:
                 self.delete_record(scenario.record_name)
 
     def delete_record(self, record_name):
-        delete_path = f"{APOLLO_RECORDS_DIR}/{record_name}.00000"
+        delete_path = f"{ADS_RECORDS_DIR}/{record_name}.00000"
         if os.path.exists(delete_path):
             os.remove(delete_path)
 
     def save_record(self, record_name):
-        shutil.copy(f"{APOLLO_RECORDS_DIR}/{record_name}.00000",
+        shutil.copy(f"{ADS_RECORDS_DIR}/{record_name}.00000",
                     f"{self.backup_record_file_save_path}/{record_name}.00000")
 
 

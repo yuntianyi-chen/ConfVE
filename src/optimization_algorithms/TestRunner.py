@@ -27,20 +27,21 @@ class TestRunner:
         self.containers = containers
         self.range_analyzer = RangeAnalyzer(self.config_file_obj)
 
-        if os.path.exists(self.file_output_manager.default_violation_dump_data_path):
-            default_violation_results_list_with_sid = self.file_output_manager.load_default_violation_results_by_pickle()
-            record_id_list = [i[0] for i in default_violation_results_list_with_sid]
-            self.message_generator.get_record_info_by_record_id(record_id_list)
-            self.message_generator.update_selected_records_violatioin_directly(default_violation_results_list_with_sid)
-        else:
-            self.message_generator.get_record_info_by_record_id(record_id_list=range(MAX_INITIAL_SCENARIOS))
+        # if os.path.exists(self.file_output_manager.default_violation_dump_data_path):
+        #     default_violation_results_list_with_sid = self.file_output_manager.load_default_violation_results_by_pickle()
+        #     record_id_list = [i[0] for i in default_violation_results_list_with_sid]
+        #     self.message_generator.get_record_info_by_record_id(record_id_list)
+        #     self.message_generator.update_selected_records_violatioin_directly(default_violation_results_list_with_sid)
+        # else:
+        self.message_generator.get_record_info_by_record_id(record_id_list=range(MAX_INITIAL_SCENARIOS))
 
-            default_violation_results_list_with_sid = check_default_running(self.message_generator,
-                                                                   self.config_file_obj,
-                                                                   self.file_output_manager,
-                                                                   self.containers)
-            print("\nDefault Config Rerun - Initial Scenario Violation Info:")
-            self.file_output_manager.dump_default_violation_results_by_pickle(default_violation_results_list_with_sid)
+        default_violation_results_list_with_sid = check_default_running(self.message_generator,
+                                                               self.config_file_obj,
+                                                               self.file_output_manager,
+                                                               self.containers)
+        print("\nDefault Config Rerun - Initial Scenario Violation Info:")
+        self.file_output_manager.dump_default_violation_results_by_pickle(default_violation_results_list_with_sid)
+
         self.runner_time = time.time()
 
     def individual_running(self, generated_individual, ind_id):

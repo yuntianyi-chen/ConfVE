@@ -2,7 +2,7 @@ import os
 from typing import List, Tuple, Set
 from cyber_record.record import Record
 from shapely.geometry import LineString
-from config import TRAFFIC_LIGHT_MODE, APOLLO_RECORDS_DIR
+from config import TRAFFIC_LIGHT_MODE, ADS_RECORDS_DIR
 from objectives.violation_number.oracles import RecordAnalyzer
 from tools.traffic_light_control.TrafficControlManager import TrafficControlManager
 from tools.utils import extract_main_decision
@@ -17,7 +17,7 @@ class Scenario:
 
     def update_record_name_and_path(self, new_record_name):
         self.record_name = new_record_name
-        self.record_path = f"{APOLLO_RECORDS_DIR}/{self.record_name}.00000"
+        self.record_path = f"{ADS_RECORDS_DIR}/{self.record_name}.00000"
 
     def measure_violations(self):
         ra = RecordAnalyzer(self.record_path)
@@ -60,7 +60,7 @@ class Scenario:
                 self.has_emerged_module_violations = True
 
     def delete_record(self):
-        delete_path = f"{APOLLO_RECORDS_DIR}/{self.record_name}.00000"
+        delete_path = f"{ADS_RECORDS_DIR}/{self.record_name}.00000"
         if os.path.exists(delete_path):
             os.remove(delete_path)
 
