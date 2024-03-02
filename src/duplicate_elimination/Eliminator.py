@@ -60,15 +60,24 @@ class Eliminator:
 if __name__ == "__main__":
     group_name_list = ["all(iter1)", "all(iter2)", "all(iter3)"]
 
-    target_name_list = ["scenoRITA_borregas_ave_GA", "scenoRITA_borregas_ave_T-way",
-                        "scenoRITA_san_mateo_GA", "scenoRITA_san_mateo_T-way",
-                        "scenoRITA_sunnyvale_loop_GA", "scenoRITA_sunnyvale_loop_T-way",
-                        "DoppelTest_borregas_ave_GA", "DoppelTest_borregas_ave_T-way",
-                        "DoppelTest_san_mateo_GA", "DoppelTest_san_mateo_T-way",
+    # target_name_list = ["scenoRITA_borregas_ave_GA", "scenoRITA_borregas_ave_T-way",
+    #                     "scenoRITA_san_mateo_GA", "scenoRITA_san_mateo_T-way",
+    #                     "scenoRITA_sunnyvale_loop_GA", "scenoRITA_sunnyvale_loop_T-way",
+    #                     "DoppelTest_borregas_ave_GA", "DoppelTest_borregas_ave_T-way",
+    #                     "DoppelTest_san_mateo_GA", "DoppelTest_san_mateo_T-way",
+    #                     "DoppelTest_sunnyvale_loop_GA",
+    #                     "DoppelTest_sunnyvale_loop_T-way",
+    #                     "ADFuzz_borregas_ave_GA", "ADFuzz_borregas_ave_T-way",
+    #                     "AVFuzzer_San_Francisco_GA", "AVFuzzer_San_Francisco_T-way"]
+    target_name_list = ["scenoRITA_borregas_ave_GA", "scenoRITA_borregas_ave_ConfVD",
+                        "scenoRITA_san_mateo_GA", "scenoRITA_san_mateo_ConfVD",
+                        "scenoRITA_sunnyvale_loop_GA", "scenoRITA_sunnyvale_loop_ConfVD",
+                        "DoppelTest_borregas_ave_GA", "DoppelTest_borregas_ave_ConfVD",
+                        "DoppelTest_san_mateo_GA", "DoppelTest_san_mateo_ConfVD",
                         "DoppelTest_sunnyvale_loop_GA",
-                        "DoppelTest_sunnyvale_loop_T-way",
-                        "ADFuzz_borregas_ave_GA", "ADFuzz_borregas_ave_T-way",
-                        "AVFuzzer_San_Francisco_GA", "AVFuzzer_San_Francisco_T-way"]
+                        "DoppelTest_sunnyvale_loop_ConfVD",
+                        "ADFuzz_borregas_ave_GA", "ADFuzz_borregas_ave_ConfVD",
+                        "AVFuzzer_San_Francisco_GA", "AVFuzzer_San_Francisco_ConfVD"]
 
     approach_list = ["scenoRITA", "DoppelTest", "ADFuzz", "AVFuzzer"]
 

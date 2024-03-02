@@ -6,9 +6,11 @@ class LatexGenerator:
 
     def __init__(self, df_unique_final, df_all_final, approach_list, map_list, output_oracle_list):
         self.df_unique_GA_final = df_unique_final[[name for name in df_unique_final.columns if "GA" in name]]
-        self.df_unique_pairwise_final = df_unique_final[[name for name in df_unique_final.columns if "T-way" in name]]
+        # self.df_unique_pairwise_final = df_unique_final[[name for name in df_unique_final.columns if "T-way" in name]]
+        self.df_unique_pairwise_final = df_unique_final[[name for name in df_unique_final.columns if "ConfVD" in name]]
         self.df_all_GA_final = df_all_final[[name for name in df_all_final.columns if "GA" in name]]
-        self.df_all_pairwise_final = df_all_final[[name for name in df_all_final.columns if "T-way" in name]]
+        # self.df_all_pairwise_final = df_all_final[[name for name in df_all_final.columns if "T-way" in name]]
+        self.df_all_pairwise_final = df_all_final[[name for name in df_all_final.columns if "ConfVD" in name]]
 
         self.df_unique_final = df_unique_final
         self.df_all_final = df_all_final
@@ -52,7 +54,9 @@ class LatexGenerator:
 
     def write_all_elim(self, f):
         df_elim = pd.DataFrame()
-        for testing_approach in ["GA", "T-way"]:
+        # for testing_approach in ["GA", "T-way"]:
+        for testing_approach in ["GA", "ConfVD"]:
+
             df_elim[f"{testing_approach}_All"] = self.df_all_final[
                 [name for name in self.df_all_final.columns if testing_approach in name]].sum(axis=1)
             df_elim[f"{testing_approach}_Unique"] = self.df_unique_final[
