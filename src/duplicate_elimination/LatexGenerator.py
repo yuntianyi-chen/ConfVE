@@ -6,11 +6,11 @@ class LatexGenerator:
 
     def __init__(self, df_unique_final, df_all_final, approach_list, map_list, output_oracle_list):
         self.df_unique_GA_final = df_unique_final[[name for name in df_unique_final.columns if "GA" in name]]
-        # self.df_unique_pairwise_final = df_unique_final[[name for name in df_unique_final.columns if "T-way" in name]]
-        self.df_unique_pairwise_final = df_unique_final[[name for name in df_unique_final.columns if "ConfVD" in name]]
+        self.df_unique_pairwise_final = df_unique_final[[name for name in df_unique_final.columns if "T-way" in name]]
+        self.df_unique_ConfVD_final = df_unique_final[[name for name in df_unique_final.columns if "ConfVD" in name]]
         self.df_all_GA_final = df_all_final[[name for name in df_all_final.columns if "GA" in name]]
-        # self.df_all_pairwise_final = df_all_final[[name for name in df_all_final.columns if "T-way" in name]]
-        self.df_all_pairwise_final = df_all_final[[name for name in df_all_final.columns if "ConfVD" in name]]
+        self.df_all_pairwise_final = df_all_final[[name for name in df_all_final.columns if "T-way" in name]]
+        self.df_all_ConfVD_final = df_all_final[[name for name in df_all_final.columns if "ConfVD" in name]]
 
         self.df_unique_final = df_unique_final
         self.df_all_final = df_all_final
@@ -28,34 +28,45 @@ class LatexGenerator:
 
 
     def write_all(self, f):
-        f.write("all ads/GA_pairwise\n")
+        f.write("all ads/GA_pairwise_ConfVD\n")
         for index, row in self.df_unique_final.iterrows():
             f.write("\\textbf{" + self.output_oracle_list[index] + "}")
             write_str = ""
             pair = []
             for a_num in row:
                 pair.append(a_num)
-                if len(pair) == 2:
-                    if pair[0] > pair[1]:
-                        pair[0] = "\\textbf{" + str(pair[0]) + "}"
-                    elif pair[0] < pair[1]:
-                        pair[1] = "\\textbf{" + str(pair[1]) + "}"
-                    write_str += f" & {pair[0]} & {pair[1]}"
+                if len(pair) == 3:
+                    # find the max value
+                    max_value = max(pair)
+                    for i in range(3):
+                        if pair[i] == max_value and max_value != 0:
+                            pair[i] = "\\textbf{" + str(pair[i]) + "}"
+                    # if pair[0] > pair[1]:
+                    #     pair[0] = "\\textbf{" + str(pair[0]) + "}"
+                    # elif pair[0] < pair[1]:
+                    #     pair[1] = "\\textbf{" + str(pair[1]) + "}"
+                    # write_str += f" & {pair[0]} & {pair[1]}"
+                    write_str += f" & {pair[0]} & {pair[1]} & {pair[2]}"
                     pair = []
             f.write(f"{write_str}\\\\ \n")
-        f.write("\\textbf{Improvement (\%)} ")
+        f.write("\\textbf{Improv. (\%)}")
         write_str = ""
         unique_total_row = self.df_unique_final.iloc[-1]
-        for e1, e2 in zip(unique_total_row[0::2], unique_total_row[1::2]):
-            improvement = round((e1 - e2) / e2 * 100, 2)
-            write_str += "& \multicolumn{2}{c}{\\textbf{" + str(improvement) + "\%}}"
+        for e1, e2, e3 in zip(unique_total_row[0::3], unique_total_row[1::3], unique_total_row[2::3]):
+            improvement1 = round((e1 - e2) / e2 * 100, 2)
+            improvement2 = round((e1 - e3) / e3 * 100, 2)
+            write_str += " & - & " + str(improvement1) + " & " + str(improvement2)
+
+        # for e1, e2 in zip(unique_total_row[0::2], unique_total_row[1::2]):
+        #     improvement = round((e1 - e2) / e2 * 100, 2)
+        #     write_str += " & \multicolumn{2}{c}{\\textbf{" + str(improvement) + "\%}}"
         f.write(f"{write_str}\\\\ \n")
         f.write("\n\n\n\n")
 
     def write_all_elim(self, f):
         df_elim = pd.DataFrame()
         # for testing_approach in ["GA", "T-way"]:
-        for testing_approach in ["GA", "ConfVD"]:
+        for testing_approach in ["GA", "T-way", "ConfVD"]:
 
             df_elim[f"{testing_approach}_All"] = self.df_all_final[
                 [name for name in self.df_all_final.columns if testing_approach in name]].sum(axis=1)
@@ -81,6 +92,8 @@ class LatexGenerator:
             f.write(f"{write_str}\\\\ \n")
         f.write("\n\n\n\n")
 
+
+###########################################
     def write_ga_elim(self, f):
         df_ga_elim = pd.DataFrame()
         for approach_name in self.approach_list:
