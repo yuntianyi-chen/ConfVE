@@ -46,7 +46,7 @@ In this section we will be discussing steps to replicate the results discussed i
             |--main.py
 ```
 
-1. Unzip the `ConfVE-data.zip` and `ConfVE-code` files under `/ConfVE` to get the `data` and `src` directory
+1. Unzip the `ConfVE.zip` file to get the `data` and `src` directories.
 
 2. Place the `/ConfVE` under the same directory with `/apollo`
 
