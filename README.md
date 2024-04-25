@@ -4,9 +4,7 @@
 
 ConfVE is the first configuration testing approach in the ADS domain, which serves as a testing framework that utilizes scenarios from pre-existing ADS scenario-generation techniques and a genetic algorithm to produce alternative configurations to identify emerged failures in an ADS by preventing the masking of failures and maximizing the possibility of producing bug-revealing violations.
 
-The DOI for this repository is: [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11068612.svg)](https://doi.org/10.5281/zenodo.11068612)
-
-We also provide video recordings of our approach when different types of violations happen: [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11051748.svg)](https://doi.org/10.5281/zenodo.11051748)
+The video recordings of ConfVE when different types of violations happen are available at [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11051748.svg)](https://doi.org/10.5281/zenodo.11051748)
 
 ## Hardware and Software Requirements
 
@@ -46,13 +44,13 @@ In this section we will be discussing steps to replicate the results discussed i
             |--main.py
 ```
 
-1. Unzip the `ConfVE.zip` file to get the `data` and `src` directories.
+1. Git clone this repository or download the zip file of this project. Unzip the `ConfVE.zip` file to get the `data` and `src` directories.
 
 2. Place the `/ConfVE` under the same directory with `/apollo`
 
 ### INSTALLING Apollo ADS
 
-1. Download the Apollo 7.0 from https://github.com/yuntianyi-chen/apollo-baidu/tree/master, and name the apollo root directory `/apollo`
+1. Git clone or Download the Apollo 7.0 from https://github.com/yuntianyi-chen/apollo-baidu/tree/master, and name the apollo root directory `/apollo`
 
 2. Copy the directory `ConfVE/module/sim_control` to `apollo/modules/`
 
