@@ -1,7 +1,7 @@
 import random
 import string
 
-from config import OPT_MODE
+from config import OPT_MODE, DISABLE_NUM_OP_DIGIT
 
 
 class MisInjTester:
@@ -14,9 +14,11 @@ class MisInjTester:
                                        self.disorder,
                                        self.cut_out,
                                        self.repeat]
-        self.number_operator_func_list = [self.generate_new_number
-            # , self.change_digit_type
-                                          ]
+
+        self.number_operator_func_list = [self.generate_new_number]
+        if not DISABLE_NUM_OP_DIGIT:
+            self.number_operator_func_list.append(self.change_digit_type)
+
 
     def apply_one_operator(self, option_type, option_value, option_range):
         if option_type in ["float", "integer"]:

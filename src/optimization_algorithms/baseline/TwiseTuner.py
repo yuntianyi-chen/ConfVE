@@ -1,7 +1,5 @@
 import random
 import itertools as it
-# from copy import deepcopy
-# from config import ONEENABLED_NUM_TYPE_TEST_TIMES
 
 
 class TwiseTuner:
@@ -21,25 +19,6 @@ class TwiseTuner:
 
     def tune_individual(self, individual, range_analyzer):
         position_tuple = self.decide_positions()
-
-        # if self.T == 1:
-        #     position = position_tuple[0]
-        #     option_type = self.config_file_obj.option_type_list[position]
-        #     if option_type in ["float", "integer", "e_number"]:
-        #         individual_list = []
-        #         for i in range(ONEENABLED_NUM_TYPE_TEST_TIMES):
-        #             individual_copy = deepcopy(individual)
-        #             range_analyzer.tune_one_value(individual_copy, self.config_file_obj, position)
-        #             individual_list.append(individual_copy)
-        #         return individual_list
-        #     else:
-        #         range_analyzer.tune_one_value(individual, self.config_file_obj, position)
-        #         return individual
-        # else:
-        #     for position in position_tuple:
-        #         range_analyzer.tune_one_value(individual, self.config_file_obj, position)
-        #     return individual
-
         for position in position_tuple:
             range_analyzer.tune_one_value(individual, self.config_file_obj, position)
         return individual

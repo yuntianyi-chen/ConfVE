@@ -12,9 +12,9 @@ OBS_PERCEPTION_FREQUENCY = 10
 MAX_RECORD_TIME = 30  # 10/30
 CONTAINER_NUM = 5  # 5/10
 TIME_HOUR_THRESHOLD = 10  # hours
-AV_TESTING_APPROACH = "scenoRITA"  # scenoRITA/DoppelTest/AVFuzzer/ADFuzz
-MAP_NAME = "sunnyvale_loop"  # borregas_ave/sunnyvale_loop/San_Francisco/san_mateo
-OPT_MODE = "ConfVD"  # GA/T-way/ConfVD
+AV_TESTING_APPROACH = "DoppelTest"  # scenoRITA/DoppelTest/AVFuzzer/ADFuzz
+MAP_NAME = "borregas_ave"  # borregas_ave/sunnyvale_loop/San_Francisco/san_mateo
+OPT_MODE = "GA"  # GA/T-way/ConfVD
 DO_RANGE_ANALYSIS = False
 
 ####################
@@ -30,6 +30,7 @@ CONFIG_FILE_NAME = f"{MODULE_NAME}_config.pb.txt"
 SIMILARITY_THRESHOLD = 0.5
 MAX_INITIAL_SCENARIOS = 10  # 10
 IS_CUSTOMIZED_EPSILON = False
+DISABLE_NUM_OP_DIGIT = True
 EPSILON_THRESHOLD = 1
 
 # APOLLO SETTINGS
@@ -69,7 +70,7 @@ EXP_NAME_OPT_MODE = f"{INITIAL_EXP_NAME}_{OPT_MODE}"
 # DIRECTORIES
 DIR_ROOT = str(Path(__file__).parent.parent.parent)
 PROJECT_ROOT = str(Path(__file__).parent.parent)
-APOLLO_ROOT = f'{DIR_ROOT}/apollo-baidu'
+APOLLO_ROOT = f'{DIR_ROOT}/apollo'
 
 RECORDS_DIR = f'{PROJECT_ROOT}/data/records'
 FEATURES_CSV_DIR = f'{PROJECT_ROOT}/data/violation_features'

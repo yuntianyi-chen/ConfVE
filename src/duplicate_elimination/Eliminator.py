@@ -7,14 +7,12 @@ from sklearn.cluster import DBSCAN
 from sklearn.neighbors import NearestNeighbors
 from sklearn.preprocessing import MinMaxScaler
 from config import FEATURES_CSV_DIR, MODULE_ORACLES, IS_CUSTOMIZED_EPSILON, EPSILON_THRESHOLD
-
 from duplicate_elimination.LatexGenerator import LatexGenerator
 
 warnings.filterwarnings('ignore')
 
 
 class Eliminator:
-
     def __init__(self):
         self.scaler = MinMaxScaler()
 
