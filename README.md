@@ -6,6 +6,7 @@ ConfVE is the first configuration testing approach in the ADS domain, which serv
 
 The DOI for this repository is: [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11051914.svg)](https://doi.org/10.5281/zenodo.11051914)
 
+We also provide video recordings of our approach when different types of violations happen: [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11051748.svg)](https://doi.org/10.5281/zenodo.11051748)
 
 ## Hardware and Software Requirements
 
