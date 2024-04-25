@@ -4,7 +4,7 @@
 
 ConfVE is the first configuration testing approach in the ADS domain, which serves as a testing framework that utilizes scenarios from pre-existing ADS scenario-generation techniques and a genetic algorithm to produce alternative configurations to identify emerged failures in an ADS by preventing the masking of failures and maximizing the possibility of producing bug-revealing violations.
 
-The DOI for this repository is: [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11051914.svg)](https://doi.org/10.5281/zenodo.11051914)
+The DOI for this repository is: [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11068612.svg)](https://doi.org/10.5281/zenodo.11068612)
 
 We also provide video recordings of our approach when different types of violations happen: [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11051748.svg)](https://doi.org/10.5281/zenodo.11051748)
 
