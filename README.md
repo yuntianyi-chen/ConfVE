@@ -52,7 +52,7 @@ In this section we will be discussing steps to replicate the results discussed i
 
 1. Git clone or Download the Apollo 7.0 from https://github.com/yuntianyi-chen/apollo-baidu/tree/master, and name the apollo root directory `/apollo`
 
-2. Copy the directory `ConfVE/module/sim_control` to `apollo/modules/`
+2. Copy the directory `ConfVE/data/module/sim_control` to `apollo/modules/`
 
 3. Replace the file `apollo/docker/scripts/dev_start.sh` with the file of `ConfVE/data/scripts/apollo_multi_container/dev_start.sh`, 
 
@@ -68,7 +68,7 @@ In this section we will be discussing steps to replicate the results discussed i
 
 2. Customize the parameters in `ConfVE/src/config.py` according to your requirements, or just remain default.
 
-3. Place your directories of initial record files under `ConfVE/data/records`, run `python3 tools/script/prepare.py`
+3. Place your directories of initial record files under `ConfVE/data/records`, run `python3 prepare.py`
 
 > The folder name should follow the rule of `ApproachName_MapName`(e.g., `DoppelTest_borregas_ave`). We've provided a group of sample records file under `ConfVE/data/records` for your reference.
 
