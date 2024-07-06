@@ -81,6 +81,7 @@ def check_default_running(message_generator, config_file_obj, file_output_manage
                                          config_file_obj,
                                          selected_pre_record_info_list,
                                          name_prefix)
+        print(f"------------Running {name_prefix}-------------")
         default_violation_results_list = run_default_scenarios(scenario_list, containers, message_generator)
         message_generator.update_selected_records_violatioin_directly(default_violation_results_list)
     return default_violation_results_list

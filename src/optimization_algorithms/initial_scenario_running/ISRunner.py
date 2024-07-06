@@ -26,8 +26,10 @@ class ISRunner:
         #     self.message_generator.get_record_info_by_record_id(record_id_list)
         #     self.message_generator.update_selected_records_violatioin_directly(default_violation_results_list_with_sid)
         # else:
+        print("get_record_info_by_record_id...")
         self.message_generator.get_record_info_by_record_id(record_id_list=range(self.message_generator.total_records_count))
 
+        print("Check_default_running...")
         default_violation_results_list_with_sid = check_default_running(self.message_generator,
                                                                self.config_file_obj,
                                                                self.file_output_manager,
