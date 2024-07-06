@@ -8,6 +8,8 @@ from config import DEFAULT_DETERMINISM_RERUN_TIMES, MODULE_ORACLES
 
 def run_default_scenarios(scenario_list, containers, message_generator):
     default_violation_results_list = []
+    with open("determinism_checking.txt", "w") as f:
+        f.write("")
     for scenario in scenario_list:
         all_emerged_results = []
         # contain_module_violation = True

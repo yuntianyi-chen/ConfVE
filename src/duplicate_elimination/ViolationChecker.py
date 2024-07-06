@@ -39,34 +39,39 @@ def check_emerged_violations(violation_results, default_violations_results):
 
 
 def confirm_determinism(scenario, containers, first_violations_emerged_results, rerun_times):
-    rerun_scenario_list = []
-    for i in range(rerun_times):
-        temp_scenario = deepcopy(scenario)
-        temp_record_name = f"{temp_scenario.record_name}_rerun_{i}"
-        temp_scenario.update_record_name_and_path(temp_record_name)
-        rerun_scenario_list.append(temp_scenario)
-    print(f"------------Rerunning {scenario.record_name}-------------")
-    replay_scenarios_in_threading(rerun_scenario_list, containers)
-    accumulated_emerged_results_count_dict = {}
-    all_emerged_results = []
-    accumulated_emerged_results = []
-    all_violation_results = []
-    for temp_scenario in rerun_scenario_list:
-        violation_results = temp_scenario.measure_violations()
-        all_violation_results.append(violation_results)
-        violations_emerged_results = check_emerged_violations(violation_results,
-                                                              temp_scenario.original_violation_results)
-        accumulated_emerged_results += violations_emerged_results
-        for violation in violation_results:
-            if violation not in all_emerged_results:
-                all_emerged_results.append(violation)
-        temp_scenario.delete_record()
-    for emerged_violation in first_violations_emerged_results + accumulated_emerged_results:
-        if emerged_violation.main_type not in accumulated_emerged_results_count_dict.keys():
-            accumulated_emerged_results_count_dict[emerged_violation.main_type] = [emerged_violation]
-        else:
-            accumulated_emerged_results_count_dict[emerged_violation.main_type].append(emerged_violation)
-    determined_emerged_results = [v[0] for v in accumulated_emerged_results_count_dict.values() if
-                                  len(v) >= DETERMINISM_CONFIRMED_TIMES]
-    print("-------------------------------------------------")
-    return determined_emerged_results, all_emerged_results, all_violation_results
+    with open("determinism_checking.txt", "a") as f:
+        f.write(f"\n------------Checking {scenario.record_name}-------------\n")
+
+        rerun_scenario_list = []
+        for i in range(rerun_times):
+            temp_scenario = deepcopy(scenario)
+            temp_record_name = f"{temp_scenario.record_name}_rerun_{i}"
+            temp_scenario.update_record_name_and_path(temp_record_name)
+            rerun_scenario_list.append(temp_scenario)
+        print(f"------------Rerunning {scenario.record_name}-------------")
+        replay_scenarios_in_threading(rerun_scenario_list, containers)
+        accumulated_emerged_results_count_dict = {}
+        all_emerged_results = []
+        accumulated_emerged_results = []
+        all_violation_results = []
+        for temp_scenario in rerun_scenario_list:
+            violation_results = temp_scenario.measure_violations()
+            f.write(f"{violation_results}\n")
+
+            all_violation_results.append(violation_results)
+            violations_emerged_results = check_emerged_violations(violation_results,
+                                                                  temp_scenario.original_violation_results)
+            accumulated_emerged_results += violations_emerged_results
+            for violation in violation_results:
+                if violation not in all_emerged_results:
+                    all_emerged_results.append(violation)
+            temp_scenario.delete_record()
+        for emerged_violation in first_violations_emerged_results + accumulated_emerged_results:
+            if emerged_violation.main_type not in accumulated_emerged_results_count_dict.keys():
+                accumulated_emerged_results_count_dict[emerged_violation.main_type] = [emerged_violation]
+            else:
+                accumulated_emerged_results_count_dict[emerged_violation.main_type].append(emerged_violation)
+        determined_emerged_results = [v[0] for v in accumulated_emerged_results_count_dict.values() if
+                                      len(v) >= DETERMINISM_CONFIRMED_TIMES]
+        print("-------------------------------------------------")
+        return determined_emerged_results, all_emerged_results, all_violation_results
