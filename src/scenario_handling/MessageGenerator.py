@@ -31,7 +31,7 @@ class MessageGenerator:
         print(self.violation_num_list)
 
     def update_selected_records_violatioin_directly(self, violation_results_list_with_sid):
-        for sid, violation_results in violation_results_list_with_sid:
+        for sid, violation_results, _ in violation_results_list_with_sid:
             for i in range(len(self.pre_record_info_list)):
                 if sid == self.pre_record_info_list[i].record_id:
                     self.pre_record_info_list[i].update_violation_directly(violation_results)

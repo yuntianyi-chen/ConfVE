@@ -12,7 +12,7 @@ def run_default_scenarios(scenario_list, containers, message_generator):
         all_emerged_results = []
         # contain_module_violation = True
         # while contain_module_violation:
-        _, all_emerged_results = confirm_determinism(scenario,
+        _, all_emerged_results, all_violation_results = confirm_determinism(scenario,
                                                      containers,
                                                      first_violations_emerged_results=[],
                                                      rerun_times=DEFAULT_DETERMINISM_RERUN_TIMES)
@@ -28,7 +28,7 @@ def run_default_scenarios(scenario_list, containers, message_generator):
             #     scenario = create_scenario(pre_record_info, name_prefix="default", config_file_tuned_status=True)
 
         print("-------------------------------------------------")
-        default_violation_results_list.append((scenario.record_id, all_emerged_results))
+        default_violation_results_list.append((scenario.record_id, all_emerged_results, all_violation_results))
     return default_violation_results_list
 
 
