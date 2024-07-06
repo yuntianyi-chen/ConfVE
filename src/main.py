@@ -6,6 +6,7 @@ from environment.MapLoader import MapLoader
 from optimization_algorithms.baseline.TwayRunner import TwayRunner
 from optimization_algorithms.baseline.ConfVDRunner import ConfVDRunner
 from optimization_algorithms.genetic_algorithm.GARunner import GARunner
+from optimization_algorithms.initial_scenario_running.ISRunner import ISRunner
 
 warnings.filterwarnings('ignore')
 
@@ -30,6 +31,8 @@ def confve_main():
         TwayRunner(containers)
     elif OPT_MODE == "ConfVD":
         ConfVDRunner(containers)
+    elif OPT_MODE == "initial_scenario":
+        ISRunner(containers)
 
 if __name__ == '__main__':
     confve_main()

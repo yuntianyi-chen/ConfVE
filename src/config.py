@@ -14,7 +14,7 @@ CONTAINER_NUM = 5  # 5/10
 TIME_HOUR_THRESHOLD = 10  # hours
 AV_TESTING_APPROACH = "DoppelTest"  # scenoRITA/DoppelTest/AVFuzzer/ADFuzz
 MAP_NAME = "borregas_ave"  # borregas_ave/sunnyvale_loop/San_Francisco/san_mateo
-OPT_MODE = "GA"  # GA/T-way/ConfVD
+OPT_MODE = "initial_scenario_running"  # GA/T-way/ConfVD
 DO_RANGE_ANALYSIS = False
 
 ####################

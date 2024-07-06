@@ -10,22 +10,22 @@ def run_default_scenarios(scenario_list, containers, message_generator):
     default_violation_results_list = []
     for scenario in scenario_list:
         all_emerged_results = []
-        contain_module_violation = True
-        while contain_module_violation:
-            _, all_emerged_results = confirm_determinism(scenario,
-                                                         containers,
-                                                         first_violations_emerged_results=[],
-                                                         rerun_times=DEFAULT_DETERMINISM_RERUN_TIMES)
-            contain_module_violation = check_module_failure(all_emerged_results, oracles=MODULE_ORACLES)
+        # contain_module_violation = True
+        # while contain_module_violation:
+        _, all_emerged_results = confirm_determinism(scenario,
+                                                     containers,
+                                                     first_violations_emerged_results=[],
+                                                     rerun_times=DEFAULT_DETERMINISM_RERUN_TIMES)
+            # contain_module_violation = check_module_failure(all_emerged_results, oracles=MODULE_ORACLES)
 
-            if contain_module_violation:
-                for ctn in containers:
-                    ctn.cyber_env_init()
-                    ctn.connect_bridge()
-                    ctn.message_handler.update_bridge(ctn.bridge)
-
-                pre_record_info = message_generator.replace_record(scenario.record_id)
-                scenario = create_scenario(pre_record_info, name_prefix="default", config_file_tuned_status=True)
+            # if contain_module_violation:
+            #     for ctn in containers:
+            #         ctn.cyber_env_init()
+            #         ctn.connect_bridge()
+            #         ctn.message_handler.update_bridge(ctn.bridge)
+            #
+            #     pre_record_info = message_generator.replace_record(scenario.record_id)
+            #     scenario = create_scenario(pre_record_info, name_prefix="default", config_file_tuned_status=True)
 
         print("-------------------------------------------------")
         default_violation_results_list.append((scenario.record_id, all_emerged_results))
