@@ -77,6 +77,7 @@ class MessageGenerator:
     def get_record_info_by_record_id(self, record_id_list):
         if AV_TESTING_APPROACH != "Random":
             for record_id in record_id_list:
+                print(f"Init Record_{record_id}...")
                 pre_record_info = InitialRecordInfo(True, record_id,
                                                     self.scenario_recordname_list[record_id],
                                                     self.scenario_record_path_list[record_id])
