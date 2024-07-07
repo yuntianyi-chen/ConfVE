@@ -39,6 +39,7 @@ class InitialRecordInfo:
         self.violation_num = len(violation_results)
 
     def extract_record_info(self):
+        print(f"Extracting Record Info: {self.record_file_path}")
         record = Record(self.record_file_path)
         for topic, message, t in record.read_messages():
             if topic == "/apollo/perception/obstacles":
