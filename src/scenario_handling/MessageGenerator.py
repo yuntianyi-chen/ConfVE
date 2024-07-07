@@ -18,7 +18,7 @@ class MessageGenerator:
 
     def get_record_path_list(self):
         scenario_recordname_list = listdir(self.scenario_record_dir_path)
-        scenario_recordname_list.sort()
+        scenario_recordname_list = sorted(filter(lambda x: x.endswith(".00000"), scenario_recordname_list))
         self.scenario_recordname_list = scenario_recordname_list
         self.scenario_record_path_list = [f"{self.scenario_record_dir_path}/{recordname}" for recordname in
                                           scenario_recordname_list]
