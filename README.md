@@ -2,9 +2,11 @@
 
 ## Introduction
 
-ConfVE is the first configuration testing approach in the ADS domain, which serves as a testing framework that utilizes scenarios from pre-existing ADS scenario-generation techniques and a genetic algorithm to produce alternative configurations to identify emerged failures in an ADS by preventing the masking of failures and maximizing the possibility of producing bug-revealing violations.
+ConfVE (Configuration Violation Emerger) is the first configuration testing approach in the ADS domain, which serves as a testing framework that utilizes scenarios from pre-existing ADS scenario-generation techniques and a genetic algorithm to produce alternative configurations to identify emerged failures in an ADS by preventing the masking of failures and maximizing the possibility of producing bug-revealing violations.
 
-The video recordings of ConfVE when different types of violations happen are available at [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11051748.svg)](https://doi.org/10.5281/zenodo.11051748)
+The **published paper** of ConfVE is available at [ACM FSE 2024](https://doi.org/10.1145/3660792)
+
+The **video recordings** of ConfVE when different types of violations happen are available at [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11051748.svg)](https://doi.org/10.5281/zenodo.11051748)
 
 ## Hardware and Software Requirements
 
@@ -80,3 +82,28 @@ In this section we will be discussing steps to replicate the results discussed i
 
 ### Notice
 - For the first run, the map parser would be automated executed to generate and save the map info file. If you test on a large map, it may take a long time.
+
+
+### Paper Citation
+```aiignore
+@article{ChenHLHG24,
+  author       = {Yuntianyi Chen and
+                  Yuqi Huai and
+                  Shilong Li and
+                  Changnam Hong and
+                  Joshua Garcia},
+  title        = {Misconfiguration Software Testing for Failure Emergence in Autonomous
+                  Driving Systems},
+  journal      = {Proc. {ACM} Softw. Eng.},
+  volume       = {1},
+  number       = {{FSE}},
+  pages        = {1913--1936},
+  year         = {2024},
+  url          = {https://doi.org/10.1145/3660792},
+  doi          = {10.1145/3660792},
+  timestamp    = {Fri, 02 Aug 2024 21:41:21 +0200},
+  biburl       = {https://dblp.org/rec/journals/pacmse/ChenHLHG24.bib},
+  bibsource    = {dblp computer science bibliography, https://dblp.org}
+}
+```
+
