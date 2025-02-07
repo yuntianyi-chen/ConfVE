@@ -4,7 +4,7 @@
 
 ConfVE (Configuration Violation Emerger) is the first configuration testing approach in the ADS domain, which serves as a testing framework that utilizes scenarios from pre-existing ADS scenario-generation techniques and a genetic algorithm to produce alternative configurations to identify emerged failures in an ADS by preventing the masking of failures and maximizing the possibility of producing bug-revealing violations.
 
-The **published paper** of ConfVE is available at [ACM FSE 2024](https://doi.org/10.1145/3660792)
+The **published paper** of ConfVE is available at [![FSE 2024](https://img.shields.io/badge/FSE%202024%20DOI-10.1145%2F3660792-blue.svg)](https://doi.org/10.1145/3660792)
 
 The **video recordings** of ConfVE when different types of violations happen are available at [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11051748.svg)](https://doi.org/10.5281/zenodo.11051748)
 
