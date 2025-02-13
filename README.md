@@ -84,6 +84,24 @@ In this section we will be discussing steps to replicate the results discussed i
 - For the first run, the map parser would be automated executed to generate and save the map info file. If you test on a large map, it may take a long time.
 
 
+### Supporting Violation Types
+
+There is a built-in scenario record violation analyzer in the `ConfVE` framework. The following table lists the violation types supported by the analyzer.
+
+| Violation Type           | Non-strict Features                                               | Strict Features  |
+|--------------------------|-------------------------------------------------------------------|------------------|
+| Collision               | $\{p^{E}_{t},s^{E}_{t},h^{E}_{t},p^{O}_{t},s^{O}_{t},h^{O}_{t}\}$ | -                |
+| Fast Acceleration       | $\{p^{E}_{t},s^{E}_{t},h^{E}_{t},duration,accel\}$                | -                |
+| Hard Braking           | $\{p^{E}_{t},s^{E}_{t},h^{E}_{t},duration,decel\}$                | -                |
+| Speeding               | $\{p^{E}_{t},s^{E}_{t},h^{E}_{t},duration\}$                      | -                |
+| Unsafe Lane-change     | $\{p^{E}_{t},s^{E}_{t},h^{E}_{t},duration\}$                      | -                |
+| Lane-change in Junction | $\{p^{E}_{t},s^{E}_{t},h^{E}_{t}\}$                               | $ id_{junction}$ |
+| Module Delay           | $\{p^{E}_{t},s^{E}_{t},h^{E}_{t},duration\}$                      | $ type_{module}$ |
+| Module Malfunction     | $\{p^{E}_{t},s^{E}_{t},h^{E}_{t}\}$                               | $type_{module}$  |
+| Vehicle Paralysis      | $\{p^{E}_{t},s^{E}_{t},h^{E}_{t}\}$                               | $ type_{module}$ |
+
+
+
 ### Paper Citation
 ```aiignore
 @article{ChenHLHG24,
